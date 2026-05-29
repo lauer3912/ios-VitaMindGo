@@ -1,0 +1,6 @@
+{
+  "colors" : [
+    { "color" : { "arguments" : { "red" : 0.94901960784313721, "green" : 0.95686274509803926, "blue" : 0.96862745098039216, "alpha" : 1 }, "type" : "logic" }, "idiom" : "universal" },
+    { "appearances" : [ { "appearance" : "luminosity", "value" : "dark" } ], "color" : { "arguments" : { "red" : 0.10980392156862745, "green" : 0.10980392156862745, "blue" : 0.11764705882352941, "alpha" : 1 }, "type" : "logic" }, "idiom" : "universal" } ],
+  "info" : { "author" : "xcode", "version" : 1 }
+}
