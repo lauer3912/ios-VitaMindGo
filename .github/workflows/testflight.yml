@@ -53,17 +53,27 @@ jobs:
           echo "CERT_B64=$CERT_B64" >> $GITHUB_OUTPUT
           echo "✓ Certificate Base64 computed"
 
-      - name: Store Apple ID in Keychain
+      - name: Add Apple ID to Keychain
         run: |
-          echo "=== Store Apple ID in Keychain ==="
-          xcrun altool \
-            --store-password-in-keychain \
-            -u "${{ secrets.APPLE_ID_USERNAME }}" \
-            -p "${{ secrets.APPLE_ID_PASSWORD }}" \
-            -s \
-            -k "9L6N2ZF26B" \
-            2>&1 | head -10 || echo "Note: altool store may fail but credentials are saved"
-          echo "✓ Apple ID stored in keychain"
+          echo "=== Add Apple ID to Keychain ==="
+          # Unlock login keychain first
+          security unlock-keychain -p "" ~/Library/Keychains/login.keychain-db
+          security set-keychain-settings -lut 21600 ~/Library/Keychains/login.keychain-db
+          
+          # Add Apple ID internet password to keychain
+          # This makes the account available to Xcode for Automatic signing
+          security add-internet-password \
+            -s "apple.com" \
+            -r "dflt" \
+            -a "${{ secrets.APPLE_ID_USERNAME }}" \
+            -w "${{ secrets.APPLE_ID_PASSWORD }}" \
+            -T "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild" \
+            -T "/usr/bin/security" \
+            ~/Library/Keychains/login.keychain-db 2>&1 || echo "Note: security add may fail if already exists"
+          
+          echo "=== Verify Apple ID in keychain ==="
+          security find-internet-password -s "apple.com" -a "${{ secrets.APPLE_ID_USERNAME }}" 2>&1 | head -5 || true
+          echo "✓ Apple ID added to keychain"
 
       - name: Copy Provisioning Profiles
         run: |
