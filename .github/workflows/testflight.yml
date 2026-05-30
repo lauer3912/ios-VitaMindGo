@@ -154,26 +154,18 @@ jobs:
             exit 1
           fi
 
-          # Profile names must match the Name field in mobileprovision
-          # VitaMind: "iOS Team Store Provisioning Profile: com.ggsheng.VitaMind"
-          # VitaMindWidget: "iOS Team Store Provisioning Profile: com.ggsheng.VitaMind.widget"
-          PROFILE_VITAMIND="iOS Team Store Provisioning Profile: com.ggsheng.VitaMind"
-          PROFILE_WIDGET="iOS Team Store Provisioning Profile: com.ggsheng.VitaMind.widget"
-          
-          echo "Main App Profile: $PROFILE_VITAMIND"
-          echo "Widget Profile: $PROFILE_WIDGET"
-
+          # Use Automatic signing — Xcode will match Profile by Bundle ID
+          # Profile files are already in ~/Library/MobileDevice/Provisioning Profiles/
+          # Xcode finds matching profiles automatically based on DEVELOPMENT_TEAM + Bundle ID
           xcodebuild \
             -project VitaMind.xcodeproj \
             -scheme VitaMind \
             -configuration Release \
             -archivePath build/VitaMind.xcarchive \
             CODE_SIGNING_ALLOWED=YES \
-            CODE_SIGN_STYLE=Manual \
+            CODE_SIGN_STYLE=Automatic \
             CODE_SIGN_IDENTITY="$CODE_SIGN_ID" \
             DEVELOPMENT_TEAM=9L6N2ZF26B \
-            PROVISIONING_PROFILE_SPECIFIER="$PROFILE_VITAMIND" \
-            OTHER_CODE_SIGN_FLAGS="--rictenforce" \
             -allowProvisioningUpdates \
             archive 2>&1 | tee build/archive.log
 
