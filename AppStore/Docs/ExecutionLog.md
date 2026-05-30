@@ -131,3 +131,25 @@ _Last updated: 2026-05-30 08:14 GMT+8_
 - **状态: ✅ 提交成功**
 - 版本: 3.0.0
 - Build ID: (见 Xcode Archive)
+
+---
+
+## 2026-05-30 上午 - 续
+
+### ⚠️ 上传成功，但提交审核需要更多资料
+
+**已完成的：**
+- ✅ Archive + Upload 成功
+
+**待完成的（Human 在 App Store Connect 填写）：**
+- ⏳ 填写 App Store Connect 信息（按 Listing.md）
+- ⏳ 上传截图到 App Store Connect
+- ⏳ 确认隐私政策 URL 可访问
+- ⏳ 确认 Support URL 可访问
+- ⏳ 完成 Content Rating 问卷
+- ⏳ 点击"提交审核"
+
+### Listing.md 更新
+- App Name: VitaMind → VitaMindGo
+- Bundle ID: com.vitamind.app → com.ggsheng.VitaMind
+- 添加上架前检查清单供 Human 参考
