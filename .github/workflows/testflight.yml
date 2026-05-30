@@ -63,6 +63,7 @@ jobs:
             CODE_SIGNING_ALLOWED=YES \
             CODE_SIGN_STYLE=Automatic \
             DEVELOPMENT_TEAM=9L6N2ZF26B \
+            -allowProvisioningUpdates \
             archive 2>&1 | tee build/archive.log
           echo "Archive completed"
 
