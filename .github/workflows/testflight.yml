@@ -138,14 +138,16 @@ jobs:
           echo "=== Build Archive ==="
           mkdir -p build
 
-          # CODE_SIGN_STYLE=Automatic lets Xcode auto-match profile by Bundle ID
-          # Certificate is already in keychain from import-codesign-certs step
+          # CODE_SIGN_STYLE=Manual + certificate in keychain
+          # Xcode will automatically find matching profile by DEVELOPMENT_TEAM + Bundle ID
+          # DO NOT use PROVISIONING_PROFILE_SPECIFIER - that causes the IsXcodeManaged conflict
           xcrun xcodebuild \
             -project VitaMind.xcodeproj \
             -scheme VitaMind \
             -configuration Release \
             -sdk iphoneos \
-            CODE_SIGN_STYLE=Automatic \
+            CODE_SIGN_IDENTITY="Apple Distribution" \
+            CODE_SIGN_STYLE=Manual \
             CODE_SIGNING_REQUIRED=YES \
             CODE_SIGNING_ALLOWED=YES \
             DEVELOPMENT_TEAM=9L6N2ZF26B \
