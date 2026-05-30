@@ -27,26 +27,31 @@ jobs:
         run: |
           mkdir -p .build
           rm -rf .build/DerivedData
+
           echo "=== Available simulators ==="
-          xcrun simctl list devices available
-          echo "=== Starting build ==="
+          xcrun simctl list devices available 2>&1 | head -30
+
+          echo "=== Building ==="
           xcodebuild \
             -project VitaMind.xcodeproj \
             -scheme VitaMind \
             -configuration Debug \
             -sdk iphonesimulator \
-            -destination 'platform=iOS Simulator,name=iPhone 16 Pro' \
-            -derivedDataPath .build/DerivedData \
             CODE_SIGNING_ALLOWED=NO \
-            build test 2>&1 | tee .build/build.log
+            build test \
+            2>&1 | tee .build/build.log
+
           RESULT=${PIPESTATUS[0]}
           echo "Exit code: $RESULT"
+
           if [ $RESULT -ne 0 ]; then
-            echo "=== Build failed, last 100 lines ==="
-            tail -100 .build/build.log
+            echo "=== Build failed, last 150 lines ==="
+            tail -150 .build/build.log
             exit 1
           fi
           echo "Build and test succeeded"
+        env:
+          CI: true
 
       - name: Upload Test Results
         if: failure()
