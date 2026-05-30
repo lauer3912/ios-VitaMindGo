@@ -116,22 +116,19 @@ jobs:
           echo "=== Build Archive ==="
           mkdir -p build
 
-          # CODE_SIGN_STYLE=Manual: explicitly specify identity + profile for each target
-          # Main App profile name
-          # Widget profile name
+          # CODE_SIGN_STYLE=Automatic lets Xcode auto-match profile by Bundle ID
+          # Certificate is already in keychain from import-codesign-certs step
           xcrun xcodebuild \
             -project VitaMind.xcodeproj \
             -scheme VitaMind \
             -configuration Release \
             -sdk iphoneos \
-            CODE_SIGN_IDENTITY="Apple Distribution" \
-            CODE_SIGN_STYLE=Manual \
+            CODE_SIGN_STYLE=Automatic \
             CODE_SIGNING_REQUIRED=YES \
             CODE_SIGNING_ALLOWED=YES \
             DEVELOPMENT_TEAM=9L6N2ZF26B \
-            PROVISIONING_PROFILE_SPECIFIER="iOS Team Store Provisioning Profile: com.ggsheng.VitaMind" \
-            OTHER_CODE_SIGN_FLAGS="--rictentative" \
-            -archivePath build/VitaMind.xcarchive \
+            -allowProvisioningUpdates \
+            -allowProvisioningDeviceValueSearch \
             archive 2>&1 | tee build/archive.log
           
           echo "Archive exit code: ${PIPESTATUS[0]}"
