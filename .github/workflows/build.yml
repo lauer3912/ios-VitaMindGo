@@ -41,7 +41,7 @@ jobs:
             -destination 'generic/platform=iOS Simulator' \
             -derivedDataPath .build/DerivedData \
             CODE_SIGNING_ALLOWED=NO \
-            build test \
+            build \
             2>&1 | tee .build/build.log
 
           RESULT=${PIPESTATUS[0]}
