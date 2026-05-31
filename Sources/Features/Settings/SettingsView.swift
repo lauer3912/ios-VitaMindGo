@@ -110,7 +110,7 @@ struct SettingsView: View {
                     NavigationLink {
                         AboutView()
                     } label: {
-                        Label("About VitaPocket", systemImage: "info.circle")
+                        Label("About VitaMindGo", systemImage: "info.circle")
                     }
                 } header: {
                     Text("App Info")
@@ -305,7 +305,7 @@ struct AboutView: View {
                         .font(.system(size: 80))
                         .foregroundColor(.blue)
                     
-                    Text("VitaPocket")
+                    Text("VitaMindGo")
                         .font(.title)
                         .fontWeight(.bold)
                     
