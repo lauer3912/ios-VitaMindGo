@@ -15,6 +15,9 @@ final class HealthKitService: ObservableObject {
     @Published var activeCalories: Double = 0
     @Published var distance: Double = 0
     
+    // Callback for background updates
+    var onBackgroundUpdate: (() -> Void)?
+    
     private let typesToRead: Set<HKObjectType> = [
         // Core health data - actually used in App
         HKObjectType.quantityType(forIdentifier: .stepCount)!,
@@ -50,7 +53,52 @@ final class HealthKitService: ObservableObject {
             self.isAuthorized = true
         }
         
+        // Setup background delivery for HealthKit updates
+        setupBackgroundDelivery()
+        
         await fetchAllData()
+    }
+    
+    // MARK: - Background Delivery
+    
+    private func setupBackgroundDelivery() {
+        for type in typesToRead {
+            guard let sampleType = type as? HKSampleType else { continue }
+            
+            healthStore.enableBackgroundDelivery(for: sampleType, frequency: .hourly) { success, error in
+                if let error = error {
+                    print("Background delivery setup failed for \(sampleType): \(error.localizedDescription)")
+                } else if success {
+                    print("Background delivery enabled for \(sampleType)")
+                }
+            }
+        }
+        
+        // Setup observer query to detect changes
+        setupObserverQuery()
+    }
+    
+    private func setupObserverQuery() {
+        // Observe step count changes
+        guard let stepType = HKQuantityType.quantityType(forIdentifier: .stepCount) else { return }
+        
+        let query = HKObserverQuery(sampleType: stepType, predicate: nil) { [weak self] _, completionHandler, error in
+            if let error = error {
+                print("HKObserverQuery error: \(error.localizedDescription)")
+                completionHandler()
+                return
+            }
+            
+            // Fetch updated data
+            Task { @MainActor in
+                await self?.fetchSteps()
+                self?.onBackgroundUpdate?()
+            }
+            
+            completionHandler()
+        }
+        
+        healthStore.execute(query)
     }
     
     @MainActor

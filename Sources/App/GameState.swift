@@ -48,6 +48,12 @@ final class GameState: ObservableObject {
             healthCards = savedHealthCards
             totalCardsCollected = healthCards.filter(\.isCollected).count
         }
+        
+        // Load and sync Widget data
+        if let widgetData = persistence.loadWidgetData() {
+            // Widget data is available, it will be updated when HealthKit data is fetched
+            print("Widget data loaded: steps=\(widgetData.steps), heartRate=\(widgetData.heartRate)")
+        }
     }
     
     private func setupDefaultDataIfNeeded() {
@@ -85,6 +91,14 @@ final class GameState: ObservableObject {
         // Save to persistence
         persistence.saveHealthCards(healthCards)
         totalCardsCollected = healthCards.count
+        
+        // Update Widget data for App Group sharing
+        persistence.saveWidgetData(
+            steps: Int(healthKit.todaySteps),
+            heartRate: Int(healthKit.todayHeartRate),
+            sleepHours: healthKit.todaySleepHours,
+            waterGlasses: Int(healthKit.todayWaterGlasses)
+        )
         
         // Update achievements based on health data
         if healthKit.todaySteps >= 10000 {

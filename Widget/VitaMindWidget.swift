@@ -8,6 +8,15 @@ struct VitaPocketWidgetEntry: TimelineEntry {
     let sleepHours: Double?
 }
 
+// Data structure matching PersistenceService.WidgetHealthData
+struct WidgetData: Codable {
+    let steps: Int
+    let heartRate: Int
+    let sleepHours: Double
+    let waterGlasses: Int
+    let lastUpdated: Date
+}
+
 struct Provider: TimelineProvider {
     func placeholder(in context: Context) -> VitaPocketWidgetEntry {
         VitaPocketWidgetEntry(date: Date(), heartRate: 72, steps: 8500, sleepHours: 7.5)
@@ -19,13 +28,23 @@ struct Provider: TimelineProvider {
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<VitaPocketWidgetEntry>) -> Void) {
-        // Note: Widget currently shows placeholder data.
-        // For production, implement App Group data sharing:
-        // 1. Change PersistenceService to use UserDefaults(suiteName: "group.com.ggsheng.VitaMind")
-        // 2. Write health data to shared UserDefaults from GameState
-        // 3. Widget reads from shared UserDefaults
-        let entry = VitaPocketWidgetEntry(date: Date(), heartRate: 72, steps: 8500, sleepHours: 7.5)
-        let timeline = Timeline(entries: [entry], policy: .atEnd)
+        // Read from App Group shared UserDefaults
+        let sharedDefaults = UserDefaults(suiteName: "group.com.ggsheng.VitaMind")
+        var heartRate: Int? = 72
+        var steps: Int? = 8500
+        var sleepHours: Double? = 7.5
+        
+        if let data = sharedDefaults?.data(forKey: "widget_health_data"),
+           let widgetData = try? JSONDecoder().decode(WidgetData.self, from: data) {
+            heartRate = widgetData.heartRate
+            steps = widgetData.steps
+            sleepHours = widgetData.sleepHours
+        }
+        
+        let entry = VitaPocketWidgetEntry(date: Date(), heartRate: heartRate, steps: steps, sleepHours: sleepHours)
+        // Refresh every 15 minutes
+        let nextUpdate = Calendar.current.date(byAdding: .minute, value: 15, to: Date())!
+        let timeline = Timeline(entries: [entry], policy: .after(nextUpdate))
         completion(timeline)
     }
 }

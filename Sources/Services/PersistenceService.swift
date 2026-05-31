@@ -3,6 +3,14 @@ import Foundation
 final class PersistenceService: ObservableObject {
     static let shared = PersistenceService()
     
+    // App Group identifier for Widget data sharing
+    private let appGroupID = "group.com.ggsheng.VitaMind"
+    
+    // Use App Group UserDefaults for Widget data sharing
+    private lazy var sharedDefaults: UserDefaults? = {
+        UserDefaults(suiteName: appGroupID)
+    }()
+    
     private let defaults = UserDefaults.standard
     private let encoder = JSONEncoder()
     private let decoder = JSONDecoder()
@@ -134,6 +142,45 @@ final class PersistenceService: ObservableObject {
     func clearAllData() {
         let keys = [Keys.userLevel, Keys.healthCards, Keys.habitCards, Keys.achievements, Keys.lastPullDate, Keys.totalXPEarned, Keys.pullStreak]
         keys.forEach { defaults.removeObject(forKey: $0) }
+    }
+    
+    // MARK: - Widget Data Sharing (App Group)
+    
+    struct WidgetHealthData: Codable {
+        let steps: Int
+        let heartRate: Int
+        let sleepHours: Double
+        let waterGlasses: Int
+        let lastUpdated: Date
+    }
+    
+    func saveWidgetData(steps: Int, heartRate: Int, sleepHours: Double, waterGlasses: Int) {
+        let data = WidgetHealthData(
+            steps: steps,
+            heartRate: heartRate,
+            sleepHours: sleepHours,
+            waterGlasses: waterGlasses,
+            lastUpdated: Date()
+        )
+        
+        if let encoded = try? encoder.encode(data) {
+            // Save to both standard UserDefaults (for main app) and shared UserDefaults (for Widget)
+            defaults.set(encoded, forKey: "widget_health_data")
+            sharedDefaults?.set(encoded, forKey: "widget_health_data")
+        }
+    }
+    
+    func loadWidgetData() -> WidgetHealthData? {
+        // Try shared UserDefaults first (for Widget), fallback to standard
+        if let data = sharedDefaults?.data(forKey: "widget_health_data"),
+           let widgetData = try? decoder.decode(WidgetHealthData.self, from: data) {
+            return widgetData
+        }
+        if let data = defaults.data(forKey: "widget_health_data"),
+           let widgetData = try? decoder.decode(WidgetHealthData.self, from: data) {
+            return widgetData
+        }
+        return nil
     }
     
     // MARK: - Defaults
