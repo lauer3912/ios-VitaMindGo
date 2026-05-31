@@ -1,4 +1,4 @@
-name: VitaMind
+name: VitaPocket
 options:
   bundleIdPrefix: com.ggsheng
   deploymentTarget:
@@ -17,9 +17,11 @@ settings:
     CODE_SIGN_STYLE: Automatic
     ENABLE_USER_SCRIPT_SANDBOXING: NO
     IPHONEOS_DEPLOYMENT_TARGET: "17.0"
+    ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+    ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
 
 targets:
-  VitaMind:
+  VitaPocket:
     type: application
     platform: iOS
     sources:
@@ -27,11 +29,12 @@ targets:
         type: group
         excludes:
           - "**/.DS_Store"
+          - "**/DesignSpec/**"
     resources:
       - path: Sources/Resources/Assets.xcassets
       - path: Sources/LaunchScreen.storyboard
     entitlements:
-      path: Sources/VitaMind.entitlements
+      path: Sources/VitaPocket.entitlements
       properties:
         com.apple.developer.healthkit: true
         com.apple.developer.healthkit.access: []
@@ -48,21 +51,21 @@ targets:
         GENERATE_INFOPLIST_FILE: NO
         TARGETED_DEVICE_FAMILY: "1,2"
     dependencies:
-      - target: VitaMindWidget
+      - target: VitaPocketWidget
         embed: true
         codeSign: true
         buildPhase:
           copyFiles:
             destination: plugins
 
-  VitaMindWidget:
+  VitaPocketWidget:
     type: app-extension
     platform: iOS
     sources:
       - path: Widget
         type: group
     entitlements:
-      path: Widget/VitaMindWidget.entitlements
+      path: Widget/VitaPocketWidget.entitlements
       properties:
         com.apple.security.application-groups:
           - group.com.ggsheng.VitaMind
@@ -74,62 +77,29 @@ targets:
         LD_RUNPATH_SEARCH_PATHS: "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks"
         SKIP_INSTALL: YES
         GENERATE_INFOPLIST_FILE: NO
-        CODE_SIGN_ENTITLEMENTS: Widget/VitaMindWidget.entitlements
+        CODE_SIGN_ENTITLEMENTS: Widget/VitaPocketWidget.entitlements
         DEVELOPMENT_TEAM: 9L6N2ZF26B
 
-  VitaMindTests:
+  VitaPocketTests:
     type: bundle.unit-test
     platform: iOS
     sources:
       - path: Tests
-        type: group
-        excludes:
-          - "**/*.storyboard"
+    dependencies:
+      - target: VitaPocket
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.ggsheng.VitaMind.tests
+        PRODUCT_BUNDLE_IDENTIFIER: com.ggsheng.VitaMindTests
         GENERATE_INFOPLIST_FILE: YES
-        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/VitaMind.app/VitaMind"
-        BUNDLE_LOADER: "$(TEST_HOST)"
-        CODE_SIGN_ENTITLEMENTS: ""
-        DEVELOPMENT_TEAM: 9L6N2ZF26B
-    dependencies:
-      - target: VitaMind
 
-  VitaMindUITests:
+  VitaPocketUITests:
     type: bundle.ui-testing
     platform: iOS
     sources:
       - path: UITests
-        type: group
-        excludes:
-          - "**/.DS_Store"
+    dependencies:
+      - target: VitaPocket
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.ggsheng.VitaMind.uitests
+        PRODUCT_BUNDLE_IDENTIFIER: com.ggsheng.VitaMindUITests
         GENERATE_INFOPLIST_FILE: YES
-        TEST_TARGET: "$(BUILT_PRODUCTS_DIR)/VitaMind.app/VitaMind"
-        CODE_SIGN_ENTITLEMENTS: ""
-        DEVELOPMENT_TEAM: 9L6N2ZF26B
-    dependencies:
-      - target: VitaMind
-
-schemes:
-  VitaMind:
-    build:
-      targets:
-        VitaMind: all
-        VitaMindWidget: all
-    run:
-      config: Debug
-    test:
-      config: Debug
-      targets:
-        - VitaMindTests
-        - VitaMindUITests
-    profile:
-      config: Release
-    analyze:
-      config: Debug
-    archive:
-      config: Release

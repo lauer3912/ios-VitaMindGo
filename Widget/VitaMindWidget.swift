@@ -1,7 +1,7 @@
 import WidgetKit
 import SwiftUI
 
-struct VitaMindWidgetEntry: TimelineEntry {
+struct VitaPocketWidgetEntry: TimelineEntry {
     let date: Date
     let heartRate: Int?
     let steps: Int?
@@ -9,23 +9,23 @@ struct VitaMindWidgetEntry: TimelineEntry {
 }
 
 struct Provider: TimelineProvider {
-    func placeholder(in context: Context) -> VitaMindWidgetEntry {
-        VitaMindWidgetEntry(date: Date(), heartRate: 72, steps: 8500, sleepHours: 7.5)
+    func placeholder(in context: Context) -> VitaPocketWidgetEntry {
+        VitaPocketWidgetEntry(date: Date(), heartRate: 72, steps: 8500, sleepHours: 7.5)
     }
 
-    func getSnapshot(in context: Context, completion: @escaping (VitaMindWidgetEntry) -> Void) {
-        let entry = VitaMindWidgetEntry(date: Date(), heartRate: 72, steps: 8500, sleepHours: 7.5)
+    func getSnapshot(in context: Context, completion: @escaping (VitaPocketWidgetEntry) -> Void) {
+        let entry = VitaPocketWidgetEntry(date: Date(), heartRate: 72, steps: 8500, sleepHours: 7.5)
         completion(entry)
     }
 
-    func getTimeline(in context: Context, completion: @escaping (Timeline<VitaMindWidgetEntry>) -> Void) {
-        let entry = VitaMindWidgetEntry(date: Date(), heartRate: nil, steps: nil, sleepHours: nil)
+    func getTimeline(in context: Context, completion: @escaping (Timeline<VitaPocketWidgetEntry>) -> Void) {
+        let entry = VitaPocketWidgetEntry(date: Date(), heartRate: nil, steps: nil, sleepHours: nil)
         let timeline = Timeline(entries: [entry], policy: .atEnd)
         completion(timeline)
     }
 }
 
-struct VitaMindWidgetEntryView: View {
+struct VitaPocketWidgetEntryView: View {
     var entry: Provider.Entry
     @Environment(\.widgetFamily) var family
 
@@ -42,14 +42,14 @@ struct VitaMindWidgetEntryView: View {
 }
 
 struct SmallWidgetView: View {
-    var entry: VitaMindWidgetEntry
+    var entry: VitaPocketWidgetEntry
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
                 Image(systemName: "heart.fill")
                     .foregroundColor(.red)
-                Text("VitaMind")
+                Text("VitaPocket")
                     .font(.caption)
                     .fontWeight(.semibold)
             }
@@ -75,7 +75,7 @@ struct SmallWidgetView: View {
 }
 
 struct MediumWidgetView: View {
-    var entry: VitaMindWidgetEntry
+    var entry: VitaPocketWidgetEntry
 
     var body: some View {
         HStack(spacing: 20) {
@@ -145,14 +145,14 @@ extension View {
 }
 
 @main
-struct VitaMindWidget: Widget {
-    let kind: String = "VitaMindWidget"
+struct VitaPocketWidget: Widget {
+    let kind: String = "VitaPocketWidget"
 
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: Provider()) { entry in
-            VitaMindWidgetEntryView(entry: entry)
+            VitaPocketWidgetEntryView(entry: entry)
         }
-        .configurationDisplayName("VitaMind")
+        .configurationDisplayName("VitaPocket")
         .description("View your health metrics at a glance.")
         .supportedFamilies([.systemSmall, .systemMedium])
     }

@@ -1,6 +1,6 @@
 import XCTest
 
-final class VitaMindUnitTests: XCTestCase {
+final class VitaPocketUnitTests: XCTestCase {
 
     // MARK: - HealthData Tests
 
