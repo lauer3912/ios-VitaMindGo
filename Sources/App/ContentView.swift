@@ -46,6 +46,8 @@ struct ContentView: View {
                     .accessibilityIdentifier("tab_button_3")
             }
             .tint(VitaTheme.Colors.primary)
+            .tabViewStyle(.automatic)
+            .ignoresSafeArea(edges: .bottom)
             
             // Card pull animation overlay
             if gameState.showCardAnimation, let card = gameState.lastPulledCard {

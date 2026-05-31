@@ -3,22 +3,21 @@ import XCTest
 // MARK: - Shared Tab Helper
 extension XCTestCase {
     func tapTabButton(in app: XCUIApplication, label: String) {
-        // SwiftUI TabView on iPad: swipe on content area to switch tabs
+        // SwiftUI TabView on iPad: use swipe to switch tabs
+        // iPad TabView in page style shows one tab at a time
         let indexMap = ["Pocket": 0, "Habits": 1, "Coach": 2, "Collection": 3]
         guard let targetIndex = indexMap[label] else { return }
         
         let window = app.windows.firstMatch
-        let frame = window.frame
         
-        // Swipe left on center of content to advance tabs
-        // Each swipe goes to next tab
+        // Swipe left to go forward one tab
         for _ in 0..<targetIndex {
             window.swipeLeft()
-            Thread.sleep(forTimeInterval: 1.5)
+            Thread.sleep(forTimeInterval: 3.0)  // Wait for tab animation
         }
         
-        Thread.sleep(forTimeInterval: 2.0)
-        print("✓ Switched to tab: \(label) via swipe (\(targetIndex) swipes)")
+        Thread.sleep(forTimeInterval: 4.0)  // Extra time for UI to settle
+        print("✓ Switched to tab: \(label) via \(targetIndex) swipe(s)")
     }
     
     func captureScreenshot(in app: XCUIApplication, name: String) {
