@@ -142,12 +142,10 @@ final class VitaPocketWatchTests: XCTestCase {
     private func capture(_ name: String) {
         let path = "/tmp/\(name).png"
         // Watch apps have different UI hierarchy
-        if let window = app.windows.firstMatch {
-            let image = window.screenshot()
-            let data = image.pngRepresentation
-            try? data.write(to: URL(fileURLWithPath: path))
-            print("📸 Captured: \(path)")
-        }
+        let image = app.windows.firstMatch.screenshot()
+        let data = image.pngRepresentation
+        try? data.write(to: URL(fileURLWithPath: path))
+        print("📸 Captured: \(path)")
     }
 
     func testMainView() {
