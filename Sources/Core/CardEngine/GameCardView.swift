@@ -241,7 +241,7 @@ struct CardBackView: View {
                     .font(.system(size: 50))
                     .foregroundColor(VitaTheme.Colors.primary)
                 
-                Text("VitaMindGo")
+                Text("VitaPocket")
                     .font(VitaTheme.Fonts.title)
                     .foregroundColor(.white)
             }

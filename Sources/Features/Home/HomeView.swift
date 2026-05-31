@@ -27,7 +27,7 @@ struct HomeView: View {
                 .padding(.vertical)
             }
             .background(VitaTheme.Colors.background)
-            .navigationTitle("VitaMindGo")
+            .navigationTitle("VitaPocket")
             .toolbarColorScheme(.dark, for: .navigationBar)
         }
         .accessibilityIdentifier("home_view")

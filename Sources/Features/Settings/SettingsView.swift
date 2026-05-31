@@ -54,7 +54,7 @@ struct SettingsView: View {
                             Label("API Key", systemImage: "key")
                             Spacer()
                             if apiKey.isEmpty {
-                                Text("未设置")
+                                Text("Not Set")
                                     .foregroundColor(.secondary)
                             } else {
                                 Text(String(repeating: "•", count: 12))
@@ -64,9 +64,9 @@ struct SettingsView: View {
                     }
                     .foregroundColor(.primary)
                 } header: {
-                    Text("AI 助手配置")
+                    Text("AI Assistant Configuration")
                 } footer: {
-                    Text("选择您的 AI 服务提供商并输入 API Key")
+                    Text("Select your AI service provider and enter API Key")
                 }
                 
                 // Test Connection Section
@@ -75,26 +75,26 @@ struct SettingsView: View {
                         testAIConnection()
                     } label: {
                         HStack {
-                            Label("测试连接", systemImage: "wifi")
+                            Label("Test Connection", systemImage: "wifi")
                             Spacer()
                             if isTesting {
                                 ProgressView()
                             } else if let result = testResult {
                                 Text(result)
-                                    .foregroundColor(result == "成功" ? .green : .red)
+                                    .foregroundColor(result == "Success" ? .green : .red)
                             }
                         }
                     }
                     .foregroundColor(.primary)
                     .disabled(isTesting || apiKey.isEmpty)
                 } header: {
-                    Text("连接测试")
+                    Text("Connection Test")
                 }
                 
                 // App Info Section
                 Section {
                     HStack {
-                        Text("App 版本")
+                        Text("App Version")
                         Spacer()
                         Text("3.0.0")
                             .foregroundColor(.secondary)
@@ -110,13 +110,13 @@ struct SettingsView: View {
                     NavigationLink {
                         AboutView()
                     } label: {
-                        Label("关于 VitaMindGo", systemImage: "info.circle")
+                        Label("About VitaPocket", systemImage: "info.circle")
                     }
                 } header: {
-                    Text("App 信息")
+                    Text("App Info")
                 }
             }
-            .navigationTitle("设置")
+            .navigationTitle("Settings")
             .sheet(isPresented: $showingProviderPicker) {
                 ProviderPickerView(selectedProvider: $selectedProvider)
             }
@@ -154,12 +154,12 @@ struct SettingsView: View {
             do {
                 let response = try await aiService.sendMessage("Hello", history: [])
                 await MainActor.run {
-                    testResult = "成功"
+                    testResult = "Success"
                     isTesting = false
                 }
             } catch {
                 await MainActor.run {
-                    testResult = "失败: \(error.localizedDescription)"
+                    testResult = "Failed: \(error.localizedDescription)"
                     isTesting = false
                 }
             }
@@ -187,7 +187,7 @@ struct ProviderPickerView: View {
                         VStack(alignment: .leading) {
                             Text(provider.displayName)
                                 .foregroundColor(.primary)
-                            Text("\(provider.supportedModels.count) 个模型可选")
+                            Text("\(provider.supportedModels.count) models available")
                                 .font(.caption)
                                 .foregroundColor(.secondary)
                         }
@@ -199,11 +199,11 @@ struct ProviderPickerView: View {
                     }
                 }
             }
-            .navigationTitle("选择 AI 提供商")
+            .navigationTitle("Select AI Provider")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("取消") { dismiss() }
+                    Button("Cancel") { dismiss() }
                 }
             }
         }
@@ -236,11 +236,11 @@ struct ModelPickerView: View {
                     }
                 }
             }
-            .navigationTitle("选择模型")
+            .navigationTitle("Select Model")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("取消") { dismiss() }
+                    Button("Cancel") { dismiss() }
                 }
             }
         }
@@ -258,17 +258,17 @@ struct ApiKeyInputView: View {
         NavigationStack {
             Form {
                 Section {
-                    SecureField("输入 API Key", text: $inputKey)
+                    SecureField("Enter API Key", text: $inputKey)
                         .autocapitalization(.none)
                         .autocorrectionDisabled()
                 } header: {
                     Text("API Key")
                 } footer: {
-                    Text("您的 API Key 将安全保存在本地设备上")
+                    Text("Your API Key will be securely stored on your device")
                 }
                 
                 Section {
-                    Button("保存") {
+                    Button("Save") {
                         apiKey = inputKey
                         AIService.shared.configure(
                             provider: AIService.shared.currentProvider,
@@ -280,11 +280,11 @@ struct ApiKeyInputView: View {
                     .disabled(inputKey.isEmpty)
                 }
             }
-            .navigationTitle("输入 API Key")
+            .navigationTitle("Enter API Key")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("取消") { dismiss() }
+                    Button("Cancel") { dismiss() }
                 }
             }
             .onAppear {
@@ -305,14 +305,14 @@ struct AboutView: View {
                         .font(.system(size: 80))
                         .foregroundColor(.blue)
                     
-                    Text("VitaMindGo")
+                    Text("VitaPocket")
                         .font(.title)
                         .fontWeight(.bold)
                     
-                    Text("版本 3.0.0")
+                    Text("Version 3.0.0")
                         .foregroundColor(.secondary)
                     
-                    Text("您的 AI 健康助理")
+                    Text("Your AI Health Companion")
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                 }
@@ -321,18 +321,18 @@ struct AboutView: View {
             }
             
             Section {
-                Link(destination: URL(string: "https://www.apple.com/privacy/")!) {
-                    Label("隐私政策", systemImage: "hand.raised")
+                Link(destination: URL(string: "https://techidaily.com/vitamind-privacy")!) {
+                    Label("Privacy Policy", systemImage: "hand.raised")
                 }
                 
-                Link(destination: URL(string: "https://www.apple.com/legal/terms/")!) {
-                    Label("服务条款", systemImage: "doc.text")
+                Link(destination: URL(string: "https://techidaily.com/vitamind-terms")!) {
+                    Label("Terms of Service", systemImage: "doc.text")
                 }
             } header: {
-                Text("法律信息")
+                Text("Legal")
             }
         }
-        .navigationTitle("关于")
+        .navigationTitle("About")
         .navigationBarTitleDisplayMode(.inline)
     }
 }
