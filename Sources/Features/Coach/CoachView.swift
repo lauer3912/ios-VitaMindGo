@@ -78,12 +78,22 @@ struct CoachView: View {
                 )
                 messages.append(aiMsg)
             } catch {
-                let aiMsg = CoachMessage(
-                    text: "抱歉，AI 服务暂时不可用: \(error.localizedDescription)",
-                    isUser: false,
-                    timestamp: Date()
-                )
-                messages.append(aiMsg)
+                // Check if API key is not configured
+                if !AIService.shared.isConfigured {
+                    let aiMsg = CoachMessage(
+                        text: "⚠️ AI 服务未配置，请在【Settings】Tab 中设置 API Key 后重试。",
+                        isUser: false,
+                        timestamp: Date()
+                    )
+                    messages.append(aiMsg)
+                } else {
+                    let aiMsg = CoachMessage(
+                        text: "抱歉，AI 服务暂时不可用: \(error.localizedDescription)",
+                        isUser: false,
+                        timestamp: Date()
+                    )
+                    messages.append(aiMsg)
+                }
             }
         }
     }
