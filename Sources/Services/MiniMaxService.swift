@@ -8,7 +8,7 @@ final class MiniMaxService: ObservableObject {
     
     private let apiKey: String
     private let baseURL = "https://api.minimax.chat/v1"
-    private let modelName = "MiniMax-M2"
+    private let modelName = "MiniMax-M2.7"
     
     private init() {
         // 从环境变量或配置读取 API Key

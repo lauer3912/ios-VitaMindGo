@@ -5,7 +5,7 @@ enum VitaTheme {
     // MARK: - Colors
     enum Colors {
         static let primary = Color(hex: "6B4EFF")
-        static let secondary = Color(hex: "00D9A")
+        static let secondary = Color(hex: "00D9A0")  // Teal accent color
         static let accent = Color(hex: "FFD700")
         static let background = Color(hex: "0D0B1E")
         static let surface = Color(hex: "1A1730")

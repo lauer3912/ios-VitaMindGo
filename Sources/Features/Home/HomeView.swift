@@ -21,7 +21,7 @@ struct HomeView: View {
                         .accessibilityIdentifier("home_health_cards")
                     
                     // Pull card button
-                    PullCardButton()
+                    PullCardButton(gameState: gameState)
                         .accessibilityIdentifier("home_pull_button")
                 }
                 .padding(.vertical)
@@ -183,6 +183,7 @@ struct HealthCardDetailView: View {
 
 // MARK: - Pull Card Button
 struct PullCardButton: View {
+    @ObservedObject var gameState: GameState
     @State private var isAnimating = false
     @State private var showConfetti = false
     
@@ -193,8 +194,12 @@ struct PullCardButton: View {
                 isAnimating = true
             }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                isAnimating = false
-                showConfetti = true
+                self.isAnimating = false
+                self.showConfetti = true
+                // Pull a new daily card
+                if let newCard = self.gameState.pullDailyCard() {
+                    print("Pulled new card: \(newCard.name)")
+                }
             }
         }) {
             HStack(spacing: 12) {

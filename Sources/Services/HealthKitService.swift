@@ -16,21 +16,21 @@ final class HealthKitService: ObservableObject {
     @Published var distance: Double = 0
     
     private let typesToRead: Set<HKObjectType> = [
+        // Core health data - actually used in App
         HKObjectType.quantityType(forIdentifier: .stepCount)!,
         HKObjectType.quantityType(forIdentifier: .heartRate)!,
         HKObjectType.categoryType(forIdentifier: .sleepAnalysis)!,
         HKObjectType.quantityType(forIdentifier: .dietaryWater)!,
         HKObjectType.categoryType(forIdentifier: .mindfulSession)!,
+        // Additional fitness data
         HKObjectType.quantityType(forIdentifier: .activeEnergyBurned)!,
         HKObjectType.quantityType(forIdentifier: .distanceWalkingRunning)!,
         HKObjectType.quantityType(forIdentifier: .bodyMass)!,
-        HKObjectType.quantityType(forIdentifier: .leanBodyMass)!,
-        HKObjectType.quantityType(forIdentifier: .bloodGlucose)!,
-        HKObjectType.quantityType(forIdentifier: .bloodPressureSystolic)!,
-        HKObjectType.quantityType(forIdentifier: .bloodPressureDiastolic)!,
-        HKObjectType.quantityType(forIdentifier: .oxygenSaturation)!,
-        HKObjectType.quantityType(forIdentifier: .respiratoryRate)!,
-        HKObjectType.quantityType(forIdentifier: .bodyTemperature)!,
+    ]
+    
+    // App does not currently write any HealthKit data
+    private let typesToWrite: Set<HKSampleType> = [
+        // Currently no write operations implemented
     ]
     
     private init() {}
@@ -44,7 +44,7 @@ final class HealthKitService: ObservableObject {
             throw HealthKitError.notAvailable
         }
         
-        try await healthStore.requestAuthorization(toShare: [], read: typesToRead)
+        try await healthStore.requestAuthorization(toShare: typesToWrite, read: typesToRead)
         
         await MainActor.run {
             self.isAuthorized = true

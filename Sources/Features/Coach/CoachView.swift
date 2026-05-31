@@ -60,18 +60,20 @@ struct CoachView: View {
         
         let userMsg = CoachMessage(text: userMessage, isUser: true, timestamp: Date())
         messages.append(userMsg)
+        let currentMessage = userMessage
         userMessage = ""
         isTyping = true
         
-        // Simulate AI response
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+        // Call real AI Coach API via gameState
+        Task { @MainActor in
             isTyping = false
-            let response = CoachMessage(
-                text: "That's a great question! Let me help you with your wellness journey. Remember, consistency is key!",
+            let response = await gameState.sendMessageToCoach(currentMessage)
+            let aiMsg = CoachMessage(
+                text: response,
                 isUser: false,
                 timestamp: Date()
             )
-            messages.append(response)
+            messages.append(aiMsg)
         }
     }
 }

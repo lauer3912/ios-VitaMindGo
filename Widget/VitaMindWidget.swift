@@ -19,7 +19,12 @@ struct Provider: TimelineProvider {
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<VitaPocketWidgetEntry>) -> Void) {
-        let entry = VitaPocketWidgetEntry(date: Date(), heartRate: nil, steps: nil, sleepHours: nil)
+        // Note: Widget currently shows placeholder data.
+        // For production, implement App Group data sharing:
+        // 1. Change PersistenceService to use UserDefaults(suiteName: "group.com.ggsheng.VitaMind")
+        // 2. Write health data to shared UserDefaults from GameState
+        // 3. Widget reads from shared UserDefaults
+        let entry = VitaPocketWidgetEntry(date: Date(), heartRate: 72, steps: 8500, sleepHours: 7.5)
         let timeline = Timeline(entries: [entry], policy: .atEnd)
         completion(timeline)
     }
