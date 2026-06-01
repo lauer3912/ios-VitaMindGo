@@ -88,7 +88,7 @@ struct CoachView: View {
                     messages.append(aiMsg)
                 } else {
                     let aiMsg = CoachMessage(
-                        text: "抱歉，AI 服务暂时不可用: \(error.localizedDescription)",
+                        text: "Sorry, AI service is temporarily unavailable: \(error.localizedDescription)",
                         isUser: false,
                         timestamp: Date()
                     )

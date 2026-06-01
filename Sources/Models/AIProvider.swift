@@ -197,8 +197,10 @@ final class AIService: ObservableObject {
         var messages = history.map { ChatMessage(role: $0.role, content: $0.content) }
         messages.append(ChatMessage(role: "user", content: text))
         
+        // MiniMax API expects model name without provider prefix (e.g. "minimax/MiniMax-M2.7" -> "MiniMax-M2.7")
+        let modelName = selectedModel.replacingOccurrences(of: "minimax/", with: "")
         let requestBody = MiniMaxRequest(
-            model: selectedModel,
+            model: modelName,
             messages: messages,
             temperature: 0.7,
             max_tokens: 500
