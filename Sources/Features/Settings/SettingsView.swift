@@ -61,7 +61,7 @@ struct SettingsView: View {
                                     }
                                 }
                                 Spacer()
-                                if isProviderActive(provider) {
+                                if isProviderActive(provider) && provider != .minimax {
                                     Text("Active")
                                         .font(.caption)
                                         .foregroundColor(.blue)
