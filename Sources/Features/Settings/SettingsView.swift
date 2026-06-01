@@ -324,7 +324,8 @@ struct CustomProviderConfigView: View {
                     .disabled(baseURL.isEmpty || apiKey.isEmpty)
                 }
 
-                if isActive {
+                // Only show switch button if test passed
+                if isActive || testResult == "Success" {
                     Button("Switch to This Provider") {
                         AIService.shared.switchProvider(provider)
                         dismiss()
