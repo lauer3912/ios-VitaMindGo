@@ -245,7 +245,7 @@ final class AIService: ObservableObject {
         )
         
         return try await makeJSONRequest(
-            endpoint: AIProviderType.minimaxCn.baseURL,
+            endpoint: AIProviderType.minimaxCn.baseURL + "/chat/completions",
             method: "POST",
             headers: ["Content-Type": "application/json", "Authorization": "Bearer \(apiKey)"],
             body: requestBody,
