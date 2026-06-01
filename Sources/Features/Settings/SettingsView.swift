@@ -28,6 +28,8 @@ struct SettingsView: View {
     @EnvironmentObject var gameState: GameState
     @StateObject private var aiService = AIService.shared
 
+    @State private var switchError: String? = nil
+
     var body: some View {
         NavigationStack {
             List {
@@ -106,7 +108,7 @@ struct SettingsView: View {
                                     Task {
                                         let success = await AIService.shared.testAndSwitchProvider(provider)
                                         if !success {
-                                            // Test failed — silently do nothing; error already shown in CustomProviderConfigView flow
+                                            switchError = "Test failed. Please configure and test this provider first."
                                         }
                                     }
                                 } label: {
@@ -117,6 +119,12 @@ struct SettingsView: View {
                                         .padding(.vertical, 4)
                                         .background(Color.blue)
                                         .cornerRadius(12)
+                                }
+                                if let err = switchError, !err.isEmpty {
+                                    Text(err)
+                                        .font(.caption2)
+                                        .foregroundColor(.red)
+                                        .lineLimit(1)
                                 }
                             }
                             .padding(.vertical, 4)
@@ -216,6 +224,7 @@ struct CustomProviderConfigView: View {
     @State private var isTesting: Bool = false
     @State private var testResult: String?
     @State private var isActive: Bool = false
+    @State private var switchError: String? = nil
 
     var body: some View {
         Form {
