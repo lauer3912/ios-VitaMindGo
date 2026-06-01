@@ -88,8 +88,8 @@ struct ChatMessage: Codable, Identifiable {
 final class AIService: ObservableObject {
     static let shared = AIService()
     
-    @Published var currentProvider: AIProviderType = .minimax
-    @Published var selectedModel: String = "MiniMax-M2.7"
+    @Published var currentProvider: AIProviderType = .openai
+    @Published var selectedModel: String = "gpt-4o"
     @Published var apiKey: String = ""
     @Published var isConfigured: Bool = false
     
