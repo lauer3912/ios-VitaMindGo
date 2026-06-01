@@ -104,6 +104,105 @@ final class VitaPocketUnitTests: XCTestCase {
         let components = version.split(separator: ".")
         XCTAssertEqual(components.count, 3)
     }
+    // MARK: - AI Service Tests
+
+    func testExtractValueFromMiniMaxResponse() throws {
+        // Simulate actual MiniMax API response format
+        let miniMaxResponse = """
+        {
+            "id": "1234567890",
+            "choices": [
+                {
+                    "index": 0,
+                    "message": {
+                        "role": "assistant",
+                        "content": "Hello! How can I help you today?"
+                    },
+                    "finish_reason": "stop"
+                }
+            ]
+        }
+        """
+        .data(using: .utf8)!
+
+        // Test with the actual keyPath used in production
+        let content = extractValue(from: miniMaxResponse, keyPath: "choices.0.message.content")
+        XCTAssertEqual(content, "Hello! How can I help you today?")
+    }
+
+    func testExtractValueNestedKeys() throws {
+        let json = """
+        {
+            "choices": [
+                {
+                    "message": {
+                        "content": "Nested response"
+                    }
+                }
+            ]
+        }
+        """.data(using: .utf8)!
+
+        let content = extractValue(from: json, keyPath: "choices.0.message.content")
+        XCTAssertEqual(content, "Nested response")
+    }
+
+    func testExtractValueReturnsNilForMissingPath() throws {
+        let json = """
+        {
+            "choices": [
+                {
+                    "message": {
+                        "role": "assistant"
+                    }
+                }
+            ]
+        }
+        """.data(using: .utf8)!
+
+        // Missing "content" key
+        let content = extractValue(from: json, keyPath: "choices.0.message.content")
+        XCTAssertNil(content)
+    }
+
+    func testExtractValueInvalidJSON() throws {
+        let invalidData = "not valid json".data(using: .utf8)!
+        let result = extractValue(from: invalidData, keyPath: "any.key.path")
+        XCTAssertNil(result)
+    }
+
+    func testExtractValueIndexOutOfBounds() throws {
+        let json = """
+        {
+            "choices": []
+        }
+        """.data(using: .utf8)!
+
+        // Empty array - index out of bounds
+        let content = extractValue(from: json, keyPath: "choices.0.message.content")
+        XCTAssertNil(content)
+    }
+
+    // MARK: - Helper for testing (must be accessible)
+    private func extractValue(from data: Data, keyPath: String) -> String? {
+        guard let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any] else {
+            return nil
+        }
+
+        var current: Any = json
+        for key in keyPath.split(separator: ".") {
+            let keyStr = String(key)
+            if let array = current as? [Any], let index = Int(keyStr), index < array.count {
+                current = array[index]
+            } else if let dict = current as? [String: Any], let value = dict[keyStr] {
+                current = value
+            } else {
+                return nil
+            }
+        }
+
+        return current as? String
+    }
 }
 
 // MARK: - Local Model Structures

@@ -450,11 +450,15 @@ final class AIService: ObservableObject {
         
         var current: Any = json
         for key in keyPath.split(separator: ".") {
-            guard let dict = current as? [String: Any],
-                  let value = dict[String(key)] else {
+            let keyStr = String(key)
+            // Handle array index (e.g., "choices.0.message")
+            if let array = current as? [Any], let index = Int(keyStr), index < array.count {
+                current = array[index]
+            } else if let dict = current as? [String: Any], let value = dict[keyStr] {
+                current = value
+            } else {
                 return nil
             }
-            current = value
         }
         
         return current as? String
