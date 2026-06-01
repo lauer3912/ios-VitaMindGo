@@ -2,23 +2,54 @@ import SwiftUI
 
 struct AppIconView: View {
     var body: some View {
-        // Use the system icon as fallback since AppIcon from Assets.xcassets
-        // may not load in all contexts. The actual app icon is defined
-        // in the asset catalog and will appear on the device/home screen.
-        ZStack {
-            RoundedRectangle(cornerRadius: 20)
-                .fill(LinearGradient(
-                    colors: [Color.blue, Color.purple],
-                    startPoint: .topLeading,
-                    endPoint: .bottomTrailing
-                ))
-                .frame(width: 100, height: 100)
-            
-            Image(systemName: "heart.fill")
-                .font(.system(size: 50))
-                .foregroundColor(.white)
+        // Load AppIcon from the app bundle's asset catalog
+        // The app icon image is stored as AppIcon.appiconset/Icon-1024@1x.png (1024x1024)
+        // Use direct file path so it works in both simulator and device
+        if let uiImage = loadAppIconImage() {
+            Image(uiImage: uiImage)
+                .resizable()
+                .scaledToFit()
+                .clipShape(RoundedRectangle(cornerRadius: 20))
+        } else {
+            // Fallback to gradient placeholder
+            ZStack {
+                RoundedRectangle(cornerRadius: 20)
+                    .fill(LinearGradient(
+                        colors: [Color.blue, Color.purple],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    ))
+                    .frame(width: 100, height: 100)
+                Image(systemName: "heart.fill")
+                    .font(.system(size: 50))
+                    .foregroundColor(.white)
+            }
         }
-        .accessibilityLabel("VitaMindGo App Icon")
+    }
+
+    private func loadAppIconImage() -> UIImage? {
+        // Try the asset catalog first
+        if let img = UIImage(named: "AppIcon") {
+            return img
+        }
+        // Try loading the PNG file directly from bundle
+        if let bundlePath = Bundle.main.resourcePath {
+            let iconPath = (bundlePath as NSString).appendingPathComponent("AppIcon.appiconset/Icon-1024@1x.png")
+            if let img = UIImage(contentsOfFile: iconPath) {
+                return img
+            }
+        }
+        // Try alternate paths
+        let possiblePaths = [
+            Bundle.main.path(forResource: "Icon-1024@1x", ofType: "png", inDirectory: "AppIcon.appiconset"),
+            Bundle.main.path(forResource: "Icon-1024@1x", ofType: "png")
+        ]
+        for path in possiblePaths {
+            if let p = path, let img = UIImage(contentsOfFile: p) {
+                return img
+            }
+        }
+        return nil
     }
 }
 
