@@ -9,6 +9,10 @@ enum AIProviderType: String, CaseIterable, Codable, Identifiable {
     case google = "Google"
     case deepseek = "DeepSeek"
     case xai = "xAI"
+    case moonshot = "Moonshot"
+    case alibaba = "Alibaba"
+    case zhipu = "Zhipu AI"
+    case stepfun = "StepFun"
     
     var id: String { rawValue }
     
@@ -22,6 +26,10 @@ enum AIProviderType: String, CaseIterable, Codable, Identifiable {
         case .google: return "g.circle"
         case .deepseek: return "magnifyingglass"
         case .xai: return "x.circle"
+        case .moonshot: return "moon.fill"
+        case .alibaba: return "building.2.fill"
+        case .zhipu: return "star.fill"
+        case .stepfun: return "bolt.fill"
         }
     }
     
@@ -33,10 +41,14 @@ enum AIProviderType: String, CaseIterable, Codable, Identifiable {
         case .google: return "gemini-3.5-flash"
         case .deepseek: return "deepseek-chat"
         case .xai: return "grok-2"
+        case .moonshot: return "kimi-k2.5"
+        case .alibaba: return "qwen3.6-plus"
+        case .zhipu: return "glm-5"
+        case .stepfun: return "step-3.5-flash"
         }
     }
     
-    var apiEndpoint: String {
+    var baseURL: String {
         switch self {
         case .minimax: return "https://api.minimax.chat/v1/text/chatcompletion_v2"
         case .openai: return "https://api.openai.com/v1/chat/completions"
@@ -44,6 +56,10 @@ enum AIProviderType: String, CaseIterable, Codable, Identifiable {
         case .google: return "https://generativelanguage.googleapis.com/v1beta/models"
         case .deepseek: return "https://api.deepseek.com/v1/chat/completions"
         case .xai: return "https://api.x.ai/v1/chat/completions"
+        case .moonshot: return "https://api.moonshot.cn/v1/chat/completions"
+        case .alibaba: return "https://dashscope.aliyuncs.com/api/v1/services/aigc/text-generation/generation"
+        case .zhipu: return "https://open.bigmodel.cn/api/paas/v4/chat/completions"
+        case .stepfun: return "https://api.stepfun.com/v1/chat/completions"
         }
     }
     
@@ -61,6 +77,14 @@ enum AIProviderType: String, CaseIterable, Codable, Identifiable {
             return ["deepseek-chat", "deepseek-coder"]
         case .xai:
             return ["grok-2", "grok-1"]
+        case .moonshot:
+            return ["kimi-k2.5", "kimi-k2", "kimi-1.5-chat"]
+        case .alibaba:
+            return ["qwen3.6-plus", "qwen3.5", "qwen2.5-coder"]
+        case .zhipu:
+            return ["glm-5", "glm-4", "glm-4-flash"]
+        case .stepfun:
+            return ["step-3.5-flash", "step-3", "step-2-flash"]
         }
     }
 }
@@ -136,6 +160,14 @@ final class AIService: ObservableObject {
             return try await sendDeepSeekMessage(text, history: history)
         case .xai:
             return try await sendXAIMessage(text, history: history)
+        case .moonshot:
+            return try await sendOpenAICompatibleMessage(text, history: history)
+        case .alibaba:
+            return try await sendOpenAICompatibleMessage(text, history: history)
+        case .zhipu:
+            return try await sendOpenAICompatibleMessage(text, history: history)
+        case .stepfun:
+            return try await sendOpenAICompatibleMessage(text, history: history)
         }
     }
     
@@ -160,7 +192,7 @@ final class AIService: ObservableObject {
         )
         
         return try await makeJSONRequest(
-            endpoint: AIProviderType.minimax.apiEndpoint,
+            endpoint: AIProviderType.minimax.baseURL,
             method: "POST",
             headers: ["Content-Type": "application/json", "Authorization": "Bearer \(apiKey)"],
             body: requestBody,
@@ -169,6 +201,10 @@ final class AIService: ObservableObject {
     }
     
     private func sendOpenAIMessage(_ text: String, history: [ChatMessage]) async throws -> String {
+        return try await sendOpenAICompatibleMessage(text, history: history, endpoint: AIProviderType.openai.baseURL)
+    }
+    
+    private func sendOpenAICompatibleMessage(_ text: String, history: [ChatMessage], endpoint: String? = nil) async throws -> String {
         struct OpenAIRequest: Codable {
             let model: String
             let messages: [[String: String]]
@@ -184,8 +220,10 @@ final class AIService: ObservableObject {
             temperature: 0.7
         )
         
+        let actualEndpoint = endpoint ?? currentProvider.baseURL
+        
         return try await makeJSONRequest(
-            endpoint: AIProviderType.openai.apiEndpoint,
+            endpoint: actualEndpoint,
             method: "POST",
             headers: ["Content-Type": "application/json", "Authorization": "Bearer \(apiKey)"],
             body: requestBody,
@@ -210,7 +248,7 @@ final class AIService: ObservableObject {
         )
         
         return try await makeJSONRequest(
-            endpoint: AIProviderType.anthropic.apiEndpoint,
+            endpoint: AIProviderType.anthropic.baseURL,
             method: "POST",
             headers: ["Content-Type": "application/json", "x-api-key": apiKey, "anthropic-version": "2023-06-01"],
             body: requestBody,
@@ -219,7 +257,7 @@ final class AIService: ObservableObject {
     }
     
     private func sendGoogleMessage(_ text: String, history: [ChatMessage]) async throws -> String {
-        guard let url = URL(string: "\(AIProviderType.google.apiEndpoint)/\(selectedModel):generateContent?key=\(apiKey)") else {
+        guard let url = URL(string: "\(AIProviderType.google.baseURL)/\(selectedModel):generateContent?key=\(apiKey)") else {
             throw AIError.invalidURL
         }
         
@@ -260,7 +298,7 @@ final class AIService: ObservableObject {
         )
         
         return try await makeJSONRequest(
-            endpoint: AIProviderType.deepseek.apiEndpoint,
+            endpoint: AIProviderType.deepseek.baseURL,
             method: "POST",
             headers: ["Content-Type": "application/json", "Authorization": "Bearer \(apiKey)"],
             body: requestBody,
@@ -285,7 +323,7 @@ final class AIService: ObservableObject {
         )
         
         return try await makeJSONRequest(
-            endpoint: AIProviderType.xai.apiEndpoint,
+            endpoint: AIProviderType.xai.baseURL,
             method: "POST",
             headers: ["Content-Type": "application/json", "Authorization": "Bearer \(apiKey)"],
             body: requestBody,
