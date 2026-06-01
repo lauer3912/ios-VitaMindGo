@@ -5,7 +5,7 @@ struct SettingsView: View {
     @StateObject private var aiService = AIService.shared
     
     @State private var selectedProvider: AIProviderType = .minimax
-    @State private var selectedModel: String = "anthropic/claude-opus-4-6"
+    @State private var selectedModel: String = "minimax/MiniMax-M2.7"
     @State private var apiKey: String = ""
     @State private var showingProviderPicker = false
     @State private var showingModelPicker = false
@@ -54,8 +54,8 @@ struct SettingsView: View {
                             Label("API Key", systemImage: "key")
                             Spacer()
                             if apiKey.isEmpty {
-                                Text("Not Set")
-                                    .foregroundColor(.secondary)
+                                Text("Not Set — tap to configure")
+                                    .foregroundColor(.orange)
                             } else {
                                 Text(String(repeating: "•", count: 12))
                                     .foregroundColor(.secondary)

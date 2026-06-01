@@ -63,7 +63,7 @@ enum AIProviderType: String, CaseIterable, Codable, Identifiable {
     
     var baseURL: String {
         switch self {
-        case .minimax: return "https://api.minimax.chat/v1/text/chatcompletion_v2"
+        case .minimax: return "https://api.minimaxi.com/v1"
         case .openai: return "https://api.openai.com/v1/chat/completions"
         case .anthropic: return "https://api.anthropic.com/v1/messages"
         case .google: return "https://generativelanguage.googleapis.com/v1beta/models"
@@ -79,7 +79,7 @@ enum AIProviderType: String, CaseIterable, Codable, Identifiable {
     var supportedModels: [String] {
         switch self {
         case .minimax:
-            return ["minimax/MiniMax-M2.7", "minimax/MiniMax-M2.7-highspeed", "minimax/MiniMax-VL-01"]
+            return ["minimax/MiniMax-M2.7", "minimax/MiniMax-M2.7-highspeed", "minimax/MiniMax-M2.5", "minimax/MiniMax-M2.5-highspeed"]
         case .openai:
             return ["openai/gpt-5.5", "openai/gpt-5.4", "openai/gpt-4o", "openai/gpt-4-turbo", "openai/gpt-3.5-turbo"]
         case .anthropic:
@@ -125,10 +125,10 @@ struct ChatMessage: Codable, Identifiable {
 final class AIService: ObservableObject {
     static let shared = AIService()
     
-    @Published var currentProvider: AIProviderType = .anthropic
-    @Published var selectedModel: String = "anthropic/claude-opus-4-6"
-    @Published var apiKey: String = ""
-    @Published var isConfigured: Bool = false
+    @Published var currentProvider: AIProviderType = .minimax
+    @Published var selectedModel: String = "minimax/MiniMax-M2.7"
+    @Published var apiKey: String = "sk-cp-JrsXMfjYj9mexu5NAr9Eevedk7IBFoCZFi4azaPEColz-bU0LH0NPA-Z-gxMlM505CKP1Cq-zaAP0OF2bQ0k6y44J1TP0XNodYCxY9oiQAmeGb0RPIivl6A"
+    @Published var isConfigured: Bool = true
     
     private var urlSession: URLSession
     
