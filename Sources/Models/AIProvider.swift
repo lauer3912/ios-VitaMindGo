@@ -3,20 +3,33 @@ import Foundation
 // MARK: - AI Provider Configuration
 
 enum AIProviderType: String, CaseIterable, Codable, Identifiable {
-    case minimax = "MiniMax"
-    case openai = "OpenAI"
-    case anthropic = "Anthropic"
-    case google = "Google"
-    case deepseek = "DeepSeek"
-    case xai = "xAI"
-    case moonshot = "Moonshot"
-    case alibaba = "Alibaba"
-    case zhipu = "Zhipu AI"
-    case stepfun = "StepFun"
+    case minimax = "minimax"
+    case openai = "openai"
+    case anthropic = "anthropic"
+    case google = "google"
+    case deepseek = "deepseek"
+    case xai = "xai"
+    case moonshot = "moonshot"
+    case qwen = "qwen"
+    case zai = "zai"
+    case stepfun = "stepfun"
     
     var id: String { rawValue }
     
-    var displayName: String { rawValue }
+    var displayName: String {
+        switch self {
+        case .minimax: return "MiniMax"
+        case .openai: return "OpenAI"
+        case .anthropic: return "Anthropic"
+        case .google: return "Google"
+        case .deepseek: return "DeepSeek"
+        case .xai: return "xAI"
+        case .moonshot: return "Moonshot AI"
+        case .qwen: return "Qwen"
+        case .zai: return "Z.AI"
+        case .stepfun: return "StepFun"
+        }
+    }
     
     var iconName: String {
         switch self {
@@ -27,24 +40,24 @@ enum AIProviderType: String, CaseIterable, Codable, Identifiable {
         case .deepseek: return "magnifyingglass"
         case .xai: return "x.circle"
         case .moonshot: return "moon.fill"
-        case .alibaba: return "building.2.fill"
-        case .zhipu: return "star.fill"
+        case .qwen: return "building.2.fill"
+        case .zai: return "star.fill"
         case .stepfun: return "bolt.fill"
         }
     }
     
     var defaultModel: String {
         switch self {
-        case .minimax: return "MiniMax-M2.7"
-        case .openai: return "gpt-5.5"
-        case .anthropic: return "claude-opus-4.8"
-        case .google: return "gemini-3.5-flash"
-        case .deepseek: return "deepseek-chat"
-        case .xai: return "grok-2"
-        case .moonshot: return "kimi-k2.5"
-        case .alibaba: return "qwen3.6-plus"
-        case .zhipu: return "glm-5"
-        case .stepfun: return "step-3.5-flash"
+        case .minimax: return "minimax/MiniMax-M2.7"
+        case .openai: return "openai/gpt-5.5"
+        case .anthropic: return "anthropic/claude-opus-4-6"
+        case .google: return "google/gemini-3.1-pro-preview"
+        case .deepseek: return "deepseek/deepseek-v4-flash"
+        case .xai: return "xai/grok-4.3"
+        case .moonshot: return "moonshot/kimi-k2.6"
+        case .qwen: return "qwen/qwen3.5-plus"
+        case .zai: return "zai/glm-5"
+        case .stepfun: return "stepfun/step-3.5-flash"
         }
     }
     
@@ -57,8 +70,8 @@ enum AIProviderType: String, CaseIterable, Codable, Identifiable {
         case .deepseek: return "https://api.deepseek.com/v1/chat/completions"
         case .xai: return "https://api.x.ai/v1/chat/completions"
         case .moonshot: return "https://api.moonshot.cn/v1/chat/completions"
-        case .alibaba: return "https://dashscope.aliyuncs.com/api/v1/services/aigc/text-generation/generation"
-        case .zhipu: return "https://open.bigmodel.cn/api/paas/v4/chat/completions"
+        case .qwen: return "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions"
+        case .zai: return "https://open.bigmodel.cn/api/paas/v4/chat/completions"
         case .stepfun: return "https://api.stepfun.com/v1/chat/completions"
         }
     }
@@ -66,25 +79,25 @@ enum AIProviderType: String, CaseIterable, Codable, Identifiable {
     var supportedModels: [String] {
         switch self {
         case .minimax:
-            return ["MiniMax-M2.7", "MiniMax-M2", "abab6.5s-chat", "abab6.5-chat"]
+            return ["minimax/MiniMax-M2.7", "minimax/MiniMax-M2.7-highspeed", "minimax/MiniMax-VL-01"]
         case .openai:
-            return ["gpt-5.5", "gpt-5.4", "gpt-4o", "gpt-4-turbo", "gpt-3.5-turbo"]
+            return ["openai/gpt-5.5", "openai/gpt-5.4", "openai/gpt-4o", "openai/gpt-4-turbo", "openai/gpt-3.5-turbo"]
         case .anthropic:
-            return ["claude-opus-4.8", "claude-sonnet-4.6", "claude-3-5-sonnet-20240620", "claude-3-opus-20240229"]
+            return ["anthropic/claude-opus-4-6", "anthropic/claude-sonnet-4-6", "anthropic/claude-3-5-sonnet-20240620", "anthropic/claude-3-opus-20240229"]
         case .google:
-            return ["gemini-3.5-flash", "gemini-3.1-pro", "gemini-1.5-pro", "gemini-1.5-flash"]
+            return ["google/gemini-3.1-pro-preview", "google/gemini-2.0-flash-exp", "google/gemini-3-flash-preview", "google/gemini-1.5-pro", "google/gemini-1.5-flash"]
         case .deepseek:
-            return ["deepseek-chat", "deepseek-coder"]
+            return ["deepseek/deepseek-v4-flash", "deepseek/deepseek-v4-pro", "deepseek/deepseek-chat"]
         case .xai:
-            return ["grok-2", "grok-1"]
+            return ["xai/grok-4.3", "xai/grok-4", "xai/grok-3", "xai/grok-2"]
         case .moonshot:
-            return ["kimi-k2.5", "kimi-k2", "kimi-1.5-chat"]
-        case .alibaba:
-            return ["qwen3.6-plus", "qwen3.5", "qwen2.5-coder"]
-        case .zhipu:
-            return ["glm-5", "glm-4", "glm-4-flash"]
+            return ["moonshot/kimi-k2.6", "moonshot/kimi-k2.5", "moonshot/kimi-k2-thinking", "moonshot/kimi-k2-turbo"]
+        case .qwen:
+            return ["qwen/qwen3.5-plus", "qwen/qwen3.5", "qwen/qwen2.5-coder", "qwen/qwen-turbo"]
+        case .zai:
+            return ["zai/glm-5", "zai/glm-4", "zai/glm-4-flash", "zai/glm-5-ultra"]
         case .stepfun:
-            return ["step-3.5-flash", "step-3", "step-2-flash"]
+            return ["stepfun/step-3.5-flash", "stepfun/step-3", "stepfun/step-2-flash"]
         }
     }
 }
@@ -113,7 +126,7 @@ final class AIService: ObservableObject {
     static let shared = AIService()
     
     @Published var currentProvider: AIProviderType = .anthropic
-    @Published var selectedModel: String = "claude-opus-4.8"
+    @Published var selectedModel: String = "anthropic/claude-opus-4-6"
     @Published var apiKey: String = ""
     @Published var isConfigured: Bool = false
     
@@ -162,9 +175,9 @@ final class AIService: ObservableObject {
             return try await sendXAIMessage(text, history: history)
         case .moonshot:
             return try await sendOpenAICompatibleMessage(text, history: history)
-        case .alibaba:
+        case .qwen:
             return try await sendOpenAICompatibleMessage(text, history: history)
-        case .zhipu:
+        case .zai:
             return try await sendOpenAICompatibleMessage(text, history: history)
         case .stepfun:
             return try await sendOpenAICompatibleMessage(text, history: history)
