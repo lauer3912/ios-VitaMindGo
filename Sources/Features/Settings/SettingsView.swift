@@ -4,91 +4,60 @@ struct SettingsView: View {
     @EnvironmentObject var gameState: GameState
     @StateObject private var aiService = AIService.shared
     
-    @State private var selectedProvider: AIProviderType = .minimax
-    @State private var selectedModel: String = "minimax/MiniMax-M2.7"
-    @State private var apiKey: String = ""
     @State private var showingProviderPicker = false
     @State private var showingModelPicker = false
     @State private var showingApiKeyInput = false
-    @State private var testResult: String?
-    @State private var isTesting = false
     
     var body: some View {
         NavigationStack {
             List {
-                // AI Provider Section
+                // AI Service Status (read-only, no editing)
                 Section {
-                    // Provider Selection
-                    Button {
-                        showingProviderPicker = true
-                    } label: {
-                        HStack {
-                            Label(selectedProvider.displayName, systemImage: selectedProvider.iconName)
-                            Spacer()
-                            Image(systemName: "chevron.right")
-                                .foregroundColor(.secondary)
-                        }
+                    HStack {
+                        Label("AI Service", systemImage: "brain.fill")
+                            .foregroundColor(.primary)
+                        Spacer()
+                        Text("Ready")
+                            .foregroundColor(.green)
+                            .fontWeight(.medium)
                     }
-                    .foregroundColor(.primary)
                     
-                    // Model Selection
-                    Button {
-                        showingModelPicker = true
-                    } label: {
-                        HStack {
-                            Label("Model", systemImage: "cpu")
-                            Spacer()
-                            Text(selectedModel)
-                                .foregroundColor(.secondary)
-                            Image(systemName: "chevron.right")
-                                .foregroundColor(.secondary)
-                        }
+                    HStack {
+                        Text("Provider")
+                        Spacer()
+                        Text("MiniMax")
+                            .foregroundColor(.secondary)
                     }
-                    .foregroundColor(.primary)
-                    
-                    // API Key
-                    Button {
-                        showingApiKeyInput = true
-                    } label: {
-                        HStack {
-                            Label("API Key", systemImage: "key")
-                            Spacer()
-                            if apiKey.isEmpty {
-                                Text("Not Set — tap to configure")
-                                    .foregroundColor(.orange)
-                            } else {
-                                Text(String(repeating: "•", count: 12))
-                                    .foregroundColor(.secondary)
-                            }
-                        }
-                    }
-                    .foregroundColor(.primary)
                 } header: {
-                    Text("AI Assistant Configuration")
+                    Text("AI Assistant")
                 } footer: {
-                    Text("Select your AI service provider and enter API Key")
+                    Text("AI service is pre-configured and ready to use")
                 }
                 
-                // Test Connection Section
+                // Custom AI Providers Section
                 Section {
-                    Button {
-                        testAIConnection()
-                    } label: {
-                        HStack {
-                            Label("Test Connection", systemImage: "wifi")
-                            Spacer()
-                            if isTesting {
-                                ProgressView()
-                            } else if let result = testResult {
-                                Text(result)
-                                    .foregroundColor(result == "Success" ? .green : .red)
+                    ForEach(AIProviderType.allCases.filter { $0 != .minimax }, id: \.self) { provider in
+                        NavigationLink {
+                            CustomProviderConfigView(provider: provider)
+                        } label: {
+                            HStack {
+                                Image(systemName: provider.iconName)
+                                    .frame(width: 30)
+                                    .foregroundColor(.blue)
+                                VStack(alignment: .leading) {
+                                    Text(provider.displayName)
+                                        .foregroundColor(.primary)
+                                    Text("Tap to configure")
+                                        .font(.caption)
+                                        .foregroundColor(.secondary)
+                                }
                             }
                         }
                     }
-                    .foregroundColor(.primary)
-                    .disabled(isTesting || apiKey.isEmpty)
                 } header: {
-                    Text("Connection Test")
+                    Text("Custom AI Providers")
+                } footer: {
+                    Text("9 additional AI providers available. Select one to configure with your own API Key")
                 }
                 
                 // App Info Section
@@ -117,49 +86,115 @@ struct SettingsView: View {
                 }
             }
             .navigationTitle("Settings")
-            .sheet(isPresented: $showingProviderPicker) {
-                ProviderPickerView(selectedProvider: $selectedProvider)
-            }
-            .sheet(isPresented: $showingModelPicker) {
-                ModelPickerView(selectedProvider: selectedProvider, selectedModel: $selectedModel)
-            }
-            .sheet(isPresented: $showingApiKeyInput) {
-                ApiKeyInputView(apiKey: $apiKey)
-            }
             .onAppear {
-                loadCurrentSettings()
-            }
-            .onChange(of: selectedProvider) { _, newValue in
-                updateProvider(newValue)
+                // AI service is pre-configured, no user action needed
             }
         }
     }
     
-    private func loadCurrentSettings() {
-        selectedProvider = aiService.currentProvider
-        selectedModel = aiService.selectedModel
-        apiKey = aiService.apiKey
+    // AI service is pre-configured — no user configuration needed
+    private func loadCurrentSettings() {}
+    
+    private func updateProvider(_ provider: AIProviderType) {}
+}
+
+// MARK: - Custom Provider Configuration
+
+struct CustomProviderConfigView: View {
+    let provider: AIProviderType
+    @Environment(\.dismiss) private var dismiss
+    @State private var apiKey: String = ""
+    @State private var baseURL: String = ""
+    @State private var selectedModel: String = ""
+    @State private var isTesting = false
+    @State private var testResult: String?
+    
+    var body: some View {
+        Form {
+            Section {
+                HStack {
+                    Text("Provider")
+                    Spacer()
+                    Text(provider.displayName)
+                        .foregroundColor(.secondary)
+                }
+                
+                TextField("Base URL", text: $baseURL)
+                    .autocapitalization(.none)
+                    .autocorrectionDisabled()
+                    .keyboardType(.URL)
+                
+                TextField("API Key", text: $apiKey)
+                    .autocapitalization(.none)
+                    .autocorrectionDisabled()
+                
+                Picker("Model", selection: $selectedModel) {
+                    ForEach(provider.supportedModels, id: \.self) { model in
+                        Text(model).tag(model)
+                    }
+                }
+            } header: {
+                Text("Configuration")
+            } footer: {
+                Text("Enter the base URL and API Key for \(provider.displayName)")
+            }
+            
+            Section {
+                Button {
+                    testConnection()
+                } label: {
+                    HStack {
+                        Text("Test Connection")
+                        Spacer()
+                        if isTesting {
+                            ProgressView()
+                        } else if let result = testResult {
+                            Text(result)
+                                .foregroundColor(result == "Success" ? .green : .red)
+                        }
+                    }
+                }
+                .disabled(baseURL.isEmpty || apiKey.isEmpty)
+                
+                Button("Save") {
+                    AIService.shared.configureCustomProvider(
+                        provider,
+                        baseURL: baseURL,
+                        apiKey: apiKey,
+                        model: selectedModel
+                    )
+                    dismiss()
+                }
+                .disabled(baseURL.isEmpty || apiKey.isEmpty)
+            }
+        }
+        .navigationTitle("Configure \(provider.displayName)")
+        .onAppear {
+            selectedModel = provider.defaultModel
+        }
     }
     
-    private func updateProvider(_ provider: AIProviderType) {
-        aiService.selectProvider(provider)
-        selectedModel = provider.defaultModel
-    }
-    
-    private func testAIConnection() {
+    private func testConnection() {
+        guard !baseURL.isEmpty, !apiKey.isEmpty else { return }
         isTesting = true
         testResult = nil
         
         Task {
             do {
-                let response = try await aiService.sendMessage("Hello", history: [])
+                let tempURL = AIService.shared.currentProvider.baseURL
+                let tempKey = AIService.shared.apiKey
+                // Temporarily set custom config
+                AIService.shared.configureCustomProvider(provider, baseURL: baseURL, apiKey: apiKey, model: selectedModel)
+                let _ = try await AIService.shared.sendMessage("Test", history: [])
                 await MainActor.run {
                     testResult = "Success"
                     isTesting = false
                 }
+                // Restore original config
+                AIService.shared.configureCustomProvider(AIService.shared.currentProvider, baseURL: tempURL, apiKey: tempKey, model: AIService.shared.selectedModel)
             } catch {
                 await MainActor.run {
-                    testResult = "Failed: \(error.localizedDescription)"
+                    testResult = "Failed"
                     isTesting = false
                 }
             }

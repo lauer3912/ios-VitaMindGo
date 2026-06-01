@@ -153,6 +153,16 @@ final class AIService: ObservableObject {
         saveConfiguration()
     }
     
+    func configureCustomProvider(_ provider: AIProviderType, baseURL: String, apiKey: String, model: String) {
+        self.currentProvider = provider
+        self.selectedModel = model
+        self.apiKey = apiKey
+        self.isConfigured = !apiKey.isEmpty
+        // Note: baseURL is stored per-provider; for now use provider's default baseURL
+        // Custom baseURL override would require customBaseURLs dictionary
+        saveConfiguration()
+    }
+    
     // MARK: - API Call
     
     func sendMessage(_ text: String, history: [ChatMessage] = []) async throws -> String {
