@@ -3,15 +3,11 @@ import SwiftUI
 struct SettingsView: View {
     @EnvironmentObject var gameState: GameState
     @StateObject private var aiService = AIService.shared
-    
-    @State private var showingProviderPicker = false
-    @State private var showingModelPicker = false
-    @State private var showingApiKeyInput = false
-    
+
     var body: some View {
         NavigationStack {
             List {
-                // AI Service Status (read-only, no editing)
+                // AI Service Status (read-only, pre-configured)
                 Section {
                     HStack {
                         Label("AI Service", systemImage: "brain.fill")
@@ -21,11 +17,18 @@ struct SettingsView: View {
                             .foregroundColor(.green)
                             .fontWeight(.medium)
                     }
-                    
+
                     HStack {
                         Text("Provider")
                         Spacer()
                         Text("MiniMax")
+                            .foregroundColor(.secondary)
+                    }
+
+                    HStack {
+                        Text("Model")
+                        Spacer()
+                        Text("MiniMax-M3")
                             .foregroundColor(.secondary)
                     }
                 } header: {
@@ -33,7 +36,7 @@ struct SettingsView: View {
                 } footer: {
                     Text("AI service is pre-configured and ready to use")
                 }
-                
+
                 // Custom AI Providers Section
                 Section {
                     ForEach(AIProviderType.allCases, id: \.self) { provider in
@@ -58,6 +61,11 @@ struct SettingsView: View {
                                     }
                                 }
                                 Spacer()
+                                if isProviderActive(provider) {
+                                    Text("Active")
+                                        .font(.caption)
+                                        .foregroundColor(.blue)
+                                }
                             }
                         }
                     }
@@ -66,7 +74,7 @@ struct SettingsView: View {
                 } footer: {
                     Text("10 AI providers available. MiniMax is pre-configured.")
                 }
-                
+
                 // App Info Section
                 Section {
                     HStack {
@@ -75,14 +83,14 @@ struct SettingsView: View {
                         Text("3.0.0")
                             .foregroundColor(.secondary)
                     }
-                    
+
                     HStack {
                         Text("Build")
                         Spacer()
                         Text("1")
                             .foregroundColor(.secondary)
                     }
-                    
+
                     NavigationLink {
                         AboutView()
                     } label: {
@@ -93,16 +101,12 @@ struct SettingsView: View {
                 }
             }
             .navigationTitle("Settings")
-            .onAppear {
-                // AI service is pre-configured, no user action needed
-            }
         }
     }
-    
-    // AI service is pre-configured — no user configuration needed
-    private func loadCurrentSettings() {}
-    
-    private func updateProvider(_ provider: AIProviderType) {}
+
+    private func isProviderActive(_ provider: AIProviderType) -> Bool {
+        return AIService.shared.currentProvider == provider
+    }
 }
 
 // MARK: - Custom Provider Configuration
@@ -115,9 +119,11 @@ struct CustomProviderConfigView: View {
     @State private var selectedModel: String = ""
     @State private var isTesting = false
     @State private var testResult: String?
-    
+    @State private var isActive = false
+
     var body: some View {
         Form {
+            // Provider Header
             Section {
                 HStack {
                     Text("Provider")
@@ -125,7 +131,7 @@ struct CustomProviderConfigView: View {
                     Text(provider.displayName)
                         .foregroundColor(.secondary)
                 }
-                
+
                 if provider == .minimax {
                     HStack {
                         Text("Status")
@@ -135,103 +141,115 @@ struct CustomProviderConfigView: View {
                             .fontWeight(.medium)
                     }
                 }
-                
-                TextField("Base URL", text: $baseURL)
-                    .autocapitalization(.none)
-                    .autocorrectionDisabled()
-                    .keyboardType(.URL)
-                    .disabled(provider == .minimax)
-                
-                TextField("API Key", text: $apiKey)
-                    .autocapitalization(.none)
-                    .autocorrectionDisabled()
-                    .disabled(provider == .minimax)
-                
-                Picker("Model", selection: $selectedModel) {
-                    ForEach(provider.supportedModels, id: \.self) { model in
-                        Text(model).tag(model)
+
+                if isActive {
+                    HStack {
+                        Text("Active")
+                        Spacer()
+                        Image(systemName: "checkmark.circle.fill")
+                            .foregroundColor(.blue)
                     }
                 }
             } header: {
-                Text("Configuration")
-            } footer: {
-                if provider == .minimax {
-                    Text("MiniMax global API is pre-configured with your API Key")
-                } else {
-                    Text("Enter the base URL and API Key for \(provider.displayName)")
-                }
+                Text(provider == .minimax ? "MiniMax" : provider.displayName)
             }
-            
-            Section {
-                Button {
-                    testConnection()
-                } label: {
-                    HStack {
-                        Text("Test Connection")
-                        Spacer()
-                        if isTesting {
-                            ProgressView()
-                        } else if let result = testResult {
-                            Text(result)
-                                .foregroundColor(result == "Success" ? .green : .red)
+
+            // Configuration (disabled for MiniMax)
+            if provider != .minimax {
+                Section {
+                    TextField("Base URL", text: $baseURL)
+                        .autocapitalization(.none)
+                        .autocorrectionDisabled()
+                        .keyboardType(.URL)
+                        .textContentType(.URL)
+
+                    SecureField("API Key", text: $apiKey)
+                        .autocapitalization(.none)
+                        .autocorrectionDisabled()
+
+                    Picker("Model", selection: $selectedModel) {
+                        ForEach(provider.supportedModels, id: \.self) { model in
+                            Text(model).tag(model)
+                        }
+                    }
+                } header: {
+                    Text("Configuration")
+                } footer: {
+                    Text("Enter your \(provider.displayName) API credentials")
+                }
+
+                // Test Result
+                if let result = testResult {
+                    Section {
+                        HStack {
+                            Text("Result")
+                            Spacer()
+                            if result == "Success" {
+                                Text("Connection successful")
+                                    .foregroundColor(.green)
+                            } else {
+                                Text(result)
+                                    .foregroundColor(.red)
+                                    .lineLimit(2)
+                            }
                         }
                     }
                 }
-                .disabled(provider == .minimax)
-                
-                Button("Test Connection") {
-                    testConnection()
-                }
-                .disabled(provider == .minimax || baseURL.isEmpty || apiKey.isEmpty)
-                
-                if provider != .minimax {
-                    Button("Save") {
-                        AIService.shared.configureCustomProvider(
-                            provider,
-                            baseURL: baseURL,
-                            apiKey: apiKey,
-                            model: selectedModel
-                        )
-                        dismiss()
+
+                // Actions
+                Section {
+                    if isTesting {
+                        HStack {
+                            Text("Testing...")
+                            Spacer()
+                            ProgressView()
+                        }
+                    } else {
+                        Button("Test & Save") {
+                            testAndSave()
+                        }
+                        .disabled(baseURL.isEmpty || apiKey.isEmpty)
                     }
-                    .disabled(baseURL.isEmpty || apiKey.isEmpty)
                 }
             }
         }
         .navigationTitle(provider == .minimax ? "MiniMax" : "Configure \(provider.displayName)")
+        .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             selectedModel = provider.defaultModel
+            isActive = AIService.shared.currentProvider == provider
             if provider == .minimax {
                 baseURL = provider.baseURL
                 apiKey = AIService.shared.apiKey
-                isTesting = false
-                testResult = nil
             }
         }
     }
-    
-    private func testConnection() {
+
+    private func testAndSave() {
         guard !baseURL.isEmpty, !apiKey.isEmpty else { return }
         isTesting = true
         testResult = nil
-        
+
         Task {
             do {
-                let tempURL = AIService.shared.currentProvider.baseURL
-                let tempKey = AIService.shared.apiKey
-                // Temporarily set custom config
+                // Temporarily switch to this provider to test
+                let previousProvider = AIService.shared.currentProvider
+                let previousModel = AIService.shared.selectedModel
+                let previousKey = AIService.shared.apiKey
+
                 AIService.shared.configureCustomProvider(provider, baseURL: baseURL, apiKey: apiKey, model: selectedModel)
-                let _ = try await AIService.shared.sendMessage("Test", history: [])
+                let _ = try await AIService.shared.sendMessage("Hi", history: [])
+
                 await MainActor.run {
                     testResult = "Success"
                     isTesting = false
+                    isActive = true
                 }
-                // Restore original config
-                AIService.shared.configureCustomProvider(AIService.shared.currentProvider, baseURL: tempURL, apiKey: tempKey, model: AIService.shared.selectedModel)
             } catch {
                 await MainActor.run {
-                    testResult = "Failed"
+                    testResult = error.localizedDescription
                     isTesting = false
+                    isActive = false
                 }
             }
         }
@@ -243,7 +261,7 @@ struct CustomProviderConfigView: View {
 struct ProviderPickerView: View {
     @Binding var selectedProvider: AIProviderType
     @Environment(\.dismiss) private var dismiss
-    
+
     var body: some View {
         NavigationStack {
             List(AIProviderType.allCases) { provider in
@@ -287,7 +305,7 @@ struct ModelPickerView: View {
     let selectedProvider: AIProviderType
     @Binding var selectedModel: String
     @Environment(\.dismiss) private var dismiss
-    
+
     var body: some View {
         NavigationStack {
             List(selectedProvider.supportedModels, id: \.self) { model in
@@ -324,7 +342,7 @@ struct ApiKeyInputView: View {
     @Binding var apiKey: String
     @Environment(\.dismiss) private var dismiss
     @State private var inputKey: String = ""
-    
+
     var body: some View {
         NavigationStack {
             Form {
@@ -337,7 +355,7 @@ struct ApiKeyInputView: View {
                 } footer: {
                     Text("Your API Key will be securely stored on your device")
                 }
-                
+
                 Section {
                     Button("Save") {
                         apiKey = inputKey
@@ -375,14 +393,14 @@ struct AboutView: View {
                     Image(systemName: "heart.circle.fill")
                         .font(.system(size: 80))
                         .foregroundColor(.blue)
-                    
+
                     Text("VitaMindGo")
                         .font(.title)
                         .fontWeight(.bold)
-                    
+
                     Text("Version 3.0.0")
                         .foregroundColor(.secondary)
-                    
+
                     Text("Your AI Health Companion")
                         .font(.subheadline)
                         .foregroundColor(.secondary)
@@ -390,12 +408,12 @@ struct AboutView: View {
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 32)
             }
-            
+
             Section {
                 Link(destination: URL(string: "https://lauer3912.github.io/ios-VitaMind/docs/PrivacyPolicy.html")!) {
                     Label("Privacy Policy", systemImage: "hand.raised")
                 }
-                
+
                 Link(destination: URL(string: "https://lauer3912.github.io/ios-VitaMind/docs/TermsOfService.html")!) {
                     Label("Terms of Service", systemImage: "doc.text")
                 }
