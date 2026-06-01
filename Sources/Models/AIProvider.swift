@@ -239,8 +239,13 @@ final class AIService: ObservableObject {
         var messages = history.map { ["role": $0.role, "content": $0.content] }
         messages.append(["role": "user", "content": text])
         
+        // All OpenAI-compatible APIs expect bare model names (no provider/ prefix)
+        let modelName = selectedModel.contains("/") 
+            ? String(selectedModel.split(separator: "/", omittingEmptySubsequences: false).last ?? "")
+            : selectedModel
+        
         let requestBody = OpenAIRequest(
-            model: selectedModel,
+            model: modelName,
             messages: messages,
             temperature: 0.7
         )
@@ -266,8 +271,12 @@ final class AIService: ObservableObject {
         var messages = history.map { ["role": $0.role, "content": $0.content] }
         messages.append(["role": "user", "content": text])
         
+        // Anthropic expects bare model name
+        let modelNameAnthropic = selectedModel.contains("/") 
+            ? String(selectedModel.split(separator: "/", omittingEmptySubsequences: false).last ?? "")
+            : selectedModel
         let requestBody = AnthropicRequest(
-            model: selectedModel,
+            model: modelNameAnthropic,
             messages: messages,
             max_tokens: 500
         )
@@ -282,7 +291,10 @@ final class AIService: ObservableObject {
     }
     
     private func sendGoogleMessage(_ text: String, history: [ChatMessage]) async throws -> String {
-        guard let url = URL(string: "\(AIProviderType.google.baseURL)/\(selectedModel):generateContent?key=\(apiKey)") else {
+        let modelName = selectedModel.contains("/") 
+            ? String(selectedModel.split(separator: "/", omittingEmptySubsequences: false).last ?? "")
+            : selectedModel
+        guard let url = URL(string: "\(AIProviderType.google.baseURL)/\(modelName):generateContent?key=\(apiKey)") else {
             throw AIError.invalidURL
         }
         
@@ -316,8 +328,12 @@ final class AIService: ObservableObject {
         var messages = history.map { ["role": $0.role, "content": $0.content] }
         messages.append(["role": "user", "content": text])
         
+        // DeepSeek expects bare model name
+        let modelNameDeepSeek = selectedModel.contains("/") 
+            ? String(selectedModel.split(separator: "/", omittingEmptySubsequences: false).last ?? "")
+            : selectedModel
         let requestBody = DeepSeekRequest(
-            model: selectedModel,
+            model: modelNameDeepSeek,
             messages: messages,
             temperature: 0.7
         )
@@ -341,8 +357,12 @@ final class AIService: ObservableObject {
         var messages = history.map { ["role": $0.role, "content": $0.content] }
         messages.append(["role": "user", "content": text])
         
+        // XAI expects bare model name
+        let modelNameXAI = selectedModel.contains("/") 
+            ? String(selectedModel.split(separator: "/", omittingEmptySubsequences: false).last ?? "")
+            : selectedModel
         let requestBody = XAIRequest(
-            model: selectedModel,
+            model: modelNameXAI,
             messages: messages,
             temperature: 0.7
         )
