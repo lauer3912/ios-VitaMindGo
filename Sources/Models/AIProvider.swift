@@ -172,6 +172,7 @@ final class AIService: ObservableObject {
         self.isConfigured = !self.apiKey.isEmpty
         saveConfiguration()
     }
+
     
     func resetToDefaultProvider() {
         self.currentProvider = .minimaxCn
@@ -475,6 +476,59 @@ final class AIService: ObservableObject {
         if let encoded = try? JSONEncoder().encode(config) {
             UserDefaults.standard.set(encoded, forKey: "ai_service_config")
         }
+        // Also save to the per-provider store if this is a custom provider
+        saveCustomProviderConfig(currentProvider, apiKey: apiKey, model: selectedModel)
+    }
+    
+    private func saveCustomProviderConfig(_ provider: AIProviderType, apiKey: String, model: String) {
+        var allConfigs = loadAllCustomProviderConfigs()
+        allConfigs[provider.rawValue] = CustomProviderConfig(apiKey: apiKey, model: model)
+        if let encoded = try? JSONEncoder().encode(allConfigs) {
+            UserDefaults.standard.set(encoded, forKey: "ai_custom_providers")
+        }
+    }
+    
+    private func loadAllCustomProviderConfigs() -> [String: CustomProviderConfig] {
+        guard let data = UserDefaults.standard.data(forKey: "ai_custom_providers"),
+              let configs = try? JSONDecoder().decode([String: CustomProviderConfig].self, from: data) else {
+            return [:]
+        }
+        return configs
+    }
+    
+    func getCustomProviderConfig(_ provider: AIProviderType) -> (apiKey: String, model: String)? {
+        let configs = loadAllCustomProviderConfigs()
+        guard let config = configs[provider.rawValue] else { return nil }
+        return (config.apiKey, config.model)
+    }
+    
+    /// Switch to a custom provider, testing the connection first.
+    /// Returns true if test passed and switch succeeded, false otherwise.
+    func testAndSwitchProvider(_ provider: AIProviderType) async -> Bool {
+        guard let config = getCustomProviderConfig(provider) else { return false }
+        
+        // Temporarily configure this provider
+        let previousProvider = self.currentProvider
+        let previousApiKey = self.apiKey
+        let previousModel = self.selectedModel
+        
+        self.currentProvider = provider
+        self.apiKey = config.apiKey
+        self.selectedModel = config.model
+        
+        do {
+            let _ = try await sendMessage("test", history: [])
+            // Test passed - commit the switch
+            self.isConfigured = true
+            saveConfiguration()
+            return true
+        } catch {
+            // Test failed - restore previous state
+            self.currentProvider = previousProvider
+            self.apiKey = previousApiKey
+            self.selectedModel = previousModel
+            return false
+        }
     }
     
     private func loadConfiguration() {
@@ -518,19 +572,24 @@ enum AIError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .missingAPIKey:
-            return "API Key 未设置，请在设置中配置"
+            return "API Key is not set. Please configure it in Settings."
         case .invalidURL:
-            return "无效的 API 地址"
+            return "Invalid API URL."
         case .invalidResponse:
-            return "服务器响应无效"
+            return "Invalid response from server."
         case .unauthorized:
-            return "API Key 无效或已过期"
+            return "API Key is invalid or expired. Please check Settings."
         case .rateLimited:
-            return "请求过于频繁，请稍后重试"
+            return "Too many requests. Please try again later."
         case .emptyResponse:
-            return "AI 返回了空响应"
+            return "AI returned an empty response."
         case .serverError(let code, let message):
-            return "服务器错误 (\(code)): \(message)"
+            return "Server error (\(code)): \(message)"
         }
     }
+}
+
+struct CustomProviderConfig: Codable {
+    let apiKey: String
+    let model: String
 }

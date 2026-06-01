@@ -81,7 +81,7 @@ struct CoachView: View {
                 // Check if API key is not configured
                 if !AIService.shared.isConfigured {
                     let aiMsg = CoachMessage(
-                        text: "⚠️ AI 服务未配置，请在【Settings】Tab 中设置 API Key 后重试。",
+                        text: "⚠️ AI service is not configured. Please go to the [Settings] tab and set up your API Key to continue.",
                         isUser: false,
                         timestamp: Date()
                     )
@@ -167,7 +167,7 @@ struct CoachMessageBubble: View {
             }
             
             VStack(alignment: message.isUser ? .trailing : .leading, spacing: 4) {
-                MarkdownText(content: message.text, isUser: message.isUser)
+                MarkdownText(content: message.text)
                     .padding(.horizontal, 16)
                     .padding(.vertical, 12)
                     .background(
@@ -207,11 +207,10 @@ struct CoachMessageBubble: View {
 
 struct MarkdownText: View {
     let content: String
-    let isUser: Bool
     
     var body: some View {
-        if let attributedString = parseMarkdown(content) {
-            Text(attributedString)
+        if let attributed = try? AttributedString(markdown: content, options: AttributedString.MarkdownParsingOptions(interpretedSyntax: .full)) {
+            Text(attributed)
                 .font(VitaTheme.Fonts.body)
                 .foregroundColor(.white)
         } else {
@@ -219,19 +218,6 @@ struct MarkdownText: View {
                 .font(VitaTheme.Fonts.body)
                 .foregroundColor(.white)
         }
-    }
-    
-    private func parseMarkdown(_ text: String) -> AttributedString? {
-        // Handle code blocks first (```...```)
-        var processed = text
-        var attributedParts: [AttributedString] = []
-        
-        // Try to parse as full markdown first
-        if let result = try? AttributedString(markdown: text, options: AttributedString.MarkdownParsingOptions(interpretedSyntax: .inlineOnlyPreservingWhitespace)) {
-            return result
-        }
-        
-        return nil
     }
 }
 
@@ -242,7 +228,6 @@ struct TypingIndicatorView: View {
     
     var body: some View {
         HStack(alignment: .bottom, spacing: 8) {
-            // AI Avatar
             ZStack {
                 Circle()
                     .fill(LinearGradient(
@@ -256,28 +241,26 @@ struct TypingIndicatorView: View {
                     .foregroundColor(.white)
             }
             
-            VStack(alignment: .leading, spacing: 4) {
-                HStack(spacing: 5) {
-                    ForEach(0..<3, id: \.self) { i in
-                        Circle()
-                            .fill(VitaTheme.Colors.primary.opacity(0.7))
-                            .frame(width: 8, height: 8)
-                            .scaleEffect(animating ? 1.0 : 0.5)
-                            .animation(
-                                .easeInOut(duration: 0.6)
-                                .repeatForever(autoreverses: true)
-                                .delay(Double(i) * 0.2),
-                                value: animating
-                            )
-                    }
+            HStack(spacing: 5) {
+                ForEach(0..<3, id: \.self) { i in
+                    Circle()
+                        .fill(VitaTheme.Colors.primary.opacity(0.7))
+                        .frame(width: 8, height: 8)
+                        .scaleEffect(animating ? 1.0 : 0.5)
+                        .animation(
+                            .easeInOut(duration: 0.6)
+                            .repeatForever(autoreverses: true)
+                            .delay(Double(i) * 0.2),
+                            value: animating
+                        )
                 }
-                .padding(.horizontal, 16)
-                .padding(.vertical, 14)
-                .background(
-                    RoundedRectangle(cornerRadius: 18)
-                        .fill(VitaTheme.Colors.surface)
-                )
             }
+            .padding(.horizontal, 16)
+            .padding(.vertical, 14)
+            .background(
+                RoundedRectangle(cornerRadius: 18)
+                    .fill(VitaTheme.Colors.surface)
+            )
             
             Spacer()
         }
