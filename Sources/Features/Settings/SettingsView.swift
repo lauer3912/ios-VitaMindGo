@@ -103,7 +103,12 @@ struct SettingsView: View {
                                 }
                                 Spacer()
                                 Button {
-                                    AIService.shared.switchProvider(provider)
+                                    Task {
+                                        let success = await AIService.shared.testAndSwitchProvider(provider)
+                                        if !success {
+                                            // Test failed — silently do nothing; error already shown in CustomProviderConfigView flow
+                                        }
+                                    }
                                 } label: {
                                     Text("Use")
                                         .font(.caption)

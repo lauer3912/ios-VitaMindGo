@@ -208,13 +208,26 @@ struct CoachMessageBubble: View {
 struct MarkdownText: View {
     let content: String
     
+    private var cleanedContent: String {
+        // Remove <think>...</think> blocks entirely from display
+        content.replacingOccurrences(
+            of: "<think>[\\s\\S]*?</think>",
+            with: "",
+            options: .regularExpression
+        )
+        .trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+    
     var body: some View {
-        if let attributed = try? AttributedString(markdown: content, options: AttributedString.MarkdownParsingOptions(interpretedSyntax: .full)) {
+        if let attributed = try? AttributedString(
+            markdown: cleanedContent,
+            options: AttributedString.MarkdownParsingOptions(interpretedSyntax: .full)
+        ) {
             Text(attributed)
                 .font(VitaTheme.Fonts.body)
                 .foregroundColor(.white)
         } else {
-            Text(content)
+            Text(cleanedContent)
                 .font(VitaTheme.Fonts.body)
                 .foregroundColor(.white)
         }
