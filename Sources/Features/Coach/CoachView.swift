@@ -150,7 +150,6 @@ struct CoachMessageBubble: View {
     var body: some View {
         HStack(alignment: .bottom, spacing: 8) {
             if !message.isUser {
-                // AI Avatar
                 ZStack {
                     Circle()
                         .fill(LinearGradient(
@@ -168,26 +167,13 @@ struct CoachMessageBubble: View {
             }
             
             VStack(alignment: message.isUser ? .trailing : .leading, spacing: 4) {
-                // Bubble with tail indicator
-                ZStack(alignment: message.isUser ? .bottomTrailing : .bottomLeading) {
-                    Text(message.text)
-                        .font(VitaTheme.Fonts.body)
-                        .foregroundColor(.white)
-                        .padding(.horizontal, 16)
-                        .padding(.vertical, 12)
-                        .background(
-                            ChatBubbleShape(isUser: message.isUser)
-                                .fill(message.isUser ? VitaTheme.Colors.primary : VitaTheme.Colors.surface)
-                        )
-                    
-                    // Tail triangle
-                    if !message.isUser {
-                        Triangle()
-                            .fill(VitaTheme.Colors.surface)
-                            .frame(width: 12, height: 8)
-                            .offset(x: -16, y: 4)
-                    }
-                }
+                MarkdownText(content: message.text, isUser: message.isUser)
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 12)
+                    .background(
+                        RoundedRectangle(cornerRadius: 18)
+                            .fill(message.isUser ? VitaTheme.Colors.primary : VitaTheme.Colors.surface)
+                    )
                 
                 Text(formatTime(message.timestamp))
                     .font(VitaTheme.Fonts.caption)
@@ -195,7 +181,6 @@ struct CoachMessageBubble: View {
             }
             
             if message.isUser {
-                // User Avatar
                 ZStack {
                     Circle()
                         .fill(VitaTheme.Colors.accent.opacity(0.8))
@@ -218,55 +203,35 @@ struct CoachMessageBubble: View {
     }
 }
 
-// MARK: - Chat Bubble Shape (rounded with tail)
+// MARK: - Markdown Text Renderer
 
-struct ChatBubbleShape: Shape {
+struct MarkdownText: View {
+    let content: String
     let isUser: Bool
     
-    func path(in rect: CGRect) -> Path {
-        let radius: CGFloat = 18
-        let tailSize: CGFloat = 8
-        
-        var path = Path()
-        
-        if isUser {
-            // User bubble: tail on right side
-            path.move(to: CGPoint(x: rect.minX + radius, y: rect.minY))
-            path.addLine(to: CGPoint(x: rect.maxX - radius - tailSize, y: rect.minY))
-            path.addQuadCurve(to: CGPoint(x: rect.maxX - tailSize, y: rect.minY + radius), control: CGPoint(x: rect.maxX - tailSize, y: rect.minY))
-            path.addLine(to: CGPoint(x: rect.maxX - tailSize, y: rect.maxY - radius))
-            path.addQuadCurve(to: CGPoint(x: rect.maxX - radius - tailSize, y: rect.maxY), control: CGPoint(x: rect.maxX - tailSize, y: rect.maxY))
-            path.addLine(to: CGPoint(x: rect.minX + radius, y: rect.maxY))
-            path.addQuadCurve(to: CGPoint(x: rect.minX, y: rect.maxY - radius), control: CGPoint(x: rect.minX, y: rect.maxY))
-            path.addLine(to: CGPoint(x: rect.minX, y: rect.minY + radius))
-            path.addQuadCurve(to: CGPoint(x: rect.minX + radius, y: rect.minY), control: CGPoint(x: rect.minX, y: rect.minY))
+    var body: some View {
+        if let attributedString = parseMarkdown(content) {
+            Text(attributedString)
+                .font(VitaTheme.Fonts.body)
+                .foregroundColor(.white)
         } else {
-            // AI bubble: tail on left side
-            path.move(to: CGPoint(x: rect.minX + radius + tailSize, y: rect.minY))
-            path.addLine(to: CGPoint(x: rect.maxX - radius, y: rect.minY))
-            path.addQuadCurve(to: CGPoint(x: rect.maxX, y: rect.minY + radius), control: CGPoint(x: rect.maxX, y: rect.minY))
-            path.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY - radius))
-            path.addQuadCurve(to: CGPoint(x: rect.maxX - radius, y: rect.maxY), control: CGPoint(x: rect.maxX, y: rect.maxY))
-            path.addLine(to: CGPoint(x: rect.minX + radius + tailSize, y: rect.maxY))
-            path.addQuadCurve(to: CGPoint(x: rect.minX + tailSize, y: rect.maxY - radius), control: CGPoint(x: rect.minX + tailSize, y: rect.maxY))
-            path.addLine(to: CGPoint(x: rect.minX + tailSize, y: rect.minY + radius))
-            path.addQuadCurve(to: CGPoint(x: rect.minX + radius + tailSize, y: rect.minY), control: CGPoint(x: rect.minX + tailSize, y: rect.minY))
+            Text(content)
+                .font(VitaTheme.Fonts.body)
+                .foregroundColor(.white)
+        }
+    }
+    
+    private func parseMarkdown(_ text: String) -> AttributedString? {
+        // Handle code blocks first (```...```)
+        var processed = text
+        var attributedParts: [AttributedString] = []
+        
+        // Try to parse as full markdown first
+        if let result = try? AttributedString(markdown: text, options: AttributedString.MarkdownParsingOptions(interpretedSyntax: .inlineOnlyPreservingWhitespace)) {
+            return result
         }
         
-        path.closeSubpath()
-        return path
-    }
-}
-
-// Triangle shape for bubble tail
-struct Triangle: Shape {
-    func path(in rect: CGRect) -> Path {
-        var path = Path()
-        path.move(to: CGPoint(x: rect.midX, y: rect.maxY))
-        path.addLine(to: CGPoint(x: rect.minX, y: rect.minY))
-        path.addLine(to: CGPoint(x: rect.maxX, y: rect.minY))
-        path.closeSubpath()
-        return path
+        return nil
     }
 }
 
@@ -309,7 +274,7 @@ struct TypingIndicatorView: View {
                 .padding(.horizontal, 16)
                 .padding(.vertical, 14)
                 .background(
-                    ChatBubbleShape(isUser: false)
+                    RoundedRectangle(cornerRadius: 18)
                         .fill(VitaTheme.Colors.surface)
                 )
             }
