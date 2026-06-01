@@ -65,7 +65,7 @@ struct SettingsView: View {
                     HStack {
                         Text("Active: ")
                             .foregroundColor(.secondary)
-                        Text(AIService.shared.currentProvider.displayName)
+                        Text(AIService.shared.currentProvider == .minimaxCn ? "System Pre-configured" : AIService.shared.currentProvider.displayName)
                             .foregroundColor(AIService.shared.currentProvider == .minimaxCn ? .green : .blue)
                             .fontWeight(.medium)
                     }
