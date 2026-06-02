@@ -24,22 +24,26 @@ enum VitaTheme {
 
         // ── Chrome (adaptive — change with appearance) ─────────────────
         // Dark mode: deep purple. Light mode: airy lavender.
-        static let background   = Color(lightHex: "F5F3FF", darkHex: "0D0B1E")
+        static let background   = Color(lightHex: "F5F2FB", darkHex: "0D0B1E")
         static let surface      = Color(lightHex: "FFFFFF", darkHex: "1A1730")
-        static let surfaceLight = Color(lightHex: "EDE9FE", darkHex: "252040")
+        static let surfaceLight = Color(lightHex: "EFEAF8", darkHex: "252040")
 
         // Standard iOS system colors so Form/List/Settings look native in
         // both light & dark. We expose them through our token system for
         // consistency.
-        static let listBackground = Color(lightHex: "F5F3FF", darkHex: "0D0B1E")
-        static let separator      = Color(lightHex: "E5E1F4", darkHex: "2A2540")
+        static let listBackground = Color(lightHex: "F5F2FB", darkHex: "0D0B1E")
+        static let separator      = Color(lightHex: "E5E0F0", darkHex: "2A2540")
+
+        // Hairline border for cards/chips in light mode (carries the
+        // visual layering along with the soft violet shadow).
+        static let border        = Color(lightHex: "E5E0F0", darkHex: "2A2540")
 
         // Text — opacity is encoded into the light/dark hex equivalents so
         // the same `textPrimary` token works in both modes.
-        // Dark mode uses near-white; light mode uses deep purple.
-        static let textPrimary   = Color(lightHex: "1A1730", darkHex: "FFFFFF")
+        // Dark mode uses near-white; light mode uses deep purple-black.
+        static let textPrimary   = Color(lightHex: "1A0F2E", darkHex: "FFFFFF")
         static let textSecondary = Color(lightHex: "4A4458", darkHex: "FFFFFF")    // ~0.7 alpha
-        static let textTertiary  = Color(lightHex: "6B6580", darkHex: "FFFFFF")    // ~0.5 alpha
+        static let textTertiary  = Color(lightHex: "7A7290", darkHex: "FFFFFF")    // ~0.5 alpha
 
         // ── Status (fixed — convey meaning, not theme) ────────────────
         static let success = Color(lightHex: "2ECC71", darkHex: "2ECC71")
@@ -85,16 +89,17 @@ enum VitaTheme {
 
     // MARK: - Shadows
     enum Shadows {
-        // Shadow opacity differs by mode: dark mode wants stronger shadows
-        // (so the card "lifts" off a dark background); light mode wants
-        // subtler shadows (the bright background already provides contrast).
+        // Dark mode: strong black shadow lifts cards off the deep background.
+        // Light mode: soft violet shadow (instead of harsh black) — the
+        // "Apple Health" aesthetic. Pair with `border` for crispness.
         static let card = Shadow(
-            color: Color(lightHex: "0D0B1E", darkHex: "000000"),
-            radius: 8, x: 0, y: 4
+            color: Color(lightHex: "6B4EFF", darkHex: "000000"),
+            radius: 14, x: 0, y: 6
         )
-        static let cardLight = Shadow(
-            color: Color(lightHex: "0D0B1E", darkHex: "000000"),
-            radius: 8, x: 0, y: 4
+        // Tighter shadow for small chips / inline elements.
+        static let cardTight = Shadow(
+            color: Color(lightHex: "6B4EFF", darkHex: "000000"),
+            radius: 6, x: 0, y: 2
         )
         static let glow = Shadow(color: Colors.primary.opacity(0.5), radius: 12, x: 0, y: 0)
         static let glowGold = Shadow(color: Colors.accent.opacity(0.6), radius: 15, x: 0, y: 0)

@@ -38,6 +38,33 @@ struct SettingsView: View {
         NavigationStack {
             List {
                 Section {
+                    ForEach(AppearanceMode.allCases) { mode in
+                        Button {
+                            appearanceModeRaw = mode.rawValue
+                        } label: {
+                            HStack {
+                                Image(systemName: mode.iconName)
+                                    .frame(width: 30)
+                                    .foregroundColor(.blue)
+                                Text(mode.displayName)
+                                    .foregroundColor(.primary)
+                                Spacer()
+                                if appearanceModeRaw == mode.rawValue {
+                                    Image(systemName: "checkmark")
+                                        .foregroundColor(.blue)
+                                        .fontWeight(.semibold)
+                                }
+                            }
+                        }
+                        .accessibilityIdentifier("appearance_\(mode.rawValue)")
+                    }
+                } header: {
+                    Text("Appearance")
+                } footer: {
+                    Text("Choose Light, Dark, or follow your system setting.")
+                }
+
+                Section {
                     HStack {
                         Image(systemName: "lock.shield.fill")
                             .font(.title2)
@@ -181,33 +208,6 @@ struct SettingsView: View {
                     }
                 } header: {
                     Text("App Info")
-                }
-
-                Section {
-                    ForEach(AppearanceMode.allCases) { mode in
-                        Button {
-                            appearanceModeRaw = mode.rawValue
-                        } label: {
-                            HStack {
-                                Image(systemName: mode.iconName)
-                                    .frame(width: 30)
-                                    .foregroundColor(.blue)
-                                Text(mode.displayName)
-                                    .foregroundColor(.primary)
-                                Spacer()
-                                if appearanceModeRaw == mode.rawValue {
-                                    Image(systemName: "checkmark")
-                                        .foregroundColor(.blue)
-                                        .fontWeight(.semibold)
-                                }
-                            }
-                        }
-                        .accessibilityIdentifier("appearance_\(mode.rawValue)")
-                    }
-                } header: {
-                    Text("Appearance")
-                } footer: {
-                    Text("Choose Light, Dark, or follow your system setting.")
                 }
             }
             .navigationTitle("Settings")

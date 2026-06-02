@@ -95,6 +95,11 @@ struct MissionCard: View {
         .background(
             RoundedRectangle(cornerRadius: VitaTheme.Radius.md)
                 .fill(VitaTheme.Colors.surface)
+                .overlay(
+                    RoundedRectangle(cornerRadius: VitaTheme.Radius.md)
+                        .stroke(VitaTheme.Colors.border, lineWidth: 1)
+                )
+                .cardShadow(VitaTheme.Shadows.cardTight)
         )
         .accessibilityIdentifier("mission_card_\(index)")
     }

@@ -303,16 +303,16 @@ struct HabitCardView: View {
                 VStack(alignment: .leading, spacing: 4) {
                     Text(habit.name)
                         .font(VitaTheme.Fonts.titleMedium)
-                        .foregroundColor(.white)
-                    
+                        .foregroundColor(VitaTheme.Colors.textPrimary)
+
                     HStack(spacing: 4) {
                         Image(systemName: habit.streakIcon)
                             .font(.system(size: 12))
                             .foregroundColor(habit.currentStreak > 0 ? VitaTheme.Colors.warning : .gray)
-                        
+
                         Text("\(habit.currentStreak) day streak")
                             .font(VitaTheme.Fonts.caption)
-                            .foregroundColor(.white.opacity(0.7))
+                            .foregroundColor(VitaTheme.Colors.textSecondary)
                     }
                 }
             }
@@ -345,10 +345,10 @@ struct HabitCardView: View {
                     if habit.isCompletedToday {
                         Image(systemName: "checkmark")
                             .font(.system(size: 20, weight: .bold))
-                            .foregroundColor(.white)
+                            .foregroundColor(Color.white)
                     } else {
                         Circle()
-                            .stroke(Color.white.opacity(0.5), lineWidth: 2)
+                            .stroke(VitaTheme.Colors.border, lineWidth: 2)
                             .frame(width: 40, height: 40)
                     }
                 }
@@ -362,6 +362,11 @@ struct HabitCardView: View {
         .background(
             RoundedRectangle(cornerRadius: VitaTheme.Radius.lg)
                 .fill(VitaTheme.Colors.surface)
+                .overlay(
+                    RoundedRectangle(cornerRadius: VitaTheme.Radius.lg)
+                        .stroke(VitaTheme.Colors.border, lineWidth: 1)
+                )
+                .cardShadow(VitaTheme.Shadows.cardTight)
         )
     }
 }
@@ -440,23 +445,23 @@ struct XPProgressBar: View {
                 Text("Lv. \(level.level)")
                     .font(VitaTheme.Fonts.captionBold)
                     .foregroundColor(VitaTheme.Colors.accent)
-                
+
                 Text(level.title)
                     .font(VitaTheme.Fonts.caption)
-                    .foregroundColor(.white.opacity(0.7))
-                
+                    .foregroundColor(VitaTheme.Colors.textSecondary)
+
                 Spacer()
-                
+
                 Text("\(level.currentXP)/\(level.xpForNextLevel) XP")
                     .font(VitaTheme.Fonts.caption)
-                    .foregroundColor(.white.opacity(0.5))
+                    .foregroundColor(VitaTheme.Colors.textTertiary)
             }
-            
+
             GeometryReader { geo in
                 ZStack(alignment: .leading) {
                     RoundedRectangle(cornerRadius: 6)
-                        .fill(Color.white.opacity(0.1))
-                    
+                        .fill(VitaTheme.Colors.surfaceLight)
+
                     RoundedRectangle(cornerRadius: 6)
                         .fill(
                             LinearGradient(
@@ -474,6 +479,11 @@ struct XPProgressBar: View {
         .background(
             RoundedRectangle(cornerRadius: VitaTheme.Radius.lg)
                 .fill(VitaTheme.Colors.surface)
+                .overlay(
+                    RoundedRectangle(cornerRadius: VitaTheme.Radius.lg)
+                        .stroke(VitaTheme.Colors.border, lineWidth: 1)
+                )
+                .cardShadow(VitaTheme.Shadows.cardTight)
         )
         .onAppear {
             withAnimation(.easeOut(duration: 1.0)) {
