@@ -10,62 +10,76 @@ final class AppIconLoader {
     }
 
     private func loadIcon() -> UIImage? {
-        // Method 1: Try UIImage named (standard asset catalog)
-        if let img = UIImage(named: "AppIcon") {
+        // Method 1: Read CFBundleIcons from Info.plist (authoritative source)
+        if let img = loadIconFromInfoPlist() {
             return img
         }
 
-        // Method 2: Search all asset catalogs in the bundle for AppIcon
-        if let img = findIconInAssetCatalogs() {
-            return img
-        }
-
-        // Method 3: Direct bundle path for AppIcon.appiconset/Icon-1024@1x.png
-        let bundleURL = URL(fileURLWithPath: Bundle.main.bundlePath)
-        let iconFullPath = bundleURL
-            .appendingPathComponent("Assets.xcassets")
-            .appendingPathComponent("AppIcon.appiconset")
-            .appendingPathComponent("Icon-1024@1x.png")
-
-        if let img = UIImage(contentsOfFile: iconFullPath.path) {
+        // Method 2: Look for the largest AppIcon*.png in the bundle root
+        if let img = loadIconFromBundleRoot() {
             return img
         }
 
         return nil
     }
 
-    private func findIconInAssetCatalogs() -> UIImage? {
-        // Try common asset catalog locations
-        let searchPaths: [String] = [
-            Bundle.main.bundlePath + "/Assets.xcassets/AppIcon.appiconset/Icon-1024@1x.png",
-            Bundle.main.bundlePath + "/Sources/Resources/Assets.xcassets/AppIcon.appiconset/Icon-1024@1x.png"
+    private func loadIconFromInfoPlist() -> UIImage? {
+        let candidates: [String] = [
+            "CFBundleIcons",
+            "CFBundleIcons~ipad"
         ]
 
-        for path in searchPaths {
-            if let img = UIImage(contentsOfFile: path) {
-                return img
+        for key in candidates {
+            guard let icons = Bundle.main.object(forInfoDictionaryKey: key) as? [String: Any] else { continue }
+            guard let primary = icons["CFBundlePrimaryIcon"] as? [String: Any] else { continue }
+            guard let files = primary["CFBundleIconFiles"] as? [String] else { continue }
+
+            // Try each filename, picking the highest resolution (@3x first, then @2x, then 1x)
+            let sorted = files.sorted { lhs, rhs in
+                let lScale = scaleRank(for: lhs)
+                let rScale = scaleRank(for: rhs)
+                return lScale > rScale
             }
-        }
-
-        // Iterate all xcassets folders found in bundle
-        let fileManager = FileManager.default
-        guard let enumerator = fileManager.enumerator(
-            at: URL(fileURLWithPath: Bundle.main.bundlePath),
-            includingPropertiesForKeys: [.isDirectoryKey],
-            options: [.skipsHiddenFiles]
-        ) else {
-            return nil
-        }
-
-        for case let url as URL in enumerator {
-            if url.pathExtension == "xcassets" {
-                let iconPath = url.appendingPathComponent("AppIcon.appiconset/Icon-1024@1x.png")
-                if let img = UIImage(contentsOfFile: iconPath.path) {
+            for name in sorted {
+                if let img = UIImage(named: name) {
                     return img
                 }
             }
         }
+        return nil
+    }
 
+    private func scaleRank(for filename: String) -> Int {
+        if filename.contains("@3x") { return 3 }
+        if filename.contains("@2x") { return 2 }
+        return 1
+    }
+
+    private func loadIconFromBundleRoot() -> UIImage? {
+        // iOS copies the canonical AppIcon PNGs to the bundle root during build:
+        //   AppIcon60x60@2x.png  (iPhone)
+        //   AppIcon76x76@2x~ipad.png  (iPad)
+        // Pick the largest available one.
+        let candidates: [String] = [
+            "AppIcon60x60@3x",
+            "AppIcon60x60@2x",
+            "AppIcon76x76@2x~ipad",
+            "AppIcon76x76@1x~ipad",
+            "AppIcon"
+        ]
+
+        let bundlePath = Bundle.main.bundlePath
+        for name in candidates {
+            for ext in ["png", "jpg"] {
+                let path = "\(bundlePath)/\(name).\(ext)"
+                if let img = UIImage(contentsOfFile: path) {
+                    return img
+                }
+            }
+            if let img = UIImage(named: name) {
+                return img
+            }
+        }
         return nil
     }
 }

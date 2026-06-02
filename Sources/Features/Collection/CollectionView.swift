@@ -9,28 +9,32 @@ struct CollectionView: View {
         NavigationStack {
             ZStack {
                 VitaTheme.Colors.background.ignoresSafeArea()
-                
-                VStack(spacing: 16) {
-                    // Filter tabs
-                    CollectionFilterTab(selected: $selectedFilter)
-                        .accessibilityIdentifier("collection_filter")
-                    
-                    // Collection stats
-                    CollectionStatsBar()
-                        .accessibilityIdentifier("collection_stats")
-                    
-                    // Card grid
-                    CollectionGrid(
-                        cards: filteredCards,
-                        selectedFilter: selectedFilter,
-                        onCardTap: { selectedCard = $0 }
-                    )
-                    .accessibilityIdentifier("collection_grid")
-                    
-                    // Achievements
-                    AchievementsSection()
-                        .accessibilityIdentifier("achievements_section")
+
+                ScrollView {
+                    LazyVStack(spacing: 16) {
+                        // Filter tabs
+                        CollectionFilterTab(selected: $selectedFilter)
+                            .accessibilityIdentifier("collection_filter")
+
+                        // Collection stats
+                        CollectionStatsBar()
+                            .accessibilityIdentifier("collection_stats")
+
+                        // Card grid
+                        CollectionGrid(
+                            cards: filteredCards,
+                            selectedFilter: selectedFilter,
+                            onCardTap: { selectedCard = $0 }
+                        )
+                        .accessibilityIdentifier("collection_grid")
+
+                        // Achievements
+                        AchievementsSection()
+                            .accessibilityIdentifier("achievements_section")
+                    }
+                    .padding(.bottom, 24)
                 }
+                .scrollIndicators(.hidden)
             }
             .navigationTitle("Collection")
             .toolbarColorScheme(.dark, for: .navigationBar)
@@ -172,56 +176,74 @@ struct CollectionGrid: View {
     let cards: [HealthCard]
     let selectedFilter: CollectionFilter
     let onCardTap: (HealthCard) -> Void
-    
+
     let columns = [
         GridItem(.flexible(), spacing: 12),
         GridItem(.flexible(), spacing: 12)
     ]
-    
+
     var body: some View {
-        LazyVGrid(columns: columns, spacing: 12) {
-            ForEach(Array(cards.enumerated()), id: \.element.id) { index, card in
-                Button {
-                    onCardTap(card)
-                } label: {
-                    CollectionCardItem(card: card, index: index)
-                }
-                .accessibilityIdentifier("collection_card_\(index)")
+        if cards.isEmpty {
+            VStack(spacing: 8) {
+                Image(systemName: "square.stack.3d.up.slash")
+                    .font(.system(size: 40))
+                    .foregroundColor(.white.opacity(0.4))
+                Text("No cards in this category yet")
+                    .font(VitaTheme.Fonts.body)
+                    .foregroundColor(.white.opacity(0.6))
+                Text("Pull a daily card or build habits to grow your collection")
+                    .font(VitaTheme.Fonts.caption)
+                    .foregroundColor(.white.opacity(0.4))
+                    .multilineTextAlignment(.center)
             }
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 40)
+            .padding(.horizontal)
+        } else {
+            LazyVGrid(columns: columns, spacing: 12) {
+                ForEach(Array(cards.enumerated()), id: \.element.id) { index, card in
+                    Button {
+                        onCardTap(card)
+                    } label: {
+                        CollectionCardItem(card: card, index: index)
+                    }
+                    .accessibilityIdentifier("collection_card_\(index)")
+                }
+            }
+            .padding(.horizontal)
         }
-        .padding(.horizontal)
     }
 }
 
 struct CollectionCardItem: View {
     let card: HealthCard
     let index: Int
-    
+
     var body: some View {
         ZStack {
             if card.isCollected {
-                GameCardView(card: card, isInteractive: false)
+                GameCardView(card: card, isInteractive: false, fixedSize: false)
             } else {
                 LockedCardView(rarity: card.rarity)
             }
         }
+        .aspectRatio(0.72, contentMode: .fit)
     }
 }
 
 struct LockedCardView: View {
     let rarity: CardRarity
-    
+
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: VitaTheme.Radius.card)
                 .fill(VitaTheme.Colors.surface)
-                .frame(width: 160, height: 220)
-            
+
             VStack(spacing: 8) {
                 Image(systemName: "questionmark.circle")
                     .font(.system(size: 40))
                     .foregroundColor(.gray)
-                
+
                 Text("???")
                     .font(VitaTheme.Fonts.caption)
                     .foregroundColor(.gray)
@@ -267,6 +289,7 @@ struct CardDetailSheet: View {
                 
                 VStack(spacing: 24) {
                     GameCardView(card: card, isInteractive: true)
+                        .frame(width: 200, height: 280)
                         .accessibilityIdentifier("sheet_card")
                     
                     VStack(spacing: 16) {

@@ -4,6 +4,7 @@ import SwiftUI
 struct GameCardView: View {
     let card: HealthCard
     let isInteractive: Bool
+    var fixedSize: Bool = true
     var onTap: (() -> Void)?
     
     @State private var isFlipped = false
@@ -62,7 +63,7 @@ struct GameCardView: View {
                 .clipped()
             }
         }
-        .frame(width: 160, height: 220)
+        .frame(width: fixedSize ? 160 : nil, height: fixedSize ? 220 : nil)
         .scaleEffect(isPressed ? 0.96 : 1.0)
         .onAppear {
             if card.rarity.stars >= 4 {

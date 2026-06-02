@@ -413,15 +413,21 @@ struct AboutView: View {
             }
 
             Section {
-                Link(destination: URL(string: "https://lauer3912.github.io/ios-VitaMind/docs/PrivacyPolicy.html")!) {
+                NavigationLink {
+                    LegalDocumentView(document: .privacyPolicy)
+                } label: {
                     Label("Privacy Policy", systemImage: "hand.raised")
                 }
 
-                Link(destination: URL(string: "https://lauer3912.github.io/ios-VitaMind/docs/TermsOfService.html")!) {
+                NavigationLink {
+                    LegalDocumentView(document: .termsOfService)
+                } label: {
                     Label("Terms of Service", systemImage: "doc.text")
                 }
             } header: {
                 Text("Legal")
+            } footer: {
+                Text("These documents are bundled with the app and available offline.")
             }
         }
         .navigationTitle("About")

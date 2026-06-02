@@ -33,6 +33,8 @@ targets:
     resources:
       - path: Sources/Resources/Assets.xcassets
       - path: Sources/LaunchScreen.storyboard
+      - path: Sources/Resources/Docs
+        type: folder
     entitlements:
       path: Sources/VitaPocket.entitlements
       properties:
