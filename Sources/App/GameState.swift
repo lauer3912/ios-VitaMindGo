@@ -38,6 +38,13 @@ final class GameState: ObservableObject {
         }
         loadPersistedData()
         setupDefaultDataIfNeeded()
+        // Seed the Health Stats grid with mock data so the screen is
+        // never empty on first launch. Real HealthKit data replaces the
+        // mock once `refreshHealthCardsFromHealthKit()` succeeds (which
+        // happens after the user grants HealthKit authorization).
+        if healthCards.isEmpty {
+            setupMockHealthCards()
+        }
     }
     
     // MARK: - Load Persisted Data

@@ -65,6 +65,36 @@ struct SettingsView: View {
                 }
 
                 Section {
+                    HStack {
+                        Image(systemName: gameState.isHealthKitAuthorized ? "heart.text.square.fill" : "heart.text.square")
+                            .foregroundColor(gameState.isHealthKitAuthorized ? VitaTheme.Colors.success : VitaTheme.Colors.textTertiary)
+                        Text("HealthKit")
+                        Spacer()
+                        if gameState.isHealthKitAuthorized {
+                            Text("Connected")
+                                .foregroundColor(VitaTheme.Colors.success)
+                        } else {
+                            Button("Connect") {
+                                Task { await gameState.requestHealthKitAuthorization() }
+                            }
+                            .font(VitaTheme.Fonts.caption)
+                            .foregroundColor(.blue)
+                        }
+                    }
+
+                    Button {
+                        Task { await gameState.refreshHealthCardsFromHealthKit() }
+                    } label: {
+                        Label("Refresh Health Cards", systemImage: "arrow.clockwise")
+                    }
+                    .accessibilityIdentifier("settings_refresh_health_cards")
+                } header: {
+                    Text("HealthKit")
+                } footer: {
+                    Text("Connect HealthKit to populate your health cards with real data (steps, heart rate, sleep, etc).")
+                }
+
+                Section {
                     HStack(spacing: 12) {
                         Image(systemName: "lock.shield.fill")
                             .font(.title2)
@@ -388,7 +418,9 @@ struct CustomProviderConfigView: View {
     }
 
     private func testAndSave() {
-        guard !baseURL.isEmpty || !apiKey.isEmpty else { return }
+        // Both Base URL and API Key are required (the button is also
+        // disabled when either is empty, but defend in depth).
+        guard !baseURL.isEmpty && !apiKey.isEmpty else { return }
         isTesting = true
         testResult = nil
 

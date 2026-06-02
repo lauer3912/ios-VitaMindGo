@@ -246,7 +246,7 @@ final class AIService: ObservableObject {
         )
         
         return try await makeJSONRequest(
-            endpoint: AIProviderType.minimaxCn.baseURL + "/chat/completions",
+            endpoint: currentProvider.baseURL + "/chat/completions",
             method: "POST",
             headers: ["Content-Type": "application/json", "Authorization": "Bearer \(apiKey)"],
             body: requestBody,
@@ -311,7 +311,7 @@ final class AIService: ObservableObject {
         )
         
         return try await makeJSONRequest(
-            endpoint: AIProviderType.anthropic.baseURL,
+            endpoint: currentProvider.baseURL,
             method: "POST",
             headers: ["Content-Type": "application/json", "x-api-key": apiKey, "anthropic-version": "2023-06-01"],
             body: requestBody,
@@ -323,7 +323,7 @@ final class AIService: ObservableObject {
         let modelName = selectedModel.contains("/") 
             ? String(selectedModel.split(separator: "/", omittingEmptySubsequences: false).last ?? "")
             : selectedModel
-        guard let url = URL(string: "\(AIProviderType.google.baseURL)/\(modelName):generateContent?key=\(apiKey)") else {
+        guard let url = URL(string: "\(currentProvider.baseURL)/\(modelName):generateContent?key=\(apiKey)") else {
             throw AIError.invalidURL
         }
         
@@ -339,11 +339,25 @@ final class AIService: ObservableObject {
         request.timeoutInterval = 30
         
         let (data, response) = try await urlSession.data(for: request)
-        
-        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+
+        guard let httpResponse = response as? HTTPURLResponse else {
             throw AIError.invalidResponse
         }
-        
+        // Mirror the 401/429/serverError classification that
+        // `makeJSONRequest` provides, so users see "API Key invalid"
+        // instead of a generic "invalid response" when Google rejects
+        // their key.
+        if httpResponse.statusCode == 401 {
+            throw AIError.unauthorized
+        }
+        if httpResponse.statusCode == 429 {
+            throw AIError.rateLimited
+        }
+        if httpResponse.statusCode != 200 {
+            let errorBody = String(data: data, encoding: .utf8) ?? "Unknown error"
+            throw AIError.serverError(statusCode: httpResponse.statusCode, message: errorBody)
+        }
+
         return extractValue(from: data, keyPath: "candidates.0.content.parts.0.text") ?? "No response"
     }
     
@@ -368,7 +382,7 @@ final class AIService: ObservableObject {
         )
         
         return try await makeJSONRequest(
-            endpoint: AIProviderType.deepseek.baseURL,
+            endpoint: currentProvider.baseURL,
             method: "POST",
             headers: ["Content-Type": "application/json", "Authorization": "Bearer \(apiKey)"],
             body: requestBody,
@@ -397,7 +411,7 @@ final class AIService: ObservableObject {
         )
         
         return try await makeJSONRequest(
-            endpoint: AIProviderType.xai.baseURL,
+            endpoint: currentProvider.baseURL,
             method: "POST",
             headers: ["Content-Type": "application/json", "Authorization": "Bearer \(apiKey)"],
             body: requestBody,
