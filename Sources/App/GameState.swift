@@ -29,6 +29,13 @@ final class GameState: ObservableObject {
     
     // MARK: - Initialization
     init() {
+        // For UI tests, force a clean pull state so each test starts with
+        // a pullable slot (canPullToday = true) regardless of the device's
+        // persisted UserDefaults.
+        if ProcessInfo.processInfo.arguments.contains("--uitesting") {
+            UserDefaults.standard.removeObject(forKey: "vita_last_pull_date")
+            UserDefaults.standard.removeObject(forKey: "vita_pull_streak")
+        }
         loadPersistedData()
         setupDefaultDataIfNeeded()
     }
@@ -153,9 +160,14 @@ final class GameState: ObservableObject {
     }
     
     // MARK: - Card Pull (Daily Gacha)
-    func pullDailyCard() -> HealthCard? {
+    enum PullResult {
+        case pulled(HealthCard)
+        case alreadyPulledToday
+    }
+
+    func pullDailyCard() -> PullResult {
         guard persistence.canPullToday() else {
-            return nil // Already pulled today
+            return .alreadyPulledToday
         }
         
         // Determine rarity based on random chance
@@ -210,7 +222,7 @@ final class GameState: ObservableObject {
             unlockAchievement(id: "shiny_hunter")
         }
         
-        return newCard
+        return .pulled(newCard)
     }
     
     func dismissCardAnimation() {

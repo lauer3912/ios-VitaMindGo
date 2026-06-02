@@ -57,18 +57,17 @@ struct CoachView: View {
     
     private func sendMessage() {
         guard !userMessage.trimmingCharacters(in: .whitespaces).isEmpty else { return }
-        
+
         let userMsg = CoachMessage(text: userMessage, isUser: true, timestamp: Date())
         messages.append(userMsg)
         let currentMessage = userMessage
         userMessage = ""
         isTyping = true
-        
+
         // Convert to ChatMessage format for AIService
         let history = messages.dropLast().map { ChatMessage(role: $0.isUser ? "user" : "assistant", content: $0.text) }
-        
+
         Task { @MainActor in
-            isTyping = false
             do {
                 let response = try await AIService.shared.sendMessage(currentMessage, history: Array(history))
                 let aiMsg = CoachMessage(
@@ -95,6 +94,10 @@ struct CoachView: View {
                     messages.append(aiMsg)
                 }
             }
+            // Turn the typing indicator off *after* the response (or error)
+            // lands, so the user actually sees it. Previously this was set
+            // before the `try` and the indicator was effectively invisible.
+            isTyping = false
         }
     }
 }

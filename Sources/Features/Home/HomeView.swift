@@ -232,6 +232,7 @@ struct HealthCardDetailView: View {
 struct PullCardButton: View {
     @ObservedObject var gameState: GameState
     @State private var isAnimating = false
+    @State private var alreadyPulledToday = false
 
     var body: some View {
         Button(action: {
@@ -242,12 +243,18 @@ struct PullCardButton: View {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                 isAnimating = false
             }
-            // Pull a daily card. GameState sets `showCardAnimation = true`,
-            // which causes ContentView to present `CardPullOverlay`.
-            // The overlay owns its own dismiss (see `CardPullOverlay.onClose`).
-            // If the user has already pulled today, GameState returns nil
-            // and no overlay is shown.
-            _ = self.gameState.pullDailyCard()
+            // Pull a daily card. GameState sets `showCardAnimation = true`
+            // (which presents CardPullOverlay) for new pulls. If the user
+            // has already pulled today, GameState returns .alreadyPulledToday
+            // and we briefly flash a non-blocking message via the
+            // accessibility identifier so UI tests can verify both paths.
+            let result = self.gameState.pullDailyCard()
+            if case .alreadyPulledToday = result {
+                self.alreadyPulledToday = true
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                    self.alreadyPulledToday = false
+                }
+            }
         }) {
             HStack(spacing: 12) {
                 ZStack {
@@ -288,5 +295,26 @@ struct PullCardButton: View {
             .padding(.horizontal)
         }
         .accessibilityIdentifier("pull_card_button")
+        .accessibilityElement(children: .contain)
+        .overlay(alignment: .top) {
+            if alreadyPulledToday {
+                Text("You already pulled today. Come back tomorrow!")
+                    .font(VitaTheme.Fonts.caption)
+                    .foregroundColor(VitaTheme.Colors.textPrimary)
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 6)
+                    .background(
+                        Capsule()
+                            .fill(VitaTheme.Colors.surface)
+                            .overlay(
+                                Capsule()
+                                    .stroke(VitaTheme.Colors.primary, lineWidth: 1)
+                            )
+                    )
+                    .offset(y: -50)
+                    .transition(.opacity)
+                    .accessibilityIdentifier("already_pulled_today_toast")
+            }
+        }
     }
 }
