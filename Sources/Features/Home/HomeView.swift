@@ -31,7 +31,7 @@ struct HomeView: View {
             }
             .background(VitaTheme.Colors.background)
             .navigationTitle("VitaMindGo")
-            .toolbarColorScheme(.dark, for: .navigationBar)
+            // toolbarColorScheme removed — let nav bar follow appearance
         }
         .accessibilityIdentifier("home_view")
     }

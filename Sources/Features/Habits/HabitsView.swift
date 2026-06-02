@@ -33,7 +33,7 @@ struct HabitsView: View {
                 }
             }
             .navigationTitle("Habits")
-            .toolbarColorScheme(.dark, for: .navigationBar)
+            // toolbarColorScheme removed — let nav bar follow appearance
         }
         .accessibilityIdentifier("habits_view")
     }

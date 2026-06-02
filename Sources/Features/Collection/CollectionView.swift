@@ -43,7 +43,7 @@ struct CollectionView: View {
                 .scrollIndicators(.hidden)
             }
             .navigationTitle("Collection")
-            .toolbarColorScheme(.dark, for: .navigationBar)
+            // toolbarColorScheme removed — let nav bar follow appearance
             .sheet(item: $selectedCard) { card in
                 CardDetailSheet(card: card)
             }
@@ -407,7 +407,7 @@ struct CardDetailSheet: View {
                     .foregroundColor(VitaTheme.Colors.primary)
                 }
             }
-            .toolbarColorScheme(.dark, for: .navigationBar)
+            // toolbarColorScheme removed — let nav bar follow appearance
         }
     }
 }

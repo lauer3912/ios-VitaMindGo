@@ -50,7 +50,7 @@ struct CoachView: View {
                 }
             }
             .navigationTitle("Coach")
-            .toolbarColorScheme(.dark, for: .navigationBar)
+            // toolbarColorScheme removed — let nav bar follow appearance
         }
         .accessibilityIdentifier("coach_view")
     }
