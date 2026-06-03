@@ -635,7 +635,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ggsheng.VitaMindTests;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/VitaPocket.app/VitaPocket";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/VitaMindGo.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/VitaMindGo";
 			};
 			name = Debug;
 		};
@@ -802,7 +802,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ggsheng.VitaMindTests;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/VitaPocket.app/VitaPocket";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/VitaMindGo.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/VitaMindGo";
 			};
 			name = Release;
 		};
