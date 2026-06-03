@@ -79,14 +79,14 @@ notification, daily, streak, gamification, card, collection
 
 ## 5. Support URL
 
-**Developer Website:** https://lauer3912.github.io/ios-VitaMind/docs/
+**Developer Website:** https://lauer3912.github.io/ios-VitaMindGo/
 **Contact Email:** support@techidaily.com
 
 ---
 
 ## 6. Privacy Policy URL
 
-**Privacy Policy:** https://lauer3912.github.io/ios-VitaMind/docs/PrivacyPolicy.html
+**Privacy Policy:** https://lauer3912.github.io/ios-VitaMindGo/PrivacyPolicy.html
 **Local Privacy Policy HTML:** AppStore/Docs/PrivacyPolicy.html
 
 ---
@@ -164,8 +164,8 @@ notification, daily, streak, gamification, card, collection
 | Full Description | ✅ 已准备 | 复制到 App Store Connect |
 | Keywords | ✅ 已准备 | 复制到 App Store Connect |
 | Screenshots | ✅ 已生成 | 上传到对应设备位置 |
-| Privacy Policy URL | ⚠️ 待确认 | 确认 `https://techidaily.com/vitamind-privacy` 可访问 |
-| Support URL | ⚠️ 待确认 | 确认 `https://techidaily.com/vitamind-support` 可访问 |
+| Privacy Policy URL | ⚠️ 待确认 | 确认 `https://lauer3912.github.io/ios-VitaMindGo/PrivacyPolicy.html` 可访问 |
+| Support URL | ⚠️ 待确认 | 确认 `https://lauer3912.github.io/ios-VitaMindGo/` 可访问 |
 | Category | ✅ Health & Fitness | 确认选择正确 |
 | Content Rating | ✅ 4+ | 完成问卷 |
 | Review Notes | ✅ 已准备 | 复制或补充 |
