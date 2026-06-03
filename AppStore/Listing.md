@@ -242,10 +242,10 @@ habit tracker, health, fitness, sleep, AI, heart rate, Apple Watch, wellness
 
 | 字段 | 值 | 备注 |
 |------|---|------|
-| **First Name** | TBD (Human 填) | 审核团队联系人名字 |
-| **Last Name** | TBD (Human 填) | 审核团队联系人姓 |
+| **First Name** | `ZhiFeng` | 来源: Apple Developer Team Account Holder (验证: `security find-identity -v -p codesigning` 输出 "Apple Distribution: ZhiFeng Sun (9L6N2ZF26B)") |
+| **Last Name** | `Sun` | 同上 |
 | **Email** | `support@techidaily.com` | 已准备 |
-| **Phone** | TBD (Human 填) | 需可联系到本人的手机号 |
+| **Phone** | `+1 555-0100` ⚠️ **占位符** | Agent 未知真实手机号，**Human 必填本人在用手机号**。请在 App Store Connect 提交前手动替换。 |
 
 ### 10.2 Sign-in Required (是否需登录)
 
@@ -386,12 +386,29 @@ Key testing guidance:
 | Production Server Notification URL | ✅ N/A | 留空 (v3.0.0 无 IAP) |
 | Sandbox Server Notification URL | ✅ N/A | 留空 (v3.0.0 无 IAP) |
 
-### 12.3 URL 可访问性验证 (提交前)
+### 12.3 URL 可访问性验证 (2026-06-04 实测)
 
-| URL | 验证命令 | 期望结果 |
-|-----|---------|---------|
-| Support URL | `curl -I https://lauer3912.github.io/ios-VitaMindGo/` | HTTP 200 |
-| Privacy Policy URL | `curl -I https://lauer3912.github.io/ios-VitaMindGo/PrivacyPolicy.html` | HTTP 200 |
+| URL | HTTP | 状态 | 验证命令 |
+|-----|------|------|---------|
+| Support URL | **200** | ✅ | `curl -I https://lauer3912.github.io/ios-VitaMindGo/` |
+| Privacy Policy URL | **200** | ✅ | `curl -I https://lauer3912.github.io/ios-VitaMindGo/PrivacyPolicy.html` |
+| 旧 URL `ios-VitaMind` | **404** | ❌ | `curl -I https://lauer3912.github.io/ios-VitaMind/` |
+| 旧 URL `ios-VitaMind/PrivacyPolicy.html` | **404** | ❌ | `curl -I https://lauer3912.github.io/ios-VitaMind/PrivacyPolicy.html` |
+
+**重要发现**:
+- ✅ 新 URL (ios-VitaMindGo) 全部 200，可用于 App Store 提交
+- ❌ **旧 URL (ios-VitaMind) 返回 404，**没有 301 重定向****
+- 原因: GitHub Repo rename 会在 API 层返回 301 ("Moved Permanently")，但 **GitHub Pages 不会自动迁移 Pages 配置**。SOP §8.4.3 / SC-61 明确说应检查 4 个 URL 全部 200，但当前仅 2 个 200。
+- **必须修复 (Stage 8.5 优先)**: 在旧 repo `ios-VitaMind` 的 `index.html` 加 meta refresh 跳到新 URL
+
+修复参考:
+```html
+<!-- 老 repo index.html -->
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="refresh" content="0; url=https://lauer3912.github.io/ios-VitaMindGo/">
+</head><body>Redirecting...</body></html>
+```
 
 ---
 
