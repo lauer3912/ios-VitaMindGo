@@ -121,8 +121,11 @@ notification, daily, streak, gamification, card, collection
 - iPhone: `vp_tab1_pocket.png`, `vp_tab2_habits.png`, `vp_tab3_coach.png`, `vp_tab4_collection.png`, `vp_tab5_settings.png`
 - iPad: `ipad_tab1.png`, `ipad_tab2.png`, `ipad_tab3.png`, `ipad_tab4.png`, `ipad_tab5_settings.png`
 
-**Last captured:** 2026-06-03 (re-captured after Mock-data removal + Settings tab + local notifications feature)
-- Legacy captures (5-31, 4 tabs only) moved to `AppStore/Screenshots/legacy-5-31/` and `legacy-5-31-ipad/`
+**Last captured:** 2026-06-03 (re-captured with **Release** configuration build, after Mock-data removal + Settings tab + local notifications feature)
+- Captured using `xcodebuild test -configuration Release` so the binary that produced the screenshots is the same configuration that gets archived and uploaded to App Store Connect
+- Verified Bundle ID = `com.ggsheng.VitaMind`, Display Name = `VitaMindGo`, Version = `3.0.0` (Build 1) in the captured `.app` Info.plist
+- No `#if DEBUG` / `#if !DEBUG` in Sources — Debug and Release configurations render identical UI
+- Legacy captures (5-31, 4 tabs only, Debug build) moved to `AppStore/Screenshots/legacy-5-31/` and `legacy-5-31-ipad/`
 
 ---
 
