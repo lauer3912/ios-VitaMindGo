@@ -39,13 +39,9 @@ final class GameState: ObservableObject {
         }
         loadPersistedData()
         setupDefaultDataIfNeeded()
-        // Seed the Health Stats grid with mock data so the screen is
-        // never empty on first launch. Real HealthKit data replaces the
-        // mock once `refreshHealthCardsFromHealthKit()` succeeds (which
-        // happens after the user grants HealthKit authorization).
-        if healthCards.isEmpty {
-            setupMockHealthCards()
-        }
+        // No mock seeding. If `healthCards` is empty (no HealthKit auth,
+        // no real data), HomeView shows its built-in "No health data yet"
+        // empty state which guides the user to connect Health.
     }
     
     // MARK: - Load Persisted Data
@@ -89,8 +85,9 @@ final class GameState: ObservableObject {
         } catch {
             print("HealthKit authorization failed: \(error)")
             isHealthKitAuthorized = false
-            // Create mock health cards if not authorized
-            setupMockHealthCards()
+            // Don't seed mock data on auth failure. The HomeView will
+            // show its empty-state card, prompting the user to retry
+            // from Settings → HealthKit.
         }
     }
 
@@ -139,16 +136,18 @@ final class GameState: ObservableObject {
         }
     }
     
-    private func setupMockHealthCards() {
-        healthCards = [
-            HealthCard(id: "steps", name: "Steps", description: "Track your daily steps", type: .health, rarity: .epic, icon: "figure.walk", color: "4ECDC4", currentValue: 5420, maxValue: 10000, unit: "steps", isCollected: true, isShiny: false, level: 1),
-            HealthCard(id: "heartRate", name: "Heart Rate", description: "Monitor your heart rate", type: .health, rarity: .rare, icon: "heart.fill", color: "FF6B6B", currentValue: 72, maxValue: 200, unit: "BPM", isCollected: true, isShiny: false, level: 1),
-            HealthCard(id: "sleep", name: "Sleep", description: "Track your sleep hours", type: .health, rarity: .uncommon, icon: "moon.fill", color: "9B59B6", currentValue: 7.5, maxValue: 9, unit: "hours", isCollected: true, isShiny: false, level: 1),
-            HealthCard(id: "water", name: "Hydration", description: "Stay hydrated", type: .health, rarity: .common, icon: "drop.fill", color: "3498DB", currentValue: 4, maxValue: 8, unit: "glasses", isCollected: true, isShiny: false, level: 1),
-            HealthCard(id: "meditation", name: "Meditation", description: "Mindful minutes", type: .health, rarity: .uncommon, icon: "brain.head.profile", color: "6B4EFF", currentValue: 10, maxValue: 30, unit: "min", isCollected: true, isShiny: false, level: 1),
-        ]
-        totalCardsCollected = healthCards.count
-    }
+    // MARK: - Mock Health Cards (REMOVED)
+    //
+    // Previously this method seeded 5 fake health cards (5420 steps,
+    // 72 BPM, 7.5h sleep, etc.) on first launch or when HealthKit
+    // authorization was denied. That made the Home tab look populated
+    // for App Store review but showed fabricated data to real users.
+    //
+    // Removed for App Store submission (commit 3xxx). The HomeView
+    // already has a "No health data yet" empty state with a dashed
+    // border and a pointer to Settings → HealthKit, which is what
+    // new users will see until they connect Health.
+    //
     
     // MARK: - Habit Operations
     func completeHabit(_ habitId: String) {

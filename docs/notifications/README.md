@@ -49,3 +49,7 @@ ffmpeg -ss 12 -t 18 -i /tmp/demo.mp4 -i /tmp/pal.png \
 - 19/19 unit tests passing
 - 10/10 UI tests passing (including `NotifDemoTests`)
 - Build: ✅ `BUILD SUCCEEDED` (iPhone 17 Pro Max, iOS 26.5 simulator)
+
+## Mock data removed (App Store prep)
+
+The Pocket tab no longer seeds fake health cards on first launch. New users see the empty state shown in `screenshots/06-pocket-no-mock.png` until they connect HealthKit.
