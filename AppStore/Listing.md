@@ -159,10 +159,34 @@ habit tracker, health, fitness, sleep, AI, heart rate, Apple Watch, wellness
 
 ## 5. Support URL
 
-**Developer Website:** https://lauer3912.github.io/ios-VitaMindGo/
-**Contact Email:** support@techidaily.com
+> **Apple 字段:** Support URL — 必需，需包含真实联系方式 (邮箱/电话/地址)
+> **本项目内规:** 使用 GitHub Pages 主页 (与 Privacy Policy 同域)
+
+| 项目 | 值 |
+|------|---|
+| **Support URL** | `https://lauer3912.github.io/ios-VitaMindGo/` |
+| **Contact Email** | `support@techidaily.com` |
+| **URL 状态** | ⚠️ 待 Human 确认可访问 |
 
 ---
+
+## 5A. Copyright (版权)
+
+> **Apple 字段:** Copyright — 格式: `YYYY Owner Name`，Apple 自动加 © 符号
+> **本项目内规:** Owner 使用 App Display Name (与品牌一致)
+
+| 项目 | 值 |
+|------|---|
+| **Copyright** | `2026 VitaMindGo` |
+
+**理由**:
+- 年份: 2026 (v3.0.0 首次发布年)
+- Owner: `VitaMindGo` (与 App Display Name 一致)
+- Apple 会自动加 © 符号，**不要在字段里手动加** `©` 或 `(c)` (会导致重复符号)
+
+---
+
+## 6. Privacy Policy URL
 
 ## 6. Privacy Policy URL
 
@@ -209,15 +233,104 @@ habit tracker, health, fitness, sleep, AI, heart rate, Apple Watch, wellness
 
 ---
 
-## 10. Review Information
+## 10. App Review Information (App 审核信息)
 
-| Field | Content |
-|-------|---------|
-| **Support Email** | support@techidaily.com |
-| **Demo Account Required** | No |
-| **Demo Account Username** | N/A |
-| **Demo Account Password** | N/A |
-| **Notes for Reviewer** | VitaMindGo integrates with Apple HealthKit and Apple Watch for health tracking. The app uses on-device CoreML AI for privacy-focused health analysis. All features are fully functional without subscription. |
+> **Apple 字段集合:** App Review Information + Export Compliance + Medical Device + Server Notifications
+> **本项目内规:** 所有 4 个子节必填，勿遗漏
+
+### 10.1 Contact Info (联系方式)
+
+| 字段 | 值 | 备注 |
+|------|---|------|
+| **First Name** | TBD (Human 填) | 审核团队联系人名字 |
+| **Last Name** | TBD (Human 填) | 审核团队联系人姓 |
+| **Email** | `support@techidaily.com` | 已准备 |
+| **Phone** | TBD (Human 填) | 需可联系到本人的手机号 |
+
+### 10.2 Sign-in Required (是否需登录)
+
+| 字段 | 值 |
+|------|---|
+| **Sign-in Required** | **No** |
+| **Username** | N/A |
+| **Password** | N/A |
+
+**理由**: VitaMindGo v3.0.0 无账号系统，所有数据本地存储 (App Group + UserDefaults)，首启即用。
+
+### 10.3 Notes for Reviewer (审核备注)
+
+> **Apple 字段:** Notes — 上限 4000 bytes，App Review 内部可见
+
+```
+VitaMindGo integrates with Apple HealthKit and Apple Watch for health tracking. The app uses on-device CoreML AI for privacy-focused health analysis. All features are fully functional without subscription.
+
+Key testing guidance:
+1. The app requests HealthKit authorization on first launch (heart rate, HRV, sleep, steps, exercise minutes). Use Settings > Health > Data Access & Devices > VitaMindGo to manage permissions.
+2. Apple Watch integration is optional. iPhone-only testing is fully supported. Watch app shows current health metrics synced from the paired iPhone.
+3. AI Coach requires a user-provided API key in Settings > AI Provider. The app ships with a placeholder; testers should enter their own OpenAI/Anthropic/Google/DeepSeek/MiniMax/xAI key. No bundled credentials.
+4. The 5 tabs (Pocket, Habits, Coach, Collection, Settings) are all functional without an account. Onboarding tour is skippable.
+5. No subscription, no IAP, no in-app purchase in v3.0.0 — app is 100% free with all features.
+6. The app does NOT claim to diagnose, treat, or prevent any medical condition. All health metrics are presented as informational/lifestyle data.
+```
+
+### 10.4 Regulated Medical Device (受监管医疗设备)
+
+> **Apple 问题:** "Is your app a regulated medical device?"
+> **答案:** **No**
+
+**理由**:
+- VitaMindGo 仅使用 HealthKit 读取心率/HRV/睡眠/步数/运动分钟数
+- **仅供生活方式与一般健康参考**，不提供医学诊断、治疗、治愈、预防任何疾病
+- 符合 Apple 审核指南 1.4.1 (Medical Device considerations) — 一般健康/生活方式类 App
+- 符合 FDA General Wellness 政策 (2019) — 适用于一般健康 App 的豁免
+- 不读取/不展示任何医疗级数据 (血糖、血压、心电图等)
+- UI 中明确说明 "wellness companion" / "lifestyle" 定位，不含 medical claim
+
+### 10.5 App Encryption (Export Compliance 加密文稿)
+
+> **Apple 问题 1:** "Is your app designed to use cryptography or contains or incorporates cryptography?"
+> **答案:** **Yes**
+
+> **Apple 问题 2:** "Does your app qualify for any of the exemptions provided in Category 5, Part 2, Note 4 of the U.S. Bureau of Industry and Security?"
+> **答案:** **Yes**
+
+**说明**:
+- VitaMindGo 使用 `URLSession` 默认 TLS/HTTPS 加密连接 (AI Provider API)
+- 使用 Apple 标准 `HealthKit` / `CoreML` 框架 (不包含自定义加密实现)
+- 所有加密都属于 BIS Category 5, Part 2, Note 4 的豁免类 (公开可获取的加密代码)
+- **不需提交 CCATS (Commodity Classification Automated Tracking System)**
+- **需年度自评报告**: 每年 2 月 1 日前向 BIS 提交 self-classification report (一次性，会计年度内仅 1 次)
+- 本项目内规: Info.plist 已预配置 `ITSAppUsesNonExemptEncryption = false` (见 §10.5 补充)
+
+### 10.6 App Store Server Notifications (服务器通知)
+
+> **Apple 字段:** 用于 IAP/订阅事件回调 URL
+> **本项目状态:** **N/A (v3.0.0 无 IAP)**
+
+| 字段 | 值 | 备注 |
+|------|---|------|
+| **Production URL** | N/A | v3.0.0 免费发布 |
+| **Sandbox URL** | N/A | v3.0.0 免费发布 |
+
+**未来计划**:
+- 当未来版本加入 Auto-Renewable Subscription 后，需配置 2 个端点 (Production + Sandbox)
+- 默认路径: `/v1/notifications/appstore` 或类似
+- 需自行实现 JWT 验证 (从 App Store 拉取公钥) + 事件处理
+- **当前阶段忽略此字段**
+
+### 10.7 字段填写汇总表 (Human 复制用)
+
+| App Store Connect 字段 | 直接复制 |
+|----------------------|---------|
+| Sign-in Required | No |
+| Username | (空) |
+| Password | (空) |
+| Notes for Reviewer | (复制 §10.3 文本块) |
+| Regulated Medical Device | No |
+| App uses cryptography | Yes |
+| App qualifies for exemption | Yes |
+| Production Server Notification URL | (空) |
+| Sandbox Server Notification URL | (空) |
 
 ---
 
@@ -237,18 +350,48 @@ habit tracker, health, fitness, sleep, AI, heart rate, Apple Watch, wellness
 
 > ⚠️ 以下内容需要你在 App Store Connect 网页上填写/确认
 
-| 项目 | 状态 | 你需要做的事 |
-|------|------|------------|
+### 12.1 本地资料 (Listing.md 已提供答案)
+
+| 项目 | Listing.md 状态 | 你需要做的事 |
+|------|-----------------|------------|
 | App Name | ✅ VitaMindGo | 确认 |
-| Short Description | ✅ 已准备 | 复制到 App Store Connect |
-| Full Description | ✅ 已准备 | 复制到 App Store Connect |
-| Keywords | ✅ 已准备 | 复制到 App Store Connect |
-| Screenshots | ✅ 已生成 | 上传到对应设备位置 |
-| Privacy Policy URL | ⚠️ 待确认 | 确认 `https://lauer3912.github.io/ios-VitaMindGo/PrivacyPolicy.html` 可访问 |
-| Support URL | ⚠️ 待确认 | 确认 `https://lauer3912.github.io/ios-VitaMindGo/` 可访问 |
-| Category | ✅ Health & Fitness | 确认选择正确 |
-| Content Rating | ✅ 4+ | 完成问卷 |
-| Review Notes | ✅ 已准备 | 复制或补充 |
+| Subtitle (可选) | ⏳ 30 chars 内 | 可加可不加 (App Store 允许空) |
+| Promotional Text | ✅ A3 (99 chars) | 复制到 App Store Connect |
+| Description | ✅ 1904 chars (纯文本) | 复制到 App Store Connect |
+| Keywords | ✅ 8 词 (76 chars) | 复制到 App Store Connect |
+| Support URL | ✅ GitHub Pages | 确认主页可访问 |
+| Copyright | ✅ "2026 VitaMindGo" | 复制到 App Store Connect |
+| Marketing URL (可选) | ⏳ 可空 | 可不填 |
+| Privacy Policy URL | ✅ GitHub Pages | 确认可访问 |
+| Category (Primary) | ✅ Health & Fitness | 确认 |
+| Category (Secondary) | ✅ Medical | 确认 |
+| Age Rating | ✅ 4+ | 完成问卷 |
+| Screenshots (iPhone) | ✅ 5 张 1320×2868 | 上传 |
+| Screenshots (iPad) | ✅ 5 张 2048×2732 | 上传 |
+
+### 12.2 App Review Information (10.x 全部子节)
+
+| 项目 | Listing.md 状态 | 你需要做的事 |
+|------|-----------------|------------|
+| Contact First Name | ❌ 待 Human 填 | 填入你本人名字 |
+| Contact Last Name | ❌ 待 Human 填 | 填入你本人姓 |
+| Contact Email | ✅ support@techidaily.com | 确认 |
+| Contact Phone | ❌ 待 Human 填 | 填入可联系的手机 |
+| Sign-in Required | ✅ No | 选 No |
+| Demo Account | ✅ N/A | 留空 |
+| Notes for Reviewer | ✅ §10.3 完整文本 | 复制 |
+| Regulated Medical Device | ✅ No | 选 No |
+| App uses cryptography | ✅ Yes | 选 Yes |
+| App qualifies for exemption | ✅ Yes | 选 Yes |
+| Production Server Notification URL | ✅ N/A | 留空 (v3.0.0 无 IAP) |
+| Sandbox Server Notification URL | ✅ N/A | 留空 (v3.0.0 无 IAP) |
+
+### 12.3 URL 可访问性验证 (提交前)
+
+| URL | 验证命令 | 期望结果 |
+|-----|---------|---------|
+| Support URL | `curl -I https://lauer3912.github.io/ios-VitaMindGo/` | HTTP 200 |
+| Privacy Policy URL | `curl -I https://lauer3912.github.io/ios-VitaMindGo/PrivacyPolicy.html` | HTTP 200 |
 
 ---
 
