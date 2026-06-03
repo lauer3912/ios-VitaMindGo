@@ -46,6 +46,7 @@ targets:
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.ggsheng.VitaMind
+        PRODUCT_NAME: VitaMindGo
         INFOPLIST_FILE: Sources/Info.plist
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         LD_RUNPATH_SEARCH_PATHS: "$(inherited) @executable_path/Frameworks"
@@ -74,6 +75,7 @@ targets:
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.ggsheng.VitaMind.widget
+        PRODUCT_NAME: VitaMindGoWidget
         INFOPLIST_FILE: Widget/Info.plist
         ASSETCATALOG_COMPILER_WIDGET_EXTENSION_IMAGE_PLACEHOLDER: ""
         LD_RUNPATH_SEARCH_PATHS: "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks"
