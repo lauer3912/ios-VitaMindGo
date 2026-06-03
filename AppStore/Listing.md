@@ -245,7 +245,7 @@ habit tracker, health, fitness, sleep, AI, heart rate, Apple Watch, wellness
 | **First Name** | `ZhiFeng` | 来源: Apple Developer Team Account Holder (验证: `security find-identity -v -p codesigning` 输出 "Apple Distribution: ZhiFeng Sun (9L6N2ZF26B)") |
 | **Last Name** | `Sun` | 同上 |
 | **Email** | `support@techidaily.com` | 已准备 |
-| **Phone** | `+1 555-0100` ⚠️ **占位符** | Agent 未知真实手机号，**Human 必填本人在用手机号**。请在 App Store Connect 提交前手动替换。 |
+| **Phone** | `+86 15050228829` | Human 2026-06-04 早间提供 (E.164 格式，中国大陆) |
 
 ### 10.2 Sign-in Required (是否需登录)
 
