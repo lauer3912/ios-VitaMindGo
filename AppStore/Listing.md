@@ -276,7 +276,7 @@ Key testing guidance:
 ### 10.4 Regulated Medical Device (受监管医疗设备)
 
 > **Apple 问题:** "Is your app a regulated medical device?"
-> **答案:** **No**
+> **答案:** **No** — VitaMindGo is **NOT a regulated medical device**.
 
 **理由**:
 - VitaMindGo 仅使用 HealthKit 读取心率/HRV/睡眠/步数/运动分钟数
