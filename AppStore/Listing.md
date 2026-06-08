@@ -52,9 +52,13 @@ AI health coach for heart, sleep, habits. On-device AI, no account, no tracking.
 
 > **Apple 字段:** Description — 官方上限 4000 chars, **plain text only, no HTML**
 > **本项目内规:** 纯文本，无 markdown，无 emoji (老爷 2026-06-04 指定)
-> **当前字符数:** 1905 chars (≤4000 ✓)
+> **当前字符数:** 1905 chars (≤4000 ✓)  <-- 2026-06-08 加 Medical Disclaimer 段 → 预计 ~2270 chars
 
 ```
+IMPORTANT MEDICAL DISCLAIMER:
+
+VitaMindGo provides general wellness and fitness information only. It is NOT a medical device and does NOT provide medical advice, diagnosis, or treatment. Always seek the advice of a qualified healthcare professional before making any medical decisions or before starting any new health regimen. Never disregard professional medical advice or delay in seeking it because of something you have read or received through VitaMindGo. If you think you may have a medical emergency, call your doctor, go to the emergency department, or call 911 immediately. The AI health coach provides general wellness information only and may not be accurate; always verify with a qualified professional.
+
 Your AI-Powered Health Companion
 
 VitaMindGo combines cutting-edge AI technology with comprehensive health monitoring to help you understand your body like never before.

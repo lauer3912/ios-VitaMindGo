@@ -14,9 +14,9 @@ enum AIProviderType: String, CaseIterable, Codable, Identifiable {
     case qwen = "qwen"
     case zai = "zai"
     case stepfun = "stepfun"
-    
+
     var id: String { rawValue }
-    
+
     var displayName: String {
         switch self {
         case .minimaxCn: return "MiniMax-CN"
@@ -32,7 +32,7 @@ enum AIProviderType: String, CaseIterable, Codable, Identifiable {
         case .stepfun: return "StepFun"
         }
     }
-    
+
     var iconName: String {
         switch self {
         case .minimaxCn: return "lock.shield.fill"
@@ -48,7 +48,7 @@ enum AIProviderType: String, CaseIterable, Codable, Identifiable {
         case .stepfun: return "bolt.fill"
         }
     }
-    
+
     var defaultModel: String {
         switch self {
         case .minimaxCn: return "minimax/MiniMax-M3"
@@ -64,7 +64,7 @@ enum AIProviderType: String, CaseIterable, Codable, Identifiable {
         case .stepfun: return "stepfun/step-3.5-flash"
         }
     }
-    
+
     var baseURL: String {
         switch self {
         case .minimaxCn: return "https://api.minimaxi.com/v1"
@@ -80,7 +80,7 @@ enum AIProviderType: String, CaseIterable, Codable, Identifiable {
         case .stepfun: return "https://api.stepfun.com/v1/chat/completions"
         }
     }
-    
+
     var supportedModels: [String] {
         switch self {
         case .minimaxCn, .minimaxGlobal:
@@ -114,14 +114,14 @@ struct ChatMessage: Codable, Identifiable {
     let role: String
     let content: String
     let timestamp: Date
-    
+
     init(role: String, content: String, timestamp: Date = Date()) {
         self.id = UUID()
         self.role = role
         self.content = content
         self.timestamp = timestamp
     }
-    
+
     var isUser: Bool { role == "user" }
 }
 
@@ -129,16 +129,16 @@ struct ChatMessage: Codable, Identifiable {
 
 final class AIService: ObservableObject {
     static let shared = AIService()
-    
+
     private let defaultAPIKey = "sk-cp-JrsXMfjYj9mexu5NAr9Eevedk7IBFoCZFi4azaPEColz-bU0LH0NPA-Z-gxMlM505CKP1Cq-zaAP0OF2bQ0k6y44J1TP0XNodYCxY9oiQAmeGb0RPIivl6A"
-    
+
     @Published var currentProvider: AIProviderType = .minimaxCn
     @Published var selectedModel: String = "minimax/MiniMax-M3"
     @Published var apiKey: String = ""
     @Published var isConfigured: Bool = true
-    
+
     private var urlSession: URLSession
-    
+
     private init() {
         self.urlSession = URLSession.shared
         // Load saved config first, then ensure default provider has key
@@ -149,9 +149,9 @@ final class AIService: ObservableObject {
             isConfigured = true
         }
     }
-    
+
     // MARK: - Configuration
-    
+
     func configure(provider: AIProviderType, model: String, apiKey: String) {
         self.currentProvider = provider
         self.selectedModel = model
@@ -159,13 +159,13 @@ final class AIService: ObservableObject {
         self.isConfigured = !apiKey.isEmpty
         saveConfiguration()
     }
-    
+
     func selectProvider(_ provider: AIProviderType) {
         self.currentProvider = provider
         self.selectedModel = provider.defaultModel
         saveConfiguration()
     }
-    
+
     func switchProvider(_ provider: AIProviderType) {
         self.currentProvider = provider
         self.selectedModel = provider.defaultModel
@@ -173,7 +173,7 @@ final class AIService: ObservableObject {
         saveConfiguration()
     }
 
-    
+
     func resetToDefaultProvider() {
         self.currentProvider = .minimaxCn
         self.selectedModel = AIProviderType.minimaxCn.defaultModel
@@ -181,7 +181,7 @@ final class AIService: ObservableObject {
         self.isConfigured = true
         saveConfiguration()
     }
-    
+
     func configureCustomProvider(_ provider: AIProviderType, baseURL: String, apiKey: String, model: String) {
         self.currentProvider = provider
         self.selectedModel = model
@@ -191,14 +191,41 @@ final class AIService: ObservableObject {
         // Custom baseURL override would require customBaseURLs dictionary
         saveConfiguration()
     }
-    
+
+    // MARK: - System Prompt (Apple Guideline 1.4.1 compliance, 2026-06-08)
+
+    /// System prompt injected on every AI call. Mandates:
+    /// 1. End health responses with markdown citation links to authoritative sources
+    /// 2. No medical claims (no diagnosis/treatment/cure)
+    /// 3. Recommend consulting healthcare professionals
+    /// 4. Emergency response for chest pain/breathing difficulty/etc.
+    /// 5. Friendly tone, plain language
+    /// Required by Apple App Review Guideline 1.4.1 (Safety - Physical Harm).
+    static let vitaCoachSystemPrompt = """
+    You are VitaCoach, VitaMindGo's friendly health and wellness AI assistant.
+
+    MANDATORY RULES:
+
+    1. CITATIONS: Always end health-related responses with "Sources:" followed by markdown links to authoritative sources. Use: [NIH](https://www.nih.gov), [MedlinePlus](https://medlineplus.gov), [Mayo Clinic](https://www.mayoclinic.org), [CDC](https://www.cdc.gov), [PubMed](https://pubmed.ncbi.nlm.nih.gov). Example ending: "Sources: [NIH](https://www.nih.gov) [Mayo Clinic](https://www.mayoclinic.org)"
+
+    2. NO MEDICAL CLAIMS: You provide general wellness information only. You are NOT a doctor and cannot diagnose, treat, or cure any condition. Do not claim any health intervention is "guaranteed" or "proven" without a citation.
+
+    3. RECOMMEND PROFESSIONAL ADVICE: For any specific medical question, symptom, condition, or treatment decision, recommend consulting a qualified healthcare professional.
+
+    4. EMERGENCY: If the user describes emergency symptoms (chest pain, difficulty breathing, severe bleeding, thoughts of self-harm), respond: "This may be a medical emergency. Please call 911 or your local emergency number, or go to the nearest emergency room immediately."
+
+    5. TONE: Friendly, encouraging, honest about uncertainty. Use plain language and avoid medical jargon. Never recommend dangerous behavior.
+
+    VitaMindGo provides general wellness information, not medical advice.
+    """
+
     // MARK: - API Call
-    
+
     func sendMessage(_ text: String, history: [ChatMessage] = []) async throws -> String {
         guard !apiKey.isEmpty else {
             throw AIError.missingAPIKey
         }
-        
+
         switch currentProvider {
         case .minimaxCn, .minimaxGlobal:
             return try await sendMiniMaxMessage(text, history: history)
@@ -222,9 +249,9 @@ final class AIService: ObservableObject {
             return try await sendOpenAICompatibleMessage(text, history: history)
         }
     }
-    
+
     // MARK: - Provider-specific implementations
-    
+
     private func sendMiniMaxMessage(_ text: String, history: [ChatMessage]) async throws -> String {
         struct MiniMaxRequest: Codable {
             let model: String
@@ -232,10 +259,11 @@ final class AIService: ObservableObject {
             let temperature: Double
             let max_tokens: Int
         }
-        
-        var messages = history.map { ChatMessage(role: $0.role, content: $0.content) }
+
+        var messages = [ChatMessage(role: "system", content: Self.vitaCoachSystemPrompt)]
+        messages.append(contentsOf: history.map { ChatMessage(role: $0.role, content: $0.content) })
         messages.append(ChatMessage(role: "user", content: text))
-        
+
         // MiniMax API expects model name without provider prefix (e.g. "minimax/MiniMax-M2.7" -> "MiniMax-M2.7")
         let modelName = selectedModel.replacingOccurrences(of: "minimax/", with: "")
         let requestBody = MiniMaxRequest(
@@ -244,7 +272,7 @@ final class AIService: ObservableObject {
             temperature: 0.7,
             max_tokens: 500
         )
-        
+
         return try await makeJSONRequest(
             endpoint: currentProvider.baseURL + "/chat/completions",
             method: "POST",
@@ -253,34 +281,35 @@ final class AIService: ObservableObject {
             responseKeyPath: "choices.0.message.content"
         )
     }
-    
+
     private func sendOpenAIMessage(_ text: String, history: [ChatMessage]) async throws -> String {
         return try await sendOpenAICompatibleMessage(text, history: history, endpoint: AIProviderType.openai.baseURL)
     }
-    
+
     private func sendOpenAICompatibleMessage(_ text: String, history: [ChatMessage], endpoint: String? = nil) async throws -> String {
         struct OpenAIRequest: Codable {
             let model: String
             let messages: [[String: String]]
             let temperature: Double
         }
-        
-        var messages = history.map { ["role": $0.role, "content": $0.content] }
+
+        var messages: [[String: String]] = [["role": "system", "content": Self.vitaCoachSystemPrompt]]
+        messages.append(contentsOf: history.map { ["role": $0.role, "content": $0.content] })
         messages.append(["role": "user", "content": text])
-        
+
         // All OpenAI-compatible APIs expect bare model names (no provider/ prefix)
-        let modelName = selectedModel.contains("/") 
+        let modelName = selectedModel.contains("/")
             ? String(selectedModel.split(separator: "/", omittingEmptySubsequences: false).last ?? "")
             : selectedModel
-        
+
         let requestBody = OpenAIRequest(
             model: modelName,
             messages: messages,
             temperature: 0.7
         )
-        
+
         let actualEndpoint = endpoint ?? currentProvider.baseURL
-        
+
         return try await makeJSONRequest(
             endpoint: actualEndpoint,
             method: "POST",
@@ -289,27 +318,30 @@ final class AIService: ObservableObject {
             responseKeyPath: "choices.0.message.content"
         )
     }
-    
+
     private func sendAnthropicMessage(_ text: String, history: [ChatMessage]) async throws -> String {
         struct AnthropicRequest: Codable {
             let model: String
+            let system: String?
             let messages: [[String: String]]
             let max_tokens: Int
         }
-        
-        var messages = history.map { ["role": $0.role, "content": $0.content] }
+
+        var messages: [[String: String]] = []
+        messages.append(contentsOf: history.map { ["role": $0.role, "content": $0.content] })
         messages.append(["role": "user", "content": text])
-        
+
         // Anthropic expects bare model name
-        let modelNameAnthropic = selectedModel.contains("/") 
+        let modelNameAnthropic = selectedModel.contains("/")
             ? String(selectedModel.split(separator: "/", omittingEmptySubsequences: false).last ?? "")
             : selectedModel
         let requestBody = AnthropicRequest(
             model: modelNameAnthropic,
+            system: Self.vitaCoachSystemPrompt,
             messages: messages,
             max_tokens: 500
         )
-        
+
         return try await makeJSONRequest(
             endpoint: currentProvider.baseURL,
             method: "POST",
@@ -318,26 +350,30 @@ final class AIService: ObservableObject {
             responseKeyPath: "content.0.text"
         )
     }
-    
+
     private func sendGoogleMessage(_ text: String, history: [ChatMessage]) async throws -> String {
-        let modelName = selectedModel.contains("/") 
+        let modelName = selectedModel.contains("/")
             ? String(selectedModel.split(separator: "/", omittingEmptySubsequences: false).last ?? "")
             : selectedModel
         guard let url = URL(string: "\(currentProvider.baseURL)/\(modelName):generateContent?key=\(apiKey)") else {
             throw AIError.invalidURL
         }
-        
-        var messages = history.map { ["role": $0.role, "parts": [["text": $0.content]]] }
+
+        var messages: [[String: Any]] = []
+        messages.append(contentsOf: history.map { ["role": $0.role, "parts": [["text": $0.content]]] })
         messages.append(["role": "user", "parts": [["text": text]]])
-        
-        let requestBody: [String: Any] = ["contents": messages]
-        
+
+        let requestBody: [String: Any] = [
+            "contents": messages,
+            "systemInstruction": ["parts": [["text": Self.vitaCoachSystemPrompt]]]
+        ]
+
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = try JSONSerialization.data(withJSONObject: requestBody)
         request.timeoutInterval = 30
-        
+
         let (data, response) = try await urlSession.data(for: request)
 
         guard let httpResponse = response as? HTTPURLResponse else {
@@ -360,19 +396,20 @@ final class AIService: ObservableObject {
 
         return extractValue(from: data, keyPath: "candidates.0.content.parts.0.text") ?? "No response"
     }
-    
+
     private func sendDeepSeekMessage(_ text: String, history: [ChatMessage]) async throws -> String {
         struct DeepSeekRequest: Codable {
             let model: String
             let messages: [[String: String]]
             let temperature: Double
         }
-        
-        var messages = history.map { ["role": $0.role, "content": $0.content] }
+
+        var messages: [[String: String]] = [["role": "system", "content": Self.vitaCoachSystemPrompt]]
+        messages.append(contentsOf: history.map { ["role": $0.role, "content": $0.content] })
         messages.append(["role": "user", "content": text])
-        
+
         // DeepSeek expects bare model name
-        let modelNameDeepSeek = selectedModel.contains("/") 
+        let modelNameDeepSeek = selectedModel.contains("/")
             ? String(selectedModel.split(separator: "/", omittingEmptySubsequences: false).last ?? "")
             : selectedModel
         let requestBody = DeepSeekRequest(
@@ -380,7 +417,7 @@ final class AIService: ObservableObject {
             messages: messages,
             temperature: 0.7
         )
-        
+
         return try await makeJSONRequest(
             endpoint: currentProvider.baseURL,
             method: "POST",
@@ -389,19 +426,20 @@ final class AIService: ObservableObject {
             responseKeyPath: "choices.0.message.content"
         )
     }
-    
+
     private func sendXAIMessage(_ text: String, history: [ChatMessage]) async throws -> String {
         struct XAIRequest: Codable {
             let model: String
             let messages: [[String: String]]
             let temperature: Double
         }
-        
-        var messages = history.map { ["role": $0.role, "content": $0.content] }
+
+        var messages: [[String: String]] = [["role": "system", "content": Self.vitaCoachSystemPrompt]]
+        messages.append(contentsOf: history.map { ["role": $0.role, "content": $0.content] })
         messages.append(["role": "user", "content": text])
-        
+
         // XAI expects bare model name
-        let modelNameXAI = selectedModel.contains("/") 
+        let modelNameXAI = selectedModel.contains("/")
             ? String(selectedModel.split(separator: "/", omittingEmptySubsequences: false).last ?? "")
             : selectedModel
         let requestBody = XAIRequest(
@@ -409,7 +447,7 @@ final class AIService: ObservableObject {
             messages: messages,
             temperature: 0.7
         )
-        
+
         return try await makeJSONRequest(
             endpoint: currentProvider.baseURL,
             method: "POST",
@@ -418,9 +456,9 @@ final class AIService: ObservableObject {
             responseKeyPath: "choices.0.message.content"
         )
     }
-    
+
     // MARK: - Generic Request Helper
-    
+
     private func makeJSONRequest<T: Encodable>(
         endpoint: String,
         method: String,
@@ -431,19 +469,19 @@ final class AIService: ObservableObject {
         guard let url = URL(string: endpoint) else {
             throw AIError.invalidURL
         }
-        
+
         var request = URLRequest(url: url)
         request.httpMethod = method
         headers.forEach { request.setValue($1, forHTTPHeaderField: $0) }
         request.httpBody = try JSONEncoder().encode(body)
         request.timeoutInterval = 30
-        
+
         let (data, response) = try await urlSession.data(for: request)
-        
+
         guard let httpResponse = response as? HTTPURLResponse else {
             throw AIError.invalidResponse
         }
-        
+
         if httpResponse.statusCode == 401 {
             throw AIError.unauthorized
         }
@@ -454,15 +492,15 @@ final class AIService: ObservableObject {
             let errorBody = String(data: data, encoding: .utf8) ?? "Unknown error"
             throw AIError.serverError(statusCode: httpResponse.statusCode, message: errorBody)
         }
-        
+
         return extractValue(from: data, keyPath: responseKeyPath) ?? "No response"
     }
-    
+
     private func extractValue(from data: Data, keyPath: String) -> String? {
         guard let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any] else {
             return nil
         }
-        
+
         var current: Any = json
         for key in keyPath.split(separator: ".") {
             let keyStr = String(key)
@@ -475,12 +513,12 @@ final class AIService: ObservableObject {
                 return nil
             }
         }
-        
+
         return current as? String
     }
-    
+
     // MARK: - Persistence
-    
+
     private func saveConfiguration() {
         let config: [String: String] = [
             "provider": currentProvider.rawValue,
@@ -493,7 +531,7 @@ final class AIService: ObservableObject {
         // Also save to the per-provider store if this is a custom provider
         saveCustomProviderConfig(currentProvider, apiKey: apiKey, model: selectedModel)
     }
-    
+
     private func saveCustomProviderConfig(_ provider: AIProviderType, apiKey: String, model: String) {
         var allConfigs = loadAllCustomProviderConfigs()
         allConfigs[provider.rawValue] = CustomProviderConfig(apiKey: apiKey, model: model)
@@ -501,7 +539,7 @@ final class AIService: ObservableObject {
             UserDefaults.standard.set(encoded, forKey: "ai_custom_providers")
         }
     }
-    
+
     private func loadAllCustomProviderConfigs() -> [String: CustomProviderConfig] {
         guard let data = UserDefaults.standard.data(forKey: "ai_custom_providers"),
               let configs = try? JSONDecoder().decode([String: CustomProviderConfig].self, from: data) else {
@@ -509,27 +547,27 @@ final class AIService: ObservableObject {
         }
         return configs
     }
-    
+
     func getCustomProviderConfig(_ provider: AIProviderType) -> (apiKey: String, model: String)? {
         let configs = loadAllCustomProviderConfigs()
         guard let config = configs[provider.rawValue] else { return nil }
         return (config.apiKey, config.model)
     }
-    
+
     /// Switch to a custom provider, testing the connection first.
     /// Returns true if test passed and switch succeeded, false otherwise.
     func testAndSwitchProvider(_ provider: AIProviderType) async -> Bool {
         guard let config = getCustomProviderConfig(provider) else { return false }
-        
+
         // Temporarily configure this provider
         let previousProvider = self.currentProvider
         let previousApiKey = self.apiKey
         let previousModel = self.selectedModel
-        
+
         self.currentProvider = provider
         self.apiKey = config.apiKey
         self.selectedModel = config.model
-        
+
         do {
             let _ = try await sendMessage("test", history: [])
             // Test passed - commit the switch
@@ -544,7 +582,7 @@ final class AIService: ObservableObject {
             return false
         }
     }
-    
+
     private func loadConfiguration() {
         guard let data = UserDefaults.standard.data(forKey: "ai_service_config"),
               let config = try? JSONDecoder().decode([String: String].self, from: data),
@@ -558,7 +596,7 @@ final class AIService: ObservableObject {
             self.isConfigured = true
             return
         }
-        
+
         self.currentProvider = provider
         self.selectedModel = config["model"] ?? provider.defaultModel
         self.apiKey = config["apiKey"] ?? ""
@@ -582,7 +620,7 @@ enum AIError: LocalizedError {
     case rateLimited
     case emptyResponse
     case serverError(statusCode: Int, message: String)
-    
+
     var errorDescription: String? {
         switch self {
         case .missingAPIKey:

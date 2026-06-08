@@ -7,12 +7,14 @@ struct CoachView: View {
         CoachMessage(text: "Welcome, trainer! I'm your VitaCoach. How can I help you today?", isUser: false, timestamp: Date())
     ]
     @State private var isTyping = false
+    @AppStorage("vita_coach_disclaimer_acknowledged") private var disclaimerAcknowledged: Bool = false
+    @State private var showFirstTimeDisclaimer: Bool = false
     
     var body: some View {
         NavigationStack {
             ZStack {
                 VitaTheme.Colors.background.ignoresSafeArea()
-                
+
                 VStack(spacing: 0) {
                     // Coach avatar header
                     CoachHeaderView()
@@ -53,6 +55,18 @@ struct CoachView: View {
             // toolbarColorScheme removed — let nav bar follow appearance
         }
         .accessibilityIdentifier("coach_view")
+        .onAppear {
+            if !disclaimerAcknowledged {
+                showFirstTimeDisclaimer = true
+            }
+        }
+        .alert("Important Medical Disclaimer", isPresented: $showFirstTimeDisclaimer) {
+            Button("I Understand") {
+                disclaimerAcknowledged = true
+            }
+        } message: {
+            Text("VitaCoach provides general wellness information only, not medical advice. It is not a substitute for professional medical advice, diagnosis, or treatment. Always consult a qualified healthcare professional before making any medical decisions. If you think you may have a medical emergency, call 911 or your local emergency number immediately.")
+        }
     }
     
     private func sendMessage() {
@@ -142,6 +156,13 @@ struct CoachHeaderView: View {
                         .font(VitaTheme.Fonts.caption)
                         .foregroundColor(VitaTheme.Colors.textSecondary)
                 }
+
+                // Medical disclaimer (Apple Guideline 1.4.1, 2026-06-08)
+                Text("For informational purposes only — not medical advice. Consult a qualified healthcare professional before making medical decisions.")
+                    .font(VitaTheme.Fonts.caption)
+                    .foregroundColor(VitaTheme.Colors.textSecondary)
+                    .padding(.top, 2)
+                    .accessibilityIdentifier("coach_medical_disclaimer")
             }
 
             Spacer()
