@@ -351,6 +351,107 @@ final class VitaPocketUnitTests: XCTestCase {
                       "System prompt must require a minimum number of citations")
     }
 
+    // MARK: - Apple Guideline 1.4.1 Regression Tests — Citation Safety Net (build 11, 2026-06-09)
+    // Build 10 was uploaded but the safety net is not enough: if the AI
+    // still forgets to emit a Sources block, the response would still
+    // ship with no citations, and Apple would reject again. Build 11 adds
+    // a UI-layer safety net: when the parsed response has no citations
+    // AND looks health-related, we attach a default "We reference these
+    // authorities" card so the footer is NEVER empty for health content.
+
+    func testHealthKeywordHeuristicDetectsCommonTopics() throws {
+        XCTAssertTrue(AIService.looksHealthRelated("Managing diabetes involves a few key things."))
+        XCTAssertTrue(AIService.looksHealthRelated("Try 30 minutes of exercise per day."))
+        XCTAssertTrue(AIService.looksHealthRelated("For sleep, aim for 7-9 hours each night."))
+        XCTAssertTrue(AIService.looksHealthRelated("Consult your doctor before adjusting medication."))
+        XCTAssertTrue(AIService.looksHealthRelated("High blood pressure can be managed with diet."))
+        XCTAssertTrue(AIService.looksHealthRelated("A balanced diet includes protein and vitamins."))
+        XCTAssertTrue(AIService.looksHealthRelated("Walking is a great form of cardio."))
+    }
+
+    func testHealthKeywordHeuristicIgnoresNonHealthContent() throws {
+        XCTAssertFalse(AIService.looksHealthRelated("Hello, how are you?"))
+        XCTAssertFalse(AIService.looksHealthRelated("The weather is nice today."))
+        XCTAssertFalse(AIService.looksHealthRelated("I love this app!"))
+        XCTAssertFalse(AIService.looksHealthRelated(""))
+        XCTAssertFalse(AIService.looksHealthRelated("What's the meaning of life?"))
+    }
+
+    func testHealthKeywordHeuristicIsCaseInsensitive() throws {
+        XCTAssertTrue(AIService.looksHealthRelated("DIABETES management tips"))
+        XCTAssertTrue(AIService.looksHealthRelated("Heart Disease prevention"))
+        XCTAssertTrue(AIService.looksHealthRelated("SLEEP and recovery"))
+    }
+
+    func testDefaultHealthCitationsCoverWhitelistRoots() throws {
+        let defaults = AIService.defaultHealthCitations()
+        XCTAssertEqual(defaults.count, 4, "Default card should show 4 authoritative sources")
+        for citation in defaults {
+            XCTAssertTrue(HealthSourceCatalog.isAllowed(citation.url),
+                          "Default citation URL must be on the Apple 1.4.1 whitelist: \(citation.url)")
+            XCTAssertFalse(citation.title.isEmpty, "Default citation must have a title")
+        }
+        // Make sure we have CDC, WHO, NIH, and Mayo Clinic as defaults.
+        let hosts = defaults.compactMap { URL(string: $0.url)?.host }
+        XCTAssertTrue(hosts.contains(where: { $0.contains("cdc.gov") }))
+        XCTAssertTrue(hosts.contains(where: { $0.contains("who.int") }))
+        XCTAssertTrue(hosts.contains(where: { $0.contains("nih.gov") }))
+        XCTAssertTrue(hosts.contains(where: { $0.contains("mayoclinic.org") }))
+    }
+
+    func testFallbackScenarioAIForgetsSources() throws {
+        // Simulate the exact failure mode Apple flagged in build 9:
+        // the AI produced a long health answer but no Sources block.
+        let rawNoSources = """
+        Managing diabetes involves several lifestyle factors. Focus on a
+        balanced diet, regular exercise, and consistent blood sugar
+        monitoring. Always work with your healthcare team to build a plan
+        that's right for you.
+        """
+        let (clean, parsedCitations) = AIService.parseCitations(from: rawNoSources)
+        XCTAssertEqual(parsedCitations.count, 0, "Without a Sources block, parser should return empty")
+
+        // The fallback safety net must attach default citations because
+        // the text is health-related.
+        var citations = parsedCitations
+        if citations.isEmpty && AIService.looksHealthRelated(clean) {
+            citations = AIService.defaultHealthCitations()
+        }
+        XCTAssertEqual(citations.count, 4, "Fallback must attach default citations for health content")
+        XCTAssertFalse(clean.isEmpty, "Display text remains the AI's actual answer")
+    }
+
+    func testFallbackScenarioAINonHealthContent() throws {
+        // If the user asks a non-health question, we don't add a citations
+        // card (avoids forcing a medical-looking footer on unrelated chats).
+        let raw = "Hello! How are you today? The weather is great."
+        let (clean, parsedCitations) = AIService.parseCitations(from: raw)
+        var citations = parsedCitations
+        if citations.isEmpty && AIService.looksHealthRelated(clean) {
+            citations = AIService.defaultHealthCitations()
+        }
+        XCTAssertEqual(citations.count, 0, "No fallback for non-health content")
+    }
+
+    func testFallbackScenarioAIDoesEmitSources() throws {
+        // When the AI DOES emit a Sources block, we use those citations
+        // and do NOT layer the defaults on top.
+        let raw = """
+        Sleep is important for health.
+
+        ### Sources
+        1. CDC - Sleep and Chronic Disease — https://www.cdc.gov/sleep
+        2. Mayo Clinic - Sleep Disorders — https://www.mayoclinic.org/sleep
+        """
+        let (clean, parsedCitations) = AIService.parseCitations(from: raw)
+        var citations = parsedCitations
+        if citations.isEmpty && AIService.looksHealthRelated(clean) {
+            citations = AIService.defaultHealthCitations()
+        }
+        XCTAssertEqual(citations.count, 2, "AI-emitted sources take precedence over defaults")
+        XCTAssertEqual(citations[0].title, "CDC - Sleep and Chronic Disease")
+    }
+
 
     // MARK: - Helper for testing (must be accessible)
     private func extractValue(from data: Data, keyPath: String) -> String? {

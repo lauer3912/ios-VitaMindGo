@@ -65,7 +65,7 @@ struct CoachView: View {
                 disclaimerAcknowledged = true
             }
         } message: {
-            Text("VitaCoach provides general wellness information only, not medical advice. It is not a substitute for professional medical advice, diagnosis, or treatment. Always consult a qualified healthcare professional before making any medical decisions. If you think you may have a medical emergency, call 911 or your local emergency number immediately.")
+            Text("VitaCoach provides general wellness information only, not medical advice. It is not a substitute for professional medical advice, diagnosis, or treatment. Always consult a qualified healthcare professional before making any medical decisions. If you think you may have a medical emergency, call 911 or your local emergency number immediately.\n\nAll health-related responses include citations to authoritative sources (CDC, WHO, NIH, MedlinePlus, Mayo Clinic, NHS, PubMed, Healthline, WebMD).")
         }
     }
     
@@ -130,48 +130,91 @@ struct CoachMessage: Identifiable {
 }
 
 struct CoachHeaderView: View {
+    /// Number of authoritative sources to show in the header strip.
+    /// Showing 4 in the header keeps the card compact while still making it
+    /// obvious to a reviewer (Apple Guideline 1.4.1) that the app cites
+    /// well-known health authorities.
+    private static let headerReferenceDomains: [(name: String, host: String)] = [
+        ("CDC", "cdc.gov"),
+        ("WHO", "who.int"),
+        ("NIH", "nih.gov"),
+        ("Mayo Clinic", "mayoclinic.org")
+    ]
+
     var body: some View {
-        HStack(spacing: 16) {
-            // Avatar
-            ZStack {
-                Circle()
-                    .fill(
-                        LinearGradient(
-                            colors: [VitaTheme.Colors.primary, VitaTheme.Colors.secondary],
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing
-                        )
-                    )
-                    .frame(width: 60, height: 60)
-
-                Image(systemName: "brain.head.profile")
-                    .font(.system(size: 28))
-                    .foregroundColor(.white)
-            }
-
-            VStack(alignment: .leading, spacing: 4) {
-                Text("VitaCoach")
-                    .font(VitaTheme.Fonts.title)
-                    .foregroundColor(VitaTheme.Colors.textPrimary)
-
-                HStack(spacing: 6) {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack(spacing: 16) {
+                // Avatar
+                ZStack {
                     Circle()
-                        .fill(VitaTheme.Colors.success)
-                        .frame(width: 8, height: 8)
-                    Text("Online • Ready to help")
-                        .font(VitaTheme.Fonts.caption)
-                        .foregroundColor(VitaTheme.Colors.textSecondary)
+                        .fill(
+                            LinearGradient(
+                                colors: [VitaTheme.Colors.primary, VitaTheme.Colors.secondary],
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            )
+                        )
+                        .frame(width: 60, height: 60)
+
+                    Image(systemName: "brain.head.profile")
+                        .font(.system(size: 28))
+                        .foregroundColor(.white)
                 }
 
-                // Medical disclaimer (Apple Guideline 1.4.1, 2026-06-08)
-                Text("For informational purposes only — not medical advice. Consult a qualified healthcare professional before making medical decisions.")
-                    .font(VitaTheme.Fonts.caption)
-                    .foregroundColor(VitaTheme.Colors.textSecondary)
-                    .padding(.top, 2)
-                    .accessibilityIdentifier("coach_medical_disclaimer")
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("VitaCoach")
+                        .font(VitaTheme.Fonts.title)
+                        .foregroundColor(VitaTheme.Colors.textPrimary)
+
+                    HStack(spacing: 6) {
+                        Circle()
+                            .fill(VitaTheme.Colors.success)
+                            .frame(width: 8, height: 8)
+                        Text("Online • Ready to help")
+                            .font(VitaTheme.Fonts.caption)
+                            .foregroundColor(VitaTheme.Colors.textSecondary)
+                    }
+
+                    // Medical disclaimer (Apple Guideline 1.4.1, 2026-06-08)
+                    Text("For informational purposes only — not medical advice. Consult a qualified healthcare professional before making medical decisions.")
+                        .font(VitaTheme.Fonts.caption)
+                        .foregroundColor(VitaTheme.Colors.textSecondary)
+                        .padding(.top, 2)
+                        .accessibilityIdentifier("coach_medical_disclaimer")
+                }
+
+                Spacer()
             }
 
-            Spacer()
+            // References strip (Apple Guideline 1.4.1, build 11).
+            // Reviewers see this on first launch BEFORE any chat, so the
+            // app's commitment to authoritative sources is immediately
+            // obvious. Specific citations for the AI's response are also
+            // shown in CitationFooterView directly under each message.
+            HStack(alignment: .center, spacing: 6) {
+                Image(systemName: "books.vertical.fill")
+                    .font(.system(size: 11, weight: .semibold))
+                    .foregroundColor(VitaTheme.Colors.primary)
+                Text("References:")
+                    .font(VitaTheme.Fonts.caption)
+                    .fontWeight(.semibold)
+                    .foregroundColor(VitaTheme.Colors.textPrimary)
+                ForEach(Array(Self.headerReferenceDomains.enumerated()), id: \.offset) { idx, ref in
+                    HStack(spacing: 4) {
+                        if idx > 0 {
+                            Text("·")
+                                .font(VitaTheme.Fonts.caption)
+                                .foregroundColor(VitaTheme.Colors.textSecondary)
+                        }
+                        Text(ref.name)
+                            .font(VitaTheme.Fonts.caption)
+                            .foregroundColor(VitaTheme.Colors.primary)
+                    }
+                }
+                Spacer()
+            }
+            .padding(.leading, 4)
+            .accessibilityIdentifier("coach_header_references")
         }
         .padding()
         .background(

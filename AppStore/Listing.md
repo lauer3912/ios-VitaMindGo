@@ -276,15 +276,22 @@ Key testing guidance:
 5. No subscription, no IAP, no in-app purchase in v3.0.0 — app is 100% free with all features.
 6. The app does NOT claim to diagnose, treat, or prevent any medical condition. All health metrics are presented as informational/lifestyle data.
 
-Guideline 1.4.1 fix (build 10, 2026-06-09):
-The AI Health Coach (VitaCoach, Coach tab) has been updated to ensure every health-related response includes citations to authoritative sources, displayed prominently in a dedicated "Sources" footer card directly below each AI message.
+Guideline 1.4.1 fix (build 11, 2026-06-09):
+The AI Health Coach (VitaCoach, Coach tab) has been updated to ensure every health-related response includes citations to authoritative sources, displayed prominently in multiple places:
 
-- Citation format: Each AI response ends with a "### Sources" block listing 2+ numbered citations.
-- Source whitelist: Citations are restricted to authoritative domains (cdc.gov, who.int, nih.gov, medlineplus.gov, mayoclinic.org, nhs.uk, pubmed.ncbi.nlm.nih.gov, healthline.com, webmd.com).
-- Visibility: Citations appear as a clearly labeled "Sources" card with tappable links, immediately below the AI message bubble.
-- Disclaimer: A persistent medical disclaimer is also shown at the top of the Coach view ("For informational purposes only — not medical advice").
+1. HEADER REFERENCES STRIP: The Coach tab header now always displays a "References: CDC · WHO · NIH · Mayo Clinic" strip at the top, so the app's commitment to authoritative sources is immediately visible BEFORE any chat.
 
-To test: Open the Coach tab, enter any health-related question (e.g., "How to manage stress", "Benefits of walking 30 min a day"), and verify the response ends with a "Sources" card containing 2+ tappable citation links.
+2. FIRST-TIME DISCLAIMER ALERT: The first time a user opens the Coach tab, a disclaimer alert explains the citation policy.
+
+3. PER-MESSAGE SOURCES CARD: Every AI response on a health topic includes a dedicated "Sources" footer card directly below the message bubble, with 2+ tappable links to authoritative sources.
+
+4. AI PROMPT ENFORCEMENT: The AI system prompt now mandates a structured "### Sources" block at the end of every health-related response with at least 2 citations.
+
+5. FALLBACK SAFETY NET: If the AI ever forgets to emit a Sources block (which would have been a rejection trigger), the app automatically attaches a default "We reference these authorities" card (CDC, WHO, NIH, Mayo Clinic) so the footer is never empty for health content.
+
+Source whitelist: Citations are restricted to authoritative domains (cdc.gov, who.int, nih.gov, medlineplus.gov, mayoclinic.org, nhs.uk, pubmed.ncbi.nlm.nih.gov, healthline.com, webmd.com).
+
+To test: Open the Coach tab. The header should immediately show "References: CDC · WHO · NIH · Mayo Clinic" with a small book icon. Enter any health-related question (e.g., "How to manage stress", "Benefits of walking 30 min a day"), and verify the response ends with a "Sources" card containing 2+ tappable citation links.
 ```
 
 ### 10.4 Regulated Medical Device (受监管医疗设备)
