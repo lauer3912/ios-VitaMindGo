@@ -43,6 +43,16 @@ final class MiniMaxService: ObservableObject {
         guard !apiKey.isEmpty else {
             throw MiniMaxError.missingAPIKey
         }
+
+        // v3.1.0 IAP: enforce free-tier daily message limit.
+        // Pro users bypass; free users blocked at 5/day with .freeMessageLimitReached.
+        // Record the message BEFORE the API call so concurrent calls can't
+        // both squeeze through the limit check.
+        let subscription = await SubscriptionManager.shared
+        let allowed = await subscription.recordFreeMessageIfAllowed()
+        guard allowed else {
+            throw MiniMaxError.freeMessageLimitReached
+        }
         
         await MainActor.run {
             self.isLoading = true
@@ -138,7 +148,8 @@ enum MiniMaxError: Error, LocalizedError {
     case serverError(statusCode: Int, message: String)
     case emptyResponse
     case networkError(Error)
-    
+    case freeMessageLimitReached  // v3.1.0 IAP: free user hit 5/day limit
+
     var errorDescription: String? {
         switch self {
         case .missingAPIKey:
@@ -155,6 +166,8 @@ enum MiniMaxError: Error, LocalizedError {
             return "Empty response from API"
         case .networkError(let error):
             return "Network error: \(error.localizedDescription)"
+        case .freeMessageLimitReached:
+            return "You've used all 5 free AI Coach messages for today. Upgrade to Pro for unlimited access, or come back tomorrow!"
         }
     }
 }

@@ -28,6 +28,8 @@ struct SettingsView: View {
     @EnvironmentObject var gameState: GameState
     @StateObject private var aiService = AIService.shared
     @StateObject private var notifications = NotificationManager.shared
+    @StateObject private var subscription = SubscriptionManager.shared
+    @State private var showPaywall: Bool = false
 
     @State private var switchError: String? = nil
 
@@ -119,6 +121,74 @@ struct SettingsView: View {
                     Text("Notifications")
                 } footer: {
                     Text("Three gentle nudges: 9 AM (daily card), 8 PM (habit check-in), 10 PM (streak rescue). Local only — no server.")
+                }
+
+                // v3.1.0 IAP: Pro status + manage subscription
+                Section {
+                    HStack {
+                        Image(systemName: subscription.entitlement.isPro
+                              ? "crown.fill"
+                              : "crown")
+                            .font(.title2)
+                            .foregroundColor(subscription.entitlement.isPro
+                                             ? VitaTheme.Colors.accent
+                                             : VitaTheme.Colors.textSecondary)
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text(subscription.entitlement.displayName)
+                                .font(.headline)
+                                .foregroundColor(VitaTheme.Colors.textPrimary)
+                            if !subscription.entitlement.isPro {
+                                Text("5 AI Coach messages / day")
+                                    .font(.caption)
+                                    .foregroundColor(VitaTheme.Colors.textSecondary)
+                            } else {
+                                Text("Unlimited AI + all Pro features")
+                                    .font(.caption)
+                                    .foregroundColor(VitaTheme.Colors.textSecondary)
+                            }
+                        }
+                        Spacer()
+                        if !subscription.entitlement.isPro {
+                            Button("Upgrade") { showPaywall = true }
+                                .font(.subheadline.bold())
+                                .foregroundColor(.white)
+                                .padding(.horizontal, 12)
+                                .padding(.vertical, 6)
+                                .background(VitaTheme.Colors.primary)
+                                .cornerRadius(8)
+                        }
+                    }
+
+                    if subscription.entitlement.isPro {
+                        Button {
+                            if let url = URL(string: "itms-apps://apps.apple.com/account/subscriptions") {
+                                UIApplication.shared.open(url)
+                            }
+                        } label: {
+                            Label("Manage Subscription", systemImage: "creditcard")
+                        }
+                    }
+
+                    Button {
+                        Task { await subscription.restorePurchases() }
+                    } label: {
+                        HStack {
+                            Label("Restore Purchases", systemImage: "arrow.clockwise")
+                            Spacer()
+                            if subscription.isPurchasing {
+                                ProgressView()
+                            }
+                        }
+                    }
+                    .disabled(subscription.isPurchasing)
+                } header: {
+                    Text("VitaMindGo Pro")
+                } footer: {
+                    if let err = subscription.lastError {
+                        Text(err).foregroundColor(.red)
+                    } else {
+                        Text("Subscriptions auto-renew until cancelled in Settings → Apple ID → Subscriptions.")
+                    }
                 }
 
                 Section {
@@ -302,6 +372,9 @@ struct SettingsView: View {
             }
             .navigationTitle("Settings")
             .listSectionSpacing(.compact)
+            .sheet(isPresented: $showPaywall) {
+                PaywallView()
+            }
         }
     }
 

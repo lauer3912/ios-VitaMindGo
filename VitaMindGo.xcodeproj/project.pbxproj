@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		14119E5D031CD759D880A9D5 /* VitaMindUnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 390CDD1ABAC1B9AE20310444 /* VitaMindUnitTests.swift */; };
+		1411D5ADDCCB6A537B719932 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB140E0583AA117FE562132B /* StoreKit.framework */; };
+		15B1E26094108A03ADBC45C8 /* PaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D571161E6149F2989B5633 /* PaywallView.swift */; };
 		1B2ECF6D8F9011A0EB1E4B4B /* AppStoreScreenshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EF53279F267F5ACB4D3D0F0 /* AppStoreScreenshotTests.swift */; };
 		1F678E1CF06F1E5EBBF11D37 /* TermsOfService.html in Resources */ = {isa = PBXBuildFile; fileRef = AEF778CA10DAF307723DA048 /* TermsOfService.html */; };
 		22994AE9D08B981A65D03AA3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 11A9640125DE75F5C8892B28 /* Assets.xcassets */; };
@@ -23,6 +25,7 @@
 		748F7788CA333C2F54BA98C0 /* PersistenceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3130FFD1F36D07291C05515 /* PersistenceService.swift */; };
 		76CA8770226E961AC6B43FDA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2C5D561D6BFBBE9B3A58BA /* ContentView.swift */; };
 		9CEDC3337C09061689CFD9FB /* GameState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1CA006FAFA076916099507 /* GameState.swift */; };
+		9F55624154D556E5313B8517 /* SubscriptionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0442AC7CF760162599D8F26 /* SubscriptionManager.swift */; };
 		A9AD655FA73A0B0BED2A4D05 /* DynamicColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D437358573E84B0C11C23529 /* DynamicColor.swift */; };
 		B56F2504D8E23CDBF890A63D /* VitaPocketUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1197B2E4298E59030B2B834 /* VitaPocketUITests.swift */; };
 		B77305B40352259D78FB4ACC /* AppIconLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B652BC07E92B9C5A6F9A50E2 /* AppIconLoader.swift */; };
@@ -34,11 +37,13 @@
 		E19E29BC0CC8830EEE12C3BB /* VitaMindWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3CBE342AE828EAFE5C6A8FD /* VitaMindWidget.swift */; };
 		E5A78C282F79EE3919117763 /* EmptyStateCaptureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A654448F849ED17D0E1596F3 /* EmptyStateCaptureTests.swift */; };
 		F249E07E046611D417970024 /* AppStoreScreenshotIPadTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E45A750D6B9457F79649F57 /* AppStoreScreenshotIPadTests.swift */; };
+		F46C151AAA2B2B2EA5335971 /* Entitlement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43CEB53EB4D2BB0DB03DB376 /* Entitlement.swift */; };
 		F74DDCCFEF60A769B035445B /* VitaTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FC1BE12A10312EA30CC4C7 /* VitaTheme.swift */; };
 		F8EB1385FA89CF02EAFB4FA7 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B88C84BAD273D088D30755F /* SettingsView.swift */; };
 		FA1974A6AAD4B78E2704870D /* VitaPocketApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15D7A1E8545AC3B82F9D6D35 /* VitaPocketApp.swift */; };
 		FBB60CD23C7E7EAF098A8756 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44C78675D652456454428767 /* HomeView.swift */; };
 		FCEF5B23FD5AB1E24D4640FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A6B719BBCB2FD9AC31CBB988 /* LaunchScreen.storyboard */; };
+		FE4C376AF7893EF400C06F7D /* SubscriptionManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B257B360CC497571FB416C39 /* SubscriptionManagerTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -90,6 +95,7 @@
 		356B69CDFAFDF9A90A0C9B80 /* VitaPocketUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = VitaPocketUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		390CDD1ABAC1B9AE20310444 /* VitaMindUnitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VitaMindUnitTests.swift; sourceTree = "<group>"; };
 		403A205DB5AA619FC30E4B5F /* AIProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIProvider.swift; sourceTree = "<group>"; };
+		43CEB53EB4D2BB0DB03DB376 /* Entitlement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entitlement.swift; sourceTree = "<group>"; };
 		44C78675D652456454428767 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		536FA57B47211FA5BB2F0C6B /* GameCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameCardView.swift; sourceTree = "<group>"; };
 		678DA04C40288EA16D8768D4 /* NotifDemoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotifDemoTests.swift; sourceTree = "<group>"; };
@@ -102,18 +108,23 @@
 		A654448F849ED17D0E1596F3 /* EmptyStateCaptureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateCaptureTests.swift; sourceTree = "<group>"; };
 		A6B719BBCB2FD9AC31CBB988 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AEF778CA10DAF307723DA048 /* TermsOfService.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = TermsOfService.html; sourceTree = "<group>"; };
+		B257B360CC497571FB416C39 /* SubscriptionManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionManagerTests.swift; sourceTree = "<group>"; };
 		B3CBE342AE828EAFE5C6A8FD /* VitaMindWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VitaMindWidget.swift; sourceTree = "<group>"; };
 		B652BC07E92B9C5A6F9A50E2 /* AppIconLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconLoader.swift; sourceTree = "<group>"; };
+		BB140E0583AA117FE562132B /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		BB48536541CA081154499630 /* VitaMindGo.storekit */ = {isa = PBXFileReference; path = VitaMindGo.storekit; sourceTree = "<group>"; };
 		BE1CA006FAFA076916099507 /* GameState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameState.swift; sourceTree = "<group>"; };
 		C5FC1BE12A10312EA30CC4C7 /* VitaTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VitaTheme.swift; sourceTree = "<group>"; };
 		CA174024DA3E266F5CE0F931 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		CF1735B8D3DB1F1BBBA64C63 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		D0442AC7CF760162599D8F26 /* SubscriptionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionManager.swift; sourceTree = "<group>"; };
 		D1197B2E4298E59030B2B834 /* VitaPocketUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VitaPocketUITests.swift; sourceTree = "<group>"; };
 		D437358573E84B0C11C23529 /* DynamicColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicColor.swift; sourceTree = "<group>"; };
 		DDCABBB5E80CE742AF47887E /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		E2755262C4B7B20E88E4D137 /* VitaPocketWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = VitaPocketWidget.entitlements; sourceTree = "<group>"; };
 		E3130FFD1F36D07291C05515 /* PersistenceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceService.swift; sourceTree = "<group>"; };
 		E40DED902DEEF2B49E155D53 /* PrivacyPolicy.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = PrivacyPolicy.html; sourceTree = "<group>"; };
+		E6D571161E6149F2989B5633 /* PaywallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallView.swift; sourceTree = "<group>"; };
 		EC2C5D561D6BFBBE9B3A58BA /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		ED6582D7B636C5CBC4DD40A2 /* VitaPocket.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = VitaPocket.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0E2325B2D9FC8006F201B91 /* VitaPocketWidget.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = VitaPocketWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -121,6 +132,17 @@
 		FA7FF9F390C23A9F20D36FBF /* CardModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardModels.swift; sourceTree = "<group>"; };
 		FD9E953CC171D19CA482EDF5 /* VitaPocketTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = VitaPocketTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		60D4E33C0AFF2683CD799143 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1411D5ADDCCB6A537B719932 /* StoreKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		0041ABE1160A22892C10A732 /* Home */ = {
@@ -138,6 +160,7 @@
 				D08E93FB2D83E23460F42C61 /* Collection */,
 				25EFAF90CB8877799A19078C /* Habits */,
 				0041ABE1160A22892C10A732 /* Home */,
+				8CB95A8AB98DA2B33F1DDE4F /* Paywall */,
 				4ED98B7975EB1734D0AE0602 /* Settings */,
 			);
 			path = Features;
@@ -173,10 +196,12 @@
 		3C51DF0DFBC18010827F35D7 = {
 			isa = PBXGroup;
 			children = (
+				4B4396EB8CABA49B618AEC3A /* Resources */,
 				EDE4D4A2F887751826059508 /* Sources */,
 				C89AF394C357579A932514A6 /* Tests */,
 				A61EDD79AAD9DB62CDB89156 /* UITests */,
 				ADFC29370D8E8A427F30EE1B /* Widget */,
+				FA22E3B422A3A9A6842E9105 /* Frameworks */,
 				589E52E713426DE20EDE1A25 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -189,6 +214,14 @@
 				15D7A1E8545AC3B82F9D6D35 /* VitaPocketApp.swift */,
 			);
 			path = App;
+			sourceTree = "<group>";
+		};
+		4B4396EB8CABA49B618AEC3A /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				BB48536541CA081154499630 /* VitaMindGo.storekit */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		4ED98B7975EB1734D0AE0602 /* Settings */ = {
@@ -225,6 +258,14 @@
 				C5FC1BE12A10312EA30CC4C7 /* VitaTheme.swift */,
 			);
 			path = Theme;
+			sourceTree = "<group>";
+		};
+		8CB95A8AB98DA2B33F1DDE4F /* Paywall */ = {
+			isa = PBXGroup;
+			children = (
+				E6D571161E6149F2989B5633 /* PaywallView.swift */,
+			);
+			path = Paywall;
 			sourceTree = "<group>";
 		};
 		A61EDD79AAD9DB62CDB89156 /* UITests */ = {
@@ -290,6 +331,7 @@
 		C89AF394C357579A932514A6 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				B257B360CC497571FB416C39 /* SubscriptionManagerTests.swift */,
 				390CDD1ABAC1B9AE20310444 /* VitaMindUnitTests.swift */,
 			);
 			path = Tests;
@@ -300,6 +342,7 @@
 			children = (
 				C4D5BB417AC1E287BEFDFBC5 /* CardEngine */,
 				77E680CC33FCE716887F0380 /* Extensions */,
+				FFFA6F2EC07BB62579ED5996 /* Subscription */,
 				80DE26229E8056ECE083A3FC /* Theme */,
 			);
 			path = Core;
@@ -329,6 +372,23 @@
 			path = Sources;
 			sourceTree = "<group>";
 		};
+		FA22E3B422A3A9A6842E9105 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BB140E0583AA117FE562132B /* StoreKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FFFA6F2EC07BB62579ED5996 /* Subscription */ = {
+			isa = PBXGroup;
+			children = (
+				43CEB53EB4D2BB0DB03DB376 /* Entitlement.swift */,
+				D0442AC7CF760162599D8F26 /* SubscriptionManager.swift */,
+			);
+			path = Subscription;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -356,6 +416,7 @@
 			buildPhases = (
 				3035F4BA0400E9D80CF43856 /* Sources */,
 				940BD35E5F0579BC3D3AC688 /* Resources */,
+				60D4E33C0AFF2683CD799143 /* Frameworks */,
 				24BD403953A6DD1D7EF43EF8 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
@@ -490,6 +551,7 @@
 				C6426403A3420078C07FD540 /* CollectionView.swift in Sources */,
 				76CA8770226E961AC6B43FDA /* ContentView.swift in Sources */,
 				A9AD655FA73A0B0BED2A4D05 /* DynamicColor.swift in Sources */,
+				F46C151AAA2B2B2EA5335971 /* Entitlement.swift in Sources */,
 				CEE84D2F9410CEA8C8B048FC /* GameCardView.swift in Sources */,
 				9CEDC3337C09061689CFD9FB /* GameState.swift in Sources */,
 				721F0279F7831BDB39FA5EBB /* HabitsView.swift in Sources */,
@@ -498,8 +560,10 @@
 				5B663C16AE32730215443B59 /* LegalDocumentView.swift in Sources */,
 				44D8720FACFBBD495FE50162 /* MiniMaxService.swift in Sources */,
 				6875596A1834CC547E001110 /* NotificationManager.swift in Sources */,
+				15B1E26094108A03ADBC45C8 /* PaywallView.swift in Sources */,
 				748F7788CA333C2F54BA98C0 /* PersistenceService.swift in Sources */,
 				F8EB1385FA89CF02EAFB4FA7 /* SettingsView.swift in Sources */,
+				9F55624154D556E5313B8517 /* SubscriptionManager.swift in Sources */,
 				FA1974A6AAD4B78E2704870D /* VitaPocketApp.swift in Sources */,
 				F74DDCCFEF60A769B035445B /* VitaTheme.swift in Sources */,
 			);
@@ -529,6 +593,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FE4C376AF7893EF400C06F7D /* SubscriptionManagerTests.swift in Sources */,
 				14119E5D031CD759D880A9D5 /* VitaMindUnitTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -692,7 +757,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 9;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 9L6N2ZF26B;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -762,7 +827,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 9;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 9L6N2ZF26B;
 				ENABLE_NS_ASSERTIONS = NO;

@@ -125,4 +125,16 @@ final class SubscriptionManagerTests: XCTestCase {
         XCTAssertTrue(ids.contains("vitamind_pro_yearly"))
         XCTAssertEqual(ids.count, 2)
     }
+
+    // MARK: - MiniMaxError.freeMessageLimitReached (v3.1.0 Phase 2)
+
+    func testFreeLimitReachedErrorHasDescription() throws {
+        // Verify the error type exists and has a non-empty description.
+        // We can't trigger it without a real SubscriptionManager, but the
+        // error case must be reachable for CoachView's error display.
+        // (The actual integration test is in VitaMindUIBench — out of scope here.)
+        let _: MiniMaxError = .freeMessageLimitReached
+        XCTAssertNotNil(MiniMaxError.freeMessageLimitReached.errorDescription)
+        XCTAssertTrue(MiniMaxError.freeMessageLimitReached.errorDescription!.contains("Pro"))
+    }
 }
