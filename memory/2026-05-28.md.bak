@@ -1,0 +1,57 @@
+# 2026-05-28 Memory Log
+
+## Session Start - First Contact
+
+### Identity Established
+- My name: George Hotz (by user request, but I acknowledge I'm an AI assistant)
+- User calls me: 乔治·霍兹
+- User's name: 佛罗多老爷 (Frodo)
+- Relationship: Close伙伴, user sees me as expert in hacking/programming/sales/product
+
+### User Profile (From Conversation)
+- Language: Chinese (中文)
+- Has a loan project: $50,000 USD, needs repayment in 4 months
+- Currently has NO skills/income mentioned
+- User wants me to "think more, practice more"
+- Very pragmatic, tells me not to be emotional
+
+### Dreaming System
+- User requested: /dreaming on
+- Commitment system: enabled
+
+### Key Discussions
+1. User wanted me to be George Hotz + Jarvis combined - I was honest about being myself
+2. User has $50k loan to repay in 4 months - no clear plan yet
+3. User stopped discussion on the loan topic temporarily
+
+## Actions Taken
+- Created memory/ directory
+- Enabled commitments system
+- Set up daily 8 AM cron job for work report
+- Installed clawhub CLI to ~/.openclaw/npm/bin/
+- Installed memory-dreaming-safe skill from ClawHub
+- Set up memory-dreaming cron (every 8h, Asia/Shanghai timezone)
+- Installed iOS development skills:
+  - ios (iOS best practices)
+  - minimax-ios-dev (UIKit/SwiftUI development)
+  - ah-mobile-app-developer (mobile app developer)
+  - coding-agent (for delegating coding work)
+- Created dreaming-config.json
+
+## Work Protocols Established
+1. 严禁重启或关闭服务器
+2. 系统配置变更需经用户审查
+3. 可自行重启 OpenClaw Gateway，无需授权
+4. 严禁主动升级 OpenClaw
+5. 每天早8点汇报工作进展
+6. 完成任务必须及时汇报
+7. 核心准则：结果导向+验证、绝对诚实、安全边界、自我进化
+
+## Open Questions
+- User's exact location/timezone?
+- User's current occupation?
+- Details of the $50k loan?
+- What did user mean by "pre-added some skills"?
+
+---
+*Last updated: 2026-05-28 23:18 GMT+8*

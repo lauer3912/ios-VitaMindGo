@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VitaMindGo Privacy Policy</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #6B4EFF 0%, #00D9A0 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        header {
+            background: linear-gradient(135deg, #6B4EFF 0%, #00D9A0 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        header p {
+            opacity: 0.9;
+            font-size: 1.1em;
+        }
+        .content {
+            padding: 40px;
+        }
+        h2 {
+            color: #6B4EFF;
+            margin: 30px 0 15px 0;
+            font-size: 1.5em;
+            border-bottom: 2px solid #6B4EFF;
+            padding-bottom: 10px;
+        }
+        h3 {
+            color: #00D9A0;
+            margin: 20px 0 10px 0;
+            font-size: 1.2em;
+        }
+        p {
+            margin-bottom: 15px;
+            color: #555;
+        }
+        ul {
+            margin: 15px 0 15px 30px;
+        }
+        li {
+            margin-bottom: 10px;
+            color: #555;
+        }
+        .highlight-box {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%);
+            border-left: 4px solid #6B4EFF;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+        }
+        .highlight-box p {
+            margin: 0;
+            font-weight: 500;
+            color: #444;
+        }
+        footer {
+            background: #f5f7fa;
+            padding: 30px 40px;
+            text-align: center;
+            border-top: 1px solid #eee;
+        }
+        footer p {
+            font-size: 0.9em;
+            color: #888;
+        }
+        .icon-heart {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 50%;
+            line-height: 50px;
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+        @media (max-width: 600px) {
+            body {
+                padding: 20px 10px;
+            }
+            .content {
+                padding: 25px;
+            }
+            header {
+                padding: 30px 20px;
+            }
+            header h1 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="icon-heart">💜</div>
+            <h1>VitaMindGo</h1>
+            <p>Privacy Policy</p>
+            <p style="margin-top: 10px; font-size: 0.9em;">Last Updated: June 1, 2026</p>
+        </header>
+        
+        <div class="content">
+            <h2>1. Introduction</h2>
+            <p>VitaMindGo ("we", "our", or "us") is committed to protecting your privacy. This Privacy Policy explains how VitaMindGo collects, uses, discloses, and safeguards your information when you use our iOS application (the "App").</p>
+            <p>By downloading or using the VitaMindGo App, you agree to the terms of this Privacy Policy. Please read it carefully.</p>
+
+            <h2>2. Information We Collect</h2>
+            
+            <h3>2.1 Health Data</h3>
+            <p>VitaMindGo integrates with Apple HealthKit to collect and process the following health data:</p>
+            <ul>
+                <li>Heart rate and heart rate variability (HRV)</li>
+                <li>Sleep analysis data (total sleep, deep sleep, REM sleep)</li>
+                <li>Step count and physical activity data</li>
+                <li>Exercise minutes and workout data</li>
+                <li>Blood oxygen saturation (SpO2)</li>
+                <li>Body temperature measurements</li>
+                <li>Stand hours and movement data</li>
+            </ul>
+
+            <h3>2.2 Usage Data</h3>
+            <p>We may collect non-personal information about how you interact with the App, including:</p>
+            <ul>
+                <li>Features accessed and usage patterns</li>
+                <li>Device type and iOS version</li>
+                <li>App crashes and performance data</li>
+                <li>Anonymous usage analytics</li>
+            </ul>
+
+            <h3>2.3 AI Conversation Data</h3>
+            <p>When you interact with the VitaMindGo AI assistant, the conversation content is processed to provide AI-powered health insights. These conversations may be processed using AI service providers (including but not limited to MiniMax, OpenAI, Anthropic, Google, DeepSeek, or xAI) to deliver AI-powered health coaching and recommendations.</p>
+
+            <div class="highlight-box">
+                <p>🔒 <strong>Privacy First:</strong> All health data collected through VitaMindGo stays on your device. We use on-device AI processing and/or trusted AI service providers for sensitive health data processing.</p>
+            </div>
+
+            <h2>3. How We Use Your Information</h2>
+            <p>We use the collected information to:</p>
+            <ul>
+                <li>Provide personalized health insights and recommendations</li>
+                <li>Sync health data with Apple Watch and HealthKit</li>
+                <li>Track your habits and send smart reminders</li>
+                <li>Generate health reports and trend analysis</li>
+                <li>Improve our App's features and user experience</li>
+                <li>Provide customer support and respond to inquiries</li>
+            </ul>
+
+            <h2>4. Data Storage and Security</h2>
+            <p>Your health data is stored securely on your iOS device using Apple's secure enclave. VitaMindGo implements the following security measures:</p>
+            <ul>
+                <li>End-to-end encryption for all data transmissions</li>
+                <li>On-device AI processing (CoreML) for sensitive health data</li>
+                <li>Secure data storage using iOS Keychain and HealthKit encryption</li>
+                <li>Regular security updates and vulnerability patches</li>
+            </ul>
+
+            <h2>5. Data Sharing</h2>
+            <p>VitaMindGo does not sell, trade, or rent your personal health information to third parties. We may share anonymized, aggregated data for research or analytics purposes, but this data cannot be used to identify you.</p>
+            <p>We may share your information with:</p>
+            <ul>
+                <li>Apple (for HealthKit integration and CloudKit sync)</li>
+                <li>AI service providers (for AI-powered features) - bound by strict data processing agreements</li>
+                <li>Service providers who assist in operating our App</li>
+                <li>Legal authorities when required by law</li>
+            </ul>
+
+            <h2>6. Apple HealthKit Permissions</h2>
+            <p>VitaMindGo requests access to Apple HealthKit for the following purposes:</p>
+            <ul>
+                <li><strong>Read:</strong> Heart rate, sleep, steps, workouts, and related health metrics</li>
+                <li><strong>Write:</strong> Habit completion data and health insights</li>
+                <li><strong>Background Delivery:</strong> Real-time sync of health data changes</li>
+            </ul>
+            <p>You can revoke HealthKit access at any time through iOS Settings > Privacy > HealthKit.</p>
+
+            <h2>7. Third-Party AI Services</h2>
+            <p>VitaMindGo may use the following third-party AI service providers to power your AI health assistant experience:</p>
+            <ul>
+                <li><strong>MiniMax</strong> - Primary AI service provider</li>
+                <li><strong>OpenAI</strong> - Alternative AI service option</li>
+                <li><strong>Anthropic</strong> - Alternative AI service option</li>
+                <li><strong>Google Gemini</strong> - Alternative AI service option</li>
+                <li><strong>DeepSeek</strong> - Alternative AI service option</li>
+                <li><strong>xAI (Grok)</strong> - Alternative AI service option</li>
+            </ul>
+            <p>All AI service providers are bound by strict data processing agreements that prohibit them from using your conversation data for training purposes or retaining it beyond the session duration.</p>
+
+            <h2>8. Your Rights</h2>
+            <p>You have the right to:</p>
+            <ul>
+                <li>Access your personal health data stored in VitaMindGo</li>
+                <li>Export your data in machine-readable format (PDF, CSV)</li>
+                <li>Request deletion of your account and all associated data</li>
+                <li>Control notification preferences</li>
+                <li>Revoke HealthKit permissions at any time</li>
+                <li>Choose which AI service provider to use for your conversations</li>
+            </ul>
+
+            <div class="highlight-box">
+                <p>🗑️ <strong>Data Deletion:</strong> To delete your VitaMindGo account and all data, go to Settings > Privacy > VitaMindGo > Delete Account. This will permanently remove all your data from our servers and devices.</p>
+            </div>
+
+            <h2>9. Children's Privacy</h2>
+            <p>VitaMindGo is not intended for use by individuals under the age of 13. We do not knowingly collect personal information from children under 13. If you believe we have inadvertently collected such information, please contact us immediately.</p>
+
+            <h2>10. Changes to This Policy</h2>
+            <p>We may update this Privacy Policy from time to time. Any changes will be posted on this page with an updated "Last Updated" date. We encourage you to review this Privacy Policy periodically.</p>
+            <p>Your continued use of VitaMindGo after any modifications indicates your acceptance of the updated Privacy Policy.</p>
+
+            <h2>11. In-App Purchases and Subscriptions</h2>
+            <p>VitaMindGo offers a Pro subscription ("VitaMindGo Pro") with the following terms:</p>
+            <ul>
+                <li><strong>Monthly:</strong> $4.99 USD per month, auto-renews until cancelled</li>
+                <li><strong>Yearly:</strong> $39.99 USD per year, auto-renews until cancelled (save 33% vs monthly)</li>
+                <li><strong>7-day Free Trial:</strong> Free for 7 days, then auto-renews at the selected plan</li>
+            </ul>
+            <p>Payment is charged to your Apple ID account at confirmation of purchase. Subscriptions automatically renew unless cancelled at least 24 hours before the end of the current period. Your account will be charged for renewal within 24 hours prior to the end of the current period.</p>
+            <p>You can manage and cancel your subscriptions in <strong>Settings → Apple ID → Subscriptions</strong> on your iOS device. Cancellation takes effect at the end of the current billing period.</p>
+            <p><strong>What Pro Unlocks:</strong> Unlimited AI Coach conversations (Free tier limited to 5 per day), advanced health insights, exclusive card themes, Apple Watch advanced features, and data export. All other core features (habit tracking, basic cards, HealthKit integration) remain free.</p>
+            <p><strong>Privacy of Subscription Data:</strong> Your subscription status is managed exclusively by Apple via your Apple ID. VitaMindGo does not collect, store, or transmit any personal information related to your subscription. We do not require account creation. Pro status is automatically recovered across your devices when signed in to the same Apple ID.</p>
+            <p><strong>Restore Purchases:</strong> If you switch devices or reinstall VitaMindGo, your Pro subscription can be restored via Settings → "Restore Purchases" within the app.</p>
+            <p><strong>No Refund Processing by VitaMindGo:</strong> All billing and refund requests are handled by Apple. Please visit <a href="https://support.apple.com/en-us/HT204084">Apple's refund support page</a> or contact App Store support.</p>
+
+            <h2>12. Contact Us</h2>
+            <p>If you have any questions, concerns, or requests regarding this Privacy Policy or our privacy practices, please contact us:</p>
+            <ul>
+                <li><strong>Email:</strong> privacy@techidaily.com</li>
+                <li><strong>Website:</strong> https://lauer3912.github.io/ios-VitaMindGo/PrivacyPolicy.html</li>
+                <li><strong>Developer:</strong> TechIDaily</li>
+            </ul>
+
+            <div class="highlight-box">
+                <p>📱 <strong>App Information:</strong><br>
+                App Name: VitaMindGo<br>
+                Bundle ID: com.ggsheng.VitaMind<br>
+                Version: 3.1.0 (In-App Purchases added)<br>
+                Platform: iOS 17.0+</p>
+            </div>
+        </div>
+
+        <footer>
+            <p>© 2026 TechIDaily. All rights reserved.</p>
+            <p>VitaMindGo is a registered trademark of TechIDaily.</p>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,89 @@
+============================================================
+  飞书消息 - 转发给 Ubuntu Katherine
+  主题: 加每日 config 备份 (防硬挂, 5 min 装好)
+  日期: 2026-06-14
+============================================================
+
+你好 Katherine-yl2rKS, Katherine-E2wa1m 在这。
+
+佛老爷让我转: 你装好了, 但**硬挂时没备份就抓瞎**。我刚写了个脚本, 每日自动 push 你的 config 到 GitHub 私仓。装上, 5 分钟。
+
+## 1. 佛老爷需要做 (你不能做的)
+
+在 lauer3912 下建一个**私仓** `agent-bus-config-backup`:
+```bash
+gh repo create lauer3912/agent-bus-config-backup --private \
+  --description "Per-agent agent-bus config backup (auto-daily, see backup-config-to-github.sh)"
+```
+
+## 2. 你需要做 (5 min)
+
+```bash
+# 拉脚本
+cd ~/.openclaw/workspace/scripts
+curl -fsSL -H "Authorization: token ghp_…TJJZ" \
+  https://raw.githubusercontent.com/lauer3912/openclaw-portable-template/main/scripts/backup-config-to-github.sh \
+  -o backup-config-to-github.sh
+chmod +x backup-config-to-github.sh
+
+# 验脚本
+bash -n backup-config-to-github.sh && echo "syntax OK"
+
+# 试跑 1 次 (应能成功 push)
+./backup-config-to-github.sh
+# 期望: ✓ backed up Katherine-yl2rKS to lauer3912/agent-bus-config-backup
+
+# 装 cron (每天 3am 自动跑)
+(crontab -l 2>/dev/null; echo "0 3 * * * $HOME/.openclaw/workspace/scripts/backup-config-to-github.sh >> $HOME/.local/share/agent-bus/backup.log 2>&1") | crontab -
+
+# 验 cron
+crontab -l | grep backup-config
+# 期望: 0 3 * * * ... backup-config-to-github.sh
+```
+
+## 3. 装完回报
+
+飞书发我:
+```
+backup 装好, crontab 有
+```
+
+## 4. 怎么验证备份在跑
+
+```bash
+# 任何时候手动跑
+~/.openclaw/workspace/scripts/backup-config-to-github.sh
+
+# 看 cron log
+tail -20 ~/.local/share/agent-bus/backup.log
+
+# 看 GitHub 仓
+open https://github.com/lauer3912/agent-bus-config-backup/tree/main
+# 应看到 backups/Katherine-yl2rKS/config
+```
+
+## 5. 硬挂恢复流程 (你不需要现在做, 知道就行)
+
+如果你的 Ubuntu 挂了, 佛老爷 或 登记官 都能帮你恢复:
+```bash
+# 1. 装回脚本 (从 portable-template)
+# 2. clone 备份仓
+gh repo clone lauer3912/agent-bus-config-backup
+# 3. 拷 config 回去
+cp agent-bus-config-backup/backups/Katherine-yl2rKS/config \
+   ~/.config/agent-bus/config
+# 4. 跑 verify
+agent-bus verify
+# 应是 verified (config 一致 + REGISTRY.md active)
+```
+
+## 故障排除
+
+- **试跑报 "no config"** → 你没装 agent-bus, 先装
+- **试跑报 gh 401** → 你的 gh auth 失效, 重新 `gh auth login --with-token`
+- **试跑报 repo 404** → 佛老爷还没建仓, 让他建
+- **试跑成功但 commit 没 push** → 看 git 错误, 可能是 ssh key 问题
+
+============================================================
+END
+============================================================

@@ -1,0 +1,85 @@
+# 2026-06-05 (Friday) — OpenClaw 跨平台 iOS 开发模板
+
+## 🎯 今日核心成果
+
+**把老爷 Mac 上的 iOS App 工作流, 完整复制到任意 Ubuntu 服务器上的 OpenClaw 智能体**。
+
+## 📦 主要交付物 (workspace 根)
+
+| 类别 | 文件 | 行数 |
+|------|------|------|
+| **SOP** | `docs/SOP-iOS-Ubuntu-Development.md` | 1834 |
+| **SOP** | `docs/AGENTS-injection.md` | 87 |
+| **脚本** | `scripts/setup-ubuntu-ssh-client.sh` | 153 |
+| **脚本** | `scripts/setup-macos-ssh-host.sh` | 108 |
+| **脚本** | `scripts/ssh-macmini-build.sh` | 184 |
+| **脚本** | `scripts/ssh-macmini-upload.sh` | 130 |
+| **脚本** | `scripts/ssh-macmini-screenshot.sh` | 147 |
+| **脚本** | `scripts/distribute-sop.sh` | 153 |
+| **脚本** | `scripts/onboard-new-ubuntu.sh` | 145 |
+| **CI** | `examples/.github/workflows/ios-verify.yml` | 170 |
+| **入口** | `README.md` | 125 |
+| **打包** | `dist/openclaw-portable-template/` (16 文件) | 172K |
+| **总计** | | **~3300 行** |
+
+## 🏗️ 工程方案 (3 层设备)
+
+```
+Ubuntu (≥1 台, OpenClaw agent) → git push (public 仓库) → GitHub Actions (macOS runner, build+test only)
+                                                                  ↓ gh API
+                                          Ubuntu agent 决策: 失败→改→push / 成功→SSH macmini
+                                                                        ↓ SSH
+                                                       Mac mini (user291981, archive+sign+upload)
+```
+
+**关键决策**:
+- ✅ GitHub Actions 只跑 build + test (不 archive / 不签名 / 不上传)
+- ✅ 公开仓库 (`ios-VitaMindGo`) → 无限免费
+- ✅ Mac mini 端是**唯一**做 archive 的地方
+- ✅ flock 互斥防止多 Ubuntu 同时 archive
+- ✅ "最小知识原则" — Agent 不知道穿透实现, 只看到 `macmini` alias
+
+## 🔐 SSH 通道配置 (简化版)
+
+- **入口**: `47.77.237.73:2222` (公网, 经 frp 透传到 Mac mini)
+- **用户名**: `user291981` (Mac mini 本机)
+- **认证**: 每台 Ubuntu 自己生成 ed25519 密钥, 公钥发给老爷
+- **Mac mini** 端 `~/.ssh/authorized_keys` 收 N 个 Ubuntu 公钥
+- **保留密码登录** (老爷拍板, 等 SSH 公钥全部验证通过后再决定)
+
+## 🐛 调试发现 + 修复 (今晚 5 项测试)
+
+| 测试 | 结果 | 修复 |
+|------|------|------|
+| 1. sop-822-check.sh 跨平台 | ✅ 21/21 通过 | 无 |
+| 2. setup-ubuntu-ssh-client.sh | ✅ 跑通 | **修了 1 bug**: 没先 `mkdir -p $HOME/.ssh`, 新机器失败 |
+| 3. distribute-sop.sh 打包 | ✅ 16 文件全到位 | 无 |
+| 4. ios-verify.yml 检查 | ✅ 零 Apple 凭据, 依赖链正确 | 无 |
+| 5. ssh-macmini-build.sh 模拟 | ✅ 7 步全跑 | **修了 1 bug**: heredoc 里 `${SCHEME}` 未 escape, client 端 set -u 触发 unbound 错误。**重写**: 把 workspace/project/scheme 检测全部移到 client 端 |
+
+## 🚦 等 VitaMindGo 审核通过后的 Pending
+
+详见 `dist/openclaw-portable-template/PUSH-TO-GITHUB.md`:
+
+1. 老爷审阅 `dist/openclaw-portable-template/` 内容 (5 分钟)
+2. 在 GitHub 创建空仓库 `lauer3912/openclaw-portable-template` (private)
+3. 按 PUSH-TO-GITHUB.md 5 步推送 (git init / add / commit / remote / push)
+4. 多 Ubuntu agent 跑 `onboard-new-ubuntu.sh <tag>` 入职
+
+## 💡 学到的教训 (写入 SOUL.md 候选)
+
+1. **写 heredoc 时, client 端变量必须先定义好** (或 escape). 复杂的 server 端逻辑用单独 function 调, 不要堆 heredoc
+2. **sop-822-check.sh 跨平台已验证** — 直接复用
+3. **测试驱动开发有效**: 5 项 dry-run 测试抓到 2 个真实 bug, 比"假设正确"省事
+4. **老爷的"测试什么都可以做"授权** 让我能放心做破坏性测试 (临时 HOME 跑 setup), 不打断流程
+
+## 🔗 关键链接
+
+- 上游 SOP: `docs/SOP-iOS-Local-Development.md` (Mac 本地版 v14)
+- 本次新建: `docs/SOP-iOS-Ubuntu-Development.md` (Ubuntu 远程版 v1.0)
+- VitaMindGo 仓库: https://github.com/lauer3912/ios-VitaMindGo (public, 审核中)
+- 便携模板仓库: https://github.com/lauer3912/openclaw-portable-template (待 push, private)
+
+---
+
+_总耗时: 约 4 小时 (含多次回头修正, 调试, 整理)_

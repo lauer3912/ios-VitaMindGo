@@ -1,0 +1,168 @@
+name: TestFlight Upload
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-and-upload:
+    runs-on: macos-14
+    timeout-minutes: 90
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+
+      - name: Check for Certificates and API Key
+        id: check_certs
+        run: |
+          echo "=== Checking .github/certs/ directory ==="
+          ls -la .github/certs/
+
+          if [ ! -f ".github/certs/szf_exported_cert.p12" ]; then
+            echo "ERROR: szf_exported_cert.p12 NOT FOUND"
+            exit 1
+          fi
+          echo "✓ szf_exported_cert.p12 found"
+
+          if [ ! -f ".github/certs/AuthKey_H3973L93M5.p8" ]; then
+            echo "ERROR: AuthKey_H3973L93M5.p8 NOT FOUND"
+            exit 1
+          fi
+          echo "✓ AuthKey_H3973L93M5.p8 found"
+
+          echo "CERT_FILE_SIZE=$(stat -f%z .github/certs/szf_exported_cert.p12)" >> $GITHUB_OUTPUT
+
+      - name: Compute Certificate Base64
+        id: compute_cert
+        run: |
+          CERT_FILE=".github/certs/szf_exported_cert.p12"
+          FILE_SIZE=$(stat -f%z "$CERT_FILE")
+          echo "Certificate file size: $FILE_SIZE bytes"
+
+          CERT_B64=$(base64 -i "$CERT_FILE" | tr -d '\n')
+          echo "CERT_B64 length: ${#CERT_B64}"
+
+          if [ ${#CERT_B64} -lt 1000 ]; then
+            echo "ERROR: Certificate Base64 too short"
+            exit 1
+          fi
+
+          echo "CERT_B64=$CERT_B64" >> $GITHUB_OUTPUT
+          echo "✓ Certificate Base64 computed"
+
+      - name: Import Certificate via Apple Actions
+        uses: Apple-Actions/import-codesign-certs@v7
+        with:
+          p12-file-base64: ${{ steps.compute_cert.outputs.CERT_B64 }}
+          p12-password: ${{ secrets.CERTIFICATE_PASSWORD }}
+          create-keychain: true
+          keychain-password: ""
+
+      - name: Setup Keychain for Build
+        run: |
+          security list-keychains -d user -s signing_temp.keychain-db login.keychain-db
+          security default-keychain -s signing_temp.keychain-db
+          security unlock-keychain -p "" signing_temp.keychain-db
+          
+          echo "=== Available Signing Identities ==="
+          security find-identity -v -p codesigning signing_temp.keychain-db
+
+      - name: Setup API Key
+        run: |
+          echo "=== Setup API Key ==="
+          mkdir -p "$HOME/.appstoreconnect/private_keys"
+          mkdir -p "$GITHUB_WORKSPACE/build"
+          cp "$GITHUB_WORKSPACE/.github/certs/AuthKey_H3973L93M5.p8" "$HOME/.appstoreconnect/private_keys/ApiKey_H3973L93M5.p8"
+          chmod 600 "$HOME/.appstoreconnect/private_keys/ApiKey_H3973L93M5.p8"
+          ls -la "$HOME/.appstoreconnect/private_keys/"
+
+      - name: Build Archive (Skip Signing)
+        run: |
+          echo "=== Build Archive (CODE_SIGNING_ALLOWED=NO) ==="
+          mkdir -p "$GITHUB_WORKSPACE/build"
+
+          xcrun xcodebuild \
+            -project "$GITHUB_WORKSPACE/VitaMind.xcodeproj" \
+            -scheme VitaMind \
+            -configuration Release \
+            -sdk iphoneos \
+            -archivePath "$GITHUB_WORKSPACE/build/VitaMind.xcarchive" \
+            CODE_SIGNING_ALLOWED=NO \
+            archive 2>&1 | tee "$GITHUB_WORKSPACE/build/archive.log"
+          
+          ARCHIVE_RESULT=${PIPESTATUS[0]}
+          echo "Archive exit code: $ARCHIVE_RESULT"
+          
+          # Allow time for file system to flush
+          sleep 3
+          
+          if [ $ARCHIVE_RESULT -ne 0 ]; then
+            echo "=== Build FAILED with exit code $ARCHIVE_RESULT ==="
+            tail -100 "$GITHUB_WORKSPACE/build/archive.log"
+            exit $ARCHIVE_RESULT
+          fi
+          
+          if [ ! -f "$GITHUB_WORKSPACE/build/VitaMind.xcarchive" ]; then
+            echo "=== Build FAILED: no xcarchive file ==="
+            tail -100 "$GITHUB_WORKSPACE/build/archive.log"
+            exit 1
+          fi
+
+          echo "✓ Archive completed successfully"
+          ls -la "$GITHUB_WORKSPACE/build/VitaMind.xcarchive"
+
+      - name: Export IPA with API Key Auth
+        run: |
+          echo "=== Export IPA with API Key Auth ==="
+          mkdir -p "$GITHUB_WORKSPACE/build"
+
+          # ExportOptions.plist - method=app-store-connect lets xcodebuild auto-fetch profiles via API Key
+          cat > "$GITHUB_WORKSPACE/build/ExportOptions.plist" << 'EOF'
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0">
+          <dict>
+            <key>method</key>
+            <string>app-store-connect</string>
+            <key>signingCertificate</key>
+            <string>Apple Distribution</string>
+            <key>teamId</key>
+            <string>9L6N2ZF26B</string>
+          </dict>
+          </plist>
+          EOF
+
+          xcrun xcodebuild \
+            -exportArchive \
+            -archivePath "$GITHUB_WORKSPACE/build/VitaMind.xcarchive" \
+            -exportOptionsPlist "$GITHUB_WORKSPACE/build/ExportOptions.plist" \
+            -exportPath "$GITHUB_WORKSPACE/build" \
+            -allowProvisioningUpdates \
+            -authenticationKeyPath "$HOME/.appstoreconnect/private_keys/ApiKey_H3973L93M5.p8" \
+            -authenticationKeyID H3973L93M5 \
+            -authenticationKeyIssuerID b2a00f88-3a8d-40d0-b148-1f1db92e10b7 \
+            2>&1 | tee "$GITHUB_WORKSPACE/build/export.log"
+          
+          echo "Export exit code: ${PIPESTATUS[0]}"
+          ls -la "$GITHUB_WORKSPACE/build/"*.ipa 2>/dev/null || echo "No IPA found"
+
+      - name: Upload to TestFlight
+        run: |
+          echo "=== Upload to TestFlight ==="
+          IPA=$(ls "$GITHUB_WORKSPACE/build/"*.ipa 2>/dev/null | head -1)
+          if [ -z "$IPA" ]; then
+            echo "ERROR: No IPA found"
+            exit 1
+          fi
+          echo "Uploading IPA: $IPA"
+          xcrun altool \
+            --upload-app \
+            -f "$IPA" \
+            -t ios \
+            --apiKey "H3973L93M5" \
+            --apiIssuer "b2a00f88-3a8d-40d0-b148-1f1db92e10b7" \
+            2>&1 | tee "$GITHUB_WORKSPACE/build/upload.log"
+          echo "Upload exit code: ${PIPESTATUS[0]}"

@@ -1,0 +1,139 @@
+name: VitaMindGo
+options:
+  bundleIdPrefix: com.ggsheng
+  deploymentTarget:
+    iOS: "17.0"
+  xcodeVersion: "16.0"
+  generateEmptyDirectories: true
+  groupSortPosition: top
+
+settings:
+  base:
+    SWIFT_VERSION: "5.10"
+    TARGETED_DEVICE_FAMILY: "1,2"
+    MARKETING_VERSION: "3.0.0"
+    CURRENT_PROJECT_VERSION: "9"
+    DEVELOPMENT_TEAM: 9L6N2ZF26B
+    CODE_SIGN_STYLE: Automatic
+    ENABLE_USER_SCRIPT_SANDBOXING: NO
+    IPHONEOS_DEPLOYMENT_TARGET: "17.0"
+    ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+    ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+
+targets:
+  VitaPocket:
+    type: application
+    platform: iOS
+    sources:
+      - path: Sources
+        type: group
+        excludes:
+          - "**/.DS_Store"
+          - "**/DesignSpec/**"
+      # Resources/ holds non-bundled support files (e.g. StoreKit config)
+      # buildPhase: none means it won't be copied into the app bundle.
+      - path: Resources
+        type: group
+        buildPhase: none
+        optional: true
+    resources:
+      - path: Sources/Resources/Assets.xcassets
+      - path: Sources/LaunchScreen.storyboard
+      - path: Sources/Resources/Docs
+        type: folder
+    entitlements:
+      path: Sources/VitaPocket.entitlements
+      properties:
+        com.apple.developer.healthkit: true
+        com.apple.developer.healthkit.access: []
+        com.apple.developer.healthkit.background-delivery: true
+        com.apple.security.application-groups:
+          - group.com.ggsheng.VitaMind
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.ggsheng.VitaMind
+        PRODUCT_NAME: VitaMindGo
+        INFOPLIST_FILE: Sources/Info.plist
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        LD_RUNPATH_SEARCH_PATHS: "$(inherited) @executable_path/Frameworks"
+        ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES: YES
+        GENERATE_INFOPLIST_FILE: NO
+        TARGETED_DEVICE_FAMILY: "1,2"
+    dependencies:
+      - target: VitaPocketWidget
+        embed: true
+        codeSign: true
+        buildPhase:
+          copyFiles:
+            destination: plugins
+      # StoreKit 2 (v3.1.0 IAP — auto-linked, kept weak for future flexibility)
+      - sdk: StoreKit.framework
+
+  VitaPocketWidget:
+    type: app-extension
+    platform: iOS
+    sources:
+      - path: Widget
+        type: group
+    entitlements:
+      path: Widget/VitaPocketWidget.entitlements
+      properties:
+        com.apple.security.application-groups:
+          - group.com.ggsheng.VitaMind
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.ggsheng.VitaMind.widget
+        PRODUCT_NAME: VitaMindGoWidget
+        INFOPLIST_FILE: Widget/Info.plist
+        ASSETCATALOG_COMPILER_WIDGET_EXTENSION_IMAGE_PLACEHOLDER: ""
+        LD_RUNPATH_SEARCH_PATHS: "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks"
+        SKIP_INSTALL: YES
+        GENERATE_INFOPLIST_FILE: NO
+        CODE_SIGN_ENTITLEMENTS: Widget/VitaPocketWidget.entitlements
+        DEVELOPMENT_TEAM: 9L6N2ZF26B
+
+  VitaPocketTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - path: Tests
+    dependencies:
+      - target: VitaPocket
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.ggsheng.VitaMindTests
+        GENERATE_INFOPLIST_FILE: YES
+        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/VitaMindGo.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/VitaMindGo"
+
+  VitaPocketUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources:
+      - path: UITests
+    dependencies:
+      - target: VitaPocket
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.ggsheng.VitaMindUITests
+        GENERATE_INFOPLIST_FILE: YES
+schemes:
+  VitaPocket:
+    build:
+      targets:
+        VitaPocket: all
+        VitaPocketWidget: all
+        VitaPocketTests: [test]
+        VitaPocketUITests: [test]
+    run:
+      config: Debug
+    test:
+      config: Debug
+      targets:
+        - VitaPocketTests
+        - VitaPocketUITests
+    profile:
+      config: Release
+    analyze:
+      config: Debug
+    archive:
+      config: Release

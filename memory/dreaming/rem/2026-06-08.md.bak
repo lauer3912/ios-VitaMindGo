@@ -1,0 +1,9 @@
+# REM Sleep
+
+### Reflections
+- No strong patterns surfaced.
+
+### Possible Lasting Truths
+- 🎯 今日核心成果: **把老爷 Mac 上的 iOS App 工作流, 完整复制到任意 Ubuntu 服务器上的 OpenClaw 智能体**。 [confidence=0.58 evidence=memory/2026-06-05.md:5-5]
+- 🎯 今日核心成果: **老爷早上拍板 "能做的尽快做，能记忆的尽快记忆"，20 分钟内连清 3 项积压 + 发现 1 项 7 天未发现的 bug**。 [confidence=0.58 evidence=memory/2026-06-06.md:5-5]
+- 🏗️ 工程方案 (3 层设备): ✅ "最小知识原则" — Agent 不知道穿透实现, 只看到 `macmini` alias [confidence=0.58 evidence=memory/2026-06-05.md:40-40]

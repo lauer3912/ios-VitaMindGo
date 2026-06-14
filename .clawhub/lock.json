@@ -1,0 +1,69 @@
+{
+  "version": 1,
+  "skills": {
+    "app-store-changelog": {
+      "version": "1.0.1",
+      "installedAt": 1780046901404
+    },
+    "apple-design-skill": {
+      "version": "1.0.0",
+      "installedAt": 1780046920666
+    },
+    "appstore-deployment-guide": {
+      "version": "1.0.2",
+      "installedAt": 1780046925985
+    },
+    "ios-animation-implementation": {
+      "version": "1.2.1",
+      "installedAt": 1780046931427
+    },
+    "ios-self-improve": {
+      "version": "1.1.0",
+      "installedAt": 1780046968321
+    },
+    "sfsymbol-generator": {
+      "version": "1.0.0",
+      "installedAt": 1780046971886
+    },
+    "swift": {
+      "version": "1.0.1",
+      "installedAt": 1780046977644
+    },
+    "ui-ux-design": {
+      "version": "1.0.0",
+      "installedAt": 1780046982431
+    },
+    "xcode": {
+      "version": "1.0.0",
+      "installedAt": 1780046986084
+    },
+    "xcode-build-analyzer": {
+      "version": "1.2.0",
+      "installedAt": 1780046992404
+    },
+    "MiniMax-AI": {
+      "version": "0.1.0",
+      "installedAt": 1780055855056
+    },
+    "gingiris-aso-growth": {
+      "version": "2.2.10",
+      "installedAt": 1781339214428
+    },
+    "reddit": {
+      "version": "1.0.0",
+      "installedAt": 1781339219011
+    },
+    "reddit-marketing": {
+      "version": "1.0.0",
+      "installedAt": 1781339223316
+    },
+    "reddit-account-operations": {
+      "version": "1.2.0",
+      "installedAt": 1781339227499
+    },
+    "marketing-analytics": {
+      "version": "1.0.0",
+      "installedAt": 1781339231086
+    }
+  }
+}

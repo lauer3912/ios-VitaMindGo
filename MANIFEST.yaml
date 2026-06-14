@@ -1,0 +1,50 @@
+# OpenClaw Portable Template 版本清单
+# 每次更新 template 后, 同步修改此文件 + 重新推送
+# sync-from-template.sh 会比对 version 字段决定是否同步
+
+version: "1.0.17"
+last_updated: "2026-06-11T10:57:00+08:00"
+template_repo: "lauer3912/openclaw-portable-template"
+template_branch: "main"
+
+# 同步策略
+sync_strategy:
+  source: "github"  # 单一可信源: GitHub raw URL + token
+  cdn: false        # 不用 jsdelivr (方案A: 简单够用)
+
+# 整体替换的文件/目录 (block 同步之外的部分)
+always_sync:
+  - MANIFEST.yaml
+  - scripts/   # 所有 shell 脚本
+  - docs/      # 所有文档
+
+# 永不覆盖的文件/目录 (用户个性化)
+skip:
+  - AGENTS.md
+  - SOUL.md
+  - IDENTITY.md
+  - USER.md
+  - MEMORY.md
+  - memory/
+
+# 注入到 workspace .md 文件的块
+# 块 ID 跨版本稳定, 内容更新时 sync 会替换块内, 块外保留
+# 路径: blocks/<block_id>.md
+# 头部可选 target: 行指定注入到哪个 workspace 文件 (默认 AGENTS.md)
+blocks:
+  - id: protocol-workspace
+    target: AGENTS.md
+  - id: red-lines
+    target: AGENTS.md
+  - id: soul-essence
+    target: SOUL.md
+  - id: vibe-rules
+    target: SOUL.md
+  - id: identity-basics
+    target: IDENTITY.md
+  - id: creature-vibe
+    target: IDENTITY.md
+  - id: onboarding-template
+    target: USER.md
+  - id: open-questions
+    target: USER.md

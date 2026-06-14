@@ -1,0 +1,35 @@
+# 2026-05-29 日志
+
+## VitaMind 项目进展
+
+### 完成阶段
+- Stage -1: 项目提案 ✅
+- Stage 0: 图标设计 + 19个尺寸 ✅
+- Stage 1: 功能清单 (72 features) + Listing.md ✅
+- Stage 2: 目录结构 + Git 初始化 ✅
+- Stage 3: project.yml 配置 ✅
+- Stage 4: Info.plist、Entitlements、Widget ✅
+- Stage 5: XcodeGen 项目生成 + GitHub Actions CI/CD ✅
+- **Stage 6: 截图与测试** ✅
+
+### Stage 6 完成内容
+- ✅ ContentView (4 Tabs): Health / Habits / AI / Settings
+- ✅ accessibilityIdentifier: 每个 Tab 和元素都有
+- ✅ Dark Mode 支持
+- ✅ Widget Extension: 已集成
+- ✅ Unit Tests: 14 个测试全部通过
+- ✅ PrivacyPolicy.html: 隐私政策 HTML
+- ✅ App Store Screenshots: 11 张占位图 (iPhone 6.5"/5.5" + iPad Pro)
+- ✅ GitHub: 已推送
+
+### 项目路径
+- ~/Desktop/ios-VitaMind/
+
+### GitHub
+- https://github.com/lauer3912/ios-VitaMind
+- Token: ghp_ej…TJJZ
+
+### 下一步
+- 功能完整性自检 (第2次、第3次)
+- Stage 7: TestFlight 上传准备 (需要人工操作 Xcode Archive)
+- Stage 8: App Store 上架

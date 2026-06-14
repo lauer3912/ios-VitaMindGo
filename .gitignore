@@ -1,0 +1,33 @@
+# 防止临时图片污染 workspace 根目录 (HR-88)
+# 2026-06-04 教训: 90 个 PNG / 40.89 MB 临时截图堆积在 workspace 根
+# 来自 simctl io screenshot / xcodebuild test / 调试截图保存到 cwd
+
+# 拒绝 workspace 根目录的 PNG/JPG/JPEG/GIF/WebP
+# 例外: screenshots/ 子目录 (保留与 memory 关联的引用)
+# 例外: docs/ 子目录 (项目文档插图)
+/*.png
+/*.jpg
+/*.jpeg
+/*.gif
+/*.webp
+
+# 临时备份文件
+/*~
+/*.bak
+/*.swp
+*.orig
+
+# macOS 噪声
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# 编辑器/IDE
+.vscode/
+.idea/
+*.swp
+
+# dist/ 是 build output (distribute-sop.sh 重新生成)
+# 它有自己的 .git + GitHub 仓库 (lauer3912/openclaw-portable-template)
+# 不在 workspace 本地 git 里 track
+/dist/
