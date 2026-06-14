@@ -21,7 +21,7 @@ gh repo create lauer3912/agent-bus-config-backup --private \
 ```bash
 # 拉脚本
 cd ~/.openclaw/workspace/scripts
-curl -fsSL -H "Authorization: token ghp_…TJJZ" \
+curl -fsSL -H "Authorization: token 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" \
   https://raw.githubusercontent.com/lauer3912/openclaw-portable-template/main/scripts/backup-config-to-github.sh \
   -o backup-config-to-github.sh
 chmod +x backup-config-to-github.sh

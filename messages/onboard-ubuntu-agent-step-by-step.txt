@@ -8,7 +8,7 @@
 
 # 前置 (佛老爷 / 你要做的)
 
-- 给我佛老爷的 GitHub token (`ghp_…TJJZ`, 跟你一样的)
+- 给我佛老爷的 GitHub token (`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`, 跟你一样的)
 - 给我一个 agent persona 名字 (我建议 "Katherine", 跟你同名, 多个 Katherine 互为备份, 不会冲突)
 - 确认我能 SSH 到 Mac mini (你装 `setup-ubuntu-ssh-client.sh` 一次就好)
 
@@ -62,7 +62,7 @@ gh --version
 >
 > ```bash
 > # 配 token (佛老爷的, 跟 Katherine 一样)
-> echo "ghp_…TJJZ" | gh auth login --with-token
+> echo "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" | gh auth login --with-token
 > gh auth status
 > # 期望: Logged in to github.com account lauer3912
 > ```
@@ -71,7 +71,7 @@ gh --version
 > ```bash
 > gh auth status               # 先看是谁
 > gh auth logout --hostname github.com   # 不是 lauer3912 就 logout
-> echo "ghp_…TJJZ" | gh auth login --with-token
+> echo "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" | gh auth login --with-token
 > ```
 
 ============================================================
@@ -84,7 +84,7 @@ mkdir -p ~/.openclaw/workspace/scripts
 cd ~/.openclaw/workspace/scripts
 
 # 拉 4 个 agent-bus 脚本 (从 portable-template v1.0.21+)
-TOKEN="ghp_…TJJZ"  # 佛老爷的
+TOKEN="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"  # 佛老爷的
 REPO="lauer3912/openclaw-portable-template"
 BRANCH="main"
 
@@ -249,7 +249,7 @@ crontab -l | grep check-app
 A: setup 必须在真 TTY 跑。SSH 进去 (不是 scp 远程), 跑 `bash -i agent-bus-setup.sh` 或 `script -q -c "bash agent-bus-setup.sh" /dev/null`
 
 **Q: gh auth status 失败**
-A: token 输错了。重新 `echo "ghp_…TJJZ" | gh auth login --with-token`
+A: token 输错了。重新 `echo "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" | gh auth login --with-token`
 
 **Q: agent-bus register 失败 "could not add label"**
 A: setup 会自动建 label, 但偶尔失败。再跑一次 `bash agent-bus-setup.sh` (idempotent)
