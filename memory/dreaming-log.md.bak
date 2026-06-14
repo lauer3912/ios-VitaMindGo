@@ -683,7 +683,7 @@
   **H. SOP version / Stage / Token 校对:**
   - SOP v14 (L152) ✅ 准确 (上次已修正误判)
   - Stage 10 (L154) ✅ 准确 (上架销售中)
-  - GitHub token `ghp_ejwNob502...` ✅ 仍准确 (24h 内 0 个 push 触发 token 验证, 但 6-12 23:08 commit 已 commit 而未 push 验证 — **下次 push 时跑代理验证**)
+  - GitHub token `ghp_…TJJZ...` ✅ 仍准确 (24h 内 0 个 push 触发 token 验证, 但 6-12 23:08 commit 已 commit 而未 push 验证 — **下次 push 时跑代理验证**)
 
   **I. ASC Subscription IDs (新永久记候选, 已写 MEMORY.md L138-142 ✅)**:
   - Group: `22153084` "VitaMindGo Pro"
