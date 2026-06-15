@@ -1,6 +1,6 @@
 # MEMORY.md - Long-Term Memory
 
-_Last updated: 2026-06-14 23:05 (今天重要日: agent-bus v2.2 + 2 Katherines + Tier 1 + token 真实值政策)_
+_Last updated: 2026-06-15 06:56 (今天重要日: 飞书 onboarding 闭环, 双 Katherine 备份链路正式上线)_
 
 ---
 
@@ -92,12 +92,24 @@ _Last updated: 2026-06-14 23:05 (今天重要日: agent-bus v2.2 + 2 Katherines 
 
 ---
 
-## ⏳ 明天 2026-06-15 佛老爷要做的事
+## ✅ 2026-06-15 06:56 飞书 onboarding 闭环 (5 min 内)
 
-1. **转发 `messages/feishu-final-onboarding-completion.txt` 给 Katherine-yl2rKS** (飞书)
-2. 等她回 "3 件全 OK"
-3. 佛老爷 ping 我, 我 verify 闭环
-4. 5 min cron 在守, 不用惦记
+- 06:51 佛老爷手动飞书发 `feishu-final-onboarding-completion.txt` 给 Katherine-yl2rKS
+- 06:56 Katherine-yl2rKS 飞书回"3 件全 OK"
+- 06:56 佛老爷 ping 我 verify
+- 06:56 我 verify 闭环 (REGISTRY Active + self-test #25 + #24 注册批准 + #26 Step 7b ack + 我 self-test #28 8/8)
+- **agent-bus 系统 v2.2 双 Katherine 备份链路正式上线**
+
+## 🆕 2026-06-15 07:09 派 #29 StretchFlow (老项目, 还没审核过)
+
+- 佛老爷拍板"让 Katherine-yl2rKS 把 StretchFlow 项目做完"
+- 仓库: `lauer3912/ios-StretchFlow`
+- 我 send #29 (request, high, project:stretchflow) 给她, 包含完整 7-phase + 教过的 4 原则
+- 07:12 佛老爷授权"你代答她问的问题" → 我 reply #29 告知"4 问 + 路线问题都问 Katherine-E2wa1m, 不用 ping 佛老爷"
+- **07:09-07:57 静默 48 min** (她 5 min poll 看到 #29 但 0 reply)
+- **🆕 07:57 佛老爷拍板"指派任务要主动跟踪"** → SOUL.md #11 增强: 派任务 + 跟踪 cron = 同一动作两半
+- **cron `da0811d7` 已加 (3 min 跟踪)**, 3 步: thread 29 + thread 30 + inbox, 收 reply 立刻 pre-review, 静默 30 min 升级 (老通道/systemEvent)
+- **教训 (永久)**: 派任务不 = 跟踪任务。send issue + cron 跟踪要**同一回合**做,不能等 user ping 才发现静默
 
 ## ⏳ 明天 v1.0.26 待修 (7 小问题, 拍板再做)
 
@@ -112,3 +124,14 @@ _Last updated: 2026-06-14 23:05 (今天重要日: agent-bus v2.2 + 2 Katherines 
 
 ---
 
+
+## Promoted From Short-Term Memory (2026-06-15)
+
+<!-- openclaw-memory-promotion:memory:memory/2026-06-11.md:13:13 -->
+- 实际改动 (3 文件, 119 行): **1. `docs/SOP-iOS-Ubuntu-Development.md` 新增 §2.7 + 增强 §2.6 Symptom 6 + §3.1 提示:** [score=0.828 recalls=0 avg=0.620 source=memory/2026-06-11.md:13-13]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-11.md:15:18 -->
+- 实际改动 (3 文件, 119 行): **§2.6 Symptom 7** (新): 大文件 SSH 传输不稳; 首选: 走 §2.7 (git push + git pull 中转, 不经 SSH 长流); 次选: rsync --partial --timeout; 分块: split + scp 循环 [score=0.828 recalls=0 avg=0.620 source=memory/2026-06-11.md:15-18]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-11.md:21:24 -->
+- 实际改动 (3 文件, 119 行): **§2.7 Mac mini 网络约束与本地代理** (新, 必读, ~100 行):; §2.7.1 代理地址 (HTTP/SOCKS5/SOCKS); §2.7.2 触发场景表 (git/curl/gh/brew/npm/xcodebuild); §2.7.3 完整用法 (单次 -x / git -c http.proxy / 临时 export) [score=0.820 recalls=0 avg=0.620 source=memory/2026-06-11.md:21-24]
+<!-- openclaw-memory-promotion:memory:memory/2026-06-11.md:19:19 -->
+- 实际改动 (3 文件, 119 行): 临时: -o ServerAliveInterval=15 [score=0.800 recalls=0 avg=0.620 source=memory/2026-06-11.md:19-19]

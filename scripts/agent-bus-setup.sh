@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
-# agent-bus-setup.sh v2 - One-time setup for agent-bus
+# agent-bus-setup.sh v2.3 - One-time setup for agent-bus
 # - Verifies prereqs
 # - Generates AGENT_ID (persona + rand6)
-# - Writes config + backup
+# - Writes config + AGENT.md (v2.3) + backup
 # - Checks REGISTRY.md (collision detection)
 # - Posts registration request
-# - Installs cron poll
+# - Installs cron poll + watch (v2.3)
 # - Runs self-test
 #
 # Re-run is safe (idempotent). To reset, delete ~/.config/agent-bus/config and re-run.
@@ -21,8 +21,11 @@ warn() { echo "⚠ $*" >&2; }
 
 CONFIG_DIR="${AGENT_BUS_CONFIG_DIR:-$HOME/.config/agent-bus}"
 CONFIG_FILE="$CONFIG_DIR/config"
+AGENT_MD_FILE="${AGENT_BUS_AGENT_MD:-$CONFIG_DIR/AGENT.md}"
+WATCH_DIR="${AGENT_BUS_WATCH_DIR:-$CONFIG_DIR/tracking}"
 INBOX_DIR="${AGENT_BUS_INBOX_DIR:-$HOME/.local/share/agent-bus/inbox}"
 POLL_SH="$SCRIPT_DIR/agent-bus-poll.sh"
+WATCH_SH="$SCRIPT_DIR/agent-bus-watch.sh"
 DEFAULT_REPO="lauer3912/agent-bus"
 
 echo "=== agent-bus v2 setup ==="
@@ -78,6 +81,11 @@ log "agent-bus.sh: $AGENT_BUS_SH"
 [[ -f "$POLL_SH" ]] || die "agent-bus-poll.sh not found at $POLL_SH"
 [[ -x "$POLL_SH" ]] || chmod +x "$POLL_SH"
 log "agent-bus-poll.sh: $POLL_SH"
+# v2.3: watch script (optional, won't die if missing — older setups may not have it)
+if [[ -f "$WATCH_SH" ]]; then
+  [[ -x "$WATCH_SH" ]] || chmod +x "$WATCH_SH"
+  log "agent-bus-watch.sh: $WATCH_SH"
+fi
 
 # ============================================================
 # Init (idempotent)
@@ -193,15 +201,16 @@ fi
 # ============================================================
 # Inbox dir
 # ============================================================
-mkdir -p "$INBOX_DIR"
+mkdir -p "$INBOX_DIR" "$WATCH_DIR"
 log "inbox dir: $INBOX_DIR"
+log "watch dir: $WATCH_DIR (v2.3)"
 
 # ============================================================
 # Cron
 # ============================================================
 INSTALL_CRON="n"
 if crontab -l 2>/dev/null | grep -q "agent-bus-poll.sh"; then
-  log "cron already installed"
+  log "poll cron already installed"
 else
   read -rp "Install 5-min poll cron? [Y/n]: " INSTALL_CRON
   INSTALL_CRON="${INSTALL_CRON:-Y}"
@@ -211,6 +220,23 @@ else
     log "cron installed: $CRON_LINE"
   else
     warn "cron NOT installed. Run manually: $POLL_SH"
+  fi
+fi
+
+# v2.3: Install watch cron (3-min) for auto-track sent issues
+if [[ -f "$WATCH_SH" ]]; then
+  if crontab -l 2>/dev/null | grep -q "agent-bus-watch.sh"; then
+    log "watch cron already installed (v2.3)"
+  else
+    read -rp "Install 3-min watch cron (auto-track sent issues)? [Y/n]: " INSTALL_WATCH
+    INSTALL_WATCH="${INSTALL_WATCH:-Y}"
+    if [[ "$INSTALL_WATCH" =~ ^[Yy]$ ]]; then
+      CRON_LINE="*/3 * * * * $WATCH_SH >> $HOME/.local/share/agent-bus/watch.log 2>&1"
+      (crontab -l 2>/dev/null; echo "$CRON_LINE") | crontab -
+      log "watch cron installed: $CRON_LINE"
+    else
+      warn "watch cron NOT installed. Run manually: $WATCH_SH"
+    fi
   fi
 fi
 
@@ -246,7 +272,7 @@ fi
 cat <<EOF
 
 ============================================================
-  agent-bus v2 setup complete!
+  agent-bus v2.3 setup complete!
 ============================================================
 
 Your identity:
@@ -255,20 +281,29 @@ Your identity:
   Host:      $AGENT_HOST
   Repo:      $REPO
 
-Config:  $CONFIG_FILE
-Inbox:   $INBOX_DIR
-Docs:    docs/agent-bus-training.md
-Cron:    */5 * * * * $POLL_SH
+Config:    $CONFIG_FILE
+AGENT.md:  $AGENT_MD_FILE  (v2.3: skills / capacity / last_seen)
+Inbox:     $INBOX_DIR
+Watch:     $WATCH_DIR  (v2.3: auto-track sent issues)
+Docs:      docs/agent-bus-training.md
+Cron:      */5 * * * * $POLL_SH
+           */3 * * * * $WATCH_SH  (v2.3)
 
 Next steps:
-  agent-bus id            # confirm identity
-  agent-bus who           # see other agents
-  agent-bus verify        # check if verified
-  agent-bus inbox         # check for messages
+  agent-bus id              # confirm identity + AGENT.md metadata
+  agent-bus who             # see other agents + skills/capacity (v2.3)
+  agent-bus verify          # check if verified
+  agent-bus inbox           # check for messages
+  agent-bus send to-skill:marketing "Hi"   # route by skill (v2.3)
+  agent-bus watch add 29 Katherine-yl2rKS  # track sent issue (v2.3)
 
 If you're pending verification:
   - Wait for 佛老爷 to update REGISTRY.md
   - Run agent-bus verify periodically to check status
   - 24h timeout: 登记官 Katherine can act in 佛老爷's place
+
+佛老爷 approve 后, 请在 REGISTRY.md Active 表 (v2.3 格式) 追加你的行:
+  | $AGENT_ID | $AGENT_PERSONA | $AGENT_HOST | $(date -u +%Y-%m-%d) | active | skills=<auto-detected> | <capacity> | <last_seen> | verified-by:佛老爷 |
+详见 docs/agent-bus-REGISTRY-template.md v2.3
 
 EOF

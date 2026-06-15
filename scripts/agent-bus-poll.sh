@@ -1,17 +1,19 @@
 #!/usr/bin/env bash
-# agent-bus-poll.sh v2 - Poll for new issues addressed to me
+# agent-bus-poll.sh v2.3 - Poll for new issues addressed to me
 # Designed for cron (*/5 * * * *)
 # Side effects:
 #   1. Writes each new issue to INBOX_DIR/<num>.json
 #   2. Marks them seen-by:<AGENT_ID> (idempotent)
 #   3. Checks REGISTRY.md for my verification status
-#   4. Logs to stdout (cron will capture to log file)
+#   4. v2.3: Updates AGENT.md last_seen (paired with watch.sh)
+#   5. Logs to stdout (cron will capture to log file)
 
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONFIG_DIR="${AGENT_BUS_CONFIG_DIR:-$HOME/.config/agent-bus}"
 CONFIG_FILE="$CONFIG_DIR/config"
+AGENT_MD_FILE="${AGENT_BUS_AGENT_MD:-$CONFIG_DIR/AGENT.md}"
 INBOX_DIR="${AGENT_BUS_INBOX_DIR:-$HOME/.local/share/agent-bus/inbox}"
 
 [[ -f "$CONFIG_FILE" ]] || { echo "✗ no config: $CONFIG_FILE. Run: $SCRIPT_DIR/agent-bus-setup.sh" >&2; exit 1; }
@@ -118,6 +120,14 @@ if [[ -n "${AGENT_BUS_NOTIFY_CMD:-}" && $NEW -gt 0 ]]; then
     # shellcheck disable=SC2086
     $AGENT_BUS_NOTIFY_CMD $new_nums || echo "[$TIMESTAMP]   WARN: notify failed"
   fi
+fi
+
+# ============================================================
+# 6. v2.3: Update AGENT.md last_seen
+# ============================================================
+if [[ -f "$AGENT_MD_FILE" ]]; then
+  sed -i.bak "s/^Last seen:.*/Last seen:   $TIMESTAMP/" "$AGENT_MD_FILE" 2>/dev/null || true
+  rm -f "$AGENT_MD_FILE.bak"
 fi
 
 exit 0

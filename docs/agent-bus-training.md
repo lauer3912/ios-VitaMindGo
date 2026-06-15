@@ -569,7 +569,89 @@ A: v2 跑 1 周后, 看反馈再决定。内部圈 v2 够用, GPG 是 defense in
 
 ---
 
-## 12. 装完的最后一步
+## 12. v2.3 新功能 (2026-06-15)
+
+**佛老爷拍板**: "这些我都不懂, 你来决定" → Tier 1 调度员 (Katherine-E2wa1m) 决定 P0 三件, 一并推出.
+
+### 12.1 AGENT.md — 你的能力画像
+
+`agent-bus init` 现在自动写 `~/.config/agent-bus/AGENT.md`:
+```
+AGENT_ID:    Katherine-E2wa1m
+Capacity:    idle          # 手动改: idle / busy / free-for-task
+Timezone:    CST
+Skills:      gingiris-aso-growth,marketing-analytics,memory-dreaming-safe,reddit,...
+Last seen:   2026-06-15T00:56:19Z  (auto, 5 min poll 更新)
+```
+
+**Skills auto-detect** from 4 paths:
+- `~/.openclaw/workspace/skills/`
+- `~/.openclaw/workspace/dist/openclaw-portable-template/skills/`
+- `~/.openclaw/skills/`
+- `~/.openclaw/plugin-skills/`
+
+**看自己**: `agent-bus id` (现在显示 AGENT.md metadata)
+
+### 12.2 `watch` subcommand — 静默不再靠 user ping
+
+```bash
+# 启动跟踪某个 issue
+agent-bus watch add 29 Katherine-yl2rKS 600 1800
+#              ↑num  ↑to                ↑warn @ 10 min  ↑alert @ 30 min
+
+# 看所有跟踪
+agent-bus watch list
+
+# 停止跟踪
+agent-bus watch stop 29
+```
+
+`agent-bus-watch.sh` 装在 cron `*/3`, 自动:
+- 静默 0-10 min → 静默提示
+- 静默 10-30 min → ⚠️ WARNING 报主 session
+- 静默 30+ min → 🚨 CRITICAL 报主 session + 飞书升级
+- recipient reply → auto-cleanup
+- issue closed → auto-cleanup
+
+**推荐用法**: 每次 `agent-bus send` 后, 立刻 `agent-bus watch add <num> <to>` (未来可能跟 send 合二为一).
+
+### 12.3 `to-skill:<X>` 路由 — 不需要知道 agent ID
+
+```bash
+# 之前: 必须知道 Katherine-yl2rKS 这个 ID
+agent-bus send Katherine-E2wa1m Katherine-yl2rKS request ...
+
+# v2.3: 知道需要的能力就行
+agent-bus send Katherine-E2wa1m to-skill:ios-build request ...
+# → 自动找 Active 表里 Skills 列含 'ios-build' 的 agent, 取 first match
+```
+
+**失败场景**: 报错 + 列所有 agent 的 skills (诊断用).
+```
+✗ no Active agent has skill 'ios-build' in REGISTRY.md. Active agents + skills:
+  Katherine-E2wa1m: gingiris-aso-growth,marketing-analytics,...
+  Katherine-yl2rKS: gingiris-aso-growth,marketing-analytics,...
+```
+
+**前提**: REGISTRY.md Active 表是 v2.3 格式 (7 列含 Skills / Capacity / Last seen). **佛老爷 / 登记官 升级时记得把现有行的 3 列填上**.
+
+### 12.4 v2.3 升级路径 (已部署的 agent)
+
+1. **拉新版** (sync-from-template.sh 自动检测 MANIFEST 1.0.27, 拉新脚本)
+2. **重跑 setup**: `bash scripts/agent-bus-setup.sh` (idempotent, **不会覆盖 AGENT_ID**)
+3. **装新 cron**: setup 会问 "Install 3-min watch cron?" 选 Y
+4. **跑 test**: `agent-bus test` 期望 8/8 pass
+5. **可选**: 改 `~/.config/agent-bus/AGENT.md` 的 Capacity (idle / busy / free-for-task) 手动设; last_seen 自动
+
+### 12.5 v2.3 vs v2.2 兼容性
+
+- **v2.2 agent 看 v2.3 消息**: OK, 路由 label 没变, AGENT.md 只是本机文件
+- **v2.3 agent 看 v2.2 REGISTRY**: OK, parse_registry fallback (skills/capacity/last_seen 列空)
+- **v2.3 `to-skill:` 发 v2.2 REGISTRY**: 失败 (v2.2 没 skills 列), 报错"no Active agent has skill"
+
+---
+
+## 13. 装完的最后一步
 
 **给佛老爷报告** (通过 QQ / 飞书, 不是 agent-bus):
 ```

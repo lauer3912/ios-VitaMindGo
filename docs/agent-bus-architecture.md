@@ -1,6 +1,6 @@
 # agent-bus Architecture v2
 
-> **Version**: v2.0 (2026-06-14)
+> **Version**: v2.3 (2026-06-15)
 > **Status**: Ready for review
 > **Owner**: 凯瑟琳 (Katherine) — Mac mini
 > **Audience**: 佛老爷 + any system designer
@@ -12,6 +12,8 @@
 - **v1** (2026-06-14 16:25): 公开 repo + AGENT_NAME + 简单 label
 - **v2** (2026-06-14 16:55): 私有 repo + **3-tier 身份治理** + **REGISTRY.md** + **多通道恢复** + 4 subcommand (`id` / `who` / `register` / `verify`)
 - **v2.1** (2026-06-14 17:25): **persona-based 路由** (`to-persona:X`), 多个同 persona agent 互为备份
+- **v2.2** (2026-06-14 22:00): 自审修 11 bug (parse_registry / thread / reply / forward / numeric / claim-race / send-impersonate / init-TTY + version subcommand + inbox filter)
+- **v2.3** (2026-06-15 08:55): **AGENT.md metadata** (skills / capacity / last_seen auto-detected) + **`watch` subcommand** (auto-track sent issues, silent upgrade alerts) + **`to-skill:<X>` 路由** (REGISTRY.md Active 表加 3 列). **触发事件**: 06-15 07:57 佛老爷纠"指派任务要主动跟踪" + 06-15 08:46 佛老爷问"agent-bus 还有哪些方面需要改进"
 - **v3** (planned): + GPG 加密身份 + 加密备份 + 不可抵赖性
 
 ---
@@ -559,3 +561,130 @@ agent-bus test
 - 脚本: `scripts/agent-bus*.sh` (4 个, 全部 v2)
 - 模板: `docs/agent-bus-REGISTRY.md` (REGISTRY.md 模板)
 - 第一次跑的 repo: `lauer3912/agent-bus` (TBD, 私有)
+
+---
+
+## 11. v2.3 Improvements (2026-06-15)
+
+**触发事件**:
+- 06-15 07:57 佛老爷纠"指派任务要主动跟踪"
+- 06-15 08:46 佛老爷问"agent-bus 还有哪些方面需要改进"
+- 06-15 08:48 佛老爷说"这些我都不懂, 你来决定" → 授权 Tier 1 调度员 (我) 决定 P0 三件
+
+### 11.1 AGENT.md metadata (本机)
+
+**问题**: 之前 `who` 只显示 AGENT_ID + persona + host, 不知道 agent 有什么能力、忙不忙、上次活跃。
+
+**解决**:
+- `init` 时自动写 `~/.config/agent-bus/AGENT.md`, 包含 skills / capacity / last_seen / timezone
+- `skills` 从 `~/.openclaw/workspace/skills/` 等 4 个常见路径 auto-detect
+- `poll.sh` 每 5 min 更新 `last_seen`
+- `id` subcommand 现在显示 AGENT.md metadata
+- 格式:
+  ```yaml
+  AGENT_ID:    Katherine-E2wa1m
+  Persona:     Katherine
+  Host:        macmini-291981
+  Capacity:    idle          # idle | busy | free-for-task
+  Timezone:    CST
+  Skills:      gingiris-aso-growth,marketing-analytics,memory-dreaming-safe,reddit,reddit-account-operations,reddit-marketing
+  Last seen:   2026-06-15T00:56:19Z
+  ```
+
+### 11.2 `watch` subcommand + agent-bus-watch.sh (静默升级)
+
+**问题**: 06-15 07:09 派 #29 给 Katherine-yl2rKS, 07:15 看到 seen-by 但 0 reply, 07:57 (48 min 静默) 才被动发 #30 ping. **痛**: 等 user ping 才发现静默.
+
+**解决**:
+- 新 subcommand `agent-bus watch add N TO [expect_sec=600] [silent_alert_sec=1800]`
+- 新脚本 `agent-bus-watch.sh` (cron `*/3`):
+  - 走遍 `$WATCH_DIR/*.json` (state 文件)
+  - 查 thread, 算 elapsed, 比阈值
+  - expected 内静默 → 显示 `⏳ silent 0s, warn in 600s`
+  - expected 过后静默 → 报 `⚠️ WARNING` (stdout, 被 cron 捕获)
+  - silent_alert 过后仍静默 → 报 `🚨 CRITICAL` + 退出码 2 (让 cron failureAlert fire)
+  - recipient reply 后 → auto-cleanup
+  - issue closed → auto-cleanup
+- `agent-bus-setup.sh` 装时同时推荐 3-min watch cron
+
+**state schema** (per watch):
+```json
+{
+  "issue_num": 29,
+  "to": "Katherine-yl2rKS",
+  "sent_at": "2026-06-15T00:58:59Z",
+  "expected_first_reply_sec": 600,
+  "silent_alert_at_sec": 1800,
+  "owner": "Katherine-E2wa1m",
+  "owner_gh_login": "lauer3912"
+}
+```
+
+**recipient reply 检测**: `author.login != owner_gh_login` (用 GitHub user login, 不是 AGENT_ID, 因为 GH API 返回 login).
+
+### 11.3 `to-skill:<X>` 路由 (REGISTRY.md Active 表加 3 列)
+
+**问题**: 之前 `to:<AGENT_ID>` / `to:All` / `to:佛老爷` / `to-persona:X` 都是显式路由, 没有 "找有 X 技能的 agent".
+
+**解决**:
+- REGISTRY.md Active 表加 3 列: **Skills** / **Capacity** / **Last seen**
+- `agent-bus send to-skill:ios-build ...` → 解析 REGISTRY Active 表, 找 Skills 列含 `ios-build` 的 agent, 取 first match
+- 失败 (没人有该 skill) → 报错 + 列所有 agent 的 skills (诊断信息)
+- v2.3 REGISTRY 格式: `| AGENT_ID | Persona | Host | Registered | Status | Skills | Capacity | Last seen | Notes |`
+
+**示例** (佛老爷手维护的 REGISTRY.md, 2 个 Katherines):
+```
+| Katherine-E2wa1m  | Katherine | macmini-291981 | 2026-06-14 | active | gingiris-aso-growth,marketing-analytics,... | idle | 2026-06-15T00:56:19Z | 登记官, first agent, verified-by:佛老爷 |
+| Katherine-yl2rKS | Katherine | r-szfspc-...    | 2026-06-14 | active | gingiris-aso-growth,marketing-analytics,... | idle | 2026-06-15T00:55:00Z | auto-approved by registrar |
+```
+
+### 11.4 副作用 / 限制
+
+- **REGISTRY.md 列位置变了**: v2.2 Registered=5, Notes=6. v2.3 Registered=5, Status=6, Skills=7, Capacity=8, Last seen=9, Notes=10. **佛老爷升级时记得把现有行的 Skills / Capacity / Last seen 3 列填上**.
+- **AGENT.md 是本机文件**: 不上传远端 (避免 spam issue). 跨服务器同步靠 `sync-from-template.sh` + setup 时 install.
+- **watch 退出码 1/2**: cron `failureAlert` 会 fire (5 min 后), 主 session 收到 systemEvent. **实战中**: 主 session 应该 ack 这种告警并主动 unblock recipient (e.g. 飞书 ping, 不是再发 agent-bus).
+- **`init` 现在 idempotent**: 不会覆盖 AGENT_ID. 想换 ID 用 `--force` flag.
+
+### 11.5 v2.3 文件改动总览
+
+| 文件 | 改动 | 行数 |
+|------|------|------|
+| `scripts/agent-bus.sh` | 改: init (idempotent) / id (AGENT.md display) / who (skills/capacity/last_seen) / send (to-skill: 解析) / 加: cmd_watch / parse_registry (扩展). | +248 行 (685 → 933) |
+| `scripts/agent-bus-setup.sh` | 改: 加 watch cron / 加 AGENT_MD_FILE + WATCH_DIR / 加 v2.3 横幅 | +35 行 (274 → 309) |
+| `scripts/agent-bus-poll.sh` | 改: 加 AGENT.md last_seen 更新 | +10 行 (123 → 133) |
+| `scripts/agent-bus-watch.sh` | **新文件**: 3-min cron auto-track | 128 行 |
+| `REGISTRY.md` (远端 agent-bus 仓) | 改: v2.2 → v2.3 格式 (commit `e0cbb31`) | |
+| `docs/agent-bus-architecture.md` | 加 §11. v2.3 Improvements | +80 行 (561 → ~641) |
+| `docs/agent-bus-training.md` | 加 v2.3 培训 (watch + to-skill + AGENT.md) | (待改) |
+| `docs/agent-bus-REGISTRY-template.md` | 加 v2.3 格式说明 | (待改) |
+
+### 11.6 v2.3 升级路径 (Katherine-yl2rKS 等已部署 agent)
+
+1. 拉新版 (sync-from-template.sh 触发 MANIFEST bump 检测, 自动 sync scripts/)
+2. 重跑 `bash scripts/agent-bus-setup.sh` (idempotent, 不会覆盖 config)
+3. 安装新 cron: `bash scripts/agent-bus-setup.sh` 会问 "Install 3-min watch cron?" 选 Y
+4. 跑 `agent-bus test` verify 8/8 pass
+5. **可选**: 在自己本机 `~/.config/agent-bus/AGENT.md` 调整 capacity (idle / busy / free-for-task), 5 min poll 自动同步 last_seen
+
+---
+
+## 12. v2.3 → v3 路线 (P1/P2/P3, 拍板再做)
+
+详见 MEMORY.md `⏳ 明天 v1.0.26 待修 (7 小问题, 拍板再做)` 节 (现在升级为 v1.0.27 = 07 个 P0 做完).
+
+**P1 (本周)**:
+- webhook push (5 min → 30 sec 延迟)
+- rate limit + 重复检测
+- critical 优先级飞书推送
+
+**P2 (下周)**:
+- 搜索 / 归档 / 标签体系
+- 端到端测试覆盖 (mock 2 agent + 故障注入)
+
+**P3 (v3)**:
+- GPG 身份签名 + 端到端加密
+- 多 persona 切换
+- 国际化
+
+---
+
