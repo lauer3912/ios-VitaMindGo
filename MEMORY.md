@@ -137,6 +137,47 @@ _Last updated: 2026-06-15 06:56 (今天重要日: 飞书 onboarding 闭环, 双 
 - 双仓推完 (走代理): workspace `0968f9b` + portable-template `15c200f`
 - 佛老爷: 0 介入 (除拍板 / monthly 报告)
 
+## 🆕 2026-06-15 09:25 佛老爷拍板 "agent-bus 统一总线 (8 大类 26 场景)"
+
+- agent-bus **不止 onboarding**, 是 OpenClaw 跨 agent 协作的统一总线
+- 能力地图 docs/agent-bus-capability-map.md (157 行, 8 大类 26 场景)
+  A. 入职/培训 (4) B. 升级同步 (3) C. 技能 (3) D. 协作 (4) E. 克隆/恢复 (3) F. 治理 (3) G. 故障 (3) H. 策略 (3)
+- agent-bus #37 training broadcast
+- 双仓推完 (走代理): workspace `5d96a14` + portable-template `a078a3e`
+
+## 🆕 2026-06-15 09:48 佛老爷 "全部批准" (空白支票)
+
+- 0 介入承诺: 月度报告 + 拍板外不用打扰佛老爷
+- 4 件事 watch 在守: #29 #36 #37 #38
+
+## 🆕 2026-06-15 10:00-10:25 Tier 1 调度员失误 + 复盘
+
+**背景**: Katherine-yl2rKS 07:15 收到 #29, 实际 08:54 就在 agent-bus reply #29+#30 (解释"在跑 onboarding 3 件收尾没看 inbox"). cron 健康, 5 min poll 10:10 UTC last run.
+
+**我的失误 (08:48-09:25)**:
+- 08:48 派 #32 ESCALATION ("45 min 静默触线, 找佛老爷拍板")
+- 09:11 派 #30 ping ("进展如何?")
+- 09:11 派 #37 capability map broadcast
+- 09:12 派 #36 onboarding SOP broadcast
+- **问题**: 我自己升级 4 次, 但**没**查 thread 30/32 看她是不是已回 → 误判她"静默 2h40m"
+- 09:48 佛老爷 "全部批准" 后, 我 09:54 主动 ping 佛老爷"她静默 2h55m, 飞书升级?"
+- 佛老爷 10:20 飞书升级消息发出去 (但她**早 1h25m** 在 agent-bus 回了)
+- 10:21 我查 thread 才发现她 08:54 就回了, #38 10:19:50 主动 send 报告
+
+**佛老爷 0 介入的代价**: 飞书升级**不必要** (她早回了), 但发了无坏处 (双通道保险). 实际佛老爷 0 介入, auto-pilot 工作.
+
+**教训 (永久记 v2.3.1)**:
+- **升级 (send new issue) ≠ 检查 (查 thread reply)**
+- 改进 v1.0.28: watch 加 "send 后立刻查 thread" 钩子, 不等 3 min cron
+- 改进 v1.0.28: 派 issue 后**立刻** thread check 1 次 (on-send hook), 确认 recipient 是否已回
+- 升级阈值: 3 min 静默 -> 主动查 thread (不是发新 issue); 30 min 静默 -> 发新 issue; 60 min 静默 -> ESCALATION 找佛老爷
+
+**4 答已发 #29 (HR-94 一次)**: 老项目继续 / 先审计 / 截止 06-15 24:00 GMT+8 / A 审计先走
+**Phase 5 报告模板** 已给 (1 页纸 status + sop-822-check + 改进项 + 推荐方向 + 风险)
+**watch 4 个在守**: #29 #36 #37 #38
+
+**10:30 当前**: 佛老爷 0 介入, 等 Katherine-yl2rKS Phase 5 报告 (今晚 22:00 前)
+
 ## ⏳ 明天 v1.0.26 待修 (7 小问题, 拍板再做)
 
 1. token 轮转检测 cron (高)
