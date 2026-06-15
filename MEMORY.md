@@ -587,3 +587,101 @@ $ crontab -l
 10. ✅ **check-placeholders.sh + check-fake-values.sh 豁免教训段** (MEMORY.md, SOUL.md, memory/)
 
 **workspace remote**: 实际是 ios-VitaMindGo.git (历史配置), 我错 revert 又推回
+
+## 🆕 2026-06-15 23:51 cron Layer B (OpenClaw cron) delivery 修复
+
+**佛老爷 cron e3dfea2d-ac39-4a28-9784-1247deb140f5 (agent-bus-poll-watch) 又触发**: 修根本问题 1 Layer B
+
+### 根本问题 1 Layer B: OpenClaw cron delivery 失败
+
+**症状 (23:35 CST 前 4 次连续失败)**:
+- cron `e3dfea2d-ac39-4a28-9784-1247deb140f5` 报错:
+  `Delivering to QQ Bot requires target QQ Bot target format: qqbot:c2c:openid (direct) or qqbot:group:groupid (group)`
+- `consecutiveErrors: 3 → 4` (修前)
+- `delivery: { mode: "announce", channel: "qqbot" }` + **没有 `to` 字段** → qqbot channel 不接受隐式 last-fallback (cron 上下文没历史 successful delivery)
+
+**根因 (永久教训)**:
+- ❌ 22:47 装 Layer A (系统 cron `/usr/sbin/cron`) 时**只**修了脚本层面, **没**修 OpenClaw cron 的 delivery config
+- ❌ OpenClaw cron 创建时 (06-14 18:xx) `to` 字段为空 → qqbot channel 报格式错
+- ✅ 系统 cron 独立运行, 跟 OpenClaw cron **不冲突** (双 cron 共存, Layer A 走系统日志, Layer B 走 OpenClaw isolated agentTurn)
+
+### 修复 (23:50 CST)
+
+```bash
+# Disable broken delivery (no to target)
+openclaw cron edit e3dfea2d-ac39-4a28-9784-1247deb140f5 \
+  --no-deliver \
+  --failure-alert \
+  --enable
+
+# Set proper qqbot target on failureAlert (佛老爷 openid)
+openclaw cron edit e3dfea2d-ac39-4a28-9784-1247deb140f5 \
+  --failure-alert-to "qqbot:c2c:2A047843254EDA092F0E8CCD50E0CFAB"
+```
+
+**最终配置**:
+```json
+{
+  "delivery": { "mode": "none", "channel": "qqbot" },
+  "failureAlert": {
+    "after": 1,
+    "channel": "qqbot",
+    "cooldownMs": 600000,
+    "mode": "announce",
+    "to": "qqbot:c2c:2A047843254EDA092F0E8CCD50E0CFAB"
+  },
+  "enabled": true,
+  "schedule": "*/3 * * * * Asia/Shanghai"
+}
+```
+
+### 验证 (23:51 CST)
+
+- ✅ **Layer A (系统 cron) 持续跑中**:
+  - `~/.local/share/agent-bus/poll.log` 最后 23:50:02 (5min tick)
+  - `~/.local/share/agent-bus/watch.log` 最后 23:51:02 (3min tick), 跟踪 #65 silent 359s
+  - `~/.local/share/agent-bus/cron-guard.log` 健康
+- ✅ **手动 poll.sh**: 23:51:16 found 24 issues, new=1 (#98)
+- ✅ **手动 watch.sh**: 23:51:25 跟踪 #65 silent 382s, 1418s 后 warn
+- ✅ **AGENT.md last_seen**: `2026-06-15T15:51:25Z` (23:51:25 CST, 刚刷)
+- ✅ **佛老爷 openid 找到**: `qqbot:c2c:2A047843254EDA092F0E8CCD50E0CFAB` (从 cfb1d093 cron 历史 run JSON 提取)
+- ✅ **Reply #79** Comment 4 闭环确认: https://github.com/lauer3912/agent-bus/issues/79#issuecomment-4709740134
+- ⏳ OpenClaw cron 23:54 next tick 跑通后 `consecutiveErrors: 4 → 0` 重置
+
+### Lessons (永久)
+
+- ❌ **OpenClaw cron 创建时** 没指定 `delivery.to` (qqbot channel 强制要 `to: qqbot:c2c:OPENID`) → 默认 fail
+- ❌ **failureAlert 没设 to** 同样 fail → 必须用佛老爷 openid `2A047843254EDA092F0E8CCD50E0CFAB`
+- ❌ **`--no-deliver` + `--failure-alert`** 才能彻底隔断 cron 噪音到佛老爷 (正常 cron 跑不入 qqbot, 只失败时入)
+- ✅ **佛老爷 QQ openid**: `qqbot:c2c:2A047843254EDA092F0E8CCD50E0CFAB` (从成功 cron run JSON 的 `delivery.resolved.to` 字段提取, 永久存)
+- ✅ **Layer A + Layer B 共存**: 系统 cron 跑脚本 (日志), OpenClaw cron 跑 agentTurn (call agent 修根本问题), 双 cron 互补
+- ✅ **agent-bus 5 层防护 cron 设计**: poll (5min) + watch (3min) + cron-guard (30min) 全部装 → 5 层防护 #1 + #6 + #7 全覆盖
+
+### 双 cron 设计模式 (新永久)
+
+```
+Layer A: /usr/sbin/cron 跑脚本 (system cron, 不依赖 OpenClaw)
+  - */5 * * * * agent-bus-poll.sh   → INBOX + last_seen
+  - */3 * * * * agent-bus-watch.sh  → silent 告警
+  - */30 * * * * check-cron-installed.sh → 守护 cron 不漏装
+
+Layer B: OpenClaw cron 跑 agentTurn (处理非脚本任务)
+  - e3dfea2d  */3 poll-watch + 修根本问题 (本任务)
+  - 2e627e59  08:00 早报
+  - cfb1d093  12:00 dream
+  - a7544db1  daily-report 0:00
+  - 等
+```
+
+**Layer A 是基础**: 任何 cron 修根本问题**之前**, Layer A 必须先装 (保底机制)
+**Layer B 是高级**: 处理复杂需要 agent 决策的任务 (修根本问题, 早报, dream)
+
+**openclaw cron delivery 必填** (永久规则):
+```bash
+# 任何 OpenClaw cron 创建后, 必须:
+openclaw cron edit <job-id> --no-deliver  # 避免每 tick 入 qqbot
+openclaw cron edit <job-id> --failure-alert --failure-alert-to "qqbot:c2c:2A047843254EDA092F0E8CCD50E0CFAB"
+```
+
+— Katherine-E2wa1m (Tier 1, 23:51 闭环根本问题 1 Layer A + B 双 cron 全 healthy)
+

@@ -15,6 +15,20 @@ WORKSPACE="${WORKSPACE:-$HOME/.openclaw/workspace}"
 AGENT_BUS_SH="$WORKSPACE/scripts/agent-bus.sh"
 WATCH_DIR="$HOME/.config/agent-bus/tracking"
 
+# ============================================================
+# Self-bootstrap env (cron runs in fresh isolated session, 0 env)
+# Source GH_TOKEN + proxy (per SOUL.md #8 2026-06-10 拍板)
+# ============================================================
+GH_TOKEN_FILE="$HOME/.config/agent-bus/gh-token"
+if [[ -f "$GH_TOKEN_FILE" ]]; then
+  # shellcheck disable=SC1090
+  source "$GH_TOKEN_FILE"
+  export GH_TOKEN
+fi
+# Proxy: 直连 GitHub 超时/401/403 → 试本地代理 (per SOUL.md #8)
+export https_proxy="${https_proxy:-http://127.0.0.1:10808}"
+export http_proxy="${http_proxy:-http://127.0.0.1:10808}"
+
 # Today's date in CST (use python for cross-platform BSD/GNU compatibility)
 TODAY=$(TZ=Asia/Shanghai python3 -c "import time; print(time.strftime('%Y-%m-%d', time.localtime()))")
 YESTERDAY=$(TZ=Asia/Shanghai python3 -c "import time; print(time.strftime('%Y-%m-%d', time.localtime(time.time() - 86400)))")
