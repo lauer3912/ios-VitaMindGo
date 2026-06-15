@@ -216,7 +216,7 @@ gh auth status
 - `workflow` (触发/查看 Actions)
 - `read:org` (如果是 org 仓库)
 
-**⚠️ 老爷的 token 已经在 MEMORY.md 永久记录** (`GH_TOKEN=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`)，如果多台 Ubuntu 用同一个 token 即可。
+**⚠️ 老爷的 token 已经在 MEMORY.md 永久记录** (`GH_TOKEN\=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`)，如果多台 Ubuntu 用同一个 token 即可。
 
 ### §0.4 Apple Team ID 共享 (从 Mac mini 拉取)
 

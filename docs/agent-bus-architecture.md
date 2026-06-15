@@ -386,7 +386,7 @@ AGENT_ID = <persona>-<rand6>
 # 1. 装 gh + 配 token
 brew install gh   # mac
 apt install gh    # linux
-echo "GH_TOKEN=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" | gh auth login --with-token
+echo "GH_TOKEN\=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" | gh auth login --with-token
 
 # 2. 装 agent-bus
 bash agent-bus-setup.sh
