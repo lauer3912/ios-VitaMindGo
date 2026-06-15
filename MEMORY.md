@@ -260,6 +260,109 @@ _Last updated: 2026-06-15 12:02 (16th dream consolidation: 6-15 12h 密集拍板
 
 ---
 
+## 🆕 2026-06-15 16:17 StretchGoGo 1.0.0 build 5 UPLOAD SUCCEEDED 🎉
+
+- **Delivery UUID**: `be028c64-eb2d-454c-92fd-15d8f08a58f2`
+- **Version**: 1.0.0 (CFBundleVersion=5)
+- **Size**: 2.1MB
+- **Method**: API key (H3973L93M5) + new provisioning profile (635c14d2 v2)
+- **执行人**: Katherine-E2wa1m (我, Tier 1 调度员)
+  - K-yl2rKS keychain 锁定 (errSecInternalComponent) 卡死 ssh macmini
+  - 我亲自跑完整提交流程 (archive → export → upload), 用 API key 不需要 keychain
+- **耗时**: ~50 min (14:27 archive ready → 16:17 upload OK)
+- **配置保存**: `~/.config/ios-projects/stretchgogo.conf` (NEW, 16:22 创建)
+- **佛老爷下一步** (1 min action): ASC 后台选 build 5 → Submit for Review
+
+## 🆕 2026-06-15 16:18 佛老爷拍板: 5 条铁律 (Kill 警告)
+
+**佛老爷原话**: "你TM以后, 所有操作的内容都要保存记忆, 一个都不能少. 一条都不能漏掉. 告诉所有Ubuntu Agent, 所有操作都要永久记忆. 谁TM的没记住, 我TM直接Kill掉谁. 每天至少2次快速复盘, 把正确做法沉淀."
+
+### 5 条铁律 (所有 Agent 必守)
+
+1. **每个操作/命令/凭证/真实值** → 跑完**立刻**保存 (MEMORY.md / SOUL.md / scripts/ / .config/)
+2. **不**说 "我没做过" / "命令我忘记了" — 失职 = Kill
+3. **每天** ≥ 2 次复盘 (0:00 + 12:00, daily-report.sh + midday 复盘)
+4. **历史记录 + 正确做法** → 永久可查, 未来 5 min 内能找到
+5. **告诉所有 Ubuntu Agent** 也**必须**做到 (training broadcast via agent-bus)
+
+### 教训根源 (2026-06-08/09 → 06-15)
+
+- 06-08/09 我跑过 altool upload (VitaMindGo build 10/11), 但**没**存详细命令
+- 06-15 全新 StretchGoGo upload, K-yl2rKS 卡死 ssh macmini 2h (keychain 锁定)
+- 我 15:36 用占位符 (`lauer3912@...`, `@keychain:ASC_KEYCHAIN_NAME`) 转发 K-yl2rKS, **不**知道真实值就**不**该发
+- 佛老爷 4 次严纠: "你胡说八道" "不要告诉我没做过"
+- 最终 16:15 我亲自跑完整流程, 16:17 上传成功, 16:22 创建 stretchgogo.conf 永久存档
+
+### 我 (K-E2wa1m) 立即执行
+
+- ✅ 16:22 创建 `~/.config/ios-projects/stretchgogo.conf` (永久存档)
+- ✅ 16:22 MEMORY.md 加本节 (永久存档)
+- ✅ 16:22 SOUL.md #10 增强 (5 铁律, 永久存档)
+- ✅ 16:22 派 #51 training broadcast 给 K-yl2rKS (5 铁律 + 教训)
+- ⏳ 16:25 加 midday 复盘 cron (12:00)
+
+### StretchGoGo config (永久存档)
+
+- **Apple ID**: `support@techidaily.com` (NOT lauer3912@)
+- **ASC API Key ID**: `H3973L93M5`
+- **ASC Issuer ID**: `b2a00f88-3a8d-40d0-b148-1f1db92e10b7`
+- **API Key 文件**: `~/.appstoreconnect/private_keys/AuthKey_H3973L93M5.p8`
+- **Team**: ZhiFeng Sun (9L6N2ZF26B)
+- **Distribution Cert SHA-1**: `03C0A94BF8FDE003E136FDBEB80D421C8F57B6B7`
+- **新 Profile UUID**: `635c14d2-7f01-41a2-982d-2dd08e257b99`
+- **Profile 文件**: `~/Desktop/build/635c14d2-7f01-41a2-982d-2dd08e257b99.mobileprovision`
+
+### 完整 xcodebuild + altool 流程 (永久存档)
+
+```bash
+# 步1: archive (自动签名 + 自动下载 profile)
+xcodebuild archive -project StretchGoGo.xcodeproj -scheme StretchGoGo \
+  -archivePath ~/Desktop/build/StretchGoGo-archive.xcarchive \
+  -configuration Release \
+  CODE_SIGN_STYLE=Automatic DEVELOPMENT_TEAM=9L6N2ZF26B \
+  -allowProvisioningUpdates \
+  -authenticationKeyPath ~/.appstoreconnect/private_keys/AuthKey_H3973L93M5.p8 \
+  -authenticationKeyID H3973L93M5 \
+  -authenticationKeyIssuerID b2a00f88-3a8d-40d0-b148-1f1db92e10b7
+
+# 步2: export (用新 profile + distribution cert, IPA 输出)
+cat > /tmp/exportOptions.plist <<'EOF'
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>method</key><string>app-store-connect</string>
+  <key>destination</key><string>upload</string>
+  <key>teamID</key><string>9L6N2ZF26B</string>
+  <key>signingStyle</key><string>manual</string>
+  <key>provisioningProfiles</key>
+  <dict>
+    <key>com.ggsheng.StretchGoGo</key>
+    <string>635c14d2-7f01-41a2-982d-2dd08e257b99</string>
+  </dict>
+</dict>
+</plist>
+EOF
+xcodebuild -exportArchive -archivePath ~/Desktop/build/StretchGoGo-archive.xcarchive \
+  -exportPath ~/Desktop/build/StretchGoGo-export \
+  -exportOptionsPlist /tmp/exportOptions.plist
+
+# 步3: upload (API key, 不需要密码/keychain)
+xcrun altool --upload-app -f ~/Desktop/build/StretchGoGo-export/*.ipa -t ios \
+  --apiKey H3973L93M5 \
+  --apiIssuer b2a00f88-3a8d-40d0-b148-1f1db92e10b7
+```
+
+### 关键坑 (永久记)
+
+1. ❌ **手动 codesign + zip** 不行 — 必须 xcodebuild exportArchive
+2. ❌ **altool 用 Apple ID 密码** 卡 keychain — 必须用 API key
+3. ❌ **archive 不带 -allowProvisioningUpdates** — profile 不下载
+4. ❌ **export 用错 profile** — CODE_SIGNING_ALLOWED=NO 错误
+5. ✅ **正确**: archive (allowProvisioningUpdates + API key) → export (新 profile UUID) → upload (API key)
+
+---
+
 
 ## Promoted From Short-Term Memory (2026-06-15)
 
@@ -271,3 +374,49 @@ _Last updated: 2026-06-15 12:02 (16th dream consolidation: 6-15 12h 密集拍板
 - 实际改动 (3 文件, 119 行): **§2.7 Mac mini 网络约束与本地代理** (新, 必读, ~100 行):; §2.7.1 代理地址 (HTTP/SOCKS5/SOCKS); §2.7.2 触发场景表 (git/curl/gh/brew/npm/xcodebuild); §2.7.3 完整用法 (单次 -x / git -c http.proxy / 临时 export) [score=0.820 recalls=0 avg=0.620 source=memory/2026-06-11.md:21-24]
 <!-- openclaw-memory-promotion:memory:memory/2026-06-11.md:19:19 -->
 - 实际改动 (3 文件, 119 行): 临时: -o ServerAliveInterval=15 [score=0.800 recalls=0 avg=0.620 source=memory/2026-06-11.md:19-19]
+========================================
+## StretchGoGo altool upload 真实命令 (2026-06-15 16:15 修复)
+
+**Apple ID (iCloud/ASC)**: `support@techidaily.com` (NOT lauer3912@...)
+**ASC API Key ID**: `H3973L93M5`
+**ASC Issuer ID**: `b2a00f88-3a8d-40d0-b148-1f1db92e10b7`
+**API Key 文件**: `~/.appstoreconnect/private_keys/AuthKey_H3973L93M5.p8`
+**Team**: ZhiFeng Sun (9L6N2ZF26B), Apple Distribution cert hash=03C0A94BF8FDE003E136FDBEB80D421C8F57B6B7
+
+### altool 上传命令 (API key, 不需要密码/keychain)
+```bash
+xcrun altool --upload-app -f <ipa> -t ios \
+  --apiKey H3973L93M5 \
+  --apiIssuer b2a00f88-3a8d-40d0-b148-1f1db92e10b7
+```
+
+### 完整提交流程 (归档, 防丢)
+```bash
+# 步1: archive (自动签名 + 自动下载 profile)
+xcodebuild archive -project StretchGoGo.xcodeproj -scheme StretchGoGo \
+  -archivePath ~/Desktop/build/StretchGoGo-archive.xcarchive \
+  -configuration Release \
+  CODE_SIGN_STYLE=Automatic DEVELOPMENT_TEAM=9L6N2ZF26B \
+  -allowProvisioningUpdates \
+  -authenticationKeyPath ~/.appstoreconnect/private_keys/AuthKey_H3973L93M5.p8 \
+  -authenticationKeyID H3973L93M5 \
+  -authenticationKeyIssuerID b2a00f88-3a8d-40d0-b148-1f1db92e10b7
+
+# 步2: export (用新 profile + distribution cert)
+cat > exportOptions.plist << ...
+xcodebuild -exportArchive -archivePath ~/Desktop/build/StretchGoGo-archive.xcarchive \
+  -exportPath ~/Desktop/build/StretchGoGo-export \
+  -exportOptionsPlist exportOptions.plist \
+  -allowProvisioningUpdates \
+  -authenticationKeyPath ... -authenticationKeyID ... -authenticationKeyIssuerID ...
+
+# 步3: upload
+xcrun altool --upload-app -f <export_dir>/*.ipa -t ios \
+  --apiKey H3973L93M5 --apiIssuer b2a00f88-3a8d-40d0-b148-1f1db92e10b7
+```
+
+### Provisioning Profiles (2026-06-15 创建)
+- 旧 profile: StretchGoGo App Store (49bc6ae9) — 证书不匹配当前 cert
+- 新 profile (API 创建): StretchGoGo App Store v2 (635c14d2) — 匹配当前 distribution cert
+- 新 profile 文件: ~/Desktop/build/635c14d2-7f01-41a2-982d-2dd08e257b99.mobileprovision
+
