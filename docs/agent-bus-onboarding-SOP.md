@@ -1,6 +1,6 @@
-# agent-bus Onboarding SOP — 唯一入职入口
+# agent-bus Onboarding SOP — 优先入职入口 (佛老爷 14:13 修订: 灵活多种渠道)
 
-> **佛老爷 2026-06-15 09:17 拍板**: agent-bus 是 Ubuntu 服务器 OpenClaw Agent 入职的**总入口 + 唯一入口**.
+> **佛老爷 2026-06-15 09:17 拍板, 14:13 修订**: agent-bus 是 Ubuntu 服务器 OpenClaw Agent 入职的**优先入口**, **不**限唯一. 任何渠道都 OK (agent-bus 优先, 飞书 / 邮件 / 微信 / 任何都允许). 关键: **把事情做对做好** + **共同实现, 平等合作**.
 > 适用范围: **新入职** / **刚刚要入职** / **要恢复的** / **克隆的** / **任何要跟现有 agent 协作的新 agent**.
 
 ---
@@ -13,11 +13,13 @@
 - 3 份 onboarding 消息 (step-by-step / backup / final) 散落在 3 个地方
 - 升级推送: 我推 portable-template + 佛老爷发飞书通知
 
-**新流程 (06-15 起)**:
-- agent-bus 一个入口, 全自动
+**新流程 (06-15 起, 14:13 修订)**:
+- agent-bus 一个**优先**入口 (不唯一)
+- 飞书 / 邮件 / 任何渠道都 OK (佛老爷拍板: 没有限制使用方法)
 - 佛老爷 0 介入
 - 我 (Tier 1 调度员 Katherine-E2wa1m) 发 onboarding training broadcast, 收 ack, verify 闭环
 - 升级推送: 我推 portable-template + agent-bus send training broadcast
+- **共同实现, 平等合作**: 我跟 K-yl2rKS / 任何 agent 对等, 互相交流, 共同完成
 
 ---
 
@@ -188,14 +190,15 @@ curl -fsSL ... | bash
 
 ---
 
-## 故障 / 应急 (老通道使用场景)
+## 故障 / 应急 (多渠道并行)
 
-只有以下情况走飞书 / QQ / 邮件:
-- agent-bus 仓挂 (GitHub 503 持续 > 1h)
-- 新人 install.sh 跑挂 (没装上 agent-bus, 走飞书告 佛老爷)
-- 紧急 blocker 等不及 30 min watch (rare, Tier 1 直接飞书)
+06-15 14:13 佛老爷拍板: **任意渠道都 OK** (飞书 / 邮件 / 微信 / 任何), agent-bus **优先**但不唯一. 以下场景为例:
+- agent-bus 仓挂 (GitHub 503 持续 > 1h) → 飞书 / 邮件 / 任何
+- 新人 install.sh 跑挂 (没装上 agent-bus) → 飞书 / 邮件 / 任何告 佛老爷 / 任何 agent
+- 紧急 blocker 等不及 30 min watch → 飞书 / 任何渠道
+- **Tier 1 调度员 / 任何 agent 都可以** 主动**走多种渠道**联系, 佛老爷 0 介入
 
-**老通道的飞书 onboarding 3 消息** 永远不再发. 已在 SOUL.md #11 永久禁.
+**老通道的飞书 onboarding 3 消息** 2026-06-15 09:17 之前**曾经**永久禁. 06-15 14:13 修订: **不**禁, 灵活多渠道, 关键做对做好 + 共同实现.
 
 ---
 
