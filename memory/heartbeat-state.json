@@ -1,9 +1,9 @@
 {
   "lastChecks": {
-    "agent-bus-poll": 1781539513,
-    "agent-bus-watch": 1781539513,
-    "cron-health": 1781539513,
-    "heartbeat": 1781539886,
+    "agent-bus-poll": 1781540916040,
+    "agent-bus-watch": 1781540916040,
+    "cron-health": 1781540916040,
+    "heartbeat": 1781540916040,
     "daily_report_cron": 1781539798632
   },
   "notes": [
@@ -321,6 +321,12 @@
       "tick": 69,
       "state": "YELLOW-FIXED",
       "summary": "5-min tick. Daily Report cron v2 (8fe5d0bf) 重建 完成: sessionTarget=isolated + timeout=600s + bestEffort=true. 旧 a7544db1 rm. 手动 cron run enqueue (runId manual:...:5) → 佛老爷 30-90s 收 daily report. 6 铁律 done. No qqbot ping (B-plan HOLD). commit 2c9cdba + push."
+    },
+    {
+      "time": "2026-06-16 00:25 CST",
+      "tick": 70,
+      "state": "YELLOW-FIXED-v3",
+      "summary": "Daily Report cron 8fe5d0bf self-bootstrap env fix: 根因=gh CLI 0 env (GH_TOKEN+proxy 未注入) → daily-report.sh 加 source ~/.config/agent-bus/gh-token + export https_proxy=http://127.0.0.1:10808 → portable-template v1.0.28→v1.0.29 BUMP + commit 0832067 + push verified. 今日报告手动补救 (本回复 deliver 给佛老爷). #104+#105 closed dup. 6 铁律 done. No qqbot announce."
     }
   ]
 }
