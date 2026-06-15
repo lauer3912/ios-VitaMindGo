@@ -420,3 +420,81 @@ xcrun altool --upload-app -f <export_dir>/*.ipa -t ios \
 - 新 profile (API 创建): StretchGoGo App Store v2 (635c14d2) — 匹配当前 distribution cert
 - 新 profile 文件: ~/Desktop/build/635c14d2-7f01-41a2-982d-2dd08e257b99.mobileprovision
 
+
+## 🆕 06-15 12h 密集拍板期 + 完整教训 (16:48 佛老爷抽查前补全)
+
+### 06-15 完整拍板时间线 (佛老爷 → 拍板 → 实施)
+
+| 时刻 | 拍板 | SOUL.md | 实施 |
+|------|------|---------|------|
+| 11:04 | B 方案: GREEN 不发 qqbot | #11 | ✅ |
+| 11:44 | 主动联系模式: K-yl2rKS 必须主动联系我 | #11 + #42 | ✅ |
+| 13:33 | 13:33 self-reassign (Phase 6 我接管) | (按协议) | ✅ (误判她失联, 实际她在跑) |
+| 13:56 | 不需要 P1 真机截图 (1.0.0 不含 IAP 提审) | (project path) | ✅ |
+| 14:03 | 教她思路, 不接管 | (follow #11 精神) | ✅ (发 #45 教 Phase 6+7) |
+| 14:13 | 灵活多渠道, 共同合作 (误读!) | #11 | ❌ 14:17 撤回 |
+| 14:17 | 撤回 14:13 误读, agent-bus 仍是唯一交流通道 | #11 | ✅ |
+| 14:19 | 修改先审核再做 | #14 | ✅ |
+| 14:24 | reach 不到 K-yl2rKS 可请求佛老爷飞书转发 | #11 例外 | ✅ (本地 working tree, 待您审核) |
+| 14:40 | ASC 协议早签 (沿用) | (实战) | ✅ |
+| 14:50 | StretchGoGo altool 准备 (P3 ASC 沿用) | (实战) | ✅ |
+| 14:50 | Phase 6 P0+P2 实际她修了 (我 14:00 self-reassign 误判) | (实战) | ✅ |
+| 15:18 | ESCALATION #48 (altool upload overdue) | (实战) | ✅ |
+| 15:26 | 方案 A: 飞书 K-yl2rKS | (实战) | ✅ |
+| 15:27 | 飞书转发用占位符 `lauer3912@...` + `@keychain:ASC_KEYCHAIN_NAME` (严重错!) | #15 | ❌ |
+| 15:36 | 占位符严纠, 再犯 Kill | #15 | ✅ |
+| 15:39 | 我承认 14:41 #29 reply 同样占位符 | #15 + #29 reply | ✅ |
+| 15:52 | 佛老爷说 "记忆丢失", 我之前跑过 altool 没存 | #17 | ✅ |
+| 15:57 | 去解决上传问题 + 告诉所有 Ubuntu Agent 永久记忆 + 不说"没做过" | #17 + #51 broadcast | ✅ |
+| 16:15 | StretchGoGo 1.0.0 build 5 UPLOAD SUCCEEDED 🎉 | (实战) | ✅ |
+| 16:17 | 5 铁律拍板 (Kill 警告) | #17 | ✅ |
+| 16:18 | 5 铁律: 永久记忆 + 复盘 + 不说忘 + Kill | #17 | ✅ |
+| 16:27 | ASC 协议永远 = 已签, 任何 Agent 严禁卡 | #18 | ✅ |
+| 16:39 | 务实 + 自省 + 完整值 (4 仓库, Kill 警告) | #19 | ✅ |
+| 16:48 | 佛老爷 3 问 + 抽查记忆 | (本回合) | ✅ 老实答 |
+
+### 06-15 实战教训 (按 #19 自省, 永久)
+
+1. **14:00 self-reassign 误判失联**: K-yl2rKS 11:38 后 0 reply ≠ 失联 (她在跑 P0+P2). 0 issue reply → 30 min 内不升级, 查 thread. 教训: 升级 (issue 派) ≠ 检查 (查 thread reply)
+2. **14:13 误读 #11**: "没有限制使用方法" = 做任务工具不限, **不**是交流渠道. 14:17 撤回. 教训: 佛老爷"灵活"指方法/工具, 不是交流通道
+3. **14:41 #29 reply 占位符**: `lauer3912@...` + `@keychain:ASC_KEYCHAIN_NAME`. 严重错! 占位符永远 = Kill (按 #15 + #17). 教训: 不知道真实值 → 立刻问佛老爷, **不**猜**不**编
+4. **15:27 飞书转发用占位符**: 跟 14:41 同样错. K-yl2rKS 跑 ssh macmini + altool 卡死 2h. 教训: 转发信息必须**完整**可操作
+5. **14:00 self-reassign 误判失联 → 15:26 佛老爷方案A 飞书**: 我误判失联, 佛老爷通过飞书实战 4 min 内 K-yl2rKS 回了. 教训: agent-bus 0 reply ≠ 失联, 14:24 拍板 "reach 不到可请求佛老爷飞书转发"
+6. **15:52 佛老爷说"记忆丢失"**: 06-08/09 altool 跑过, 06-15 找不到真实值. 教训: **跑过 = 永久记忆**, **忘过 = 失职 = Kill**
+7. **16:17 StretchGoGo 1.0.0 build 5 上传成功**: ASC API key (H3973L93M5) + 新 provisioning profile (635c14d2). 教训: 上传用 API key, 不需要 Apple ID 密码
+8. **16:18-16:39 三次拍板 (16:18 永久记忆 + 16:27 ASC 协议 + 16:39 自省)**: 实战 6 教训 → SOUL.md #17/#18/#19. 教训: 三心二意 / 不踏实 = Kill
+
+### 06-15 之前漏的 (按 #19 自省, 已补)
+
+| 漏的 | 补到 | 状态 |
+|------|------|------|
+| SOUL.md #14 (14:19 修改先审核) | 本地 working tree | ⏳ 待佛老爷审核 |
+| SOUL.md #11 例外 (14:24 飞书转发) | 本地 working tree | ⏳ 待佛老爷审核 |
+| altool 完整命令 (16:17 修复) | MEMORY.md ✅ | ✅ 已存 |
+| ASC API key + Profile UUID (16:17 修复) | MEMORY.md ✅ | ✅ 已存 |
+| 4 仓库 + 关键值 (16:39 自查) | MEMORY.md ✅ (本回合) | ✅ 已存 |
+
+### 4 仓库状态 (16:48 自查, 永久)
+
+| 仓库 | 类型 | 06-15 最新 commit | 凭证 |
+|------|------|-------------------|------|
+| lauer3912/agent-bus | GitHub public | bb65486 / 16:17 (13+ commits) | ✅ (含 #51 broadcast) |
+| lauer3912/openclaw-portable-template | private | 17 commits 06-15, v1.0.29 | ✅ |
+| lauer3912/openclaw-portable-marketing-template | private | v1.0.9 (06-14, ASC 凭证 ~/.openclaw/workspace/.credentials/asc/) | ✅ |
+| lauer3912/agent-bus-config-backup | private | 每日 03:00 cron 备份 | ✅ |
+
+### 关键信息真实值 (16:48 自查, 永久)
+
+- **Apple ID (iCloud/ASC)** = `support@techidaily.com`
+- **ASC API Key ID** = `H3973L93M5`
+- **ASC Issuer ID** = `b2a00f88-3a8d-40d0-b148-1f1db92e10b7`
+- **API Key 文件** = `~/.appstoreconnect/private_keys/AuthKey_H3973L93M5.p8`
+- **Team** = `ZhiFeng Sun (9L6N2ZF26B)`
+- **Distribution cert SHA-1** = `03C0A94BF8FDE003E136FDBEB80D421C8F57B6B7`
+- **DSID** = `16789127845`
+- **Profile UUID (新, 06-15 创建)** = `635c14d2-7f01-41a2-982d-2dd08e257b99`
+- **macmini IP** = `192.168.1.9` (user291981's Mac mini)
+- **Bundle ID** = `com.ggsheng.StretchGoGo` (VitaMindGo: `com.ggsheng.VitaMind`)
+- **VitaMindGo App ID** = `6774840392`
+- **GitHub Token 路径** = `~/.config/agent-bus/gh-token` (mode 600, 不在 git)
+- **VitaMindGo 商店 URL** = `https://apps.apple.com/us/app/vitamindgo/id6774840392`
