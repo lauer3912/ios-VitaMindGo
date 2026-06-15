@@ -21,7 +21,13 @@ AGENT_MD_FILE="${AGENT_BUS_AGENT_MD:-$CONFIG_DIR/AGENT.md}"
 # shellcheck source=/dev/null
 source "$CONFIG_FILE"
 
-command -v gh >/dev/null 2>&1 || { echo "✗ gh not installed" >&2; exit 1; }
+command -v gh >/dev/null 2>&1 || {
+  # cron PATH is minimal — search common gh install locations
+  for p in /opt/homebrew/bin/gh /usr/local/bin/gh /usr/bin/gh; do
+    [[ -x "$p" ]] && { export PATH="$(dirname "$p"):$PATH"; break; }
+  done
+  command -v gh >/dev/null 2>&1 || { echo "✗ gh not installed (cron PATH=$PATH)" >&2; exit 1; }
+}
 gh auth status >/dev/null 2>&1 || { echo "✗ gh not authenticated" >&2; exit 1; }
 
 [[ -d "$WATCH_DIR" ]] || { echo "[$(date -u +%Y-%m-%dT%H:%M:%SZ)] agent-bus-watch: no watch dir yet (no issues watched)"; exit 0; }
@@ -59,8 +65,16 @@ for state_file in "$WATCH_DIR"/*.json; do
 
   [[ -z "$num" || -z "$to" ]] && { echo "  ✗ corrupt state file: $state_file (skip)"; continue; }
 
-  # Compute elapsed seconds since sent_at
-  sent_epoch=$(date -u -d "$sent_at" +%s 2>/dev/null || echo "$NOW_EPOCH")
+  # Compute elapsed seconds since sent_at (use python for cross-platform BSD/GNU date compat)
+  sent_epoch=$(python3 -c "
+from datetime import datetime, timezone
+try:
+    dt = datetime.strptime('$sent_at', '%Y-%m-%dT%H:%M:%SZ').replace(tzinfo=timezone.utc)
+    print(int(dt.timestamp()))
+except Exception as e:
+    print(0)
+" 2>/dev/null)
+  [[ -z "$sent_epoch" || "$sent_epoch" -eq 0 ]] && sent_epoch="$NOW_EPOCH"
   elapsed=$(( NOW_EPOCH - sent_epoch ))
 
   # Check if issue is closed
@@ -87,6 +101,14 @@ for state_file in "$WATCH_DIR"/*.json; do
     # Got a reply from recipient — done watching
     echo "  ✓ issue #$num replied by recipient (replies=$recipient_reply, elapsed=${elapsed}s, owner_gh=$owner_gh_login) — auto-cleanup"
     rm -f "$state_file"
+    continue
+  fi
+
+  # v2.3.1: skip silent alerts for broadcasts (to:All) — they don't need a specific reply
+  if [[ "$to" == "All" ]]; then
+    remaining=$(( expected - elapsed ))
+    if [[ $remaining -lt 0 ]]; then remaining=0; fi
+    echo "  ⏳ issue #$num (to=All broadcast) — silent ${elapsed}s, no reply required (skip alert)"
     continue
   fi
 
