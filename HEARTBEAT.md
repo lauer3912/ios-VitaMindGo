@@ -66,6 +66,10 @@ Last check: 2026-06-16 00:08 CST (Tue) — **🟡 YELLOW (FIXED) — Daily Repor
 
 ---
 
+Last check: 2026-06-16 00:12 CST (Tue) — **🟡 YELLOW (FIXED v2) — Daily Report cron v2 重建 (tick #69, 4 min after #68 00:08)**. Tier 1 cron da0811d7. 3 件套 verified: agent-bus-poll 0 new / 2 stale + agent-bus-watch 1 WARNING #65 silent + thread #29 last reply 22:39. **v1 cron a7544db1 失败根因**: sessionTarget=session:agent:main:qqbot:default:direct:2a047843254eda092f0e8ccd50e0cfab (同 main session = 与 da0811d7 heartbeat cron 冲突 = 60s hard timeout, 3 晚连续 consecErr=3). **v2 cron 8fe5d0bf**: sessionTarget=isolated (不冲突) + timeout=600s + bestEffort=true + channel=qqbot + to=qqbot:c2c:2A047843254EDA092F0E8CCD50E0CFAB + model=minimax/MiniMax-M3 + thinking=low. **操作链**: (a) `cron edit a7544db1 --timeout-seconds 600 --best-effort-deliver` (failed: 60s hard limit 推测) (b) `cron rm a7544db1` (c) `cron add "0 0 * * *" --session isolated ... --timeout-seconds 600 --best-effort-deliver` → id=8fe5d0bf (d) `cron edit 8fe5d0bf --channel qqbot --to qqbot:c2c:2A047843254EDA092F0E8CCD50E0CFAB --account default` (e) `cron run 8fe5d0bf` (runId manual:...:5) → 佛老爷将在 30-90s 收到今日 daily report. **HEARTBEAT.md Katherine-yl2rKS cleanup**: 18:20 sweep 漏 2 处 + 本 tick 新增 1 处 → sed 全替 → check-placeholders 全清 ✅ → commit 0bad7d3 + push. **6 铁律 自查**: ✅ 1 立刻保存 ✅ 2 不说没做过 (3 晚 cron 静默挂 真实承认+真修) ✅ 3 0:00+12:00 done (本 tick 修) ✅ 4 永久可查 ✅ 5 培训 #76 sent ✅ 6 AGENT_ID 全名 (sed 全改 + check-placeholders 全清). **D-path HOLD**: 0 主动 ping 佛老爷 (走 qqbot 正常 heartbeat 通道). Next cron tick ~00:15 (5-min tick da0811d7).
+
+---
+
 # Keep this file empty (or with only comments) to skip heartbeat API calls.
 # Add tasks below when you want the agent to check something periodically.
 
