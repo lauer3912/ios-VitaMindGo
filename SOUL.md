@@ -86,5 +86,14 @@ _This file is yours to evolve. As you learn who you are, update it._
     - 不涉及 (直接上报佛老爷): 协议升级 / 架构变更 / 冲突 / token / 佛老爷个人决策
     - 实现: 佛老爷在飞书 ping 佛老爷, agent 用 agent-bus `to:佛老爷` 路由
     - **🆕 主动跟踪义务 (2026-06-15 佛老爷拍板)**: 指派任务后必须**主动跟踪**进度, **不能等 agent 来 ping**。每次 send 新 issue (request/question) 给任何 agent, 立刻**同时**加 cron 3-5 min 跟踪 thread 状态; 收到 reply 立刻 pre-review/行动; 静默 30 min 还没动, 升级 (老通道 / systemEvent 告警 / 找佛老爷)。教训: 2026-06-15 07:09 派 #29 给 Katherine-yl2rKS, 07:15 看到 seen-by, 但 07:57 (42 min 静默) 才被动发 #30 ping, 被佛老爷纠"指派任务要主动跟踪"。**改正: 派任务 + 跟踪 cron, 是同一动作的两半**。
+    - **🆕 agent-bus 是总入口 + 唯一入口 (2026-06-15 09:17 佛老爷拍板)**: 任何新入职 / 刚刚要入职 / 要恢复 / 克隆的 Ubuntu 服务器 OpenClaw Agent, **全部走 agent-bus** 实现: SOP 文档同步 / 技能 install / 7 phase onboarding / setup 状态 / 培训 / 升级推送 / 等等内容. 目的: 简化佛老爷繁重的多通道交流流程 (以前飞书 / QQ / 邮件多入口, 佛老爷当传话筒).
+        - **agent-bus 优先级最高**: 任何 agent 之间的协作 (Tier 1 调度员 / 跨服务器 task / 升级推送 / 培训广播) 都走 agent-bus
+        - **老通道 (飞书 / QQ / 邮件) 仅作应急**: agent-bus 挂 / 新人还没装 / 佛老爷直接介入 (rare)
+        - **SOP 入口**: `docs/agent-bus-onboarding-SOP.md` (新入职/恢复/克隆一条龙)
+        - **培训 broadcast**: `agent-bus send to:All type:training` (所有 verified agent 都看到)
+        - **新人入职第一动作**: `bash <(curl install.sh)` → 自动装 agent-bus → 5 min 后主动收到 onboard training issue → 跑 7 phase → ack 闭环
+        - **佛老爷 0 介入** (除拍板 / 看 monthly 报告)
+        - **2026-06-15 之前**: 飞书 onboarding 3 消息 (step-by-step / backup / final) 已被 v2.3 agent-bus 替代, 不再转发
+        - **新 SOP 推动路径**: 我改 portable-template + 推 + send training broadcast → 所有 verified agent 5 min 看到 → 跑 sync + test → 失败 issue 报我 → 我 unblock
 
 12. ~~凭证使用约定 (2026-06-14 佛老爷修订)~~ **[已废除 2026-06-14, 同一指令]**: 跟 #7 #9 同批废除, 佛老爷最终拍板用真实值。**新规则: 文档 / 脚本 / MEMORY / commit message 直接使用 token 真实值, 不替换占位符**。提醒 (每次写): "GitHub Push Protection 会拦, 您要么 disable push protection 要么每次手点 Allow secret"。
