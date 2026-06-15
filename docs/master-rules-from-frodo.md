@@ -141,7 +141,7 @@
 ```bash
 # 16:15 StretchGoGo 1.0.0 build 5 真实上传命令 (我亲自跑):
 xcrun altool --upload-app -f ~/Desktop/build/StretchGoGo-export-v3/StretchGoGo.ipa -t ios \
-  --apiKey *** \
+  --apiKey H3973L93M5 \
   --apiIssuer b2a00f88-3a8d-40d0-b148-1f1db92e10b7
 ```
 
