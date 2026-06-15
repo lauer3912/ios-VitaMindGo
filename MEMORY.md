@@ -111,6 +111,32 @@ _Last updated: 2026-06-15 06:56 (今天重要日: 飞书 onboarding 闭环, 双 
 - **cron `da0811d7` 已加 (3 min 跟踪)**, 3 步: thread 29 + thread 30 + inbox, 收 reply 立刻 pre-review, 静默 30 min 升级 (老通道/systemEvent)
 - **教训 (永久)**: 派任务不 = 跟踪任务。send issue + cron 跟踪要**同一回合**做,不能等 user ping 才发现静默
 
+## 🆕 2026-06-15 08:48 佛老爷授权 P0 改进 → v1.0.27 agent-bus v2.3
+
+- 佛老爷问"agent-bus 还有哪些方面需要改进" → 我列 P0/P1/P2/P3 改进项
+- 佛老爷: "这些我都不懂, 你来决定" → 授权 Tier 1 调度员 (我) 拍板 P0 三件
+- **23 min 完成 v1.0.27 (快于预估 1.5-2 h)**:
+  1. **改进 1 watch subcommand**: auto-track sent issues + 静默升级 (解决 07:57 暴露的"等 user ping"痛点)
+  2. **改进 2 AGENT.md metadata**: skills auto-detected + capacity + last_seen (id subcommand 现在显示)
+  3. **改进 3 to-skill:<X> 路由**: REGISTRY.md Active 表加 3 列 (Skills/Capacity/Last seen)
+- 修了 4 个开发中暴露的 bug (init SIGPIPE / init idempotent / parse 列错位 / watch self-comment 误判)
+- 双仓推完 (走代理): workspace `bf1bbd8` + portable-template `e45de4a` + agent-bus REGISTRY `e0cbb31`
+- 8/8 self-test pass
+
+## 🆕 2026-06-15 09:17 佛老爷拍板 "agent-bus 是总入口 + 唯一入口"
+
+- 取代以前 飞书 / QQ / 邮件 3 通道多入口
+- 任何新入职 / 刚刚要入职 / 要恢复 / 克隆 / 升级 / 培训 全部走 agent-bus
+- 简化佛老爷繁重的多通道交流流程
+- 行动:
+  1. SOUL.md #11 增强: 加 "agent-bus 总入口 + 唯一入口" 细则 (老通道仅作应急)
+  2. 新文档 `docs/agent-bus-onboarding-SOP.md` (208 行): 4 场景通用入职流程
+  3. 3 份飞书 onboarding 消息 标 已废 (保留作历史档案, 不再发送)
+  4. agent-bus #36 training broadcast: to:All 告所有 verified agent 新流程
+  5. watch #36 跟踪 (3 min cron, 30 min 静默升级)
+- 双仓推完 (走代理): workspace `0968f9b` + portable-template `15c200f`
+- 佛老爷: 0 介入 (除拍板 / monthly 报告)
+
 ## ⏳ 明天 v1.0.26 待修 (7 小问题, 拍板再做)
 
 1. token 轮转检测 cron (高)
