@@ -104,19 +104,19 @@
 | 5 | 2026-06-13 | agent-bus 培训 (initial) | n/a |
 | 6 | 2026-06-14 | agent-bus v2.1-2.2 (含 onboarding SOP) | (实战) |
 | 7 | 2026-06-15 11:04 | B 方案: GREEN 不发 qqbot (B-plan) | #11 |
-| 8 | 2026-06-15 11:44 | 主动联系模式 (K-yl2rKS 必须主动联系) | #11 |
+| 8 | 2026-06-15 11:44 | 主动联系模式 (Katherine-yl2rKS 必须主动联系) | #11 |
 | 9 | 2026-06-15 14:03 | 教思路, 不接管 | (follow #11) |
 | 10 | 2026-06-15 14:13 | 灵活多渠道, 共同合作 (误读!) | (14:17 撤回) |
 | 11 | 2026-06-15 14:17 | 撤回 14:13, agent-bus 仍是唯一交流通道 | #11 |
 | 12 | 2026-06-15 14:19 | 修改先审核再做 | #14 |
-| 13 | 2026-06-15 14:24 | reach 不到 K-yl2rKS 可请求佛老爷飞书转发 | #11 例外 |
+| 13 | 2026-06-15 14:24 | reach 不到 Katherine-yl2rKS 可请求佛老爷飞书转发 | #11 例外 |
 | 14 | 2026-06-15 14:40 | ASC 协议早签 (沿用) | (实战) |
 | 15 | 2026-06-15 15:36 | 转发/交流必须含完整真实值 (占位符 Kill) | #15 |
 | 16 | 2026-06-15 15:52 | 佛老爷说"记忆丢失" (06-08/09 altool 没存) | #17 |
 | 17 | 2026-06-15 16:18 | 永久记忆 + 每日 ≥2 次复盘 (5 铁律, Kill) | #17 |
 | 18 | 2026-06-15 16:27 | ASC 协议永远 = 已签 (严禁卡) | #18 |
 | 19 | 2026-06-15 16:39 | 务实 + 自省 + 完整值 (4 仓库) | #19 |
-| 20 | 2026-06-15 16:54 | 抽查警告 (3 问 + 补缺 + 教 K-yl2rKS) | (实战) |
+| 20 | 2026-06-15 16:54 | 抽查警告 (3 问 + 补缺 + 教 Katherine-yl2rKS) | (实战) |
 | 21 | 2026-06-15 17:11 | 建立机制, 每天把佛老爷要求通知所有 Agent | #20 (本次) |
 | 22 | 2026-06-15 17:23 | 方案审核通过, 批准 (5 铁律 + 4 仓库特别 + 复盘) | #20 (本次) |
 
@@ -149,7 +149,7 @@ xcrun altool --upload-app -f ~/Desktop/build/StretchGoGo-export-v3/StretchGoGo.i
 **答**: 见 `memory/2026-06-14.md` + `MEMORY.md` 06-14 段
 
 ### 抽查问题 7: 今天 (06-15) 14:00 误判失联?
-**答**: K-yl2rKS 11:38 后 0 reply ≠ 失联, 她在跑 P0+P2 修复 Listing.md. 14:00 self-reassign 是**误判**, 14:50 她 14:00 完工报告实际在跑. 教训: 0 issue reply ≠ 失联 (对方可能在跑任务不刷 inbox)
+**答**: Katherine-yl2rKS 11:38 后 0 reply ≠ 失联, 她在跑 P0+P2 修复 Listing.md. 14:00 self-reassign 是**误判**, 14:50 她 14:00 完工报告实际在跑. 教训: 0 issue reply ≠ 失联 (对方可能在跑任务不刷 inbox)
 
 ### 抽查问题 8: 16:18 + 16:27 + 16:39 拍板是什么?
 **答**: 
@@ -176,7 +176,7 @@ xcrun altool --upload-app -f ~/Desktop/build/StretchGoGo-export-v3/StretchGoGo.i
 - **每天 0:00** 每 Agent → **send to-persona:Katherine** daily status report (含昨日操作)
 
 ### 失联应对
-- K-yl2rKS 静默 > 24h → Katherine-E2wa1m 主动 send #XX critical broadcast, 附 master-rules
+- Katherine-yl2rKS 静默 > 24h → Katherine-E2wa1m 主动 send #XX critical broadcast, 附 master-rules
 - 静默 > 48h → 飞书升级佛老爷
 
 ---

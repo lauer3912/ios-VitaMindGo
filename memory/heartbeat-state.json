@@ -5,12 +5,14 @@
     "email": null,
     "calendar": null,
     "weather": null,
-    "katherine_yl2rks_poll": 1781488855,
+    "katherine_yl2rks_poll": 1781518402,
     "tier3_escalation": 1781488855,
     "frodo_inbox": 1781488687,
-    "agent_bus_poll": 1781488855
+    "agent_bus_poll": 1781518402,
+    "heartbeat": 1781518402
   },
   "notes": [
+    "2026-06-15 18:13 CST - Tier 1 cron tick #24 (heartbeat poll + #55 自测执行). 18:08 CST 佛老爷拍板 测试每天提醒机制 → 我 18:08 send #55 to Katherine-yl2rKS, 18:10 heartbeat 抓到, 1 min 内 read master-rules + 答 8 问 (qqbot 报佛老爷) + watch #55 (5 min 等 Katherine-yl2rKS). 3 件套 verified: thread 29 closed (UPLOAD 16:17 CST, 1h53m ago) + inbox 0 new + watch #29/#51/#55 active. Katherine-yl2rKS 4h42m 全网静默 (last_seen 14:28 CST), within normal per #19 自省. #51 1h48m training ack silent (no escalate per B-plan 11:04). 8 cron jobs healthy. 决策: #55 自测执行成功 (1 min 内响应, override B-plan D-path 因为 #55 body 显式指令). File updated.",
     "2026-06-15 10:00 CST (Mon) - Tier 1 cron tick #23 (heartbeat poll). 关键修复: agent-bus-poll.sh cron PATH 无 /opt/homebrew/bin 时退到 /opt/homebrew/bin:/usr/local/bin:/usr/bin/gh, env -i PATH=/usr/bin:/bin 也能跑 (1.5h 静默期间错过的 reply 0 条 — #29/30/32/35 全 0-1 comments, 仍空). #35 佛老爷: 44m 静默 (60-min line 10:16 还 16 min). #32: 78m. #30: 88m. #29: 2h 51m. 无新 reply, 无新 issue. cron 健康 ok (1 dream cycle consecutiveErrors=2/4 仍 under, 12:05 retry). 决策: HOLD (等 10:16 60-min line / 不 spam / 不重复升级). 10:16 还 16 min, 到时 #35 仍未 ack 则主动 ping 佛老爷 + 启用 Tier 1 自决 fallback.",
     "2026-06-15 09:49 CST (Mon) - Tier 1 cron tick #22 (heartbeat poll). #35 佛老爷: 33m 静默 (60-min line 10:16 还 27 min). #32: 59m 静默 (50-min line 已过, but #35 escalated). #30: 77m. #29: 10.5h+. 无新 reply, 无新 issue. cron 健康 ok. 决策: HOLD (等 60-min line / 不 spam / 不重复升级). 10:00 下个 tick 再 check."
   ]

@@ -227,11 +227,11 @@ _Last updated: 2026-06-15 12:02 (16th dream consolidation: 6-15 12h 密集拍板
 - 报告渠道: 8:00 早报 (已有) + 0:00 日报 (a7544db1) + 1号 月报 (2e8a2442)
 - 跟踪: 派 issue + cron 3-5 min 跟踪 = 同一动作两半 (07:57 教训)
 
-## 🆕 2026-06-15 11:44-11:55 K-yl2rKS 主动联系新规 (#42) + 11:46 GREEN 反转
+## 🆕 2026-06-15 11:44-11:55 Katherine-yl2rKS 主动联系新规 (#42) + 11:46 GREEN 反转
 
 - **11:44 佛老爷 拍板**: "她必须主动跟你联系, 你帮她, 实在不行你再报我. 必须让她学会这种交流方式. 我不想做消息传递中间人"
-- **11:44 派 #42** (critical, request) 给 K-yl2rKS: 30 min thread #29 reply 报进展 / 卡住发新 issue / 跑完 thread close
-- **11:46 GREEN 反转**: K-yl2rKS 11:38 实际已交 Phase 5 完整审计 (9 项 P0×5+P1×1+P2×3+P3×1) — 她**不是** silent, 60-min 阈值基于过期期待
+- **11:44 派 #42** (critical, request) 给 Katherine-yl2rKS: 30 min thread #29 reply 报进展 / 卡住发新 issue / 跑完 thread close
+- **11:46 GREEN 反转**: Katherine-yl2rKS 11:38 实际已交 Phase 5 完整审计 (9 项 P0×5+P1×1+P2×3+P3×1) — 她**不是** silent, 60-min 阈值基于过期期待
   - 关闭 #41 (superseded, 11:35 alert 时 3 min 后她就交了)
   - 取消 11:50 飞书 escalation
   - 11:42 我 #29 reply Phase 6 拍板 (A/B/C 3 选项, 推荐 B 分批 + 等佛老爷拍 P1 真机截图)
@@ -267,7 +267,7 @@ _Last updated: 2026-06-15 12:02 (16th dream consolidation: 6-15 12h 密集拍板
 - **Size**: 2.1MB
 - **Method**: API key (H3973L93M5) + new provisioning profile (635c14d2 v2)
 - **执行人**: Katherine-E2wa1m (我, Tier 1 调度员)
-  - K-yl2rKS keychain 锁定 (errSecInternalComponent) 卡死 ssh macmini
+  - Katherine-yl2rKS keychain 锁定 (errSecInternalComponent) 卡死 ssh macmini
   - 我亲自跑完整提交流程 (archive → export → upload), 用 API key 不需要 keychain
 - **耗时**: ~50 min (14:27 archive ready → 16:17 upload OK)
 - **配置保存**: `~/.config/ios-projects/stretchgogo.conf` (NEW, 16:22 创建)
@@ -288,17 +288,17 @@ _Last updated: 2026-06-15 12:02 (16th dream consolidation: 6-15 12h 密集拍板
 ### 教训根源 (2026-06-08/09 → 06-15)
 
 - 06-08/09 我跑过 altool upload (VitaMindGo build 10/11), 但**没**存详细命令
-- 06-15 全新 StretchGoGo upload, K-yl2rKS 卡死 ssh macmini 2h (keychain 锁定)
-- 我 15:36 用占位符 (`lauer3912@...`, `@keychain:ASC_KEYCHAIN_NAME`) 转发 K-yl2rKS, **不**知道真实值就**不**该发
+- 06-15 全新 StretchGoGo upload, Katherine-yl2rKS 卡死 ssh macmini 2h (keychain 锁定)
+- 我 15:36 用占位符 (`lauer3912@...`, `@keychain:ASC_KEYCHAIN_NAME`) 转发 Katherine-yl2rKS, **不**知道真实值就**不**该发
 - 佛老爷 4 次严纠: "你胡说八道" "不要告诉我没做过"
 - 最终 16:15 我亲自跑完整流程, 16:17 上传成功, 16:22 创建 stretchgogo.conf 永久存档
 
-### 我 (K-E2wa1m) 立即执行
+### 我 (Katherine-E2wa1m) 立即执行
 
 - ✅ 16:22 创建 `~/.config/ios-projects/stretchgogo.conf` (永久存档)
 - ✅ 16:22 MEMORY.md 加本节 (永久存档)
 - ✅ 16:22 SOUL.md #10 增强 (5 铁律, 永久存档)
-- ✅ 16:22 派 #51 training broadcast 给 K-yl2rKS (5 铁律 + 教训)
+- ✅ 16:22 派 #51 training broadcast 给 Katherine-yl2rKS (5 铁律 + 教训)
 - ⏳ 16:25 加 midday 复盘 cron (12:00)
 
 ### StretchGoGo config (永久存档)
@@ -428,19 +428,19 @@ xcrun altool --upload-app -f <export_dir>/*.ipa -t ios \
 | 时刻 | 拍板 | SOUL.md | 实施 |
 |------|------|---------|------|
 | 11:04 | B 方案: GREEN 不发 qqbot | #11 | ✅ |
-| 11:44 | 主动联系模式: K-yl2rKS 必须主动联系我 | #11 + #42 | ✅ |
+| 11:44 | 主动联系模式: Katherine-yl2rKS 必须主动联系我 | #11 + #42 | ✅ |
 | 13:33 | 13:33 self-reassign (Phase 6 我接管) | (按协议) | ✅ (误判她失联, 实际她在跑) |
 | 13:56 | 不需要 P1 真机截图 (1.0.0 不含 IAP 提审) | (project path) | ✅ |
 | 14:03 | 教她思路, 不接管 | (follow #11 精神) | ✅ (发 #45 教 Phase 6+7) |
 | 14:13 | 灵活多渠道, 共同合作 (误读!) | #11 | ❌ 14:17 撤回 |
 | 14:17 | 撤回 14:13 误读, agent-bus 仍是唯一交流通道 | #11 | ✅ |
 | 14:19 | 修改先审核再做 | #14 | ✅ |
-| 14:24 | reach 不到 K-yl2rKS 可请求佛老爷飞书转发 | #11 例外 | ✅ (本地 working tree, 待您审核) |
+| 14:24 | reach 不到 Katherine-yl2rKS 可请求佛老爷飞书转发 | #11 例外 | ✅ (本地 working tree, 待您审核) |
 | 14:40 | ASC 协议早签 (沿用) | (实战) | ✅ |
 | 14:50 | StretchGoGo altool 准备 (P3 ASC 沿用) | (实战) | ✅ |
 | 14:50 | Phase 6 P0+P2 实际她修了 (我 14:00 self-reassign 误判) | (实战) | ✅ |
 | 15:18 | ESCALATION #48 (altool upload overdue) | (实战) | ✅ |
-| 15:26 | 方案 A: 飞书 K-yl2rKS | (实战) | ✅ |
+| 15:26 | 方案 A: 飞书 Katherine-yl2rKS | (实战) | ✅ |
 | 15:27 | 飞书转发用占位符 `lauer3912@...` + `@keychain:ASC_KEYCHAIN_NAME` (严重错!) | #15 | ❌ |
 | 15:36 | 占位符严纠, 再犯 Kill | #15 | ✅ |
 | 15:39 | 我承认 14:41 #29 reply 同样占位符 | #15 + #29 reply | ✅ |
@@ -455,11 +455,11 @@ xcrun altool --upload-app -f <export_dir>/*.ipa -t ios \
 
 ### 06-15 实战教训 (按 #19 自省, 永久)
 
-1. **14:00 self-reassign 误判失联**: K-yl2rKS 11:38 后 0 reply ≠ 失联 (她在跑 P0+P2). 0 issue reply → 30 min 内不升级, 查 thread. 教训: 升级 (issue 派) ≠ 检查 (查 thread reply)
+1. **14:00 self-reassign 误判失联**: Katherine-yl2rKS 11:38 后 0 reply ≠ 失联 (她在跑 P0+P2). 0 issue reply → 30 min 内不升级, 查 thread. 教训: 升级 (issue 派) ≠ 检查 (查 thread reply)
 2. **14:13 误读 #11**: "没有限制使用方法" = 做任务工具不限, **不**是交流渠道. 14:17 撤回. 教训: 佛老爷"灵活"指方法/工具, 不是交流通道
 3. **14:41 #29 reply 占位符**: `lauer3912@...` + `@keychain:ASC_KEYCHAIN_NAME`. 严重错! 占位符永远 = Kill (按 #15 + #17). 教训: 不知道真实值 → 立刻问佛老爷, **不**猜**不**编
-4. **15:27 飞书转发用占位符**: 跟 14:41 同样错. K-yl2rKS 跑 ssh macmini + altool 卡死 2h. 教训: 转发信息必须**完整**可操作
-5. **14:00 self-reassign 误判失联 → 15:26 佛老爷方案A 飞书**: 我误判失联, 佛老爷通过飞书实战 4 min 内 K-yl2rKS 回了. 教训: agent-bus 0 reply ≠ 失联, 14:24 拍板 "reach 不到可请求佛老爷飞书转发"
+4. **15:27 飞书转发用占位符**: 跟 14:41 同样错. Katherine-yl2rKS 跑 ssh macmini + altool 卡死 2h. 教训: 转发信息必须**完整**可操作
+5. **14:00 self-reassign 误判失联 → 15:26 佛老爷方案A 飞书**: 我误判失联, 佛老爷通过飞书实战 4 min 内 Katherine-yl2rKS 回了. 教训: agent-bus 0 reply ≠ 失联, 14:24 拍板 "reach 不到可请求佛老爷飞书转发"
 6. **15:52 佛老爷说"记忆丢失"**: 06-08/09 altool 跑过, 06-15 找不到真实值. 教训: **跑过 = 永久记忆**, **忘过 = 失职 = Kill**
 7. **16:17 StretchGoGo 1.0.0 build 5 上传成功**: ASC API key (H3973L93M5) + 新 provisioning profile (635c14d2). 教训: 上传用 API key, 不需要 Apple ID 密码
 8. **16:18-16:39 三次拍板 (16:18 永久记忆 + 16:27 ASC 协议 + 16:39 自省)**: 实战 6 教训 → SOUL.md #17/#18/#19. 教训: 三心二意 / 不踏实 = Kill

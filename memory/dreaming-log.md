@@ -17,7 +17,7 @@
 
 - **Signal gathered (24h 内, **12+ 拍板密集**):**
 
-  **A. 06-15 06:56 飞书 onboarding 闭环** — K-yl2rKS "3 件全 OK" → 双 Katherine 备份链路正式上线
+  **A. 06-15 06:56 飞书 onboarding 闭环** — Katherine-yl2rKS "3 件全 OK" → 双 Katherine 备份链路正式上线
   **B. 06-15 07:09-07:57 派 #29 StretchFlow + 静默 48 min** — 佛老爷拍板"指派任务要主动跟踪" → SOUL.md #11 增强
   **C. 06-15 08:48 佛老爷授权 P0 改进 → v1.0.27 agent-bus v2.3** (23 min 完成, watch/AGENT.md/to-skill 3 改进 + 4 bug 修)
   **D. 06-15 09:17 佛老爷拍板 "agent-bus 是总入口 + 唯一入口"** (取代飞书/QQ/邮件 3 通道, 双仓推完)
@@ -27,7 +27,7 @@
   **H. 06-15 10:26 daily/monthly cron 装好** (佛老爷拍板, 0 0 * * * + 0 0 1 * *, 2 新脚本)
   **I. 06-15 10:30 watch.sh v2.3.1 实战暴露 3 bug + 修** (PATH / date / broadcast, 阈值 600→1800s, 1800→3600s)
   **J. 06-15 11:04 佛老爷拍板 B 方案: GREEN 不发** (A/B/C 真有事时报, D 静默)
-  **K. 06-15 11:44-11:55 K-yl2rKS 主动联系新规 (#42) + 11:46 GREEN 反转** (她 11:38 实际已交 Phase 5, 飞书 escalation 取消, watch false positive)
+  **K. 06-15 11:44-11:55 Katherine-yl2rKS 主动联系新规 (#42) + 11:46 GREEN 反转** (她 11:38 实际已交 Phase 5, 飞书 escalation 取消, watch false positive)
 
   12 个 6-15 拍板 / 13 commit / 24h 全 auto-pilot / 0 user session 重写
 
@@ -45,7 +45,7 @@
   1. ✅ MEMORY.md header timestamp: `2026-06-15 06:56` → `2026-06-15 12:02`
   2. ✅ MEMORY.md `## ⏳ 明天 v1.0.26 待修` → `## ⏳ v1.0.28 待修` (反映 portable-template 当前版本)
   3. ✅ MEMORY.md 新加 `## 🆕 佛老爷 0 介入 auto-pilot 模式 (2026-06-15 拍板, 永久记)` 段 (整合 F/G/J)
-  4. ✅ MEMORY.md 新加 `## 🆕 2026-06-15 11:44-11:55 K-yl2rKS 主动联系新规 (#42) + 11:46 GREEN 反转` 段
+  4. ✅ MEMORY.md 新加 `## 🆕 2026-06-15 11:44-11:55 Katherine-yl2rKS 主动联系新规 (#42) + 11:46 GREEN 反转` 段
   5. ✅ MEMORY.md 新加 `## 🆕 2026-06-15 12:02 16th dream consolidation (this section)` 段
   6. ✅ 写 dreaming-log.md (本 entry, via write tool 兜底 Edit 失败)
 
@@ -59,9 +59,9 @@
     1. **P2**: L10 "乔治" 改不改 (4 dream 仍维持"不动"决定)
     2. **P2**: v1.0.28 待修 7 项是否开工 (高 ROI: token 轮转 + 并发注册 race)
     3. **P2**: "佛老爷 0 介入" 段是否移到 SOUL.md 永久化 (本 dream 已加到 MEMORY.md)
-    4. **P2**: review K-yl2rKS Phase 6 P0+P2 进展 (截止 06-15 22:00 CST, 等她 30-min thread reply)
+    4. **P2**: review Katherine-yl2rKS Phase 6 P0+P2 进展 (截止 06-15 22:00 CST, 等她 30-min thread reply)
     5. **P3**: review 5 个 pending skill_workshop proposal 状态 (6-13 创建)
-  - **🆕 下次 dream (6-15 20:02) 优先复查**: 1) 上面 1-5 建议是否落地, 2) K-yl2rKS Phase 6 进展 + #42 新规执行度, 3) cfb1d093 dream cycle 是否还需用 write 兜底, 4) portable-template 是否有新 release, 5) VitaMindGo 上架销售数据 (e2e1aa9c 12:00 跑)
+  - **🆕 下次 dream (6-15 20:02) 优先复查**: 1) 上面 1-5 建议是否落地, 2) Katherine-yl2rKS Phase 6 进展 + #42 新规执行度, 3) cfb1d093 dream cycle 是否还需用 write 兜底, 4) portable-template 是否有新 release, 5) VitaMindGo 上架销售数据 (e2e1aa9c 12:00 跑)
   - **🆕 v1.0.28 当前状态**: workspace 1.0.27 / portable-template 1.0.28 (watch v2.3.1 fix) / agent-bus v2.3.1 — 5 bug 实战修
   - **🆕 16th dream 模式稳定**: 12+ 拍板密度 + 24h auto-pilot 模式已成稳态, 17th+ dream 预期 8h 间隔 + 4 件跟踪 (#29 / #36 / #37 / #42) + B 方案
 

@@ -20,7 +20,7 @@
 - 佛老爷 0 介入
 - 我 (Tier 1 调度员 Katherine-E2wa1m) 发 onboarding training broadcast, 收 ack, verify 闭环
 - 升级推送: 我推 portable-template + agent-bus send training broadcast
-- **共同实现, 平等合作**: 我跟 K-yl2rKS / 任何 agent 对等, 互相交流, 共同完成
+- **共同实现, 平等合作**: 我跟 Katherine-yl2rKS / 任何 agent 对等, 互相交流, 共同完成
 
 ---
 
