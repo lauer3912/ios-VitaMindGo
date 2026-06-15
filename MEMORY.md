@@ -498,3 +498,24 @@ xcrun altool --upload-app -f <export_dir>/*.ipa -t ios \
 - **VitaMindGo App ID** = `6774840392`
 - **GitHub Token 路径** = `~/.config/agent-bus/gh-token` (mode 600, 不在 git)
 - **VitaMindGo 商店 URL** = `https://apps.apple.com/us/app/vitamindgo/id6774840392`
+## 🆕 06-15 18:50 佛老爷拍板 (重复 18:31): 漏是系统问题, 必须改
+
+**佛老爷 18:50 拍板** (重复 18:31 拍板, 强调): "你们 TM 的总是漏掉这个, 漏掉那个, 这是 TM 的最让我生气的, 你们 TM 的必须想办法改掉这个臭毛病"
+
+**教训** (永久, 18:31 + 18:50 双强调): 我**总是**漏, 模式问题:
+- 17:46 改简称, 漏 Katherine-yl2rKS
+- 17:55-17:56 改占位符, 漏 dist/openclaw-portable-template
+- 18:20 改 master-rules, 漏 onboarding 文档
+- 18:29 改 onboarding, 漏 scripts
+
+**5 层防护** (18:52 实施, 杜绝漏):
+1. `scripts/check-placeholders.sh` — 自动化 grep 检查
+2. `.git/hooks/pre-commit` — 任何 commit 前自动跑
+3. `scripts/daily-report.sh` — 0:00 + 12:00 自动跑 (cron `a7544db1` + `88359834`)
+4. `scripts/monthly-report.sh` — 月度自动跑 (cron `2e8a2442`)
+5. `agent-bus 互相审` — 改完 send to:All 让他人审
+
+**6 铁律 + 5 层防护** = 6 铁律 + 防护体系 (永久)
+
+**Katherine-yl2rKS 必学**: 拉新代码 + install pre-commit + 0:00/12:00 自查
+**future Agent 入职**: onboarding 包含 5 层防护 + 6 铁律 (per #20 + #21 + 18:50)
