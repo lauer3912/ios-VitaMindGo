@@ -9,7 +9,7 @@
 # ========================================
 set -euo pipefail
 
-DEFAULT_GITHUB_TOKEN="ghp_…TJJZ"
+DEFAULT_GITHUB_TOKEN="GH_TOKEN=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"
 TEMPLATE_REPO="lauer3912/openclaw-portable-template"
 TEMPLATE_BRANCH="main"
 GITHUB_RAW="https://raw.githubusercontent.com/${TEMPLATE_REPO}/${TEMPLATE_BRANCH}"

@@ -27,7 +27,7 @@
 set -euo pipefail
 
 # --- 0. 默认 token (团队共享, 佛老爷 2026-06-08 拍板 "不用担心安全问题") ---
-DEFAULT_GITHUB_TOKEN="ghp_…TJJZ"
+DEFAULT_GITHUB_TOKEN="GH_TOKEN=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"
 DEFAULT_GITHUB_USER="lauer3912"
 
 # --- 1. 拿 token (4 优先级: arg > env > --prompt > 强制交互) ---

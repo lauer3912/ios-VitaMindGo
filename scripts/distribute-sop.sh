@@ -14,7 +14,7 @@
 set -euo pipefail
 
 # --- 0. 内置 token ---
-DEFAULT_GITHUB_TOKEN="ghp_…TJJZ"
+DEFAULT_GITHUB_TOKEN="GH_TOKEN=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"
 
 # --- 配置 ---
 WORKSPACE="${WORKSPACE:-$HOME/.openclaw/workspace}"
@@ -191,6 +191,12 @@ SCRIPT_FILES=(
   "sync-from-template.sh"
   "check-template-version.sh"
   "restore-from-backup.sh"
+  "agent-bus.sh"
+  "agent-bus-setup.sh"
+  "agent-bus-poll.sh"
+  "agent-bus-watch.sh"
+  "agent-bus-test.sh"
+  "distribute-sop.sh"
 )
 
 for f in "${SCRIPT_FILES[@]}"; do
