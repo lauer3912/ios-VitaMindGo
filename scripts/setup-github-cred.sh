@@ -75,7 +75,7 @@ if [[ "$GITHUB_TOKEN" =~ ^ghp_[a-zA-Z0-9]{36}$ ]]; then
 elif [[ "$GITHUB_TOKEN" =~ ^github_pat_[a-zA-Z0-9_]{82}$ ]]; then
     TOKEN_TYPE="fine-grained"
 else
-    echo "⚠️  Token 格式不像标准 GitHub PAT (GH_TO...HTJJZ (或 github_pat_...))"
+    echo "⚠️  Token 格式不像标准 GitHub PAT (GH_TOKEN=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 (或 github_pat_...))"
     echo "   继续写入, 但认证可能失败, 验证步骤会暴露"
     TOKEN_TYPE="unknown"
 fi

@@ -126,7 +126,7 @@ curl -fsSL ... | bash
 
 # 2. init 时换 persona (避免同 persona 撞库)
 # 选 persona: Katherine2 (例)
-# AGENT_ID 会变 Katherine2-xxxxxx
+# AGENT_ID 格式: <name>-<6字符随机后缀> (gh 自动生), 真实示例: Katherine-E2wa1m, Katherine-yl2rKS
 
 # 3. register, 我 (登记官) verify, 加 Active
 ```

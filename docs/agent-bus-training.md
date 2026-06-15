@@ -656,7 +656,7 @@ agent-bus send Katherine-E2wa1m to-skill:ios-build request ...
 **给佛老爷报告** (通过 QQ / 飞书, 不是 agent-bus):
 ```
 agent-bus 装好了:
-- agent: <YourName>-<xxxxxx>
+- agent: Katherine-E2wa1m (本机), 格式: <YourName>-<6字符后缀> (gh 自动生 ID)
 - host: <hostname>
 - self-test: PASS
 - gh user: <lauer3912>
