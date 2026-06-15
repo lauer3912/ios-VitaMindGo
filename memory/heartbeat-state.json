@@ -1,23 +1,26 @@
 {
   "lastChecks": {
-    "heartbeat": 1747423080,
-    "agent-bus-poll": 1747423080,
-    "agent-bus-watch": 1747423080,
-    "thread-29": 1747423080,
-    "cron": 1747423080
+    "heartbeat": 1781542224,
+    "agent-bus-poll": 1781542224,
+    "agent-bus-watch": 1781542224,
+    "thread-29": 1781542224,
+    "cron": 1781542224
   },
-  "tick": 76,
-  "lastTickCST": "2026-06-16T00:38:00+08:00",
-  "nextTickCST": "2026-06-16T00:40:00+08:00",
+  "tick": 79,
+  "lastTickCST": "2026-06-16T00:50:24+08:00",
+  "nextTickCST": "2026-06-16T00:55:00+08:00",
   "state": "GREEN",
   "silentIssue": {
     "issue": "#65",
-    "silentSec": 3188,
-    "silentMin": 53.1,
+    "silentSec": 3925,
+    "silentMin": 65.4,
     "to": "Katherine-yl2rKS",
     "type": "training follow-up",
-    "criticalPath": false
+    "criticalPath": false,
+    "note": "K-yl2rKS 22:34 #79 3 Q&A reply 后 2h16m silent, #76 测试 7+8 23:00 截止后无回, #65 1h5m training silent, NOT critical path"
   },
+  "closedThisTick": ["#111"],
+  "repliedThisTick": ["#110"],
   "build": {
     "VitaMindGo": "v3.0.0 build 11 APPROVED (上架销售)",
     "StretchGoGo": "1.0.0 build 5 UPLOADED 2026-06-15 16:17 CST, awaiting 佛老爷 ASC Submit"
@@ -25,8 +28,8 @@
   "cron": {
     "enabled": 8,
     "disabled": 2,
-    "tier1_da0811d7": "ok last 2m",
-    "daily_8fe5d0bf": "error 1 consecErr (timeout, v1.0.29 self-bootstrap fix 明日 0:00 应 ok)"
+    "tier1_da0811d7": "ok last 1m",
+    "daily_8fe5d0bf": "error 40m ago (v1.0.29 self-bootstrap fix 修了, 明日 0:00 应 ok)"
   },
-  "verdict": "HOLD per B-plan 11:04 + 21:10 升级 criteria (24h 静默 OR 任务真阻塞) — 53m training silent ≠ 24h, ≠ 阻塞. 强 ping late night = noise > signal. 佛老爷 0 介入 严守. Late night quiet hours, 无 urgent action."
+  "verdict": "HOLD per B-plan 11:04 + 21:10 升级 criteria (24h 静默 OR 任务真阻塞) — 65.4m training silent ≠ 24h, ≠ 阻塞 (K-yl2rKS 22:34 #79 reply 后 2h16m silent, 醒-发-回睡 模式 working window per #19 自省). 强 ping late night = noise > signal. 佛老爷 0 介入 严守."
 }
