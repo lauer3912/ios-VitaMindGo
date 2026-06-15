@@ -38,7 +38,7 @@ curl -fsSL -H "Authorization: token <lauer3912's GitHub PAT>" \
 **自动完成**:
 - 拉 template → workspace (`~/.openclaw/workspace/`)
 - 注入灵魂文件 (AGENTS / SOUL / IDENTITY / USER)
-- 装 agent-bus (Step 4) + 注册 AGENT_ID
+- 装 agent-bus (Step 4) + 注册 AGENT_ID (全名, 18:20 拍板)
 - 装 cron (5 min poll + 3 min watch)
 - 装 5 个营销 skill (Step 5.5, 如果是营销 agent)
 - 跑 self-test (期望 8/8 PASS)
@@ -127,6 +127,8 @@ curl -fsSL ... | bash
 # 2. init 时换 persona (避免同 persona 撞库)
 # 选 persona: Katherine2 (例)
 # AGENT_ID 格式: <name>-<6字符随机后缀> (gh 自动生), 真实示例: Katherine-E2wa1m, Katherine-yl2rKS
+# 18:20 佛老爷拍板: **所有** AGENT_ID 必须使用**全名** (即 gh 自动生的 <name>-<rand6> 形式, 不许简写 K-E2wa1m 或 K-yl2rKS)
+# onboarding 时 登记官 (Katherine-E2wa1m) verify 全名, 否决简写 AGENT_ID
 
 # 3. register, 我 (登记官) verify, 加 Active
 ```

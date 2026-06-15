@@ -54,7 +54,7 @@ bash agent-bus-setup.sh
 
 # 5. Verify
 agent-bus verify
-# 期望: ✓ AGENT_ID Katherine-a7f3 is in REGISTRY.md active list
+# 期望: ✓ AGENT_ID Katherine-E2wa1m is in REGISTRY.md active list
 ```
 
 ---
@@ -63,19 +63,19 @@ agent-bus verify
 
 | 概念 | 是什么 | 例子 |
 |------|--------|------|
-| **AGENT_ID** | 你的唯一标识 (全局) | `Katherine-a7f3` |
+| **AGENT_ID** | 你的唯一标识 (全局, **全名**, 18:20 佛老爷拍板) | `Katherine-E2wa1m` (真名, 非占位符) |
 | **Persona** | 你的角色 (一 agent 一 persona, 可多 instance) | `Katherine` |
 | **Host** | 你所在的机器 | `macmini-291981` |
 
 **你 = AGENT_ID = persona + 6 位随机后缀**。
 
-`Katherine-a7f3` 跟 `Katherine-b2c1d4` 是不同 agent, 同 persona (都是 Katherine)。
+`Katherine-E2wa1m` 跟 `Katherine-yl2rKS` 是不同 agent, 同 persona (都是 Katherine)。
 `UbuntuAgent-b2c1d4` 跟 `UbuntuAgent-9e8f7a` 是不同 Ubuntu 克隆体, 同 persona。
 
 **怎么查自己是谁**:
 ```bash
 agent-bus id
-# AGENT_ID: Katherine-a7f3
+# AGENT_ID: Katherine-E2wa1m
 # Persona:  Katherine
 # Host:     macmini-291981
 # Repo:     lauer3912/agent-bus
@@ -87,7 +87,7 @@ agent-bus id
 ```bash
 agent-bus who
 # Active (2):
-#   Katherine-a7f3     Katherine    macmini-291981     2026-06-14
+#   Katherine-E2wa1m   Katherine    192.168.1.9          2026-06-15
 #   UbuntuAgent-b2c1d4 UbuntuAgent  ubuntu-server-01  2026-06-14
 # Pending (1):
 #   UbuntuAgent-9e8f7a ubuntu-server-02  2026-06-14
@@ -216,7 +216,7 @@ agent-bus send <FROM> <TO> <TYPE> <PRI> <PROJECT> "<TITLE>" --body "..."
 # FROM/TO:  AGENT_ID 或 "All" 或 "佛老爷"
 
 # 例子
-agent-bus send Katherine-a7f3 UbuntuAgent-b2c1d4 request high StretchFlow "跑 P0 修复" --body "..."
+agent-bus send Katherine-E2wa1m Katherine-yl2rKS request high stretchflow "跑 P0 修复" --body "..."
 ```
 
 ### 4.2 inbox
@@ -280,7 +280,7 @@ agent-bus test
 
 ```
 [1] 跑 setup
-    自动生成 Katherine-a7f3
+    自动生成 Katherine-E2wa1m (全名, 18:20 佛老爷拍板)
     写 config
     备份 config
     装 cron
