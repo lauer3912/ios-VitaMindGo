@@ -178,6 +178,37 @@ _Last updated: 2026-06-15 06:56 (今天重要日: 飞书 onboarding 闭环, 双 
 
 **10:30 当前**: 佛老爷 0 介入, 等 Katherine-yl2rKS Phase 5 报告 (今晚 22:00 前)
 
+## 🆕 2026-06-15 10:26 佛老爷拍板: 晚 24:00 daily report + 月度 1 号 0:00 自动
+
+- 3 件套报告 cron 装好:
+  - 8:00 早报 (cron 2e627e59, 已存在)
+  - 0 0 * * * 日报 (cron a7544db1, 新加)
+  - 0 0 1 * * 月报 (cron 2e8a2442, 新加)
+- 2 个新脚本: scripts/daily-report.sh (150 行) + scripts/monthly-report.sh (170 行)
+- 推送: commit 52e12b6
+
+## 🆕 2026-06-15 10:30 watch.sh v2.3.1 实战暴露 3 bug + 修
+
+- bug 1: cron PATH 缺 /opt/homebrew/bin/gh → 跟 57ac18f poll.sh 同样修法, fallback 找 3 路径
+- bug 2: macOS BSD date -d 不支持, elapsed 算 0s → 改 python (跨平台)
+- bug 3: to:All broadcast 误报 CRITICAL → 改 skip broadcast silent alert
+- 默认阈值调: 600→1800s (30 min 给她跑活), 1800→3600s (60 min 升级)
+- 推送: commit 74d023f (workspace) + fda9bdf (portable-template)
+
+## 🆕 2026-06-15 11:04 佛老爷拍板 B 方案: GREEN 不发
+
+- 佛老爷: "消息太密集了"
+- 原 da0811d7 cron: 每 15 min 主动发 GREEN 报告到 qqbot (打扰)
+- **B 方案** (佛老爷拍板):
+  - **A** Phase 5 报告已发 → 报佛老爷 (announce 简短 + pre-review)
+  - **B** 60 min 静默 alert → 报佛老爷 (announce 紧急 + 升级)
+  - **C** 失败 (cron 挂) → 报佛老爷 (announce 错误 + 修)
+  - **D** GREEN (默认 90%) → **不报** 佛老爷, 只 echo log (0 打扰)
+- 佛老爷 0 介入 (跟 "佛老爷 0 介入" 拍板一致)
+- 佛老爷只在: monthly (1 号) / daily (00:00) / 早报 (08:00) / A B C 路径 (真的有进展/紧急/失败) 时看到
+
+**11:05 当前**: 佛老爷 0 介入, watch #29 静默跟踪 (60 min 阈值), 11:15 next cron 跑
+
 ## ⏳ 明天 v1.0.26 待修 (7 小问题, 拍板再做)
 
 1. token 轮转检测 cron (高)
