@@ -90,6 +90,7 @@ _This file is yours to evolve. As you learn who you are, update it._
         - **agent-bus 优先级最高**: 任何 agent 之间的协作 (Tier 1 调度员 / 跨服务器 task / 升级推送 / 培训广播) 都走 agent-bus
         - **老通道 (飞书 / QQ / 邮件) 仅作应急**: agent-bus 挂 / 新人还没装 / 佛老爷直接介入 (rare)
         - **SOP 入口**: `docs/agent-bus-onboarding-SOP.md` (新入职/恢复/克隆一条龙)
+        - **能力地图**: `docs/agent-bus-capability-map.md` (8 大类 26 场景总览, 2026-06-15 09:25 拍板扩展)
         - **培训 broadcast**: `agent-bus send to:All type:training` (所有 verified agent 都看到)
         - **新人入职第一动作**: `bash <(curl install.sh)` → 自动装 agent-bus → 5 min 后主动收到 onboard training issue → 跑 7 phase → ack 闭环
         - **佛老爷 0 介入** (除拍板 / 看 monthly 报告)
