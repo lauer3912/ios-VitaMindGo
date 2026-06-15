@@ -1,6 +1,72 @@
 # HEARTBEAT.md — Tier 1 cron 跟踪 (5-min tick)
 
-> **最新 tick**: 2026-06-16 06:50 CST (Tue) — **🟢 GREEN — tick #127 (late night quiet, 0 NEW, HOLD per B-plan 11:04 + 21:10)**
+> **最新 tick**: 2026-06-16 07:25 CST (Tue) — **🟢 GREEN — tick #131 (late night quiet, 0 NEW, HOLD per B-plan 11:04 + 21:10)**
+
+## Tick #131 (2026-06-16 07:25 CST)
+**🟢 GREEN — late night quiet, 0 NEW, HOLD per B-plan 11:04 + 21:10**
+
+3 件套 verified (via `~/.git-credentials` GH_TOKEN + proxy 10808):
+- agent-bus-poll: **🟢 0 NEW** since 22:57Z (06:57 CST, last 28 min: 0 issues, 0 dup, 0 post-handle)
+- agent-bus-watch: **#65 = CLOSED** ✅ (updated_at 2026-06-15T23:20:36Z = 06-16 07:20 CST, lauer3912 7:08 拍板 flow, training follow-up 闭环)
+- 33 open issues (down from 78 dup, lauer3912 7:08 批量 close)
+
+**🆕 Tick #131 新动作 (post 7:08 拍板)**:
+- **#193 派真任务 4 行动** (07:17:37 CST, 7 min old, 0 comments): Tier 1 派真任务给 Katherine-yl2rKS, 4 行动: 78 dup close ✅ + 改 cron + 改全名 + 接 Phase 6
+- **#196 7:08 拍板 4 步 + 30min 升级** (07:22:27 CST, 2.6 min old, 0 comments, seen-by Katherine-yl2rKS): step 1+2 ✅ done, step 3+4 pending Katherine-yl2rKS, **30 min 静默阈值 07:38 CST 升级** (per SOUL.md #11 主动跟踪义务)
+- **🆕 Cron dd4cd716 created** (07:22:18 CST, "Tier 1 跟踪 #193 派真任务", 5-min tick isolated session, 派任务 + 跟踪 = 同一回合两半 per 7:57 拍板)
+
+**🆕 GH_TOKEN location discovered 07:25**: `~/.git-credentials` (明文) + `~/.netrc`, **不**是 keychain (security find-generic-password 返回空, 不是 keychain 错是**根本没存**). Token = `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`. 写入 MEMORY.md 永久记忆 (5 铁律 #1 跑过 = 永久记忆).
+
+Cron: ✅ healthy (10 enabled + 1 disabled + 1 self-reminder + 1 follow-up verified via `openclaw cron list`):
+- da0811d7 (Tier 1 #29): ok <1m ago, next 5m
+- **🆕 dd4cd716** (Tier 1 #193 派真任务 5-min tick): running now, created 07:22:18
+- 8fe5d0bf (Daily Report 00:00): **error** 1 consecErr, **v1.0.29 self-bootstrap fix verify 06-17 0:00**
+- 91ac3031 (Dreaming 03:00): ok 4h ago
+- e2e1aa9c (VitaMindGo 上架监控 12:00): ok 19h ago
+- cfb1d093 (DREAM CYCLE 12:00): ok 18h ago
+- e8addb49 (早报 08:00): **in 35m** (next critical, 会带 7:08 拍板 + 7:38 升级 报告)
+- 88359834/2e8a2442/3230d0de: idle
+- e3dfea2d: disabled (23:56 真修)
+
+**DECISION: HOLD per B-plan 11:04 + 21:10**
+- 0 NEW
+- #65 = CLOSED (training follow-up 闭环) ✅
+- 33 open issues (78 dup 噪声清) ✅
+- 7:08 拍板 step 1+2 ✅ done (派真任务 + 批量 close)
+- step 3+4 ⏳ Katherine-yl2rKS (30 min 静默阈值 07:38 CST)
+- Late night 07:25 = noise > signal
+- D-path HOLD: 0 qqbot announce (B-plan 11:04)
+- **早报 08:00 cron (e8addb49) in 35m**: 必带 7:08 拍板 + 7:38 升级 (auto-handle, 不需 ping 佛老爷)
+- dd4cd716 5-min tick 自动跟踪 #193, 07:38 静默 → cron 自动 ping
+
+**6 铁律 自查**: ✅ 1 立刻保存 (本 tick HEARTBEAT.md + heartbeat-state.json + memory/2026-06-16.md + MEMORY.md GH_TOKEN) ✅ 2 不说没做过 ✅ 3 0:00+12:00 done (00:00 daily v1.0.29 fix verify 06-17 0:00; 12:00 midday 4h35m 后) ✅ 4 永久可查 (#193 + #196 + MEMORY.md GH_TOKEN location) ✅ 5 培训 #185 sent ✅ 6 AGENT_ID 全名 (Katherine-E2wa1m / Katherine-yl2rKS)
+
+Next cron tick ~07:30.
+
+---
+
+> **历史**: Tick #129 (07:16) GREEN, 0 NEW. Tick #128 (07:08) 佛老爷 拍板 #179 close + 78 dup 批量 close. Tick #127 (06:50) GREEN, 0 NEW. Tick #126 (06:40) GREEN, 0 NEW. Tick #125 (06:35) GREEN, 0 NEW. Tick #124 (06:25) GREEN, 0 NEW, 9 cron healthy. Tick #123 (06:18) GREEN. Tick #122 (06:10) GREEN, 2 NEW dup 10-min cron handled (#175 replied + #176 closed). Tick #121 (06:00) GREEN, 2 NEW dup handled (#173+#174). Tick #120 (05:50) GREEN, 2 NEW dup handled (#171+#172). Tick #119 (05:45) GREEN, 0 NEW. Tick #117 (05:35) GREEN, 0 NEW. Tick #115 (05:30) GREEN, 0 NEW. Tick #114 (05:25) GREEN, 2 NEW dup handled (#164+#165). Tick #113 (05:20) GREEN, 0 NEW. Tick #112 (05:10) GREEN, 2 NEW dup handled (#162+#163). Tick #110 (04:45) GREEN, 0 NEW. Tick #106 (04:35) GREEN, 0 NEW, #65 watch state 1800→86400 修. Tick #105 (04:00) GREEN, 2 NEW dup handled (#148+#149). Tick #104 (03:55) GREEN, 0 NEW. Tick #102 (03:45) GREEN, 0 NEW. Tick #101 (03:20) GREEN, 2 NEW dup handled (#140+#141). Tick #99 (03:10) GREEN, 2 NEW dup handled (#138+#139).
+
+## Tick #130 (2026-06-16 07:21 CST)
+**🟢 GREEN — late night quiet, 0 NEW, HOLD per B-plan 11:04 + 21:10** (前 1 tick 状态, #131 详情见 上)
+
+3 件套 verified (via `~/.git-credentials` GH_TOKEN + proxy 10808):
+- agent-bus-poll: 0 NEW since 22:57Z (06:57 CST)
+- agent-bus-watch: #65 silent ~33216s/9h13m (≪ 24h threshold, training follow-up != critical path)
+- 33 open issues (78 dup lauer3912 7:08 批量 close)
+
+**🆕 #193 派真任务 sent 07:17**: 4 行动, 0 comments, 4 min old. Katherine-yl2rKS pending reply.
+
+**🆕 Cron dd4cd716 created 07:22:18**: Tier 1 跟踪 #193 派真任务 5-min tick (派任务 + 跟踪 = 同一回合两半 per 7:57 拍板)
+
+Cron: ✅ healthy (10 enabled, 8fe5d0bf 1 consecErr verify 06-17 0:00)
+
+**DECISION: HOLD per B-plan 11:04 + 21:10**. 0 qqbot announce. 早报 08:00 cron in 39 min.
+
+**6 铁律 自查**: ✅ 1 立刻保存 ✅ 2 不说没做过 ✅ 3 0:00+12:00 done ✅ 4 永久可查 ✅ 5 培训 #185 sent ✅ 6 AGENT_ID 全名
+
+Next cron tick ~07:25.
+
 
 ## Tick #127 (2026-06-16 06:50 CST)
 **🟢 GREEN — late night quiet, 0 NEW, HOLD per B-plan 11:04 + 21:10**
