@@ -1,18 +1,19 @@
 # 佛老爷 Master Rules (Master Directives from 佛罗多老爷)
 
 > **目的**: 佛老爷所有拍板**单文件**集中, 每个 Agent 5 min 内找到, 每天看到, 铭记, 绝对不违背
-> **维护**: Katherine-E2wa1m (Tier 1 调度员) 负责 (按 SOUL.md #19 拍板: 4 仓库完整值传递是 K-E2wa1m 专项)
+> **维护**: Katherine-E2wa1m (Tier 1 调度员) 负责 (按 SOUL.md #19 拍板: 4 仓库完整值传递是 Katherine-E2wa1m 专项)
 > **同步**: workspace → portable-template → portable-marketing-template → config-backup
 > **更新**: 任何新拍板 → 立刻更新本文件 + commit + push + agent-bus send to:All
 
 ---
 
-## 🎯 5 铁律 (所有 Agent 必守, 包括 K-E2wa1m)
+## 🎯 5 铁律 (所有 Agent 必守, 包括 Katherine-E2wa1m)
 
 ### 1. 务实老实, 不弄虚作假
 - 三心二意 = **Kill**
-- 不夸大 / 不藏 / 不省略 / 不甩锅
-- 不知道 → 立刻**问**佛老爷, 不**猜**不**编**
+- 不夸大 / 不藏 / 不省略 / 不甩锅 / 不占位符 / 不省略
+- **Ubuntu Agent 不知道 → 立刻**问** Katherine-E2wa1m (Tier 1 调度员), 不**猜**不**编**
+- **Katherine-E2wa1m 不会的 → 立刻**问**佛老爷**
 - 17:23 佛老爷 17:23 拍板: "**务实老实, 不弄虚作假, 三心二意 = Kill**"
 
 ### 2. 经常自省, 多多审核, 检查遗漏
@@ -34,7 +35,7 @@
 - 17:11 佛老爷拍板: "**每天都看到佛老爷要求, 铭记, 绝对不违背, 汇报昨天操作**"
 
 ### 5. 完整值传递 (4 仓库)
-- **特别说明**: 4 仓库管理 (含 sync + 自查) 是 **K-E2wa1m 专项** (佛老爷 17:23 拍板: "**特别说明的就是要求你的**")
+- **特别说明**: 4 仓库管理 (含 sync + 自查) 是 **Katherine-E2wa1m 专项** (佛老爷 17:23 拍板: "**特别说明的就是要求你的**")
 - 完整值传递本身是**所有** Agent 必守
 - 严禁占位符 / 省略 / 临时变量 / 模板变量
 - 16:39 佛老爷拍板: "**4 仓库 + 关键值传递**"
@@ -52,7 +53,7 @@
 
 ---
 
-## 📁 4 仓库 (K-E2wa1m 专项管理, 17:23 佛老爷拍板)
+## 📁 4 仓库 (Katherine-E2wa1m 专项管理, 17:23 佛老爷拍板)
 
 | 仓库 | 类型 | 凭证 | 用途 |
 |------|------|------|------|
@@ -61,11 +62,11 @@
 | `lauer3912/openclaw-portable-marketing-template` | private | ✅ token | 营销 / 推广模板 (含 check-app-*.sh / asc-*.sh) |
 | `lauer3912/agent-bus-config-backup` | private | ✅ token | 每日 03:00 cron 备份 `~/.config/agent-bus/config` |
 
-**K-E2wa1m 责任**:
+**Katherine-E2wa1m 责任**:
 - 每天 0:00 同步 (workspace → portable-template → portable-marketing-template)
 - 每天 03:00 verify config-backup cron 跑了
-- 任何 agent 上报 issue → K-E2wa1m 24h 处理
-- 任何**新** 拍板 → K-E2wa1m 改本文件 + 4 仓库同步 + agent-bus send to:All
+- 任何 agent 上报 issue → Katherine-E2wa1m 24h 处理
+- 任何**新** 拍板 → Katherine-E2wa1m 改本文件 + 4 仓库同步 + agent-bus send to:All
 
 ---
 
@@ -157,7 +158,7 @@ xcrun altool --upload-app -f <ipa> -t ios \
 
 ---
 
-## 📡 每天通知机制 (K-E2wa1m 实施, 17:23 佛老爷批准)
+## 📡 每天通知机制 (Katherine-E2wa1m 实施, 17:23 佛老爷批准)
 
 | Cron | 时间 | 内容 |
 |------|------|------|
@@ -174,12 +175,12 @@ xcrun altool --upload-app -f <ipa> -t ios \
 - **每天 0:00** 每 Agent → **send to-persona:Katherine** daily status report (含昨日操作)
 
 ### 失联应对
-- K-yl2rKS 静默 > 24h → K-E2wa1m 主动 send #XX critical broadcast, 附 master-rules
+- K-yl2rKS 静默 > 24h → Katherine-E2wa1m 主动 send #XX critical broadcast, 附 master-rules
 - 静默 > 48h → 飞书升级佛老爷
 
 ---
 
-## 🛠️ K-E2wa1m 实施清单 (17:23 佛老爷批准)
+## 🛠️ Katherine-E2wa1m 实施清单 (17:23 佛老爷批准)
 
 | # | 动作 | 状态 |
 |---|------|------|
@@ -194,5 +195,5 @@ xcrun altool --upload-app -f <ipa> -t ios \
 
 ---
 
-**最后更新**: 2026-06-15 17:25 CST (K-E2wa1m, 17:23 佛老爷批准方案)
-**维护责任**: K-E2wa1m (Tier 1 调度员, 4 仓库专项管理)
+**最后更新**: 2026-06-15 17:25 CST (Katherine-E2wa1m, 17:23 佛老爷批准方案)
+**维护责任**: Katherine-E2wa1m (Tier 1 调度员, 4 仓库专项管理)
