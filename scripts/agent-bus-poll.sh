@@ -27,7 +27,13 @@ if ! command -v gh >/dev/null 2>&1; then
   done
 fi
 command -v gh >/dev/null 2>&1 || { echo "✗ gh not installed (PATH=$PATH)" >&2; exit 1; }
-gh auth status >/dev/null 2>&1 || { echo "✗ gh not authenticated" >&2; exit 1; }
+# v2.3.2: Use GH_TOKEN from local config (chmod 600) — keyring access fails in cron env
+if [[ -f "$CONFIG_DIR/gh-token" ]]; then
+  # shellcheck source=/dev/null
+  source "$CONFIG_DIR/gh-token"
+  export GH_TOKEN
+fi
+gh auth status >/dev/null 2>&1 || { echo "✗ gh not authenticated (set GH_TOKEN in $CONFIG_DIR/gh-token)" >&2; exit 1; }
 
 mkdir -p "$INBOX_DIR"
 
