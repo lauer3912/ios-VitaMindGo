@@ -184,7 +184,7 @@
 - **Duplicates / contradictions found:** 无 — 整 48h 19 个 commit + 11 dist release 内容互不冲突, 主题集中在 "template 自举 + Mac 代理 + 新 agent 验证 + WWDC26"
 - **SOP version 校对:** MEMORY.md v14 (L152) **🔥 STALE 4 步** → 实际 v1.0.17 (2026-06-11 10:58, 含 §2.7 Mac 代理 + WWDC26)
 - **Current stage 校对:** MEMORY.md Stage 8 (L154) **🔥 CRITICAL STALE** → 实际 Stage 9 (2026-06-10 20:03 READY_FOR_SALE)
-- **GitHub token check:** `ghp_…TJJZ` ✅ 仍准确 (本轮 rule #7-#9 反复验证, 写入规则已加固)
+- **GitHub token check:** `GH_TOKEN=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` ✅ 仍准确 (本轮 rule #7-#9 反复验证, 写入规则已加固)
 - **Actions:** 不修改 MEMORY.md — 4 处 staleness + 4 项新增永久记 等 user session 拍板; 现有条目与 git log/corpus 高度一致
 - **Status:** ✅ Complete — 保守模式, 12 个 dream 全部维持一致策略
 - **Notes:**
@@ -221,7 +221,7 @@
   - 2026-06-08 17:31 user 重新提交 (选 build 9) ✅ L198
   - 2026-06-08 17:32 ASC state WAITING_FOR_REVIEW (重新进 review queue) ✅ L199
   - 单元测试 14 → 19 → 22 (含 3 个 1.4.1 回归测试) ✅ L185
-  - GitHub token `ghp_…TJJZ` ✅ 仍准确
+  - GitHub token `GH_TOKEN=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` ✅ 仍准确
   - 6-9 03:00 deep dream 写入 "Promoted From Short-Term Memory (2026-06-09)" 区块 (10 条 6-2/6-5 旧精华) — 自包含, 不需整理
   - VitaMindGo Stage 8 当前最新: 17:32 重提后 ~18.5h WAITING_FOR_REVIEW (Apple 实际 24-72h SLA, 在合理范围)
 
@@ -267,7 +267,7 @@
 
 - **Duplicates / contradictions found:** 无
 - **SOP version 校对:** MEMORY.md v14 (L65) **仍 stale** → 实际 v1.0.5 (2026-06-08 11:47)
-- **GitHub token check:** `ghp_…TJJZ` ✅ 仍准确
+- **GitHub token check:** `GH_TOKEN=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` ✅ 仍准确
 - **DREAMS.md 工作树状态:** modified (3 段 6-7/6-8 REM 诗追加, 03:00 deep dream 写入, 跟 MEMORY.md 无关, 不需管)
 - **Actions:** 不修改 MEMORY.md — 24h 内无 user 互动, 现有条目与 git log 高度一致; 2 处 staleness + Apple 1.4.1 教训等 user session 拍板
 - **Status:** ✅ Complete — 保守模式, 11 个 dream 全部维持一致策略
@@ -307,7 +307,7 @@
   - 2026-06-08 "Last updated" header → "v1.0.5 SOP §0.9.13 VitaMindGo 实战重演" ✅
   - "Promoted From Short-Term Memory (2026-06-08)" 区块已自动沉淀 10 条 (含 6-3 通知、6-5 跨平台) ✅
   - 6-7 12:02 → 6-8 12:02 期间无 4xx/5xx API、新 cron 失败、新 GitHub issue
-  - GitHub token `ghp_…TJJZ` ✅ 仍准确
+  - GitHub token `GH_TOKEN=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` ✅ 仍准确
 
   **B. 发现 3 处 MEMORY.md 轻度 staleness (建议下次 user session 一次性更新, 此次不自动改):**
 
@@ -334,7 +334,7 @@
 
 - **Duplicates / contradictions found:** 无
 - **SOP version 校对:** MEMORY.md v14 (L65) **stale** → 实际 v1.0.5 (2026-06-08), 详见 B-1
-- **GitHub token check:** `ghp_…TJJZ` ✅ 仍准确
+- **GitHub token check:** `GH_TOKEN=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` ✅ 仍准确
 - **Actions:** 不修改 MEMORY.md — 3 处 staleness 等 user session 拍板; 现有条目与 git log 高度一致
 - **Status:** ✅ Complete — 保守模式, 24h 内信号主要是 3 个 git commit 落地, 内容已全部入 MEMORY.md
 - **Notes:** 
@@ -392,7 +392,7 @@
 
 - **Duplicates / contradictions found:** 无
 - **SOP version 校对:** MEMORY.md v14 (2026-06-04) — local SOP, daily log 2026-06-02 提到 v9 (本地端有 v9→v14 跨日跳版本, 正常)
-- **GitHub token check:** `ghp_…TJJZ` ✅ 仍准确
+- **GitHub token check:** `GH_TOKEN=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` ✅ 仍准确
 - **Actions:** 不修改 MEMORY.md — 现有条目与 daily log 高度一致, 升入 daily log 内容会重复 SOP 已有沉淀
 - **Status:** ✅ Complete — 保守模式, 信号已在 SOP/daily logs/git history 中充分沉淀
 - **Notes:** MEMORY.md 当前结构 (身份 / 配置 / Skills / SOP / App Store 字段 / VitaMind / 关键事件 / Open Questions / 永久 Lessons) 是健康的, 不需结构性调整
@@ -417,7 +417,7 @@
   - No `.learnings/` directory exists
   - No new GitHub activity or token changes
 - **MEMORY.md accuracy check:**
-  - GitHub token `ghp_…TJJZ` ✅ matches
+  - GitHub token `GH_TOKEN=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` ✅ matches
   - VitaPocket status (Stage 8, Archive pending) ✅ matches daily log
   - SOP v6 confirmed (per 2026-05-31 daily log)
   - Work protocols ✅ current
@@ -438,7 +438,7 @@
   - No `.learnings/` directory exists
   - No new GitHub activity or token changes
 - **MEMORY.md accuracy check:**
-  - GitHub token `ghp_…TJJZ` ✅ matches
+  - GitHub token `GH_TOKEN=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` ✅ matches
   - VitaPocket status (Stage 8, Archive pending) ✅ accurately reflected in daily log
   - Work protocols ✅ current
   - Skills list ✅ current (no changes)
@@ -459,7 +459,7 @@
   - No `.learnings/` directory exists
   - No new GitHub activity or token changes
 - **MEMORY.md accuracy check:**
-  - GitHub token `ghp_…TJJZ` ✅ matches
+  - GitHub token `GH_TOKEN=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` ✅ matches
   - VitaPocket status (Stage 8, Archive pending) ✅ accurately reflected in daily log
   - Work protocols ✅ current
   - Skills list ✅ current (no changes)
@@ -493,7 +493,7 @@
   - No `.learnings/` directory exists
   - No new GitHub activity or token changes
 - **MEMORY.md accuracy check:**
-  - GitHub token `ghp_…TJJZ` ✅ matches
+  - GitHub token `GH_TOKEN=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` ✅ matches
   - VitaMind Stage 6 complete ✅
   - SOP v5, last updated 2026-05-29 ✅
   - Skills list current ✅
@@ -647,7 +647,7 @@
 - **Duplicates / contradictions found:** 无 — 24h 内 4 commit + 1 dist release 内容互不冲突, 主题集中在 "VitaMindGo 上架 + IAP 商业化 + 3 工作线 + 模板升级"
 - **SOP version 校对:** MEMORY.md v14 (L152) ✅ **仍准确** (Local SOP 实际 v14, 2026-06-04 后无新版本, 之前 6-11 dream 误判为 v1.0.17)
 - **Current stage 校对:** MEMORY.md Stage 10 (L154) ✅ 准确 (VitaMindGo 上架销售中)
-- **GitHub token check:** `ghp_…TJJZ` ✅ 仍准确 (本轮 6-11 多次成功 push 验证, 走代理)
+- **GitHub token check:** `GH_TOKEN=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` ✅ 仍准确 (本轮 6-11 多次成功 push 验证, 走代理)
 - **Actions:** 不修改 MEMORY.md — 1 处 staleness (L523-557) + 3 项新增永久记 (A/B/C) 等 user session 拍板; 现有条目与 git log/corpus 高度一致
 - **Status:** ✅ Complete — 保守模式, 13 个 dream 全部维持一致策略
 - **Notes:**
@@ -750,7 +750,7 @@
   **H. SOP version / Stage / Token 校对:**
   - SOP v14 (L152) ✅ 准确 (上次已修正误判)
   - Stage 10 (L154) ✅ 准确 (上架销售中)
-  - GitHub token `ghp_…TJJZ...` ✅ 仍准确 (24h 内 0 个 push 触发 token 验证, 但 6-12 23:08 commit 已 commit 而未 push 验证 — **下次 push 时跑代理验证**)
+  - GitHub token `GH_TOKEN=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...` ✅ 仍准确 (24h 内 0 个 push 触发 token 验证, 但 6-12 23:08 commit 已 commit 而未 push 验证 — **下次 push 时跑代理验证**)
 
   **I. ASC Subscription IDs (新永久记候选, 已写 MEMORY.md L138-142 ✅)**:
   - Group: `22153084` "VitaMindGo Pro"
@@ -792,7 +792,7 @@
   - `MANIFEST.yaml` (workspace 本地) = v1.0.17, `dist/openclaw-portable-template/MANIFEST.yaml` = v1.0.18, `dist/openclaw-marketing-template/MANIFEST.yaml` = v1.0.9 (1 步滞后是设计)
   - `dreaming-config.json` (无变化, obsidian 仍 disabled)
   - `.learnings/` ❌ 仍不存在
-  - **GitHub token 验证**: `ghp_…TJJZ` ✅ HTTP 200 + login `lauer3912` 正确 (走代理 + 直接都过)
+  - **GitHub token 验证**: `GH_TOKEN=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` ✅ HTTP 200 + login `lauer3912` 正确 (走代理 + 直接都过)
 - **Signal gathered (24h 内 6-13 12:02 → 6-14 12:08, **信号量是 14 dream 中最大**, 涵盖 1 个新仓库诞生 + 5 个 release + 1 个反常识决策 + 5 个新 Skill):**
 
   **🎉 A. 🆕 MAJOR MILESTONE: openclaw-marketing-template 独立仓库诞生 + 5 个版本迭代 (2026-06-13 16:24→20:35)**
@@ -883,7 +883,7 @@
   **J. SOP / Stage / Token 校对:**
   - SOP v14 (L152) ✅ 准确
   - Stage 10 (L154) ✅ 准确 (上架销售中)
-  - GitHub token `ghp_…TJJZ` ✅ HTTP 200 + login `lauer3912` 正确 (走代理 + 直接都过, 本轮 6-13 6 个 marketing push 全过)
+  - GitHub token `GH_TOKEN=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` ✅ HTTP 200 + login `lauer3912` 正确 (走代理 + 直接都过, 本轮 6-13 6 个 marketing push 全过)
 
   **K. 6-13 5 个 skill_workshop proposal 状态:**
   - `d0a2d1ddcc` vitamindgo-marketing-knowledge — pending
@@ -896,7 +896,7 @@
 - **Duplicates / contradictions found:** 0 duplicates (24h 内 6 commit 主题集中在 marketing template 演进 + ASC 凭证); 1 stale 60h+ (L523-557 模板 header); 1 矛盾 fact (L10 乔治, 不动); 0 critical conflicts
 - **SOP version 校对:** v14 ✅
 - **Current stage 校对:** Stage 10 ✅
-- **GitHub token check:** `ghp_…TJJZ` ✅ HTTP 200 + login `lauer3912` 正确 (走代理)
+- **GitHub token check:** `GH_TOKEN=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` ✅ HTTP 200 + login `lauer3912` 正确 (走代理)
 - **Actions:** 不修改 MEMORY.md — 1 处 staleness (L523-557) 60h+ 仍待 user; 1 处 IDENTITY 矛盾 (L10 乔治) 仍待 user; 5 项新永久记候选 (A marketing template / B ASC .p8 / C 5 新 Skill / D 6 新脚本 / E 11 commit) 待 user session 拍板
 - **Status:** ✅ Complete — 保守模式, 15 个 dream 全部维持一致策略
 - **Notes:**

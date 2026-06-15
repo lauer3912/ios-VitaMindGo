@@ -19,7 +19,7 @@ if "$AGENT_BUS_SH" test; then
   exit 0
 else
   echo "✗ agent-bus-test FAIL at $(date -u +%Y-%m-%dT%H:%M:%SZ)" >&2
-  "$AGENT_BUS_SH" send "$AGENT_ID" Katherine-a7f3 report high bus "agent-bus self-test FAILED" --body "
+  "$AGENT_BUS_SH" send "$AGENT_ID" Katherine-E2wa1m report high bus "agent-bus self-test FAILED" --body "
 agent-bus v2 self-test failed at $(date -u +%Y-%m-%dT%H:%M:%SZ)
 Host: $AGENT_HOST
 Agent: $AGENT_ID

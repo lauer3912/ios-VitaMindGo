@@ -23,23 +23,23 @@
 ## §1 拉脚本 (2 min)
 
 ## §1 拉脚本 (2 min)
-curl -fsSL -H "Authorization: token ghp_xxxxxxxx" \
+curl -fsSL -H "Authorization: token <真实 token 已存 MEMORY.md, 飞书消息脱敏>" \
   https://raw.githubusercontent.com/lauer3912/openclaw-portable-template/main/scripts/agent-bus.sh \
   -o agent-bus.sh
-curl -fsSL -H "Authorization: token ghp_xxxxxxxx" \
+curl -fsSL -H "Authorization: token <真实 token 已存 MEMORY.md, 飞书消息脱敏>" \
   https://raw.githubusercontent.com/lauer3912/openclaw-portable-template/main/scripts/agent-bus-setup.sh \
   -o agent-bus-setup.sh
-curl -fsSL -H "Authorization: token ghp_xxxxxxxx" \
+curl -fsSL -H "Authorization: token <真实 token 已存 MEMORY.md, 飞书消息脱敏>" \
   https://raw.githubusercontent.com/lauer3912/openclaw-portable-template/main/scripts/agent-bus-poll.sh \
   -o agent-bus-poll.sh
-curl -fsSL -H "Authorization: token ghp_xxxxxxxx" \
+curl -fsSL -H "Authorization: token <真实 token 已存 MEMORY.md, 飞书消息脱敏>" \
   https://raw.githubusercontent.com/lauer3912/openclaw-portable-template/main/scripts/agent-bus-test.sh \
   -o agent-bus-test.sh
 chmod +x agent-bus*.sh
 
 # 文档也拉一份, 备查
 mkdir -p ~/.openclaw/workspace/docs
-curl -fsSL -H "Authorization: token ghp_xxxxxxxx" \
+curl -fsSL -H "Authorization: token <真实 token 已存 MEMORY.md, 飞书消息脱敏>" \
   https://raw.githubusercontent.com/lauer3912/openclaw-portable-template/main/docs/agent-bus-training.md \
   -o ~/.openclaw/workspace/docs/agent-bus-training.md
 ```

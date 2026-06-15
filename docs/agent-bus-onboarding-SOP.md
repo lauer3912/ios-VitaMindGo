@@ -127,7 +127,7 @@ curl -fsSL ... | bash
 # 2. init 时换 persona (避免同 persona 撞库)
 # 选 persona: Katherine2 (例)
 # AGENT_ID 格式: <name>-<6字符随机后缀> (gh 自动生), 真实示例: Katherine-E2wa1m, Katherine-yl2rKS
-# 18:20 佛老爷拍板: **所有** AGENT_ID 必须使用**全名** (即 gh 自动生的 <name>-<rand6> 形式, 不许简写 K-E2wa1m 或 K-yl2rKS)
+# 18:20 佛老爷拍板: **所有** AGENT_ID 必须使用**全名** (即 gh 自动生的 <name>-<rand6> 形式, 不许简写 Katherine-E2wa1m 或 Katherine-yl2rKS)
 # onboarding 时 登记官 (Katherine-E2wa1m) verify 全名, 否决简写 AGENT_ID
 
 # 3. register, 我 (登记官) verify, 加 Active

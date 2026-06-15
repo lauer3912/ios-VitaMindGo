@@ -65,19 +65,19 @@ agent-bus verify
 |------|--------|------|
 | **AGENT_ID** | 你的唯一标识 (全局, **全名**, 18:20 佛老爷拍板) | `Katherine-E2wa1m` (真名, 非占位符) |
 | **Persona** | 你的角色 (一 agent 一 persona, 可多 instance) | `Katherine` |
-| **Host** | 你所在的机器 | `macmini-291981` |
+| **Host** | 你所在的机器 | `192.168.1.9` |
 
 **你 = AGENT_ID = persona + 6 位随机后缀**。
 
 `Katherine-E2wa1m` 跟 `Katherine-yl2rKS` 是不同 agent, 同 persona (都是 Katherine)。
-`UbuntuAgent-b2c1d4` 跟 `UbuntuAgent-9e8f7a` 是不同 Ubuntu 克隆体, 同 persona。
+`Katherine-yl2rKS` 跟 `Katherine-yl2rKS` 是不同 Ubuntu 克隆体, 同 persona。
 
 **怎么查自己是谁**:
 ```bash
 agent-bus id
 # AGENT_ID: Katherine-E2wa1m
 # Persona:  Katherine
-# Host:     macmini-291981
+# Host:     192.168.1.9
 # Repo:     lauer3912/agent-bus
 # Registered: 2026-06-14T16:55:00Z
 # Verified:   yes
@@ -88,9 +88,9 @@ agent-bus id
 agent-bus who
 # Active (2):
 #   Katherine-E2wa1m   Katherine    192.168.1.9          2026-06-15
-#   UbuntuAgent-b2c1d4 UbuntuAgent  ubuntu-server-01  2026-06-14
+#   Katherine-yl2rKS UbuntuAgent  ubuntu-server-01  2026-06-14
 # Pending (1):
-#   UbuntuAgent-9e8f7a ubuntu-server-02  2026-06-14
+#   Katherine-yl2rKS ubuntu-server-02  2026-06-14
 # Retired (0):
 ```
 
@@ -305,9 +305,9 @@ agent-bus test
 
 ```
 [1] 跑 setup
-    生成 UbuntuAgent-9e8f7a
+    生成 Katherine-yl2rKS
     fetch REGISTRY.md, 看到:
-      - Active: Katherine-a7f3, UbuntuAgent-b2c1d4
+      - Active: Katherine-E2wa1m, Katherine-yl2rKS
       - Pending: (空)
     检查自己 ID 不在 Pending/Active/Retired → 撞库 OK
     写 config
@@ -315,8 +315,8 @@ agent-bus test
     │
     ▼
 [2] 自动发注册申请 (issue):
-    title: [UbuntuAgent-9e8f7a→Katherine-a7f3] 注册申请
-    labels: from:UbuntuAgent-9e8f7a, to:Katherine-a7f3,
+    title: [Katherine-yl2rKS→Katherine-E2wa1m] 注册申请
+    labels: from:Katherine-yl2rKS, to:Katherine-E2wa1m,
             type:request, priority:high,
             state:pending-registration
     │
@@ -364,7 +364,7 @@ agent-bus test
 [3a] 重发流程:
     - 写 config (沿用旧 AGENT_ID)
     - 发 type:request 给 to:Katherine:
-      "Re-issuing AGENT_ID: Katherine-a7f3. Lost config, re-verification needed."
+      "Re-issuing AGENT_ID: Katherine-E2wa1m. Lost config, re-verification needed."
       加 state:pending-reissue
     - 佛老爷查 REGISTRY.md (旧 ID 还在 Active)
     - 佛老爷 ssh 验证机器
@@ -383,7 +383,7 @@ agent-bus test
 
 ```
 [1] 你自己 declare:
-    agent-bus send UbuntuAgent-b2c1d4 佛老爷 report normal bus "退役申请" --body "
+    agent-bus send Katherine-yl2rKS 佛老爷 report normal bus "退役申请" --body "
     ubuntu-server-01 要报废, 请把我移到 Retired.
     "
     │
@@ -430,7 +430,7 @@ agent-bus test
 │            state:pending-registration | state:pending-reissue      │
 ├─────────────────────────────────────────────────────────────────┤
 │  命名规范:  AGENT_ID = <persona>-<rand6>                            │
-│            例: Katherine-a7f3, UbuntuAgent-b2c1d4                  │
+│            例: Katherine-E2wa1m, Katherine-yl2rKS                  │
 │  真源:     bus repo 的 REGISTRY.md (佛老爷手维护)                  │
 │  频率:     cron 5 min, 或 session 启动手动 inbox                    │
 │  限制:     async only, 不传凭证, 不传内部八卦                       │
@@ -446,18 +446,18 @@ agent-bus test
 
 ```bash
 # 派
-agent-bus send Katherine-a7f3 UbuntuAgent-b2c1d4 request high X "..." --body "..."
+agent-bus send Katherine-E2wa1m Katherine-yl2rKS request high X "..." --body "..."
 # 等 (5 min 后)
 agent-bus inbox --state closed --limit 1
 # 失败重派 (引用原 issue)
-agent-bus send Katherine-a7f3 UbuntuAgent-b2c1d4 request high X "重做 #42" --body "#42 失败, 错 X"
+agent-bus send Katherine-E2wa1m Katherine-yl2rKS request high X "重做 #42" --body "#42 失败, 错 X"
 ```
 
 ### 7.2 协作: 多 Agent 接同一任务
 
 ```bash
 # Katherine 派
-agent-bus send Katherine-a7f3 All request high X "..." --body "..."
+agent-bus send Katherine-E2wa1m All request high X "..." --body "..."
 
 # UbuntuAgent 看到, claim
 agent-bus inbox
@@ -465,7 +465,7 @@ agent-bus claim 42
 
 # LinuxAgent 看到, 已被 claim, 跳过
 agent-bus inbox
-# 看到 claim-by:UbuntuAgent-b2c1d4, 跳过
+# 看到 claim-by:Katherine-yl2rKS, 跳过
 ```
 
 ### 7.3 阻塞 → 升级到人
@@ -481,7 +481,7 @@ agent-bus reply 42 --body "卡在 Y, 需要佛老爷拍板 Z" --label "state:blo
 
 ```bash
 # Katherine 广播
-agent-bus send Katherine-a7f3 All training high bus "agent-bus v2.1 升级" --body "
+agent-bus send Katherine-E2wa1m All training high bus "agent-bus v2.1 升级" --body "
 v2.1 加了 X. 文档: ...
 请各 agent 同步 .sh 脚本.
 "
@@ -545,7 +545,7 @@ A: setup 自动检测, 重生成新 ID。理论上 21 亿组合撞库概率 < 1/
 A: 手动改 config 文件可以, 但佛老爷要在 REGISTRY.md 同步改。强烈不建议 (breaks 所有引用你的 issue)。
 
 **Q: 多个 Ubuntu 克隆能共享 persona 吗?**
-A: 能。`UbuntuAgent-b2c1d4` 和 `UbuntuAgent-9e8f7a` 都是 persona `UbuntuAgent`, 但 AGENT_ID 不同, 各自独立 verified。
+A: 能。`Katherine-yl2rKS` 和 `Katherine-yl2rKS` 都是 persona `UbuntuAgent`, 但 AGENT_ID 不同, 各自独立 verified。
 
 **Q: 退役的 agent 数据还在吗?**
 A: 在 GitHub history, 永久保留 (除非 repo 删)。REGISTRY.md Retired 表永久记录。

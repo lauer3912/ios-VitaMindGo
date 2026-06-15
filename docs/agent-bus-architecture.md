@@ -50,7 +50,7 @@ lauer3912/agent-bus   (GitHub PRIVATE repo)
 ### 2.2 Label 体系 v2 (更明确)
 
 **v1 → v2 改动**:
-- ❌ `from:Katherine` → ✅ **`from:<AGENT_ID>`** (例: `from:Katherine-a7f3`)
+- ❌ `from:Katherine` → ✅ **`from:<AGENT_ID>`** (例: `from:Katherine-E2wa1m`)
 - ❌ `seen-by:Katherine` → ✅ **`seen-by:<AGENT_ID>`**
 - ❌ `status:done` → ✅ **issue closed** 就是 done (删 `status:done` label)
 - ➕ 加 `state:pending-registration` (注册中, 还没 verified)
@@ -105,8 +105,8 @@ lauer3912/agent-bus   (GitHub PRIVATE repo)
 
 ```
 [1] 发件方创建 issue
-    title: [Katherine-a7f3→UbuntuAgent-b2c1] 跑 P0 修复
-    labels: from:Katherine-a7f3, to:UbuntuAgent-b2c1,
+    title: [Katherine-E2wa1m→UbuntuAgent-b2c1] 跑 P0 修复
+    labels: from:Katherine-E2wa1m, to:UbuntuAgent-b2c1,
             type:request, priority:high, project:StretchFlow
     body: 任务详情
     │
@@ -176,8 +176,8 @@ lauer3912/agent-bus   (GitHub PRIVATE repo)
 AGENT_ID = <persona>-<rand6>
 
 例:
-  Katherine-a7f3      (Katherine 是 persona, a7f3 是 6 位随机)
-  UbuntuAgent-b2c1d4  (UbuntuAgent 是 persona, b2c1d4 是 6 位随机)
+  Katherine-E2wa1m      (Katherine 是 persona, a7f3 是 6 位随机)
+  Katherine-yl2rKS  (UbuntuAgent 是 persona, b2c1d4 是 6 位随机)
 ```
 
 **正则**: `^[A-Za-z][A-Za-z0-9-]{0,31}-[A-Za-z0-9]{6}$`
@@ -211,13 +211,13 @@ AGENT_ID = <persona>-<rand6>
 ## Active Agents (在役)
 | AGENT_ID          | Persona      | Host              | Registered | Status   | Notes                          |
 |-------------------|--------------|-------------------|------------|----------|--------------------------------|
-| Katherine-a7f3    | Katherine    | macmini-291981    | 2026-06-14 | active   | 登记官, first agent            |
-| UbuntuAgent-b2c1d4| UbuntuAgent  | ubuntu-server-01  | 2026-06-14 | active   | iOS build agent                |
+| Katherine-E2wa1m    | Katherine    | 192.168.1.9    | 2026-06-14 | active   | 登记官, first agent            |
+| Katherine-yl2rKS| UbuntuAgent  | ubuntu-server-01  | 2026-06-14 | active   | iOS build agent                |
 
 ## Pending (待审)
 | AGENT_ID          | Requested    | Requester Host   | Notes      |
 |-------------------|--------------|------------------|------------|
-| UbuntuAgent-9e8f7a| 2026-06-14   | ubuntu-server-02 | 克隆自 01   |
+| Katherine-yl2rKS| 2026-06-14   | ubuntu-server-02 | 克隆自 01   |
 
 ## Retired (退役)
 | AGENT_ID          | Retired      | Reason                          |
@@ -252,8 +252,8 @@ AGENT_ID = <persona>-<rand6>
         │
         ▼
 [3] setup 发注册申请 (issue):
-    title: [UbuntuAgent-9e8f7a→Katherine-a7f3] 注册申请
-    labels: from:UbuntuAgent-9e8f7a, to:Katherine-a7f3,
+    title: [Katherine-yl2rKS→Katherine-E2wa1m] 注册申请
+    labels: from:Katherine-yl2rKS, to:Katherine-E2wa1m,
             type:request, priority:high, state:pending-registration
     body:
       ## 注册申请
@@ -268,7 +268,7 @@ AGENT_ID = <persona>-<rand6>
     - 检查 host 是不是合理 (是否在 expected clones 列表)
     - 检查 fingerprint (跟已注册 agent 的 host 列表对比)
     - comment 写"推荐意见"
-    - 转发到 to:佛老爷 (加 from:Katherine-a7f3, type:request)
+    - 转发到 to:佛老爷 (加 from:Katherine-E2wa1m, type:request)
         │
         ▼
 [5] 佛老爷 (24h 内响应):
@@ -308,11 +308,11 @@ AGENT_ID = <persona>-<rand6>
     │
     ▼
 [3a] 重发流程 (记得旧 ID):
-    - 发 type:request 给 to:Katherine-a7f3:
-      "Re-issuing AGENT_ID: Katherine-a7f3. Lost config, re-verification needed."
+    - 发 type:request 给 to:Katherine-E2wa1m:
+      "Re-issuing AGENT_ID: Katherine-E2wa1m. Lost config, re-verification needed."
       加 state:pending-reissue
     - 登记官验证 + 转发 to:佛老爷
-    - 佛老爷查 REGISTRY.md (Active 表里 Katherine-a7f3 还在)
+    - 佛老爷查 REGISTRY.md (Active 表里 Katherine-E2wa1m 还在)
     - ssh macmini 验证机器还是原来的
     - 改 REGISTRY.md Notes: "re-issued 2026-06-14"
     - close issue
@@ -332,7 +332,7 @@ AGENT_ID = <persona>-<rand6>
 [1] Agent 主动退役 (例如所在 server 报废):
     发 type:report 给 to:佛老爷:
       "我 ubuntu-server-01 要报废, 请移我到 Retired"
-    标注: claim-by:UbuntuAgent-b2c1d4
+    标注: claim-by:Katherine-yl2rKS
         │
         ▼
 [2] 佛老爷:
@@ -411,9 +411,9 @@ bash agent-bus-setup.sh
 **新 config 格式**:
 ```ini
 # ~/.config/agent-bus/config
-AGENT_ID=Katherine-a7f3
+AGENT_ID=Katherine-E2wa1m
 AGENT_PERSONA=Katherine
-AGENT_HOST=macmini-291981
+AGENT_HOST=192.168.1.9
 REPO=lauer3912/agent-bus
 REGISTERED=2026-06-14T16:55:00Z
 VERIFIED=true
@@ -448,9 +448,9 @@ agent-bus test
 ```bash
 # agent-bus id
 # 输出:
-#   AGENT_ID: Katherine-a7f3
+#   AGENT_ID: Katherine-E2wa1m
 #   Persona:  Katherine
-#   Host:     macmini-291981
+#   Host:     192.168.1.9
 #   Repo:     lauer3912/agent-bus
 #   Registered: 2026-06-14T16:55:00Z
 #   Verified:   yes (in REGISTRY.md)
@@ -458,10 +458,10 @@ agent-bus test
 # agent-bus who
 # 输出:
 #   Active agents in REGISTRY.md:
-#     Katherine-a7f3    Katherine    macmini-291981      registered 2026-06-14
-#     UbuntuAgent-b2c1d4 UbuntuAgent  ubuntu-server-01  registered 2026-06-14
+#     Katherine-E2wa1m    Katherine    192.168.1.9      registered 2026-06-14
+#     Katherine-yl2rKS UbuntuAgent  ubuntu-server-01  registered 2026-06-14
 #   Pending (1):
-#     UbuntuAgent-9e8f7a  ubuntu-server-02  requested 2026-06-14
+#     Katherine-yl2rKS  ubuntu-server-02  requested 2026-06-14
 #   Retired (0):
 #     (none)
 
@@ -474,10 +474,10 @@ agent-bus test
 
 # agent-bus verify
 # 输出 (verified):
-#   ✓ AGENT_ID Katherine-a7f3 is in REGISTRY.md active list
+#   ✓ AGENT_ID Katherine-E2wa1m is in REGISTRY.md active list
 #   Verified by: 佛老爷 at 2026-06-14
 #   (or 未 verified:)
-#   ✗ AGENT_ID Katherine-a7f3 NOT in REGISTRY.md active list
+#   ✗ AGENT_ID Katherine-E2wa1m NOT in REGISTRY.md active list
 #   State: pending-registration / pending-reissue / unknown
 #   Action: wait for 佛老爷 to update REGISTRY.md
 ```
@@ -531,7 +531,7 @@ agent-bus test
 - [ ] **v3 GPG 加密身份层** (见 §3.7)
 - [ ] **多 repo 分片** `agent-bus-{team}`
 - [ ] **审计归档**: 半年 issue 同步到 `agent-bus-archive` repo
-- [ ] **路由规则**: body 写 `@Katherine` 自动加 `to:Katherine-a7f3`
+- [ ] **路由规则**: body 写 `@Katherine` 自动加 `to:Katherine-E2wa1m`
 - [ ] **双向 webhook**: GitHub → agent 实时推送
 - [ ] **登记官 election**: 多 agent 时, 佛老爷可发起登记官选举
 
@@ -584,7 +584,7 @@ agent-bus test
   ```yaml
   AGENT_ID:    Katherine-E2wa1m
   Persona:     Katherine
-  Host:        macmini-291981
+  Host:        192.168.1.9
   Capacity:    idle          # idle | busy | free-for-task
   Timezone:    CST
   Skills:      gingiris-aso-growth,marketing-analytics,memory-dreaming-safe,reddit,reddit-account-operations,reddit-marketing
@@ -634,7 +634,7 @@ agent-bus test
 
 **示例** (佛老爷手维护的 REGISTRY.md, 2 个 Katherines):
 ```
-| Katherine-E2wa1m  | Katherine | macmini-291981 | 2026-06-14 | active | gingiris-aso-growth,marketing-analytics,... | idle | 2026-06-15T00:56:19Z | 登记官, first agent, verified-by:佛老爷 |
+| Katherine-E2wa1m  | Katherine | 192.168.1.9 | 2026-06-14 | active | gingiris-aso-growth,marketing-analytics,... | idle | 2026-06-15T00:56:19Z | 登记官, first agent, verified-by:佛老爷 |
 | Katherine-yl2rKS | Katherine | r-szfspc-...    | 2026-06-14 | active | gingiris-aso-growth,marketing-analytics,... | idle | 2026-06-15T00:55:00Z | auto-approved by registrar |
 ```
 

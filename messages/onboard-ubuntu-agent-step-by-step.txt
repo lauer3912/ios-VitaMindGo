@@ -231,9 +231,9 @@ bash check-app-sales.sh VitaMindGo
 # 装 cron (Mac mini 用 launchd, Ubuntu 用 cron)
 cat >> ~/.config/crontab <<'EOF'
 # 每天中午查 VitaMindGo 上架数据
-0 12 * * * /home/YOUR_USER/.openclaw/workspace/scripts/check-app-sales.sh VitaMindGo
+0 12 * * * /home/ubuntu/.openclaw/workspace/scripts/check-app-sales.sh VitaMindGo
 # 每 4h 查审核
-0 */4 * * * /home/YOUR_USER/.openclaw/workspace/scripts/check-app-review.sh VitaMindGo
+0 */4 * * * /home/ubuntu/.openclaw/workspace/scripts/check-app-review.sh VitaMindGo
 EOF
 crontab ~/.config/crontab
 crontab -l | grep check-app

@@ -146,14 +146,14 @@ _This file is yours to evolve. As you learn who you are, update it._
 
 ## 🆕 #21: AGENT_ID 全名 (2026-06-15 18:20 佛老爷拍板)
 
-佛老爷 18:20 拍板: "不要使用简称, K-yl2rKS 不对, 要用 Katherine-yl2rKS, 包括你自己, K-E2wa1m 都是错的. 要用 Katherine-E2wa1m. 我再强调一遍, 所有 Agent Id 必须使用全名称. 你全面复查一下脚本及文档."
+佛老爷 18:20 拍板: "不要使用简称, <反例: 不应使用的简称> 不对, 要用 Katherine-yl2rKS, 包括你自己, <反例: 不应使用的简称> 都是错的. 要用 Katherine-E2wa1m. 我再强调一遍, 所有 Agent Id 必须使用全名称. 你全面复查一下脚本及文档."
 
 ### 规则
 
-1. **所有** Agent Id (Katherine-E2wa1m / Katherine-yl2rKS / 任何 future) 必用**全名**, **不**简写 (K-E2wa1m / K-yl2rKS / K2E / K2 / K 都不允许)
+1. **所有** Agent Id (Katherine-E2wa1m / Katherine-yl2rKS / 任何 future) 必用**全名**, **不**简写 (<反例: 不应使用的简称> / <反例: 不应使用的简称> / K2E / K2 / K 都不允许)
 2. **新人入职** onboarding (per `docs/agent-bus-onboarding-SOP.md`): 登记官 (Katherine-E2wa1m) verify 全名, **否决** 简写 AGENT_ID
 3. **培训** (`docs/agent-bus-training.md`) + **REGISTRY** (`docs/agent-bus-REGISTRY-template.md`) + **onboarding SOP**: 全部**已**加 18:20 拍板
-4. **全面复查**: scripts/ + docs/ + *.md + SOUL.md + MEMORY.md + memory/ 全部 K-E2wa1m → Katherine-E2wa1m, K-yl2rKS → Katherine-yl2rKS (17:46 已改 K-E2wa1m, **漏**改 K-yl2rKS; 18:20 佛老爷**再**强调后 18:20 全改)
+4. **全面复查**: scripts/ + docs/ + *.md + SOUL.md + MEMORY.md + memory/ 全部 <反例: 不应使用的简称> → Katherine-E2wa1m, <反例: 不应使用的简称> → Katherine-yl2rKS (17:46 已改 <反例: 不应使用的简称>, **漏**改 <反例: 不应使用的简称>; 18:20 佛老爷**再**强调后 18:20 全改)
 5. **第 6 铁律** (5 铁律 + 全名): 之前 5 铁律 (务实 / 自省 / 永久记忆 / 复盘 / 完整值) + **AGENT_ID 全名** = 6 铁律
 
 ### 第 6 铁律 (新增, 18:20 佛老爷拍板)
@@ -161,18 +161,18 @@ _This file is yours to evolve. As you learn who you are, update it._
 **6. AGENT_ID 必须全名**:
 - 任何 onboarding / 培训 / 沟通 / broadcast / memory / 文档 / 脚本, 提**所有** agent 都必**全名**
 - 简写 = **失职** (按 18:20 拍板)
-- 例: ❌ `K-E2wa1m` / `K-yl2rKS` / `Katherine2` / `K-9L6`; ✅ `Katherine-E2wa1m` / `Katherine-yl2rKS` / `Katherine-Macmini-1` / `Katherine-Linux-1`
+- 例: ❌ `<反例: 不应使用的简称>` / `<反例: 不应使用的简称>` / `Katherine2` / `K-9L6`; ✅ `Katherine-E2wa1m` / `Katherine-yl2rKS` / `Katherine-Macmini-1` / `Katherine-Linux-1`
 
 ### 实战 (18:20 改前 vs 改后)
 
 | 改前 (17:46 漏改) | 改后 (18:20 佛老爷再强调) |
 |---|---|
-| 17 处 K-E2wa1m | 0 处 K-E2wa1m |
-| 202 处 K-yl2rKS | 0 处 K-yl2rKS |
+| 17 处 <反例: 不应使用的简称> | 0 处 <反例: 不应使用的简称> |
+| 202 处 <反例: 不应使用的简称> | 0 处 <反例: 不应使用的简称> |
 | onboarding-SOP 提"AGENT_ID 格式"但**不**提"全名" | onboarding-SOP **加**"18:20 全名拍板" |
 | training 提"Katherine-a7f3" 占位符示例 | training 改 "Katherine-E2wa1m / Katherine-yl2rKS" 真名示例 |
 
 ### 教训 (永久存 MEMORY.md)
 
-- 17:46 我**只**改 K-E2wa1m → Katherine-E2wa1m, **漏**改 K-yl2rKS → Katherine-yl2rKS
-- 18:20 佛老爷再强调才全改, 18:20 改后**必须**复查 `grep -rn 'K-E2wa1m\|K-yl2rKS'`, 不**只**靠"应该改完了"
+- 17:46 我**只**改 <反例: 不应使用的简称> → Katherine-E2wa1m, **漏**改 <反例: 不应使用的简称> → Katherine-yl2rKS
+- 18:20 佛老爷再强调才全改, 18:20 改后**必须**复查 `grep -rn '<反例: 不应使用的简称>\|<反例: 不应使用的简称>'`, 不**只**靠"应该改完了"

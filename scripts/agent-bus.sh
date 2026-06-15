@@ -348,12 +348,12 @@ cmd_register() {
 
   # Post registration request
   # v2.1: send to to-persona:<my_persona> (any of my persona acts as registrar)
-  # Falls back to to:Katherine-a7f3 (canonical first agent) if persona not set
+  # Falls back to to:Katherine-E2wa1m (canonical first agent) if persona not set
   local target_to
   if [[ -n "${AGENT_PERSONA:-}" ]]; then
     target_to="to-persona:${AGENT_PERSONA}"
   else
-    target_to="Katherine-a7f3"  # legacy fallback
+    target_to="Katherine-E2wa1m"  # legacy fallback
   fi
   local body
   body=$(cat <<EOF

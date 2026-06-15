@@ -55,7 +55,7 @@ workspace:
 
 alerts:
   channel: telegram | slack | discord
-  webhook: <YOUR_WEBHOOK_URL>
+  webhook: <DINGTALK_WEBHOOK_URL_HERE, 真实 URL 已存 .config/dingtalk-webhook>
 ```
 
 ### Compatibility
