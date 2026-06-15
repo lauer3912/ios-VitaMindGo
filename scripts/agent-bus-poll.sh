@@ -20,7 +20,13 @@ INBOX_DIR="${AGENT_BUS_INBOX_DIR:-$HOME/.local/share/agent-bus/inbox}"
 # shellcheck source=/dev/null
 source "$CONFIG_FILE"
 
-command -v gh >/dev/null 2>&1 || { echo "✗ gh not installed" >&2; exit 1; }
+# Ensure gh is reachable — cron PATH often strips /opt/homebrew/bin
+if ! command -v gh >/dev/null 2>&1; then
+  for gh_candidate in /opt/homebrew/bin/gh /usr/local/bin/gh /usr/bin/gh; do
+    [[ -x "$gh_candidate" ]] && { export PATH="$(dirname "$gh_candidate"):$PATH"; break; }
+  done
+fi
+command -v gh >/dev/null 2>&1 || { echo "✗ gh not installed (PATH=$PATH)" >&2; exit 1; }
 gh auth status >/dev/null 2>&1 || { echo "✗ gh not authenticated" >&2; exit 1; }
 
 mkdir -p "$INBOX_DIR"
