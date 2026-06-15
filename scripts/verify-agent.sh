@@ -106,7 +106,9 @@ fi
 echo ""
 echo "【6】GitHub 认证"
 TOKEN=$(grep "DEFAULT_GITHUB_TOKEN=" "$WS/scripts/setup-github-cred.sh" 2>/dev/null | head -1 | awk -F'"' '{print $2}')
-if [ -n "$TOKEN" ] && [ "$TOKEN" != "ghp_***" ]; then
+# 06-15 17:53 佛老爷拍板: 严禁占位符 (15:36 #15 + 17:46)
+# 不再与占位符 ghp_*** 比较, 直接检查非空 + 长度合理
+if [ -n "$TOKEN" ] && [ "${#TOKEN}" -ge 20 ]; then
   if curl -fsSL --max-time 10 -H "Authorization: token $TOKEN" \
      https://api.github.com/user 2>/dev/null | grep -q '"login"'; then
     login=$(curl -fsSL --max-time 10 -H "Authorization: token $TOKEN" \
