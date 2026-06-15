@@ -3,8 +3,8 @@
 # OpenClaw: GitHub Credential 一键设置 (新 Ubuntu 入职用)
 # ========================================
 # 用法 (3 选 1):
-#   GITHUB_TOKEN="ghp_xxx" bash setup-github-cred.sh   # 从 env (推荐 CI/自动化)
-#   bash setup-github-cred.sh ghp_xxx                  # 从第 1 个位置参数
+#   GITHUB_TOKEN="$YOUR_GITHUB_PAT" bash setup-github-cred.sh   # 从 env (推荐 CI/自动化, $YOUR_GITHUB_PAT 是你的真实 GitHub PAT)
+#   bash setup-github-cred.sh $YOUR_GITHUB_PAT                  # 从第 1 个位置参数 (实参 = 你的真实 GitHub PAT)
 #   bash setup-github-cred.sh                          # 交互式 prompt
 #
 # 前置:
