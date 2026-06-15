@@ -43,7 +43,7 @@
 ### 6. AGENT_ID 必须全名 (18:20 佛老爷拍板)
 - 任何 onboarding / 培训 / 沟通 / broadcast / memory / 文档 / 脚本, 提**所有** agent 都必**全名**
 - 简写 = **失职**
-- 例: ❌ `K-E2wa1m` / `K-yl2rKS` / `Katherine2` / `K-9L6`; ✅ `Katherine-E2wa1m` / `Katherine-yl2rKS` / `Katherine-Macmini-1` / `Katherine-Linux-1`
+- 例: ❌ `Katherine-E2wa1m` / `Katherine-yl2rKS` / `Katherine2` / `K-9L6`; ✅ `Katherine-E2wa1m` / `Katherine-yl2rKS` / `Katherine-Macmini-1` / `Katherine-Linux-1`
 - **新人入职** onboarding (per `docs/agent-bus-onboarding-SOP.md`): 登记官 (Katherine-E2wa1m) verify 全名, **否决** 简写 AGENT_ID
 - 培训 (`docs/agent-bus-training.md`) + **REGISTRY** (`docs/agent-bus-REGISTRY-template.md`) + **onboarding SOP**: 全部**已**加 18:20 拍板
 

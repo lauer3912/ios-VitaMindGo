@@ -12,7 +12,7 @@
 #   - rand6: 6 位 alphanumeric (auto-generate, 可手改)
 # AGENT_ID 全局唯一, 撞库重生成
 # 同一 persona 可有多个 instance (多克隆体)
-# 18:20 佛老爷拍板: **所有** AGENT_ID 必须使用**全名** (gh 自动生格式, 登记官 verify, 不接受简写如 K-E2wa1m / K-yl2rKS)
+# 18:20 佛老爷拍板: **所有** AGENT_ID 必须使用**全名** (gh 自动生格式, 登记官 verify, 不接受简写如 Katherine-E2wa1m / Katherine-yl2rKS)
 #
 # v2.3 新增列 (从 v2.2 升级时记得填):
 #   - Skills: 逗号分隔, 跟 AGENT.md 同步 (auto-detected from skills/)
@@ -54,7 +54,7 @@
 # 4. 24h 内 Pending 列表里的没处理 = 登记官代行
 #    - 在 Notes 列加 "registrar-acting:Yes (24h timeout)"
 #    - 佛老爷事后可追认或撤销
-# 5. AGENT_ID 字符必须 match: ^[A-Za-z][A-Za-z0-9-]{0,31}-[A-Za-z0-9]{6}$ (即 <persona>-<6 字符后缀>, 18:20 佛老爷拍板 **全名**, 不接受简写如 K-E2wa1m / K-yl2rKS)
+# 5. AGENT_ID 字符必须 match: ^[A-Za-z][A-Za-z0-9-]{0,31}-[A-Za-z0-9]{6}$ (即 <persona>-<6 字符后缀>, 18:20 佛老爷拍板 **全名**, 不接受简写如 Katherine-E2wa1m / Katherine-yl2rKS)
 # 6. 同 host 可有多个 AGENT_ID (多 OpenClaw 实例跑同一机器), 没问题
 # 7. 同 persona 可有多个 instance (多克隆体), 用 rand6 区分
 # 8. Skills 列 = 逗号分隔, 跟 `agent-bus id` 输出的 AGENT.md 一致

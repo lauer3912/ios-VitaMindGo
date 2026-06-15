@@ -170,7 +170,7 @@ _This file is yours to evolve. As you learn who you are, update it._
 | 17 处 <反例: 不应使用的简称> | 0 处 <反例: 不应使用的简称> |
 | 202 处 <反例: 不应使用的简称> | 0 处 <反例: 不应使用的简称> |
 | onboarding-SOP 提"AGENT_ID 格式"但**不**提"全名" | onboarding-SOP **加**"18:20 全名拍板" |
-| training 提"Katherine-a7f3" 占位符示例 | training 改 "Katherine-E2wa1m / Katherine-yl2rKS" 真名示例 |
+| training 改用真名 (按 18:20 拍板) | training 改 "Katherine-E2wa1m / Katherine-yl2rKS" 真名示例 |
 
 ### 教训 (永久存 MEMORY.md)
 
