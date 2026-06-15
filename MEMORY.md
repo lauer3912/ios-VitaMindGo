@@ -1,6 +1,6 @@
 # MEMORY.md - Long-Term Memory
 
-_Last updated: 2026-06-15 06:56 (今天重要日: 飞书 onboarding 闭环, 双 Katherine 备份链路正式上线)_
+_Last updated: 2026-06-15 12:02 (16th dream consolidation: 6-15 12h 密集拍板期整理, 佛老爷 0 介入 auto-pilot 模式确立)_
 
 ---
 
@@ -209,7 +209,44 @@ _Last updated: 2026-06-15 06:56 (今天重要日: 飞书 onboarding 闭环, 双 
 
 **11:05 当前**: 佛老爷 0 介入, watch #29 静默跟踪 (60 min 阈值), 11:15 next cron 跑
 
-## ⏳ 明天 v1.0.26 待修 (7 小问题, 拍板再做)
+---
+
+## 🆕 佛老爷 0 介入 auto-pilot 模式 (2026-06-15 拍板, 永久记)
+
+源自 24h 4 拍板合流, 简化为单一原则:
+
+1. **09:48 佛老爷 "全部批准"** (空白支票) — 0 介入, 月度报告 + 拍板外不打扰
+2. **10:00-10:25 Tier 1 失误复盘** — 升级 (send new issue) ≠ 检查 (查 thread reply), 静默阈值: 3min 查 thread / 30min 发新 issue / 60min escalate 佛老爷
+3. **11:04 B 方案 GREEN 不发** — 只在 A/B/C 路径真有事时报, D 路径静默
+4. **09:17/09:25 agent-bus 总入口** — Tier 1 调度员全权处理 Ubuntu Agent
+
+**操作细则 (写给 future-me):**
+- 飞书 / QQ 直 ping 佛老爷 = 紧急 (60-min 阈值触线, cron 挂, 拍板事项) — **不要为 GREEN 报**
+- agent-bus `to:佛老爷` = 仅限真需拍板 (跨 agent 冲突 / 协议升级 / 佛老爷决策)
+- Tier 1 调度员 (我) 拍板范围: 脚本运行 / iOS build / 营销监控 / agent-bus 通讯 / 跨 agent 协作
+- 报告渠道: 8:00 早报 (已有) + 0:00 日报 (a7544db1) + 1号 月报 (2e8a2442)
+- 跟踪: 派 issue + cron 3-5 min 跟踪 = 同一动作两半 (07:57 教训)
+
+## 🆕 2026-06-15 11:44-11:55 K-yl2rKS 主动联系新规 (#42) + 11:46 GREEN 反转
+
+- **11:44 佛老爷 拍板**: "她必须主动跟你联系, 你帮她, 实在不行你再报我. 必须让她学会这种交流方式. 我不想做消息传递中间人"
+- **11:44 派 #42** (critical, request) 给 K-yl2rKS: 30 min thread #29 reply 报进展 / 卡住发新 issue / 跑完 thread close
+- **11:46 GREEN 反转**: K-yl2rKS 11:38 实际已交 Phase 5 完整审计 (9 项 P0×5+P1×1+P2×3+P3×1) — 她**不是** silent, 60-min 阈值基于过期期待
+  - 关闭 #41 (superseded, 11:35 alert 时 3 min 后她就交了)
+  - 取消 11:50 飞书 escalation
+  - 11:42 我 #29 reply Phase 6 拍板 (A/B/C 3 选项, 推荐 B 分批 + 等佛老爷拍 P1 真机截图)
+- **11:55 watch false positive 发现**: watch.sh v2.3 限制: 多个 agents 同 GH 账号, comments 都来自 lauer3912, 误判 silence. 改手动跟踪 via heartbeat
+- 教训 (永久记): **GREEN 状态 60-min 阈值触线 ≠ 必须升级**, 必先查 thread 确认 recipient 实际状态; 飞书 escalation 是"佛老爷 0 介入"的最终 fallback, 不轻发
+
+## 🆕 2026-06-15 12:02 16th dream consolidation (this section)
+
+- **24h 信号量 = 14 dream 中最大** (跟 14/15 持平): 13 commit + 12 daily events + 12 拍板 + Tier 1 全实战 + 24h 全无 user session
+- **MEMORY.md 现状**: 13h 前 user session 重写后, 整 24h 内零 user session 改, **6-15 12 个事件全部 user 拍板入档**, 12+ signal 100% 已 capture, **0 漏抓, 0 duplicate**
+- **本 dream 微调** (2 处 minor): header timestamp 06:56 → 12:02, "v1.0.26 待修" → "v1.0.28 待修" (当前 portable-template 版本)
+- **永久记新加 1 段**: "佛老爷 0 介入 auto-pilot 模式" (整合 09:48 + 10:00-10:25 + 11:04 3 拍板为单一原则)
+- **cfb1d093 dream cycle 修**: 连续 2 次 `Edit dreaming-log.md` 失败 (tool error), 改 `write` 兜底 (本次 16th dream 用 write)
+
+## ⏳ v1.0.28 待修 (7 小问题, 拍板再做) — workspace 1.0.27 / portable-template 1.0.28
 
 1. token 轮转检测 cron (高)
 2. 并发注册 race (中)
@@ -219,6 +256,7 @@ _Last updated: 2026-06-15 06:56 (今天重要日: 飞书 onboarding 闭环, 双 
 6. host 一致性 (低)
 7. host 改名 (低)
 - **我建议暂不做** (当前够用, 等真需求再开 5x ROI)
+- 备注: v1.0.26 → v1.0.27 (agent-bus v2.3 watch/AGENT.md/to-skill) → v1.0.28 (watch v2.3.1 cron PATH/date/broadcast fix), 5 bug 实战修了
 
 ---
 

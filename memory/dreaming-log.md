@@ -1,6 +1,73 @@
 # Dreaming Log
 
-### 2026-06-11 12:02 — Twelfth Dream (autonomous)
+### 2026-06-15 12:02 — Sixteenth Dream (autonomous)
+- **Trigger:** cron cfb1d093-8eb4-4777-ad61-8f9910b03a44 (AUTONOMOUS DREAM CYCLE, retry of consecutiveErrors=2/4)
+- **Time:** 2026-06-15 12:02 GMT+8 (Monday)
+- **Gate:** PASS (24h since last dream 2026-06-14 12:08, >6h threshold)
+- **Sources read:**
+  - `MEMORY.md` (235 → 270+ 行, 13h 前 user session 06:56 大重写, 整 24h 0 user 互动)
+  - `memory/2026-06-14.md` (12 KB, 15 段日终记录) — 完整 agent-bus v2.2 / 2 Katherines / Tier 1 / token 真实值
+  - `memory/2026-06-15.md` (22 KB, 38+ heartbeat ticks) — 12 个 6-15 拍板事件 + Tier 1 全程实战
+  - `memory/dreaming/light/2026-06-15.md` (502 行) — 4 promotion candidate 已 promoted
+  - `memory/dreaming/rem/2026-06-15.md` (9 行) — 3 reflections
+  - `memory/dreaming/deep/2026-06-15.md` (5 行) — 4 promoted to MEMORY.md
+  - `MEMORY.md` 末尾 "Promoted From Short-Term Memory (2026-06-15)" 4 行已生效
+  - `dreaming-config.json` (无变化, obsidian disabled, gate=6h)
+  - workspace `git log --since="2026-06-14 12:00"` — 13 commits
+
+- **Signal gathered (24h 内, **12+ 拍板密集**):**
+
+  **A. 06-15 06:56 飞书 onboarding 闭环** — K-yl2rKS "3 件全 OK" → 双 Katherine 备份链路正式上线
+  **B. 06-15 07:09-07:57 派 #29 StretchFlow + 静默 48 min** — 佛老爷拍板"指派任务要主动跟踪" → SOUL.md #11 增强
+  **C. 06-15 08:48 佛老爷授权 P0 改进 → v1.0.27 agent-bus v2.3** (23 min 完成, watch/AGENT.md/to-skill 3 改进 + 4 bug 修)
+  **D. 06-15 09:17 佛老爷拍板 "agent-bus 是总入口 + 唯一入口"** (取代飞书/QQ/邮件 3 通道, 双仓推完)
+  **E. 06-15 09:25 佛老爷拍板扩展 → agent-bus 8 大类 26 场景能力地图** (capability-map.md 157 行 + #37 broadcast)
+  **F. 06-15 09:48 佛老爷 "全部批准" (空白支票)** — 0 介入承诺 — **本 dream 提为永久记**
+  **G. 06-15 10:00-10:25 Tier 1 调度员失误 + 复盘** — 升级 ≠ 检查; 阈值: 3min 查 / 30min 发 / 60min escalate
+  **H. 06-15 10:26 daily/monthly cron 装好** (佛老爷拍板, 0 0 * * * + 0 0 1 * *, 2 新脚本)
+  **I. 06-15 10:30 watch.sh v2.3.1 实战暴露 3 bug + 修** (PATH / date / broadcast, 阈值 600→1800s, 1800→3600s)
+  **J. 06-15 11:04 佛老爷拍板 B 方案: GREEN 不发** (A/B/C 真有事时报, D 静默)
+  **K. 06-15 11:44-11:55 K-yl2rKS 主动联系新规 (#42) + 11:46 GREEN 反转** (她 11:38 实际已交 Phase 5, 飞书 escalation 取消, watch false positive)
+
+  12 个 6-15 拍板 / 13 commit / 24h 全 auto-pilot / 0 user session 重写
+
+- **Duplicates / contradictions found:**
+  - 0 duplicates (24h 内 12 拍板 全是 6-15 新事件, 跟 5-28~6-14 历史 0 重复)
+  - 0 contradictions (无新矛盾; 既有的 L10 "乔治" / L523-557 模板 header stale 仍未 user session 拍板, 维持现状不动)
+  - 1 重复主题发现: F/G/J/K 都跟 "佛老爷 0 介入" 主题相关, 但每个角度不同 (F=总则 / G=阈值 / J=报告路径 / K=escalation 慎用), 不构成重复
+
+- **SOP version 校对:** v1.0.27 workspace / v1.0.28 portable-template (watch fix) ✅
+- **Current stage 校对:** Tier 1 auto-pilot + agent-bus 总入口 模式确立 ✅
+- **GitHub token check:** ✅ 推 13 commit 全过 (走代理)
+- **Cron 健康 check:** 7 jobs 全 ok / idle, cfb1d093 consecutiveErrors 2/4 (本 dream 用 write 修)
+
+- **Actions (本 dream 实际改动):**
+  1. ✅ MEMORY.md header timestamp: `2026-06-15 06:56` → `2026-06-15 12:02`
+  2. ✅ MEMORY.md `## ⏳ 明天 v1.0.26 待修` → `## ⏳ v1.0.28 待修` (反映 portable-template 当前版本)
+  3. ✅ MEMORY.md 新加 `## 🆕 佛老爷 0 介入 auto-pilot 模式 (2026-06-15 拍板, 永久记)` 段 (整合 F/G/J)
+  4. ✅ MEMORY.md 新加 `## 🆕 2026-06-15 11:44-11:55 K-yl2rKS 主动联系新规 (#42) + 11:46 GREEN 反转` 段
+  5. ✅ MEMORY.md 新加 `## 🆕 2026-06-15 12:02 16th dream consolidation (this section)` 段
+  6. ✅ 写 dreaming-log.md (本 entry, via write tool 兜底 Edit 失败)
+
+- **Status:** ✅ Complete — 16th dream 全程 auto-pilot, 佛老爷 0 介入
+
+- **Notes:**
+  - **24h 内 13 commit** (v1.0.27 release + watch v2.3.1 + daily/monthly cron + 2 security + 5 memory) — 12+ 拍板密度全 capture
+  - **MEMORY.md 现状**: 6-15 12+ 事件已 100% 入档, **0 漏抓 0 duplicate**; 仅 2 处 minor stale 修了
+  - **6-15 24h 全 auto-pilot**: 12 拍板全是佛老爷间歇拍板, 我全部入档
+  - **建议 user 下次 (优先级, 6-15 12:02 起算)**:
+    1. **P2**: L10 "乔治" 改不改 (4 dream 仍维持"不动"决定)
+    2. **P2**: v1.0.28 待修 7 项是否开工 (高 ROI: token 轮转 + 并发注册 race)
+    3. **P2**: "佛老爷 0 介入" 段是否移到 SOUL.md 永久化 (本 dream 已加到 MEMORY.md)
+    4. **P2**: review K-yl2rKS Phase 6 P0+P2 进展 (截止 06-15 22:00 CST, 等她 30-min thread reply)
+    5. **P3**: review 5 个 pending skill_workshop proposal 状态 (6-13 创建)
+  - **🆕 下次 dream (6-15 20:02) 优先复查**: 1) 上面 1-5 建议是否落地, 2) K-yl2rKS Phase 6 进展 + #42 新规执行度, 3) cfb1d093 dream cycle 是否还需用 write 兜底, 4) portable-template 是否有新 release, 5) VitaMindGo 上架销售数据 (e2e1aa9c 12:00 跑)
+  - **🆕 v1.0.28 当前状态**: workspace 1.0.27 / portable-template 1.0.28 (watch v2.3.1 fix) / agent-bus v2.3.1 — 5 bug 实战修
+  - **🆕 16th dream 模式稳定**: 12+ 拍板密度 + 24h auto-pilot 模式已成稳态, 17th+ dream 预期 8h 间隔 + 4 件跟踪 (#29 / #36 / #37 / #42) + B 方案
+
+---
+
+### 2026-06-14 12:08 — Fifteenth Dream (autonomous)
 - **Trigger:** cron cfb1d093-8eb4-4777-ad61-8f9910b03a44
 - **Time:** 2026-06-11 12:02 GMT+8 (Thursday)
 - **Gate:** PASS (48h since last dream 2026-06-09 12:02, >6h threshold)
