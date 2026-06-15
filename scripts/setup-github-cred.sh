@@ -4,7 +4,7 @@
 # ========================================
 # 用法 (3 选 1):
 #   GITHUB_TOKEN="$GITHUB_TOKEN" bash setup-github-cred.sh   # 从 env (推荐 CI/自动化, 从 env GITHUB_TOKEN 设的真实值)
-#   bash setup-github-cred.sh $YOUR_GITHUB_PAT                  # 从第 1 个位置参数 (实参 = 真实 GitHub PAT)
+#   bash setup-github-cred.sh "$GITHUB_TOKEN"  # 实参 = 真实 GitHub PAT (从 \$1 或 env 读)                  # 从第 1 个位置参数 (实参 = 真实 GitHub PAT)
 #   bash setup-github-cred.sh                          # 交互式 prompt
 #
 # 前置:
