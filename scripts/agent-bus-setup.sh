@@ -208,10 +208,12 @@ log "watch dir: $WATCH_DIR (v2.3)"
 # ============================================================
 # Cron
 # ============================================================
-INSTALL_CRON="n"
+INSTALL_CRON=""
 if crontab -l 2>/dev/null | grep -q "agent-bus-poll.sh"; then
   log "poll cron already installed"
 else
+  # 23:16 bug fix: 默认 "" (空), 让 ${INSTALL_CRON:-Y} 真生效默认 Y
+  # 之前是 "n" 初始赋值, 让 default Y 失效, 是 cron 漏装根因之一
   read -rp "Install 5-min poll cron? [Y/n]: " INSTALL_CRON
   INSTALL_CRON="${INSTALL_CRON:-Y}"
   if [[ "$INSTALL_CRON" =~ ^[Yy]$ ]]; then
@@ -236,6 +238,22 @@ if [[ -f "$WATCH_SH" ]]; then
       log "watch cron installed: $CRON_LINE"
     else
       warn "watch cron NOT installed. Run manually: $WATCH_SH"
+    fi
+  fi
+fi
+
+# v2.3.1: Install cron 守护 (30-min) for auto-补装
+GUARD_SH="$SCRIPT_DIR/check-cron-installed.sh"
+if [[ -f "$GUARD_SH" ]]; then
+  if crontab -l 2>/dev/null | grep -q "check-cron-installed.sh"; then
+    log "cron 守护 (check-cron-installed) already installed"
+  else
+    read -rp "Install 30-min cron 守护 (auto-补装 poll/watch cron)? [Y/n]: " INSTALL_GUARD
+    INSTALL_GUARD="${INSTALL_GUARD:-Y}"
+    if [[ "$INSTALL_GUARD" =~ ^[Yy]$ ]]; then
+      CRON_LINE="*/30 * * * * $GUARD_SH >> $HOME/.local/share/agent-bus/cron-guard.log 2>&1"
+      (crontab -l 2>/dev/null; echo "$CRON_LINE") | crontab -
+      log "cron 守护 installed: $CRON_LINE"
     fi
   fi
 fi

@@ -1,9 +1,0 @@
-# REM Sleep
-
-### Reflections
-- No strong patterns surfaced.
-
-### Possible Lasting Truths
-- 🐛 7-day Cron Bug 复盘: **症状**: 8:00 早报 + Dreaming (8h cycle) 两个 cron job **静默失败** [confidence=0.58 evidence=memory/2026-06-06.md:23-23]
-- 🐛 7-day Cron Bug 复盘: 模型 `minimax/MiniMax-M2.7` 已从 `agents.defaults.models allowlist` 中被剔除; allowlist 当前只允许 `[minimax/MiniMax-M3]`; 两个 cron job 创建时间早于模型白名单更新, **从未被自动迁移**; 错误信息 (dreaming job): `cron payload.model 'minimax/MiniMax-M2.7' rejected by agents.defaults.models allowlist [confidence=0.58 evidence=memory/2026-06-06.md:26-29]
-- 🐛 7-day Cron Bug 复盘: 用 `cron` 工具 patch payload.model → `minimax/MiniMax-M3`; 同步加 `thinking: medium`; 验证: `openclaw cron get` 返回 `payload.model = minimax/MiniMax-M3` [confidence=0.58 evidence=memory/2026-06-06.md:33-35]

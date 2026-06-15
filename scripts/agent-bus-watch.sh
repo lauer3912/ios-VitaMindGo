@@ -41,7 +41,10 @@ if [[ -f "$CONFIG_DIR/gh-token" ]]; then
   source "$CONFIG_DIR/gh-token"
   export GH_TOKEN
 fi
-gh auth status >/dev/null 2>&1 || { echo "✗ gh not authenticated (set GH_TOKEN in $CONFIG_DIR/gh-token)" >&2; exit 1; }
+# v2.3.4: Use gh api /user instead of gh auth status — gh auth status fails in cron env
+# when gh has stale config entries or keychain tokens (exit code 1 despite GH_TOKEN being valid)
+# gh api /user makes a real API call using only GH_TOKEN env var, bypassing config/keychain issues
+gh api /user --jq .login >/dev/null 2>&1 || { echo "✗ gh API auth failed (check GH_TOKEN in $CONFIG_DIR/gh-token)" >&2; exit 1; }
 
 [[ -d "$WATCH_DIR" ]] || { echo "[$(date -u +%Y-%m-%dT%H:%M:%SZ)] agent-bus-watch: no watch dir yet (no issues watched)"; exit 0; }
 

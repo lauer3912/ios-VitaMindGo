@@ -196,6 +196,9 @@ SCRIPT_FILES=(
   "agent-bus-poll.sh"
   "agent-bus-watch.sh"
   "agent-bus-test.sh"
+  "check-fake-values.sh"
+  "check-cron-installed.sh"
+  "check-placeholders.sh"
   "distribute-sop.sh"
 )
 

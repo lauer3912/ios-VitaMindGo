@@ -23,7 +23,7 @@ block_threshold:
   url_404: warn_only
 comm_style: <concise_only | detailed_with_examples | show_code_blocks>
 current_app: <VitaMindGo | other>
-ios_team_id: <9L6N2ZF26B | your_team_id>
+ios_team_id: 9L6N2ZF26B
 github_user: <lauer3912 | your_username>
 bundle_id_prefix: <com.ggsheng. | your.prefix.>
 ```

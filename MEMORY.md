@@ -519,3 +519,63 @@ xcrun altool --upload-app -f <export_dir>/*.ipa -t ios \
 
 **Katherine-yl2rKS 必学**: 拉新代码 + install pre-commit + 0:00/12:00 自查
 **future Agent 入职**: onboarding 包含 5 层防护 + 6 铁律 (per #20 + #21 + 18:50)
+
+## 🆕 2026-06-15 22:47 cron 修复: 根本问题 1 已修 (Katherine-yl2rKS #79 Q1)
+
+**佛老爷 22:45 cron 触发 (agent-bus-poll-watch)**: 修根本问题 1 (K-yl2rKS 22:34 报 3 问题 #79)
+
+### 根本问题 1: 我没装 cron 跑 agent-bus-poll.sh + agent-bus-watch.sh
+
+**症状**:
+- 我 (Katherine-E2wa1m) crontab **完全空** (`crontab -l` 0 lines)
+- agent-bus-poll.sh / agent-bus-watch.sh 0 自动 tick
+- AGENT.md last_seen 卡死 13h 前 (Katherine-yl2rKS 22:19 通过 last_seen 误判我离线)
+- Katherine-yl2rKS 22:34 改用 `seen-by:AGENT_ID` 标签判断 (正确做法, 修复她的误判)
+
+**承认 + 修复 (22:47 CST 刚刚)**:
+```
+$ crontab -l
+*/5 * * * * /Users/user291981/.openclaw/workspace/scripts/agent-bus-poll.sh >> /Users/user291981/.local/share/agent-bus/poll.log 2>&1
+*/3 * * * * /Users/user291981/.openclaw/workspace/scripts/agent-bus-watch.sh >> /Users/user291981/.local/share/agent-bus/watch.log 2>&1
+```
+
+**手动验证 (22:47 CST)**:
+- ✅ poll.sh → found 12 open issues for K-E2wa1m, new=0 skipped=12
+- ✅ watch.sh → 检测到 #76 已 1206s silent (K-yl2rKS 未回, 等她 ack)
+- ✅ cron daemon 跑中 (`/usr/sbin/cron` PID 43495)
+- ✅ AGENT.md last_seen 更新到 `2026-06-15T14:47:27Z` (22:47:27 CST)
+- ✅ next 自动 tick: 22:48 watch + 22:50 poll
+
+**问题根因 (教训永久)**:
+1. 之前 `agent-bus-setup.sh` 跑时 (06-14 09:03) 我**没**装 cron (当时回答 "n" 或 skipped)
+2. v2.3 加了 watch.sh cron (06-15 08:48 P0 改进), 我**仍**没装 (setup 改版时机会错过)
+3. 5 层防护 #1 `check-placeholders.sh` 只查文档/脚本/凭证, **不**查 crontab (gap)
+4. setup.sh 有 prompt "Install 5-min poll cron? [Y/n]" 但我**没**默认 Y (未来改默认 Y)
+
+**修复 (本回合)**:
+- ✅ 装 cron (22:47 CST)
+- ✅ 手动跑 1 次验证
+- ✅ Reply #79 跟 Katherine-yl2rKS 确认 (https://github.com/lauer3912/agent-bus/issues/79#issuecomment-4709149744)
+
+### 根本问题 2 + 3 答复 (同 #79 reply)
+
+**Q2 (10 min 噪音)**: ack-only 模式, idle 不发新 issue, 改短 1 行, 静默 30 min 才再发
+
+**Q3 (StretchFlow altool)**: 不是卡死, 16:17 CST **已 UPLOAD SUCCEEDED**:
+- API key path (不是 keychain): `xcrun altool --upload-app -f ~/Desktop/build/StretchGoGo-export-v3/StretchGoGo.ipa -t ios --apiKey *** --apiIssuer b2a00f88-3a8d-40d0-b148-1f1db92e10b7`
+- Delivery UUID: `be028c64-eb2d-454c-92fd-15d8f08a58f7`
+- 现在等佛老爷 1 min Submit action
+
+### Lessons (永久)
+
+- ❌ **漏装 cron** 是 setup.sh prompt 没默认 Y 导致的 → 改 setup.sh 默认 Y
+- ❌ **5 层防护没覆盖 crontab** → 加 `scripts/check-cron-installed.sh` (本回合未做, 下回合 todo)
+- ❌ **K-yl2rKS 用 last_seen 误判** 反映我没及时更新 last_seen → 装 cron 后会自动更新
+- ✅ 6 铁律 #1 跑完立刻存 (本回合: cron 内容 + 修复时间 + commit URL 存 MEMORY.md) ✓
+
+### 立即 todo (下回合做)
+
+1. 改 `agent-bus-setup.sh` cron prompt 默认 Y (不交互)
+2. 加 `scripts/check-cron-installed.sh` (5 层防护 #6, 查 crontab -l 必含 poll.sh + watch.sh)
+3. 加 cron `*/3 * * * *` 跑 `check-cron-installed.sh` (守护 cron)
+4. send training broadcast `to:All` 教 K-yl2rKS + future agents 必装 cron

@@ -1,9 +1,0 @@
-# REM Sleep
-
-### Reflections
-- No strong patterns surfaced.
-
-### Possible Lasting Truths
-- 18:30 Build 10 上传: Apple 1.4.1 Citation System v2 修复: **⏸️ 等**: 用户登 ASC 选 build 10 + Submit + Apple 重审 [confidence=0.58 evidence=memory/2026-06-09.md:33-33]
-- 18:30 Build 10 上传: Apple 1.4.1 Citation System v2 修复: **触发**: 用户 18:08 报 build 9 被拒 (Guideline 1.4.1 升级要求 citations)。 **根因 2 处**: [confidence=0.58 evidence=memory/2026-06-09.md:5-6]
-- 18:30 Build 10 上传: Apple 1.4.1 Citation System v2 修复: AIProvider.swift: Citation struct + AIResponse wrapper + HealthSourceCatalog (9 域名白名单) + parseCitations 解析器 (3 种 header + inline fallback) + sendMessage 返回 AIResponse; system prompt: CITATIONS 提到 #1, "### Sources" 结构化 header 强 [confidence=0.58 evidence=memory/2026-06-09.md:11-14]

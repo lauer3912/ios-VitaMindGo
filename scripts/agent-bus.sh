@@ -41,7 +41,15 @@ require_config() {
 
 require_gh() {
   command -v gh >/dev/null 2>&1 || die "gh CLI not installed. Install: brew install gh / apt install gh"
-  gh auth status >/dev/null 2>&1 || die "gh not authenticated. Run: echo $GITHUB_TOKEN | gh auth login --with-token  # 你的真实 GitHub PAT 从 env GITHUB_TOKEN 读"
+  # v2.3.4: Source gh-token first (for cron env where GH_TOKEN may not be in shell env)
+  if [[ -f "$CONFIG_DIR/gh-token" ]]; then
+    # shellcheck source=/dev/null
+    source "$CONFIG_DIR/gh-token"
+    export GH_TOKEN
+  fi
+  # Use gh api /user instead of gh auth status — gh auth status fails when
+  # gh config has stale entries or keychain tokens (exit code 1 despite valid GH_TOKEN)
+  gh api /user --jq .login >/dev/null 2>&1 || die "gh API auth failed. Check GH_TOKEN in $CONFIG_DIR/gh-token"
 }
 
 require_repo() {
@@ -754,7 +762,7 @@ cmd_test() {
   local pass=0 fail=0
   step() { local name="$1"; shift; if "$@"; then echo "  ✓ $name"; pass=$((pass+1)); else echo "  ✗ $name"; fail=$((fail+1)); fi; }
 
-  step "gh auth works" bash -c "gh auth status >/dev/null 2>&1"
+  step "gh auth works" bash -c "source $CONFIG_DIR/gh-token 2>/dev/null; export GH_TOKEN; gh api /user --jq .login >/dev/null 2>&1"
   step "repo $REPO accessible" bash -c "gh repo view $REPO >/dev/null 2>&1"
   step "config has AGENT_ID" bash -c "[[ -n '$AGENT_ID' ]]"
 

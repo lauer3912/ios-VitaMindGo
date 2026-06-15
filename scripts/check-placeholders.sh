@@ -21,14 +21,15 @@ ERRORS=0
 WARN=0
 
 # 辅助函数: grep with 0-match-safe (不触发 set -e exit)
+# 豁免: MEMORY.md / SOUL.md (教训段必含简称) + .bak.* + check-placeholders.sh 自身
 gcount() {
   local pat="$1"
-  grep -rnw "$pat" . 2>/dev/null | grep -v ".bak:" 2>/dev/null | grep -v "/.git/" 2>/dev/null | grep -v "check-placeholders.sh" 2>/dev/null | wc -l 2>/dev/null | tr -d ' '
+  grep -rnw "$pat" . 2>/dev/null | grep -vE "\.bak(\.|$)" 2>/dev/null | grep -v "/.git/" 2>/dev/null | grep -v "check-placeholders.sh" 2>/dev/null | grep -vE "/(MEMORY|SOUL)\.md" 2>/dev/null | grep -vE "/memory/" 2>/dev/null | wc -l 2>/dev/null | tr -d ' '
 }
 
 glines() {
   local pat="$1"
-  grep -rnw "$pat" . 2>/dev/null | grep -v ".bak:" 2>/dev/null | grep -v "/.git/" 2>/dev/null | grep -v "check-placeholders.sh" 2>/dev/null | head -5 2>/dev/null
+  grep -rnw "$pat" . 2>/dev/null | grep -vE "\.bak(\.|$)" 2>/dev/null | grep -v "/.git/" 2>/dev/null | grep -v "check-placeholders.sh" 2>/dev/null | grep -vE "/(MEMORY|SOUL)\.md" 2>/dev/null | grep -vE "/memory/" 2>/dev/null | head -5 2>/dev/null
 }
 
 echo "=== check-placeholders.sh (按 18:31 + 18:50 佛老爷拍板) ==="

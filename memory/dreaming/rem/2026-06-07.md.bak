@@ -1,9 +1,0 @@
-# REM Sleep
-
-### Reflections
-- No strong patterns surfaced.
-
-### Possible Lasting Truths
-- 🎯 今日核心成果: **把老爷 Mac 上的 iOS App 工作流, 完整复制到任意 Ubuntu 服务器上的 OpenClaw 智能体**。 [confidence=0.58 evidence=memory/2026-06-05.md:5-5]
-- 🏗️ 工程方案 (3 层设备): ✅ "最小知识原则" — Agent 不知道穿透实现, 只看到 `macmini` alias [confidence=0.58 evidence=memory/2026-06-05.md:40-40]
-- 🏗️ 工程方案 (3 层设备): ✅ GitHub Actions 只跑 build + test (不 archive / 不签名 / 不上传); ✅ 公开仓库 (`ios-VitaMindGo`) → 无限免费; ✅ Mac mini 端是**唯一**做 archive 的地方; ✅ flock 互斥防止多 Ubuntu 同时 archive [confidence=0.58 evidence=memory/2026-06-05.md:36-39]

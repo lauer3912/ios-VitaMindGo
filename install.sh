@@ -213,7 +213,7 @@ field_limits:
 daily_report_time: <08:00 | custom:09:30>
 comm_style: <concise_only | detailed_with_examples | show_code_blocks>
 current_app: <AppName | other>
-ios_team_id: <your_team_id>
+ios_team_id: 9L6N2ZF26B
 github_user: <your_username>
 bundle_id_prefix: <com.example. | your.prefix.>
 ```

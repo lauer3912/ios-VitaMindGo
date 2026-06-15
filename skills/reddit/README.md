@@ -37,10 +37,11 @@ node scripts/reddit.mjs search all "breaking news"
 Add these to your shell profile or Clawdbot's environment:
 
 ```bash
-export REDDIT_CLIENT_ID="your_client_id"
-export REDDIT_CLIENT_SECRET="your_client_secret"
-export REDDIT_USERNAME="your_reddit_username"
-export REDDIT_PASSWORD="your_reddit_password"
+# ⚠️ 占位符: 用户从 https://www.reddit.com/prefs/apps 拿 (per SOUL.md #15)
+export REDDIT_CLIENT_ID="<your_reddit_client_id: 从 https://www.reddit.com/prefs/apps 拿>"
+export REDDIT_CLIENT_SECRET="<your_reddit_client_secret: 同上>"
+export REDDIT_USERNAME="<your_reddit_username>"
+export REDDIT_PASSWORD="<your_reddit_password>"
 ```
 
 ### 3. Authorize (One Time)

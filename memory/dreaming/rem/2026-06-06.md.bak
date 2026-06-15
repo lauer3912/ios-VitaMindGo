@@ -1,9 +1,0 @@
-# REM Sleep
-
-### Reflections
-- No strong patterns surfaced.
-
-### Possible Lasting Truths
-- **关键 Bug 修复**: UNUserNotificationCenterDelegate: 模拟器 simctl push 通知**前台不显示 banner** (iOS 标准行为); 必须实现 `willPresent(_:withCompletionHandler:)` 返回 `[.banner, .sound, .badge]`; 修了"开发时用 simctl push 测得通、真机却看不到 banner"的经典坑; **副作用好处**: 真实用户点 "Send Test Notification" 按钮也能看到 banner, 不会以为功能 [confidence=0.58 evidence=memory/2026-06-03.md:36-39]
-- ✅ 验证结果: | UI tests | 10/10 ✅ (含 NotifDemoTests) | | **总测试** | **29/29 ✅** | | Git | 2 个 commit 推 main: `69f8626` + `af40a59` | | 模拟器演示 | ✅ 弹窗 → Allow → Settings → banner 全流程 | [confidence=0.58 evidence=memory/2026-06-03.md:53-56]
-- ✅ 验证结果: | 项目 | 结果 | |---|---| | Build (iPhone simulator) | ✅ BUILD SUCCEEDED | | Unit tests | 19/19 ✅ | [confidence=0.58 evidence=memory/2026-06-03.md:49-52]
