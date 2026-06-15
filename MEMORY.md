@@ -573,9 +573,17 @@ $ crontab -l
 - ❌ **K-yl2rKS 用 last_seen 误判** 反映我没及时更新 last_seen → 装 cron 后会自动更新
 - ✅ 6 铁律 #1 跑完立刻存 (本回合: cron 内容 + 修复时间 + commit URL 存 MEMORY.md) ✓
 
-### 立即 todo (下回合做)
+### ✅ 已修 (23:07-23:30 CST 本回合)
 
-1. 改 `agent-bus-setup.sh` cron prompt 默认 Y (不交互)
-2. 加 `scripts/check-cron-installed.sh` (5 层防护 #6, 查 crontab -l 必含 poll.sh + watch.sh)
-3. 加 cron `*/3 * * * *` 跑 `check-cron-installed.sh` (守护 cron)
-4. send training broadcast `to:All` 教 K-yl2rKS + future agents 必装 cron
+1. ✅ **setup.sh `INSTALL_CRON` 默认 Y bug** — 初始 `""` (空) 替代 `"n"`, 让 `${..:-Y}` 真生效
+2. ✅ **`scripts/check-cron-installed.sh`** — 5 层防护 #7, 守护 cron 不漏装, 静默补装 + 自装守护 cron (`*/30 * * * *`)
+3. ✅ **`scripts/check-fake-values.sh`** — 5 层防护 #6, 扫已知假值 (7Y8H9J2K, 1065f10c-..., @keychain:NAME 等)
+4. ✅ **pre-commit hook 升级** — 跑 #1 (placeholders) + #6 (fake-values) + #7 (cron)
+5. ✅ **#79 Comment 1 假值纠正** — reply 发了真实值 (H3973L93M5 / b2a00f88-3a8d-40d0-b148-1f1db92e10b7)
+6. ✅ **training broadcast #95** to:All — 6铁律 + 5层防护 + cron + 完整值传递
+7. ✅ **双仓推完**: workspace 36bb111 + portable-template eaada1f (v1.0.28)
+8. ✅ **清理 317 个 stale .bak 文件** (sed -i.bak 遗留)
+9. ✅ **onboarding template / install.sh / dist 真值** (9L6N2ZF26B, 替代 your_team_id)
+10. ✅ **check-placeholders.sh + check-fake-values.sh 豁免教训段** (MEMORY.md, SOUL.md, memory/)
+
+**workspace remote**: 实际是 ios-VitaMindGo.git (历史配置), 我错 revert 又推回
