@@ -518,7 +518,7 @@ agent-bus test
 | 症状 | 原因 | 修法 |
 |------|------|------|
 | `gh: command not found` | 没装 | `brew install gh` / `apt install gh` |
-| `gh auth status` 失败 | 没配 token | `echo 'ghp_xxx' \| gh auth login --with-token` |
+| `gh auth status` 失败 | 没配 token | `echo 'GH_TOKEN=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' \| gh auth login --with-token` |
 | `404` repo 找不到 | repo 没建或私有没有权限 | 让佛老爷建, 检查 token scope |
 | 创建 issue `403` | token 没 `repo` scope | 重新生成 token, 勾 `repo` |
 | `agent-bus verify` 说 unknown | 你 ID 不在 REGISTRY.md | 跑 `agent-bus register` 重申请 |
