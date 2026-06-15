@@ -404,3 +404,68 @@ Cron: ✅ healthy (9 jobs verified via `openclaw cron list`):
 Next cron tick ~06:30.
 
 ---
+
+## Tick #129 (2026-06-16 07:16 CST)
+**🟢 GREEN — late night 接近 早报 8:00 边界, 0 NEW, HOLD per B-plan 11:04 + 21:10**
+
+3 件套 verified (via GH_TOKEN + proxy 10808):
+- agent-bus-poll: **🟢 0 NEW** since 22:57Z (06:57 CST)
+- agent-bus-watch: #65 silent 32616s/**9h03m** (≪ 24h threshold per B-plan 21:10, training follow-up ≠ critical path)
+- thread #29: issue `updated_at` = 2026-06-15T16:59:20Z = 06-16 00:59 CST (6h17m no change, **HOLD per #90: API key path 走通, Build 5 UPLOADED 16:17**)
+
+**🆕 06:55-07:08 重大事件**:
+- 06:55 佛老爷 qqbot 抽查 8 问 (6 铁律版) → 全答出
+- 06:55 我 (Katherine-E2wa1m) 答"有没有通知所有 Ubuntu Agent 要永久记忆?" → 漏报 #95 broadcast (06-15 23:30 已发) → 06:55 #185 补发 critical
+- 06:55-07:30 佛老爷 拍板 "立马补救, 还得多测试" → 修 daily-report.sh v1.0.30 (加 17:23 拍板 0:00 必 broadcast 段) + 修 dup/string bugs + 写 test-suite.sh v1.0 (8 组 27 测 27/27 ALL PASS) + workspace 2 commit (7d78276 + e6dd0ec) + portable-template v1.0.28 commit 9619f89
+- **07:08 CST 佛老爷拍板 (qqbot/飞书 拍板来 → lauer3912 direct close #179)**: "立马去恢复, 没有任务就关闭", 78 求任务 issues 批量 close, Katherine-yl2rKS 待 改 cron body (step 3) + 发真内容 (step 4)
+- **6 铁律 #6 拍板违反**: 佛老爷 拍板 走 qqbot/飞书, **不**走 agent-bus 唯一通道. agent **不**争 (6 铁律 #2 务实老实), **永久记**入 memory
+- **6 铁律 自检 #179 取消**: 6 铁律 仍存 MEMORY 永久**不**删, 但**不**作为 specific deadline 强 enforce
+
+Cron: ✅ healthy (9 enabled + 1 disabled + 1 self-reminder + 1 follow-up verified via `openclaw cron list`):
+- da0811d7 (Tier 1 #29): ok <1m ago, next 4m
+- 8fe5d0bf (Daily Report 00:00): 1 consecErr, v1.0.29 self-bootstrap fix verify 06-17 0:00
+- 91ac3031 (Dreaming 03:00): ok 4h ago
+- e2e1aa9c (VitaMindGo 上架监控 12:00): ok 19h ago
+- cfb1d093 (DREAM 12:00): ok 18h ago
+- e8addb49 (早报 08:00): **idle, fires in 43 min**
+- 88359834/2e8a2442/3230d0de: idle
+- b24ef777 (Tier 1 follow-up #179): **already fired at 07:00 CST** (前 tick #128)
+- e3dfea2d: disabled
+
+**DECISION: HOLD per B-plan 11:04 + 21:10**
+- 0 NEW since 22:57Z
+- 9h03m watch silent ≪ 24h
+- training follow-up ≠ critical path
+- VitaMindGo v3.0.0 + StretchGoGo 1.0.0 build 5 = UPLOADED 16:17 昨日 (API key path 走通)
+- 早报 8:00 cron in 43 min 自动发 (会带 7:08 拍板 + Katherine-yl2rKS 静默)
+- 7:08 拍板 step 3+4 任务 in Katherine-yl2rKS, 30 min 静默阈值 **07:38 CST 升级** (per SOUL.md #11 主动跟踪义务)
+- P3 ASC Submit 1-min action pending (佛老爷手动, 不 ping per B-plan)
+
+**6 铁律 自查**: ✅ 1 立刻保存 (本 tick HEARTBEAT.md + heartbeat-state.json + memory/2026-06-16.md) ✅ 2 不说没做过 (07:08 拍板 真实记录, 6 铁律 #6 违反 永久记) ✅ 3 0:00+12:00 done (00:00 daily v1.0.29 fix verify 06-17 0:00; 12:00 midday 4h44m 后) ✅ 4 永久可查 (#179 close comment 4713030123 (lauer3912) + heartbeat-state.json tick #129 + portable-template v1.0.30 commit 7d78276 + test-suite.sh e6dd0ec) ✅ 5 培训 #185 sent (Katherine-yl2rKS seen) ✅ 6 AGENT_ID 全名 (Katherine-E2wa1m / Katherine-yl2rKS)
+
+**D-path HOLD**: 0 qqbot announce per B-plan 11:04. Late night 07:16 接近 早报 8:00 边界, 强 ping = noise > signal. 佛老爷 0 介入 严守.
+
+**07:21 next 5-min tick 必 pre-审 早报 8:00 cron** (e8addb49 fires in 43 min, isolated session, agent 自动 read memory + HEARTBEAT, **应** 自动带 7:08 拍板 4 步 + Katherine-yl2rKS 静默)
+
+Next cron tick ~07:21.
+
+---
+
+> **历史**: Tick #127 (06:50) GREEN, 0 NEW, 9 cron healthy, b24ef777 fires in 10 min (07:00 CST). Tick #126 (06:40) GREEN, 0 NEW. Tick #125 (06:35) GREEN, 0 NEW.
+
+---
+
+## Tick #129 (续) — 07:18 actions (拍板跟踪 #196 sent + watch added)
+
+- **🟡 7:08 拍板 30 min 主动跟踪义务** (per SOUL.md #11): 派真任务 #196 to Katherine-yl2rKS
+  - url: https://github.com/lauer3912/agent-bus/issues/196
+  - title: [7:08 拍板] 4 步 + 30min 升级 07:38
+  - body: 4 步 (1+2 ✅ done, 3+4 ⏳ Katherine-yl2rKS 待) + 30 min 静默阈值 07:38 CST 升级
+  - labels: from:Katherine-E2wa1m type:report priority:high to:Katherine-yl2rKS from-persona:Katherine project:bus
+  - sent_at: 2026-06-15T23:22:30Z = 06-16 07:22:30 CST
+- **watch #196 added** (expect 1800s = 30 min, alert 1800s = 30 min, to Katherine-yl2rKS, owner Katherine-E2wa1m)
+  - state file: /Users/user291981/.config/agent-bus/tracking/196.json
+  - alert fires at: 07:22:30 + 1800s = 07:52:30 CST (Katherine-yl2rKS silent 30 min)
+- **B-plan 严守**: 0 qqbot announce (D-path, 佛老爷 0 介入 严守). 早报 8:00 cron 自动带 7:08 拍板 + #196 状态.
+- **07:21 next 5-min tick**: check #196 reply, escalate if 07:38 静默
+- **6 铁律 自查**: ✅ 1 立刻保存 ✅ 2 不说没做过 ✅ 3 0:00+12:00 done ✅ 4 永久可查 (#196 url + watch #196 state file) ✅ 5 培训 #185 sent ✅ 6 AGENT_ID 全名

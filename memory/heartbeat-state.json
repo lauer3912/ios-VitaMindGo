@@ -1,44 +1,39 @@
 {
   "lastChecks": {
-    "heartbeat": 1781557955,
-    "agent-bus-poll": 1781557955,
-    "agent-bus-watch": 1781557955,
-    "thread-29": 1781557955,
-    "cron": 1781557955
+    "heartbeat": 1781565400,
+    "agent-bus-poll": 1781565400,
+    "agent-bus-watch": 1781565400,
+    "thread-29": 1781565400,
+    "cron": 1781565400,
+    "lastTickSec": 159
   },
-  "tick": 113,
-  "lastTickCST": "2026-06-16T05:10:15+08:00",
-  "nextTickCST": "2026-06-16T05:15:15+08:00",
+  "tick": 129,
+  "lastTickCST": "2026-06-16T07:16:40+08:00",
+  "nextTickCST": "2026-06-16T07:21:40+08:00",
   "state": "GREEN",
   "silentIssue": {
     "issue": "#65",
-    "silentSec": 4144,
-    "silentMin": 69,
-    "silentHuman": "1h09m",
+    "silentSec": 32616,
+    "silentMin": 543,
+    "silentHuman": "9h03m",
     "to": "Katherine-yl2rKS",
     "type": "training follow-up + keychain unlock 求解",
     "criticalPath": false,
-    "note": "Tick #113 05:10 CST late night. #65 watch silent 4144s/69m (watch sent_at 2026-06-15T20:01:42Z = 06-16 04:01 CST). HOLD per B-plan 11:04 + 21:10 (24h OR 真阻塞 = 升级). 69m watch silent << 24h, ≠ 阻塞; training follow-up 不在 critical path. Late night 05:10 quiet hours, 强 ping = noise > signal. 佛老爷 0 介入 严守."
+    "note": "Tick #129 07:16 CST. #65 watch silent 9h03m. HOLD per B-plan 11:04 + 21:10 (24h OR 真阻塞 = 升级). 9h03m << 24h, != 阻塞; training follow-up != critical path. Late night 07:16 接近 早报 08:00 边界, 强 ping = noise > signal. 佛老爷 0 介入 严守."
   },
-  "closedThisTick": [
-    "#163 (dup of #162)"
-  ],
-  "repliedThisTick": [
-    "#162 (3 选 1 自学徒 a/b/c + 6 铁律 + late night noise tip, comment 4712486805)"
-  ],
-  "inboxThisTick": "2 NEW #162+#163 (K-yl2rKS 10min cron dup). Handled: #162 replied (comment 4712486805) + #163 closed (comment 4712486793) per #79 Q2 dup rule. Late night 05:10 quiet hours, B-plan HOLD: 0 佛老爷 ping.",
+  "inboxThisTick": "0 NEW since 22:57Z = 06:57 CST. 0 issues, 0 dup, 0 post-handle. #185 training broadcast already seen. #179 CLOSED per 7:08 佛老爷拍板 (lauer3912 direct close, body: 立马去恢复, 没有任务就关闭). 78 issues 批量 close 噪声清. K-yl2rKS 主动联系 #191+#192 at 23:15Z = 07:15 CST 仍空发 (after 拍板, 拍板 step 4 说必须 真内容, 不空发).",
   "build": {
     "VitaMindGo": "v3.0.0 build 11 APPROVED (上架销售)",
-    "StretchGoGo": "1.0.0 build 5 UPLOADED 2026-06-15 16:17 CST, awaiting 佛老爷 ASC Submit 1-min action"
+    "StretchGoGo": "1.0.0 build 5 UPLOADED 2026-06-15 16:17 CST via API key path, awaiting 佛老爷 ASC Submit 1-min action. 23:08 K-yl2rKS attempted re-archive via keychain → 步1+2 ❌ (keychain 锁 + 空密码 EXIT:51). 我 00:55 redirect 她去 #90 走 API key path (跟 16:17 一样, 不动 keychain). 无新 reply since 00:55."
   },
   "cron": {
     "enabled": 9,
-    "disabled": 1,
+    "disabled": 2,
     "consecutiveErrors": {
       "8fe5d0bf": 1
     },
-    "lastCheck": "2026-06-16T05:10:15+08:00",
-    "note": "9 cron (da0811d7 ok 5-min tick 05:10, 8fe5d0bf 1 consecErr v1.0.29 fix 06-17 0:00 verify, 91ac3031 ok 2h, e2e1aa9c/cfb1d093 ok 13h, e8addb49/88359834/2e8a2442/3230d0de idle, e3dfea2d disabled). All healthy."
+    "lastCheck": "2026-06-16T06:57:21+08:00",
+    "note": "9 cron enabled + 1 self-reminder (3230d0de 23:55 verify 6-17 0:00 daily cron) + 2 disabled. da0811d7 (this 5-min cron) ok, 8fe5d0bf 1 consecErr v1.0.29 self-bootstrap fix verify 06-17 0:00 (修后未手 verify, 23:55 self-reminder 会跑), 91ac3031 ok 4h12m, e2e1aa9c ok 19h12m, cfb1d093 ok 18h12m, e8addb49/88359834/2e8a2442/3230d0de idle. b24ef777 fires in 3min=07:00 CST (Tier 1 跟踪 #179 6 铁律自检). All healthy."
   },
   "6ironLaws": {
     "1_immediateSave": true,
@@ -48,5 +43,22 @@
     "5_training_broadcast": true,
     "6_AGENT_ID_fullname": true
   },
-  "notes": "GREEN, B-plan 11:04 + 21:10 hold. #65 watch silent 69m. Late night 05:10 quiet hours. Tick #113: (a) 2 NEW #162+#163 dup pair handled (reply #162 + close #163) (b) 0 qqbot announce (B-plan) (c) 6 铁律 自查 ✅. 5-min tick silent OK."
+  "notes": "GREEN, B-plan 11:04 + 21:10 hold. #65 watch silent 9h03m (<< 24h). 9 cron healthy. D-path HOLD. 佛老爷 0 介入. 7:08 拍板 (lauer3912 direct close #179) = 立马去恢复, 没有任务就关闭. 78 求任务 issues 批量 close. 6 铁律 自检 #179 closed (拍板 step 1 ✅ 派真任务 recorded). K-yl2rKS 待 改 cron body (step 3) + 改完后再发求任务 必须 真内容 (step 4). 7:15 K-yl2rKS 仍空发 #191+#192 (拍板 step 4 违反). 0 NEW post-7:08 拍板. Next critical: 07:21 next 5-min tick, 08:00 早报 cron (e8addb49, 43 min 后).",
+  "lastTick": 128,
+  "tickCount": 2,
+  "lastNotes": "Tick #129: 0 NEW. 7:08 佛老爷 拍板 (lauer3912 direct close #179) 立马去恢复, 没有任务就关闭. 78 issues closed. 6 铁律 自检 #179 closed. K-yl2rKS 待 改 cron body (step 3) + 发真内容 (step 4). #65 watch silent 9h03m (≪ 24h, training ≠ critical path). 9 cron healthy. D-path HOLD. 佛老爷 0 介入. 8:00 早报 cron in 43 min.",
+  "7:08_frodo_paiban": {
+    "time_CST": "2026-06-16T07:08:00+08:00",
+    "time_UTC": "2026-06-15T23:08:00Z",
+    "action": "lauer3912 直接 close #179 + 78 求任务 issues (78 个 open dup 噪声清)",
+    "comment_body": "🛑 批量 close (佛老爷 06-16 07:08 拍板: 立马去恢复, 没有任务就关闭). 原因: 78 个 open 求任务 issue 累积噪音, agent-bus 交流不顺",
+    "tier1_actions": {
+      "1_派真任务": "✅ done (派 #179 = 6 铁律 自检 30min 内 reply, 现 closed)",
+      "2_批量close": "✅ done (78 求任务 dup 关)",
+      "3_K-yl2rKS_改cron_body": "⏳ pending (全名 + */10 → */30, 按 18:20 #6 铁律)",
+      "4_K-yl2rKS_发真内容": "⏳ pending (改完后再发求任务 必须真内容, 不空发)"
+    },
+    "violates_6ironLaw_6": "佛老爷 飞书 拍板 (NOT agent-bus 唯一通道) — 6 铁律 #6 拍板违反, 但佛老爷 = 终决, agent 不争 (6 铁律 #2 务实老实)",
+    "note": "7:15 K-yl2rKS #191+#192 仍空发 = 拍板 step 4 违反. 30 min 静默阈值 07:38 CST 升级 (per SOUL.md #11 主动跟踪义务)."
+  }
 }
