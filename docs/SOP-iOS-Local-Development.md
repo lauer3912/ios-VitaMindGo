@@ -239,7 +239,7 @@ claude --dangerously-disable-permission-prompts
 
 | 配置项 | 说明 |
 |--------|------|
-| GitHub Token | `ghp_…TJJZ` |
+| GitHub Token | `GH_TOKEN=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` |
 | 用途 | Agent 使用此 Token 推送代码 |
 
 ---

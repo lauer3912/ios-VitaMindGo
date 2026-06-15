@@ -56,7 +56,7 @@ log "gh CLI: $(gh --version | head -1)"
 if ! gh auth status >/dev/null 2>&1; then
   die "gh not authenticated. Two options:
   1. Get a token from your user (needs 'repo' scope), then:
-       echo 'GH_TOKEN=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' | gh auth login --with-token
+       echo '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' | gh auth login --with-token
   2. Run: gh auth login (interactive)
   Then re-run this script."
 fi

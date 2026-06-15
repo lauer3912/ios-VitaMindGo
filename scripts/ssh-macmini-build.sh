@@ -130,25 +130,30 @@ echo "  scheme: $SCHEME"
 echo "  archive 路径: $ARCHIVE_PATH"
 echo "  预计耗时: 5-15 分钟 (取决于项目大小)"
 echo ""
-
-# 拿锁 (非阻塞, 拿不到立刻报 BUSY, 防止多 agent 并发)
-# 修前: 先 flock -n check (拿锁) → 检测 (无锁) → flock archive (TOCTOU 竞态)
-# 修后: 所有检测 先 走完, 唯一次拿锁点 在 archive 起步, flock -n 防双开
-LOCK_TAKE=$(ssh "$SSH_HOST" "flock -n $LOCK_FILE echo TAKEN || echo BUSY" 2>/dev/null || echo "BUSY")
-if [ "$LOCK_TAKE" = "BUSY" ]; then
+# --- flock 互斥 (单点拿锁, 防双开) ---
+# flock 持锁直到 heredoc 结束. 修 bug: 去掉第一次 flock -n check (拿锁后立刻放, 无意义),
+# 只保留 heredoc 内的 flock -n (真正互斥). 加 stale lock 检测 (30min+ 残留则强制删).
+# 修: flock -n 在 server 端跑, 避免 client exit 后锁文件残留问题.
+STALE_CHECK=$(ssh "$SSH_HOST" "\
+  if [ -f $LOCK_FILE ]; then \
+    if command -v stat >/dev/null 2>&1; then \
+      AGE=\$((\$(date +%s) - \$(stat -f %m \"$LOCK_FILE\" 2>/dev/null || stat -c %Y \"$LOCK_FILE\" 2>/dev/null))); \
+    else \
+      AGE=0; \
+    fi; \
+    if [ \$AGE -gt 1800 ]; then echo 'STALE'; else echo 'ACTIVE'; fi; \
+  else echo 'ABSENT'; fi" 2>/dev/null || echo "CHECK_FAIL")
+if [ "$STALE_CHECK" = "STALE" ]; then
+  echo "⚠️  发现 stale lock (30min+ 残留), 自动删除..."
+  ssh "$SSH_HOST" "rm -f $LOCK_FILE"
+elif [ "$STALE_CHECK" = "ACTIVE" ]; then
   echo "❌ 锁被占用, 另一台 Ubuntu 正在跑 ${APP_NAME} 的 archive"
   echo "   等下个心跳或找老爷手动 unlock:"
   echo "   ssh $SSH_HOST 'rm -f $LOCK_FILE'"
   exit 1
 fi
-echo "✅ 锁获取成功 (flock -n non-blocking)"
+echo "✅ 锁检查通过 (无 active lock, stale 已清理)"
 
-# 锁获取后, 释放 (仅为占位, 让别 agent 能看到 BUSY) - flock 命令释放后锁消失
-# 实际: 上面的 flock -n 在 ssh 命令结束时释放
-# 下一步: 跑 archive (需要时再拿锁, 加 -n)
-
-# 实际 archive 命令 (不持锁, 但走检测过的配置, 保护靠手件)
-# 为了真正互斥, 下面用 flock -n 包 archive
 ssh "$SSH_HOST" "flock -n $LOCK_FILE bash -s" << EOF
   set -euo pipefail
   cd $PROJECT_DIR

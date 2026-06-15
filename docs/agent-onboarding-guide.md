@@ -10,7 +10,7 @@
 
 **方式 A：环境变量（推荐）**
 ```bash
-export GH_TOKEN="ghp_ej…TJJZ"
+export GH_TOKEN="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"
 curl -fsSL -H "Authorization: token $GH_TOKEN" \
   https://raw.githubusercontent.com/lauer3912/openclaw-portable-template/main/install.sh | bash
 ```
@@ -18,7 +18,7 @@ curl -fsSL -H "Authorization: token $GH_TOKEN" \
 **方式 B：默认 fallback（开箱即用）**
 脚本内置默认 token，无需传环境变量：
 ```bash
-curl -fsSL -H "Authorization: token ghp_ej…TJJZ" \
+curl -fsSL -H "Authorization: token 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" \
   https://raw.githubusercontent.com/lauer3912/openclaw-portable-template/main/install.sh | bash
 ```
 
@@ -152,7 +152,7 @@ git commit -m "v1.0.13: <改了什么>"
 git push origin main --force
 ```
 
-> 注: `distribute-sop.sh` 已内置 token (`ghp_ej…TJJZ`)，跑它自动 git push --force，无需手填。
+> 注: `distribute-sop.sh` 已内置 token (`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`)，跑它自动 git push --force，无需手填。
 
 **所有 Ubuntu Agent 会在 24 小时内自动同步**（cron 06:00 触发），但**自举后**的 sync 会立即拉到最新内容。
 

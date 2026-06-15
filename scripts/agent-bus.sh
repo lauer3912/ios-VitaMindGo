@@ -41,7 +41,7 @@ require_config() {
 
 require_gh() {
   command -v gh >/dev/null 2>&1 || die "gh CLI not installed. Install: brew install gh / apt install gh"
-  gh auth status >/dev/null 2>&1 || die "gh not authenticated. Run: echo $YOUR_GITHUB_PAT | gh auth login --with-token  # $YOUR_GITHUB_PAT = 你的真实 GitHub PAT"
+  gh auth status >/dev/null 2>&1 || die "gh not authenticated. Run: echo $YOUR_GITHUB_PAT | gh auth login --with-token  # 你的真实 GitHub PAT 从 env GITHUB_TOKEN 读取"
 }
 
 require_repo() {

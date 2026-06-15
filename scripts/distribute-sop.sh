@@ -14,7 +14,7 @@
 set -euo pipefail
 
 # --- 0. 内置 token ---
-DEFAULT_GITHUB_TOKEN="GH_TOKEN=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"
+DEFAULT_GITHUB_TOKEN="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"
 
 # --- 配置 ---
 WORKSPACE="${WORKSPACE:-$HOME/.openclaw/workspace}"

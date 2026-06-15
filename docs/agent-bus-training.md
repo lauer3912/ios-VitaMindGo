@@ -29,7 +29,7 @@
 # Linux: sudo apt install gh
 
 # 2. 配 token (user 给你, 或从 setup-github-cred.sh 拿)
-echo "ghp_xxx..." | gh auth login --with-token
+echo "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" | gh auth login --with-token
 gh auth status   # 期望: Logged in to github.com
 
 # 3. 装 agent-bus
@@ -506,7 +506,7 @@ agent-bus test
 6. ⚠ Cron job 装上了 (optional)
 
 **失败常见**:
-- `gh: not authenticated` → `echo 'ghp_xxx' | gh auth login --with-token`
+- `gh: not authenticated` → `echo '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' | gh auth login --with-token`
 - `404` → repo 没建, 让佛老爷建 (私有!)
 - `403` → token 没 `repo` scope
 - `REGISTRY.md not found` → 你是第一个 agent, 见 §5.1

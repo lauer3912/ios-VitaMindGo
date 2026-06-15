@@ -101,7 +101,7 @@
 
 | 工具 | 何时用 | 例子 |
 |---|---|---|
-| ***`naming-check.sh` (待实现)*** | rename / 新项目启动 | 5 项 30 秒核对（Display / Bundle / xcodeproj / Folder / Remote）|
+| **`naming-check.sh` (待实现, 参考 SOP-iOS-Ubuntu-Development §3.1)** | rename / 新项目启动 | 5 项 30 秒核对（Display / Bundle / xcodeproj / Folder / Remote）|
 | **`Submission-Checklist.md`** | App Store 提交前 | 5 阶段分步操作（Archive / Connect / Screenshot / Review / Submit）|
 | **git tag `vX.Y.Z-pre-XXX`** | 大改前（回滚点）| `v3.0.0-pre-rename` 一键 checkout |
 | **`/tmp/.../backup/`** | rename / 大改前 | 31MB folder 镜像 + archive 双备份 |

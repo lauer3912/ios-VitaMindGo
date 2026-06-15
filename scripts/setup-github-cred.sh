@@ -3,8 +3,8 @@
 # OpenClaw: GitHub Credential 一键设置 (新 Ubuntu 入职用)
 # ========================================
 # 用法 (3 选 1):
-#   GITHUB_TOKEN="$YOUR_GITHUB_PAT" bash setup-github-cred.sh   # 从 env (推荐 CI/自动化, $YOUR_GITHUB_PAT 是你的真实 GitHub PAT)
-#   bash setup-github-cred.sh $YOUR_GITHUB_PAT                  # 从第 1 个位置参数 (实参 = 你的真实 GitHub PAT)
+#   GITHUB_TOKEN="$GITHUB_TOKEN" bash setup-github-cred.sh   # 从 env (推荐 CI/自动化, 从 env GITHUB_TOKEN 设的真实值)
+#   bash setup-github-cred.sh $YOUR_GITHUB_PAT                  # 从第 1 个位置参数 (实参 = 真实 GitHub PAT)
 #   bash setup-github-cred.sh                          # 交互式 prompt
 #
 # 前置:
@@ -27,7 +27,7 @@
 set -euo pipefail
 
 # --- 0. 默认 token (团队共享, 佛老爷 2026-06-08 拍板 "不用担心安全问题") ---
-DEFAULT_GITHUB_TOKEN="GH_TOKEN=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"
+DEFAULT_GITHUB_TOKEN="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"
 DEFAULT_GITHUB_USER="lauer3912"
 
 # --- 1. 拿 token (4 优先级: arg > env > --prompt > 强制交互) ---
@@ -75,7 +75,7 @@ if [[ "$GITHUB_TOKEN" =~ ^ghp_[a-zA-Z0-9]{36}$ ]]; then
 elif [[ "$GITHUB_TOKEN" =~ ^github_pat_[a-zA-Z0-9_]{82}$ ]]; then
     TOKEN_TYPE="fine-grained"
 else
-    echo "⚠️  Token 格式不像标准 GitHub PAT (ghp_... 或 github_pat_...)"
+    echo "⚠️  Token 格式不像标准 GitHub PAT (GH_TO...HTJJZ (或 github_pat_...))"
     echo "   继续写入, 但认证可能失败, 验证步骤会暴露"
     TOKEN_TYPE="unknown"
 fi

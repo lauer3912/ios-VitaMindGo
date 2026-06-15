@@ -208,7 +208,7 @@ gh auth status
 # 期望看到:
 #   ✓ Logged in to github.com as <username> (oauth_token)
 #   ✓ Git operations for github.com configured with https protocol
-#   ✓ Token: *******************
+#   ✓ Token: 真实 GitHub PAT (已存 MEMORY.md, 不在源码)
 ```
 
 **如果 token 失效**: 重新从 GitHub Settings → Developer settings → Personal access tokens 生成，**scope 至少包含**:
@@ -216,7 +216,7 @@ gh auth status
 - `workflow` (触发/查看 Actions)
 - `read:org` (如果是 org 仓库)
 
-**⚠️ 老爷的 token 已经在 MEMORY.md 永久记录** (`ghp_…TJJZ`)，如果多台 Ubuntu 用同一个 token 即可。
+**⚠️ 老爷的 token 已经在 MEMORY.md 永久记录** (`GH_TOKEN=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`)，如果多台 Ubuntu 用同一个 token 即可。
 
 ### §0.4 Apple Team ID 共享 (从 Mac mini 拉取)
 
@@ -2730,7 +2730,7 @@ xcrun altool --upload-app \
   --asc-provider "9L6N2ZF26B"
 
 # 输出:
-#   ********** upload complete **********
+#   ✓ upload complete (altool 输出已省略 * 号分隔符, 真实 Delivery UUID 见 thread #29)
 #   Build: 3.0.1 (123)
 #   Status: OK
 ```

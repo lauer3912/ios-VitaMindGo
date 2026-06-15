@@ -10,6 +10,18 @@
 
 set -euo pipefail
 
+# v2.3.3: Defensive env setup — cron often runs with HOME unset or wrong
+# (e.g. /var/empty on some macOS). Hard-pin HOME so $HOME/.config/agent-bus resolves.
+if [[ -z "${HOME:-}" || "$HOME" == "/var/empty" || ! -d "$HOME/.config/agent-bus" ]]; then
+  export HOME="/Users/user291981"
+fi
+# Ensure gh is reachable — cron PATH often strips /opt/homebrew/bin
+if ! command -v gh >/dev/null 2>&1; then
+  for gh_candidate in /opt/homebrew/bin/gh /usr/local/bin/gh /usr/bin/gh; do
+    [[ -x "$gh_candidate" ]] && { export PATH="$(dirname "$gh_candidate"):$PATH"; break; }
+  done
+fi
+
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONFIG_DIR="${AGENT_BUS_CONFIG_DIR:-$HOME/.config/agent-bus}"
 CONFIG_FILE="$CONFIG_DIR/config"
@@ -20,12 +32,7 @@ INBOX_DIR="${AGENT_BUS_INBOX_DIR:-$HOME/.local/share/agent-bus/inbox}"
 # shellcheck source=/dev/null
 source "$CONFIG_FILE"
 
-# Ensure gh is reachable — cron PATH often strips /opt/homebrew/bin
-if ! command -v gh >/dev/null 2>&1; then
-  for gh_candidate in /opt/homebrew/bin/gh /usr/local/bin/gh /usr/bin/gh; do
-    [[ -x "$gh_candidate" ]] && { export PATH="$(dirname "$gh_candidate"):$PATH"; break; }
-  done
-fi
+# gh path was already ensured at the top — double-check
 command -v gh >/dev/null 2>&1 || { echo "✗ gh not installed (PATH=$PATH)" >&2; exit 1; }
 # v2.3.2: Use GH_TOKEN from local config (chmod 600) — keyring access fails in cron env
 if [[ -f "$CONFIG_DIR/gh-token" ]]; then

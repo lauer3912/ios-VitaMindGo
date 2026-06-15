@@ -57,8 +57,8 @@
 
 ```bash
 # 1. 设 GITHUB_TOKEN (老爷已告诉你)
-export GITHUB_TOKEN="ghp_…TJJZ"
-echo 'export GITHUB_TOKEN="ghp_…TJJZ"' >> ~/.bashrc
+export GITHUB_TOKEN="GH_TOKEN=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"
+echo 'export GITHUB_TOKEN="GH_TOKEN=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"' >> ~/.bashrc
 
 # 2. Clone 模板到 agent workspace 下子目录 (不污染 OpenClaw 自身 config)
 git clone https://lauer3912:${GITHUB_TOKEN}@github.com/lauer3912/openclaw-portable-template.git \
