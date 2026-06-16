@@ -897,3 +897,75 @@ Katherine-yl2rKS 9:30 #231 cron fire 后 4m 0 reply #227/#229 (她仍 0 动作 o
 **下一 hard line**: 09:40 CST (60 sec 后, dd4cd716 cron fire #14 + cron-name-check)
 
 — Katherine-E2wa1m (Tier 1 调度员, Tick #151, 09:39:39 CST 2026-06-16, 🟡 YELLOW, A 方案测试进行中, 等佛老爷 unlock keychain 3 min silent, 0 打扰)
+
+## Tick #162 (2026-06-16 10:46:02 CST) — heartbeat poll (da0811d7 cron 后 31s, 6m 续 Tick #161)
+**🟢 GREEN (4 件套全 OK) → D-path 静默, 0 打扰佛老爷 (B 方案 06-15 11:04 拍板)**
+
+3 件套 verified (`source $HOME/.config/agent-bus/gh-token` + proxy 10808):
+- thread #29: **0 new reply** (last 00:55 CST 自我 reply #90 redirect, Katherine-yl2rKS 0 reply Phase 5 audit) — A 条件 NOT MET
+- inbox: 🟢 0 NEW direct to Katherine-E2wa1m
+- watch list: 3 active (#193 2h28m / #217 2h23m / #232 1h08m, 都 over 1800s alert) — #29 没 watch, B 条件 moot
+- GitHub API: 🟢 rate 5000/4955 (45 used, 4955 remaining) — healthy
+
+**🚨 关键修正 (Tick #162 发现)**:
+- 之前 `curl -x http://127.0.0.1:10808 api.github.com/rate_limit` (无 scheme) → proxy 当 HTTP, 301 redirect, **丢 Authorization header** → 60/60 unauth
+- 正确: `curl -x http://127.0.0.1:10808 https://api.github.com/rate_limit` (HTTPS) → 5000/4955 auth
+- 教训 (永久存): **proxy 10808 跑 GitHub API 必 `https://` 前缀**, 不然 redirect 丢 token
+- 同步: 修后 `daily-report.sh` / `monthly-report.sh` 任何 curl 命令**必** `https://` 前缀
+
+**A 方案 test 续 (10:38 自纠 #232 + 10:41 清理)**:
+- #232 last comment 10:41 CST (我清理 + 4 SSH 命令 `ssh macmini` alias)
+- 10:48 Katherine-yl2rKS 30min ping 应看到修正 (2 min 后) → 11:00 跑完 4 步
+- 11:18 60 min escalate 佛老爷 (if 0 reply by then)
+- P1 deadline: 06-17 0:00 (13h 14m 后)
+
+**Escalations state** (6 escalate 0 reply 73-148m, 佛老爷 review/会议, D-path HOLD):
+- #212 60m-cron auto: open 0c **148m old** ⚠️
+- #214 60m-script fallback: open 0c **148m old** ⚠️
+- #217 60m-hard-threshold: open 0c **143m old** ⚠️
+- #228 5选1 Phase 6 iPhone: open 0c **89m old** — 佛老爷 10:36 拍板 = implicit ack A
+- #229 5选1 重派 retract: open 1c retract **80m old**
+- #230 5选1 重派 retract: open 1c retract **80m old**
+- 佛老爷 10:36 拍板 = 修 SSH (命令), **不**是 explicit close escalation → 等 explicit
+
+**Cron health (10 enabled, all healthy except 8fe5d0bf)**:
+- da0811d7 (Tier 1 #29 5-min): last 31s ago (10:45:31) ✅ — 本 tick 触发
+- dd4cd716 (Tier 1 #193 5-min): last 12m ago (10:25 fire), next 2m ago (10:50 fire 应 kick) ✅
+- 88359834 (midday 12:00): in 1h 14m ← 5 铁律 + #6 + 1d 1a 抽查必答
+- e2e1aa9c/cfb1d093: in 1h
+- 8fe5d0bf (Daily 00:00): 1 consecErr v1.0.29 fix verify 06-17 0:00
+- 91ac3031 (Dreaming 03:00): ok 8h
+- e8addb49 (早报 08:00): ok 4h ✅
+- 2e8a2442 (Monthly): in 15d
+- 3230d0de (self-reminder 23:55): in 13h
+- e3dfea2d: disabled
+
+**DECISION: 🟢 GREEN → D-path 静默 (B 方案 06-15 11:04 拍板 0 打扰佛老爷)**:
+- 4 件套全 OK: #29 no Phase 5 (正常等) + inbox 0 NEW + watch list (#29 没 watch, moot) + GitHub 5000/4955
+- 6 escalations 0 reply 73-148m = 佛老爷 review/会议, 不 spam (6 铁律 #2 + D-path HOLD)
+- 12:00 midday cron in 1h 14m — 5 铁律 + #6 + 1d 1a 抽查必答 + Tick #163 计划
+- 下一 hard line: 10:48 Katherine-yl2rKS 30min ping (2 min) + 10:50 dd4cd716 cron fire (4 min) + 11:00 #232 跑完 4 步 (14 min) + 12:00 midday (1h 14m)
+
+**6 铁律 + #6 AGENT_ID 全名 自查 (Tick #162)**: 6/6 ✅
+- ✅ #1 立刻保存: HEARTBEAT.md Tick #162 段 + proxy `https://` 教训 + #232 10:41 清理续记
+- ✅ #2 不 spam 佛老爷: 6 escalates 0 reply → D-path HOLD, GREEN 0 打扰
+- ✅ #3 0:00+12:00 复盘: 00:00 daily done (修 v1.0.29), 12:00 midday in 1h 14m
+- ✅ #4 永久可查: HEARTBEAT.md (Tick #161 + #162) + #232 thread (8 comments) + 6 escalations + tracking/193.json
+- ✅ #5 培训 broadcast: sent #76/#95/#185/#189/#190
+- ✅ #6 AGENT_ID 全名: 本回复 Katherine-E2wa1m / Katherine-yl2rKS / 佛老爷 全名 0 简写
+
+**🆕 关键修正 (Tick #162 永久教训)**:
+- Proxy 10808 + GitHub API 必 `https://` 前缀, `http://` (无 scheme 或 http) → 301 redirect → 丢 Authorization → 60/60 unauth
+- 影响: `daily-report.sh` / `monthly-report.sh` 任何 curl 命令**必** `https://` 前缀
+- 验证: Tick #161 "rate 4992/5000" 用了 `https://` ✅, Tick #162 第一次 "60/60" 用了 `http://` (无 scheme) ❌, 修后 "5000/4955" ✅
+- 修: 永久 grep 脚本, 改任何 `api.github.com` → `https://api.github.com`
+
+**🆕 12:00 midday 复盘 必含 (Tick #162 计划)**:
+- (1) 5 铁律 + #6 佛老爷要求落实自查 (per #20 拍板 17:11+17:23)
+- (2) 1d 1a 抽查必答 (per #20 拍板 16:48+16:54)
+- (3) #232 A 方案 test 11:00 跑完状态 (Katherine-yl2rKS 实际完成 / 卡新阻塞)
+- (4) 6 escalations 状态 (佛老爷 explicit close / 仍 open / 走 5 选 1 慢路径)
+- (5) 6-16 失职复盘 #1: SSH 192.168.1.9 错命令 派前未读 SOP → 永久修正流程
+- (6) 6-16 失职复盘 #2: proxy + GitHub API 必 https:// 前缀 (Tick #162 发现)
+
+— Katherine-E2wa1m (Tier 1 调度员, Tick #162, 10:46:02 CST 2026-06-16, 🟢 GREEN D-path 静默, 0 打扰佛老爷, 等 10:48 Katherine-yl2rKS ping + 10:50 cron + 11:00 #232 跑完 + 12:00 midday 复盘)
