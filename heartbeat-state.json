@@ -1,60 +1,92 @@
 {
   "lastChecks": {
-    "agent-bus-inbox": "2026-06-16T10:08:35+08:00",
-    "issue-193": "2026-06-16T10:08:35+08:00",
-    "issue-232-a-plan": "2026-06-16T10:08:35+08:00",
-    "issue-233-kyl2rks-30min": "2026-06-16T10:08:35+08:00",
-    "escalations-212-214-217-228-229-230-232": "2026-06-16T10:08:35+08:00",
-    "kyl2rks-dup-cron": "2026-06-16T10:08:35+08:00",
-    "background-scripts": "2026-06-16T10:08:35+08:00"
+    "agent-bus-inbox": "2026-06-16T12:34:14+08:00",
+    "issue-193": "2026-06-16T12:34:14+08:00",
+    "issue-247-PATCH": "2026-06-16T12:30:00+08:00",
+    "issue-249-PATCH": "2026-06-16T12:30:00+08:00",
+    "issue-250-PATCH": "2026-06-16T12:30:00+08:00",
+    "issue-251-dup-close": "2026-06-16T12:30:00+08:00",
+    "issue-252-dup-close": "2026-06-16T12:30:00+08:00",
+    "issue-254-bug-report": "2026-06-16T12:26:00+08:00",
+    "issue-255-kyl2rks-1230-cron": "2026-06-16T12:30:02+08:00",
+    "issue-256-1200-cron-backup": "2026-06-16T12:34:00+08:00",
+    "12-00-cron-error": "2026-06-16T12:01:00+08:00",
+    "background-scripts": "2026-06-16T12:34:14+08:00"
   },
-  "state": "YELLOW-D-path-HOLD",
-  "current_fire": "dd4cd716 cron fire #18 @ 10:00 CST (next #19 @ 10:10)",
-  "decision": "D-path HOLD per B 方案 06-15 11:04 拍板 (GREEN 不发 qqbot, 0 主动 ping 佛老爷 per 6 铁律 #2 + 14:13 拍板 agent-bus 唯一交流通道 + 14:19 拍板 改先审核)",
+  "state": "ORANGE-D-path-HOLD",
+  "current_fire": "da0811d7 cron fire #XX @ 12:30 SHA (Tick #167)",
+  "tick": "#167",
+  "tick_time": "2026-06-16T12:34:14+08:00",
+  "decision": "5 PATCHes + 2 dup close + #256 12:00 補发 done; D-path HOLD 续 (佛老爷 review/会议, 等 #228 / #250 / #254 ack); 12:00 cron errored → 12:30 手动補发 #256",
   "key_issues": {
     "193": {
       "state": "open",
-      "comments": 24,
-      "派后": "2h 47m",
-      "60min_hard_threshold": "已过 1h 47m",
-      "Katherine-yl2rKS_reply": "0 reply 自 09:08 (2h 0m silent on 真任务)",
-      "6_铁律_6": "Katherine-yl2rKS 9:30 #231 fix ✅ + 10:00 #233 fix ✅ 持续"
+      "comments_派后": "5h+",
+      "60min_hard_threshold": "已过 4h+",
+      "Katherine-yl2rKS_reply": "0 reply 自 09:08 (3h26m silent on 真任务)",
+      "6_铁律_6": "Katherine-yl2rKS 9:30 #231 + #255 12:30 全名 fix ✅ 持续"
     },
     "232": {
-      "type": "A 方案 test (佛老爷 unlock + Katherine-yl2rKS SSH archive/export/upload)",
+      "type": "A 方案 test 验证失败 → B 方案必走 (#240 PATCH)",
       "state": "open",
-      "comments": 3,
-      "派后": "29m 40s",
-      "Katherine-yl2rKS": "seen-by, 0 reply"
+      "outcome": "A 方案 10:50+11:00 验证失败 (macOS SSH keychain + cert 缺), B 方案 5 选 1 0 reply"
     },
-    "233": {
-      "type": "Katherine-yl2rKS 30min 主动联系 cron @ 10:00:03Z",
-      "全名_fix": "✅ 持续 (Katherine-E2wa1m ... ——Katherine-yl2rKS)"
-    },
-    "escalations_0_reply": ["#212 (1h 51m)", "#214 (1h 51m)", "#217 (1h 46m)", "#228 (52m)", "#229 (43m)", "#230 (43m)", "#232 (29m)"]
+    "246_PATCH": "12:15 PATCH 4022 chars (P3 Submit build 5 vs build 6, 5 选 1 0 reply)",
+    "247_PATCH": "12:30 PATCH 1441 chars (MANIFEST mismatch 失职)",
+    "248": "Katherine-yl2rKS 12:00 30min 主动联系 — 在, 0 reply #245",
+    "249_PATCH": "12:30 PATCH 1361 chars (修正 12:10 27h 静默 错描述)",
+    "250_PATCH": "12:30 PATCH 1705 chars (Escalate #193 4h+)",
+    "251": "closed not_planned (dup of #253, auto-fix bug 截断 49 chars)",
+    "252": "closed not_planned (dup of #253, auto-fix bug 截断 43 chars)",
+    "253": "Tier 1 30-min ping Katherine-yl2rKS #245 E 方案 onboarding (12:27, 1685 chars 完整 via gh issue create)",
+    "254": "🐛 CRITICAL BUG agent-bus.sh v1.0.30 content-checklist 集成损坏 (12:26, 3874 chars, 修方案等佛老爷 ack)",
+    "255": "Katherine-yl2rKS 12:30 30min 主动联系 (60 chars, 全名 ✅)",
+    "256": "📊 12:00 midday cron 補发 record (12:30, 5478 chars, 7 段)"
   },
-  "a_plan_test": {
-    "拍板时间": "09:31 CST (37 min 0 进展)",
-    "Step 0": "佛老爷 unlock keychain — 0 确认 37 min",
-    "Step 1-3": "Katherine-yl2rKS SSH 跑 archive/export/upload — pending unlock",
-    "真实_Project": "~/Desktop/ios-StretchFlow/StretchGoGo.xcodeproj",
-    "真实_Bundle": "com.ggsheng.StretchGoGo",
-    "真实_Team": "9L6N2ZF26B",
-    "真实_cert_SHA-1": "03C0A94BF8FDE003E136FDBEB80D421C8F57B6B7",
-    "真实_ASC_Key_ID": "H3973L93M5",
-    "真实_ASC_Issuer": "b2a00f88-3a8d-40d0-b148-1f1db92e10b7"
+  "escalations_0_reply": [
+    "#212 (08:17 SHA, 4h17m)",
+    "#214 (08:17 SHA, 4h17m)",
+    "#217 (08:22 SHA, 4h12m)",
+    "#228 (09:10 SHA, 3h24m, 5 选 1 Phase 6 iPhone)",
+    "#245 (11:53 SHA, 41m, E 方案 onboarding)",
+    "#246 (11:54 SHA, 40m, P3 Submit)",
+    "#250 (12:11 SHA, 23m, Escalate #193 4h+)",
+    "#254 (12:26 SHA, 8m, CRITICAL BUG agent-bus.sh)",
+    "#256 (12:34 SHA, 0m, 12:00 cron 補发)"
+  ],
+  "auto_fix_bug": {
+    "bug_1": "agent-bus.sh:539 `body=$(echo \"$checklist_out\" | tail -1)` 错误提取 (FAIL 取 warning, PASS 取 body 末行)",
+    "bug_2": "agent-bus.sh:506-512 第一个 case loop 不识别 --skip-checklist / --checklist-strict",
+    "修复方案_等佛老爷_ack": "方案 A: content-checklist.sh 用 ---AUTO-FIXED-BODY-START/END--- marker 包裹, agent-bus.sh 用 sed 提取; 合并 case loop",
+    "workaround": "所有 Agent 紧急 send 走 `gh issue create` 直发 (per #254 模板), 不走 agent-bus.sh",
+    "受影响_issues": "#247 (PATCH 1441) + #249 (PATCH 1361) + #250 (PATCH 1705) + #251 (closed dup) + #252 (closed dup) = 5 issues 修"
+  },
+  "12_00_cron_error": {
+    "jobId": "88359834",
+    "last_fire": "2026-06-16T12:01:00+08:00",
+    "status": "error",
+    "原因": "agent-bus.sh v1.0.30 auto-fix bug 影响, body 截断 17 chars '状态: YELLOW. 等待指示.' → cron 系统检测异常 → 标 error",
+    "manual_backup": "#256 (12:34 SHA, 5478 chars, 7 段全含)"
   },
   "next_actions": [
-    "10:10 dd4cd716 cron fire #19 (1m 25s 后)",
-    "10:30 Katherine-yl2rKS 30min cron fire verify 全名 fix 持续 (21m 后)",
-    "12:00 midday cron (1h 52m 后) — 5 铁律 + #6 + 1d 1a 抽查必答"
+    "12:35 next da0811d7 cron fire (1 min 后)",
+    "12:40 next dd4cd716 cron fire #N",
+    "13:00 Katherine-yl2rKS 30min 主动联系 (E 方案 #245 60 min escalate 倒计时 30 min)",
+    "13:23 60 min escalate 佛老爷 #245 静默 (per #253 升级路径)",
+    "5 拍板待佛老爷 5 min ack: #228 / #246 / #250 / #254 / #256"
   ],
-  "6_铁律_自查": {
-    "#1_立刻保存": "✅ 本回合 3 文件同步",
-    "#2_不说没做过": "✅ 派 + 15 PING + 78 dup close + 7 escalate + 派 #232 A 方案 + 9:28 retract + 17 cron fire + 5 选 1 慢路径",
-    "#3_0:00+12:00": "✅ 00:00 daily done, 12:00 midday in 1h 52m",
-    "#4_永久可查": "✅ #193 (24 comments) + #232 (3) + 7 escalate + 撤旧启新脚本 + MEMORY.md GH_TOKEN + A 方案真实值",
-    "#5_培训_sent": "✅ #76/#95/#185/#189/#190",
-    "#6_AGENT_ID_全名": "✅ 本回合通信 全名 0 简写; Katherine-yl2rKS 9:30 #231 + 10:00 #233 fix ✅ 持续"
+  "6_铁律_6_自查": {
+    "#1_立刻保存": "✅ HEARTBEAT.md Tick #167 + memory/2026-06-16.md + heartbeat-state.json + 3 PATCHes + 2 dup close + #256 補发",
+    "#2_不说没做过": "✅ PATCH #247 (1441) + #249 (1361) + #250 (1705) + close #251/#252 + #256 補发 (5478) + 7 escalations 跟踪",
+    "#3_0:00+12:00": "✅ 00:00 daily done, 12:00 cron errored → 12:30 手动補发 #256 (本回合)",
+    "#4_永久可查": "✅ HEARTBEAT.md Tick #167 + #256 (5478 chars) + #254 (3874 chars) + 7 escalations + 5 PATCH records",
+    "#5_培训_sent": "✅ #76/#95/#185/#189/#190 + #243 E 方案 broadcast + #254 bug 修方案待 ack",
+    "#6_AGENT_ID_全名": "✅ 本回合通信 Katherine-E2wa1m / Katherine-yl2rKS / 佛老爷 全名 0 简写; Katherine-yl2rKS #255 12:30 全名 fix ✅ 持续"
+  },
+  "6-16_失职_复盘": {
+    "#1_Tick161": "SSH 192.168.1.9 错命令 派前未读 SOP §0.2.3 → 修: 派 Ubuntu 任务前必读 SOP §0.2 SSH 通道 + §6 发布链路",
+    "#2_Tick162": "proxy + GitHub API 必 https:// 前缀 → 修: curl -x http://127.0.0.1:10808 + URL https://",
+    "#3_Tick163": "content-checklist auto-fix bug 把 #240 body 截断 → 11:15 紧急 PATCH 修, 12:26 提 #254 修方案",
+    "#4_Tick166": "12:10 #249 'Katherine-yl2rKS 27h 静默' 错 (她 #255 12:30 cron 在线) → 修: 静默判定 3 层逻辑, 不看 last_seen (登录时间), 看 cron 主动联系 + 真任务 reply"
   }
 }

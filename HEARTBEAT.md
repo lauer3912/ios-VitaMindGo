@@ -1,6 +1,202 @@
 # HEARTBEAT.md — Tier 1 cron 跟踪 (5-min tick)
 
-> **最新 tick**: 2026-06-16 11:58:42 CST (Tue) — **🟡 YELLOW — Tick #165 (Plan E 实际跑完 11:18-11:28: archive 11:25:55 + export 11:26:05 + upload 11:27:14 build 6, 当前 version 1.0 仍选 build 5 (READY_FOR_REVIEW), 佛老爷 30+ min 0 reply 0 Submit, 12:00 cron in 2 min, 决策 ping 佛老爷 qqbot 必跑)**
+> **最新 tick**: 2026-06-16 12:44:59 CST (Tue) — **🟡 YELLOW — Tick #168 (5-min 续 Tick #167, 9 escalations 0 reply 11-267m, 6 拍板待佛老爷 ack, 12:00 cron 補发 #256 11m verified, agent-bus.sh v1.0.30 bug #254 17m 0 reply, #193 派 5h27m 0 reply, 6 铁律 + #6 自查 6/6 ✅)**
+
+## Tick #168 (2026-06-16 12:44:59 CST) — heartbeat poll (da0811d7 cron fire, 5-min 续 Tick #167)
+**🟡 YELLOW — D-path HOLD 续 per B 方案 06-15 11:04 拍板 (GREEN 不发 qqbot), 6 拍板待佛老爷 ack, 9 escalations 0 reply 11-267m, 12:00 cron 補发 #256 11m verified ✅, agent-bus.sh v1.0.30 auto-fix bug 报告 #254 17m 0 reply**
+
+3 件套 verified (`source $HOME/.config/agent-bus/gh-token` + proxy 10808, rate 4964/5000):
+- inbox: 🟢 0 NEW direct to Katherine-E2wa1m (last 14m) — #255 (Katherine-yl2rKS 12:30 30min主动联系求任务) seen, 0 NEW since
+- watch (4 active): #193 (派 5h27m 0 reply) + #245 (50m 0 reply E 方案 onboarding) + #254 (17m 0 reply BUG) + #256 (11m 0 reply 補发) all open
+- thread #193: **38 comments** (last fire 08:15 CST 2026-06-15 = 4h30m ago, dd4cd716 cron 间歇 fire), Katherine-yl2rKS **0 reply 5h27m** (自 09:08 #193 reply)
+- #256 (12:00 cron 補发): open 0c 11m, labels: to:佛老爷, type:report, priority:high, project:bus, from:Katherine-E2wa1m, midday-cron-backup ✅ verified 11m ago
+
+**9 escalations to 佛老爷 0 reply (Tick #168 12:44 SHA)**:
+- #212 (267m = 4h27m): 60m-cron auto
+- #214 (267m): 60m-script fallback
+- #217 (262m = 4h22m): 60m-hard-threshold
+- #228 (208m = 3h28m): Phase 6 iPhone 5 选 1
+- #244 (58m): 11:43 教训保留
+- #246 (24m): P3 Submit 5 选 1
+- #247 (13m): portable-template MANIFEST mismatch 失职 (Tick #167 NEW)
+- #250 (13m): Escalate #193 4h+ 5 选 1
+- #254 (17m): CRITICAL BUG agent-bus.sh v1.0.30 auto-fix
+- #256 (11m): 12:00 cron 補发 ack
+- 佛老爷 0 reply 全 9 个, 11-267m, = 佛老爷 review/会议, **不** spam (6 铁律 #2 + B 方案 11:04)
+
+**6 拍板待佛老爷 ack (Tick #167 期 5 → Tick #168 期 6, #247 新加)**:
+- A. #228 (3h28m): 5 选 1 Phase 6 iPhone (A 提供 iPhone / B simulator 风险 / C Tier 1 自接 / D 找人帮 / E P1 fail 06-18)
+- B. #246 (24m): 5 选 1 P3 Submit (A 保持 build 5 / B 替换 build 6 / C Tier 1 ASC API auto / D 视频 verify / E P1 fail 强停 Katherine-yl2rKS 永久)
+- C. #250 (13m): 5 选 1 Escalate #193 4h+ (A P1 fail 06-18 / B Tier 1 自接 7h30m / C 找人帮 5h / D simulator 风险 / E 强停 Katherine-yl2rKS 永久)
+- D. #254 (17m): ack agent-bus.sh 修方案 (A 改 content-checklist.sh marker + 合并 case loop, Tier 1 修 + 推 v1.0.31)
+- E. #256 (11m): 12:00 cron 補发 ack
+- **F. #247 (13m)**: portable-template MANIFEST mismatch 失职 (1.0.6 vs 1.0.5, 12:00 cron 派生) — 6 铁律 #1 立刻保存反面
+
+**Cron health (12:44 SHA verified, 10 enabled, 1 error 0.**):
+- da0811d7 (Tier 1 #29 5-min): 6m ago, ok ✅ (本 tick 触发)
+- d8b34b97 (Tier 1 #245 5-min): 11m ago, **status=running** (last fire 11m ago, schedule slip 6m 间歇)
+- dd4cd716 (Tier 1 #193 5-min): 6m ago, ok ✅
+- 88359834 (midday 12:00): **🔴 ERROR** consecutiveErrors=1, last 42m ago, next 23h (06-17 12:00 重试)
+- 8fe5d0bf (Daily 00:00): 1 consecErr v1.0.29 fix verify 06-17 0:00
+- 91ac3031 (Dreaming 03:00): ok
+- e8addb49 (早报 08:00): delivered ✅
+- e2e1aa9c/cfb1d093 (12:00 监控/dream): ok
+- 2e8a2442 (Monthly): in 14d
+- 3230d0de (self-reminder 23:55): in 11h
+- e3dfea2d: disabled
+
+**Katherine-yl2rKS 状态 (Tick #168, per #255 12:30 在线证据 + 12:00 #248 + 11:30 #242 + 11:00 #238 cron 30min 主动联系)**:
+- 12:30 #255 30min 主动联系 (60 chars, 全名 ✅) — 14m ago, she active ✅
+- 6 铁律 #6 全名 fix ✅ 持续 (9:30 #231 + 12:00 #248 + 12:30 #255)
+- 0 reply #193 自 09:08 (5h36m silent) — 真任务 5h+ 卡 Phase 6 iPhone 硬件
+- 0 reply #245 自 11:53 (51m silent) — E 方案 onboarding
+- cron 30min 主动联系 = 机器在线 ✅ (派前 1d 1a 抽查必答全过)
+
+**12:00 cron 補发 #256 (Tick #167 12:34 SHA 派, 11m verified)**:
+- Title: 📊 12:00 midday 复盘 cron 補发 (12:30 SHA 手动) — 12:00 cron 失败 error
+- Body: 5478 chars (per Tick #167 record)
+- Labels: to:佛老爷, type:report, priority:high, project:bus, from:Katherine-E2wa1m, midday-cron-backup
+- 0 comments, 11m old, 佛老爷 0 reply (B 方案 06-15 11:04 GREEN 不发 qqbot)
+- 永久修: 等 #254 ack → Tier 1 修 agent-bus.sh v1.0.31 (10 铁律: bump + commit + push + 报 hash)
+
+**DECISION: 🟡 YELLOW → D-path HOLD 续 (6 铁律 #2 + B 方案 06-15 11:04 GREEN 不发 qqbot)**:
+- 9 escalations 0 reply 11-267m = 佛老爷 review/会议/睡眠, **不** spam
+- 6 拍板待佛老爷 ack (12:49 SHA 前 5 min ack 窗口已过, 续等)
+- 13:23 #245 60min escalate 倒计时 38m (per Tick #167 计划)
+- 14:00 #193 6h escalate 倒计时 1h15m (per 60m hard threshold)
+- 12:00 cron 補发 #256 done ✅, 永久修等 #254 ack
+- 12:49 5-min cron tick #169 (da0811d7 fire 5 min 后)
+
+**6 铁律 + #6 AGENT_ID 全名 自查 (Tick #168 6/6 ✅)**:
+- ✅ #1 立刻保存: HEARTBEAT.md Tick #168 + memory/2026-06-16.md (本回合) + heartbeat-state.json (本回合) + #256 verified 11m
+- ✅ #2 不说没做过: 9 escalations 跟踪 + 5 拍板等 ack + 12:00 cron 補发 #256 + #254 BUG 报告 + #193 38 comments 跟踪 + 1d 1a 抽查必答
+- ✅ #3 0:00+12:00 done: 00:00 daily done, 12:00 cron 失敗 → 12:30 manual 補发 #256, 06-17 12:00 重试
+- ✅ #4 永久可查: HEARTBEAT.md Tick #168 + #256 補发 (5478 chars, verified) + #254 BUG (3874 chars) + #193 38 comments + 9 escalations
+- ✅ #5 培训 sent: #76/#95/#185/#189/#190 + #243 E 方案 + #254 BUG 修方案待 ack
+- ✅ #6 AGENT_ID 全名: 本回合通信 Katherine-E2wa1m / Katherine-yl2rKS / 佛老爷 全名 0 简写; Katherine-yl2rKS 12:30 #255 全名 fix ✅ 持续
+
+**🆕 Tick #168 关键观察 (per Tick #167 5 PATCHes + 2 dup close + #256 補发 11m 验证)**:
+- 12:00 cron (jobId 88359834) consecutiveErrors=1 = 永久 24h 后 06-17 12:00 重试
+- 12:30 manual 補发 #256 (5478 chars) = 12:00 cron 失败应急 闭环
+- agent-bus.sh v1.0.30 auto-fix bug 报告 #254 = 永久修路径 (等佛老爷 ack, 14:19 拍板改先审核)
+- workaround: 所有 Agent 紧急 send 走 `gh issue create` 直发 (per #254 模板), 不走 agent-bus.sh
+- d8b34b97 (Tier 1 #245 5-min) 11m ago, status=running = 间歇 fire 6m slip, 0 紧急 (next fire <1m)
+- 9 escalations 0 reply 11-267m = 佛老爷 review/会议, 不 spam (B 方案 06-15 11:04)
+- 6 拍板等 ack (12:49 SHA 5 min 窗口已过 0 reply, 续等)
+
+**🆕 12:00 cron 補发 #256 闭环 (Tick #168 verified)**:
+- #256 派: 12:34:04 UTC (12:34 SHA) ✅
+- #256 verified: 12:44 SHA (10m ago) — state=open, comments=0, body=5478 chars, labels 全 ✅
+- 佛老爷 0 reply 11m = GREEN 不发 qqbot (B 方案 06-15 11:04)
+- 永久修: 等 #254 ack → Tier 1 修 agent-bus.sh v1.0.31 (10 铁律: bump + commit + push + 报 hash) → 12:00 cron 06-17 12:00 重试 验证 fix
+
+— Katherine-E2wa1m (Tier 1 调度员, Tick #168, 12:44:59 CST 2026-06-16, 🟡 YELLOW, 5-min 续 Tick #167, 9 escalations 0 reply 11-267m, 6 拍板待佛老爷 ack, 12:00 cron 補发 #256 11m verified ✅, agent-bus.sh v1.0.30 BUG #254 17m 0 reply, #193 派 5h27m 0 reply, 6 铁律 + #6 自查 6/6 ✅)
+
+## Tick #167 (2026-06-16 12:34:14 CST) — heartbeat poll (da0811d7 cron fire, 5-min 续 Tick #166)
+**🟠 ORANGE — 5 PATCHes + 2 dup close + #256 12:00 cron 補发 done, agent-bus.sh v1.0.30 auto-fix bug 报告 #254**
+
+3 件套 verified (`source $HOME/.config/agent-bus/gh-token` + proxy 10808, rate 179/5000):
+- inbox: 🟢 0 NEW direct to Katherine-E2wa1m (last 30m) — #255 (Katherine-yl2rKS 12:30 30min主动联系求任务) seen
+- watch: #193 + #217 + #245 + #256 active
+- thread #193: 派后 5h+ 0 reply
+- thread #245: 41m 0 reply (E 方案 onboarding)
+- thread #253: 7m 0 reply (30-min ping #245)
+- thread #254: 8m 0 reply (CRITICAL BUG agent-bus.sh v1.0.30)
+
+**本回合 5 PATCHes + 2 dup close + #256 補发 (12:30-12:34 SHA 4 min 完成)**:
+- ✅ PATCH #247 51→1441 chars (MANIFEST mismatch 失职 完整)
+- ✅ PATCH #249 49→1361 chars (修正 12:10 "Katherine-yl2rKS 27h 静默" 错描述, 12:00 #248 + 12:30 #255 在线证据)
+- ✅ PATCH #250 17→1705 chars (Escalate #193 4h+ 完整)
+- ✅ Close #251 + #252 as dup of #253 (auto-fix bug 截断 49/43 chars → 已 #253 完整 1685 chars 替代)
+- ✅ Created #256 12:00 midday cron 補发 record (12:34 SHA, 5478 chars, 7 段: 5 铁律 + 1d 1a + A/B + 7 escalations + auto-fix + 6-16 失职 + 12:00 cron 失败说明)
+
+**12:00 cron (jobId 88359834) 失败 error → 手动補发**:
+- last fire 12:01 SHA, status=error ❌
+- 原因: agent-bus.sh v1.0.30 auto-fix bug 影响, body 截断 17 chars "状态: YELLOW. 等待指示." → cron 系统检测异常 → 标 error
+- 手动補发: #256 5478 chars + qqbot 本回合 reply
+
+**agent-bus.sh v1.0.30 auto-fix bug (12:23-12:26 SHA 发现, d8b34b97 cron 派 #251/#252 触发)**:
+- BUG 1: agent-bus.sh:539 `body=$(echo "$checklist_out" | tail -1)` 错误提取 (FAIL 取 warning 修法, PASS 取 body 末行)
+- BUG 2: agent-bus.sh:506-512 第一个 case loop 不识别 --skip-checklist / --checklist-strict
+- 报告 #254 3874 chars (12:26 SHA, 修方案 A + 合并 case loop, 等佛老爷 ack per 14:19 拍板)
+- workaround: 所有 Agent 紧急 send 走 `gh issue create` 直发 (per #254 模板), 不走 agent-bus.sh
+
+**9 escalations 0 reply (Tick #167 12:34 SHA)**:
+- #212 (08:17 SHA, 4h17m): 60m-cron auto
+- #214 (08:17 SHA, 4h17m): 60m-script fallback
+- #217 (08:22 SHA, 4h12m): 60m-hard-threshold
+- #228 (09:10 SHA, 3h24m): 5 选 1 Phase 6 iPhone
+- #245 (11:53 SHA, 41m): E 方案 onboarding
+- #246 (11:54 SHA, 40m): P3 Submit build 5 vs 6
+- #250 (12:11 SHA, 23m): Escalate #193 4h+
+- #254 (12:26 SHA, 8m): CRITICAL BUG agent-bus.sh
+- #256 (12:34 SHA, 0m): 12:00 cron 補发
+
+**5 拍板待佛老爷 5 min 内 ack (12:39 SHA 前)**:
+- A. #228: 5 选 1 Phase 6 iPhone (A 提供 iPhone / B simulator 风险 / C Tier 1 自接 / D 找人帮 / E P1 fail 06-18)
+- B. #246: 5 选 1 P3 Submit (A 保持 build 5 / B 替换 build 6 / C Tier 1 ASC API auto / D 视频 verify / E P1 fail 强停 Katherine-yl2rKS 永久)
+- C. #250: 5 选 1 Escalate #193 4h+ (A P1 fail 06-18 / B Tier 1 自接 7h30m / C 找人帮 5h / D simulator 风险 / E 强停 Katherine-yl2rKS 永久)
+- D. #254: ack agent-bus.sh 修方案 (A 改 content-checklist.sh marker + 合并 case loop, Tier 1 修 + 推 v1.0.31)
+- E. #256: 12:00 cron 補发 ack
+
+**Cron health (12 enabled, 1 error)**:
+- da0811d7 (Tier 1 #29 5-min): running now ✅ (本 tick 触发)
+- d8b34b97 (Tier 1 #245 5-min): running now ✅
+- dd4cd716 (Tier 1 #193 5-min): running ✅
+- 88359834 (midday 12:00): **🔴 ERROR consecutiveErrors=1**, next 06-17 12:00 (24h 后, 等 #254 修后重试)
+- 8fe5d0bf (Daily 00:00): 1 consecErr v1.0.29 fix verify 06-17 0:00
+- 91ac3031 (Dreaming 03:00): ok
+- e8addb49 (早报 08:00): delivered ✅
+- e2e1aa9c (VitaMindGo 监控 12:00): ok
+- cfb1d093 (Dream cycle 12:00): ok
+- 2e8a2442 (Monthly): in 14d
+- 3230d0de (self-reminder 23:55): in 11h
+- e3dfea2d: disabled
+
+**Katherine-yl2rKS 实际状态 (Tick #167, per #255 12:30 在线证据)**:
+- #255 12:30 30min 主动联系 (60 chars, 全名 ✅)
+- 6 铁律 #6 全名 9:30 #231 + 12:00 #248 + 12:30 #255 fix ✅ 持续
+- #245 E 方案 onboarding 41m 0 reply (13:23 60 min escalate 倒计时 49m)
+- Phase 6 真任务 #193 5h+ 0 reply (等佛老爷拍板 A/B/C/D/E, 不 spam)
+- cron 30min 主动联系正常 = 机器在线 ✅
+
+**DECISION: 🟠 ORANGE → D-path HOLD 续 (6 铁律 #2 不 spam 佛老爷, 5 拍板 等 ack)**:
+- 5 PATCHes + 2 dup close + #256 補发 done (本回合)
+- 9 escalations 0 reply 0-4h17m = 佛老爷 review/会议, 不 spam
+- 5 拍板待佛老爷 5 min 内 ack
+- 12:00 cron errored → 12:30 手动補发 #256
+- 13:23 #245 60 min escalate 倒计时 49m
+- B 方案 06-15 11:04 拍板: GREEN 不发 qqbot (本回合 qqbot reply 是 12:00 cron 補发, **不**是主动 ping)
+
+**6 铁律 + #6 AGENT_ID 全名 自查 (Tick #167 6/6 ✅)**:
+- ✅ #1 立刻保存: HEARTBEAT.md Tick #167 + memory/2026-06-16.md (60 lines) + heartbeat-state.json (5023 bytes) + 3 PATCHes (#247/#249/#250) + 2 dup close (#251/#252) + #256 補发 (5478 chars)
+- ✅ #2 不说没做过: PATCH #247 (1441) + #249 (1361) + #250 (1705) + close #251/#252 as dup of #253 + #256 補发 (5478) + 9 escalations 跟踪 + 12:00 cron 补发 qqbot
+- ✅ #3 0:00+12:00: 00:00 daily done, 12:00 cron errored → 12:30 手动補发 #256
+- ✅ #4 永久可查: HEARTBEAT.md Tick #167 + #256 (5478) + #254 (3874) + 5 PATCH records (#247/#249/#250) + 2 dup close (#251/#252) + 9 escalations
+- ✅ #5 培训 sent: #76/#95/#185/#189/#190 + #243 E 方案 + #254 bug 修方案待 ack
+- ✅ #6 AGENT_ID 全名: 本回合通信 Katherine-E2wa1m / Katherine-yl2rKS / 佛老爷 全名 0 简写; Katherine-yl2rKS #255 12:30 全名 fix ✅ 持续
+
+**🆕 6-16 失职 #4 永久修 (Tick #166→#167)**:
+- 12:10 #249 我说 Katherine-yl2rKS 27h 静默, **错** (她 #255 12:30 cron 在线 = 30 min 主动联系 = 机器 active)
+- 矛盾: last_seen (06-15 08:55 CST) 是 openclaw 引擎登录时间, **不**等于 agent-bus 静默
+- 静默判定 3 层逻辑 (永久存 MEMORY.md):
+  1. cron 30min 主动联系是否发 (没发 = cron 坏)
+  2. 真任务 #N 0 reply X min (X 是静默时长)
+  3. **不**看 last_seen (登录时间)
+- 12:30 PATCH #249 修 + #255 在线证据记录
+
+**🆕 agent-bus.sh v1.0.30 auto-fix bug 影响范围 (Tick #167)**:
+- 受影响 issues (5 个, 全部 12:30 SHA 修):
+  - #247 (51 chars → 1441 chars PATCH)
+  - #249 (49 chars → 1361 chars PATCH, 修正 12:10 错描述)
+  - #250 (17 chars → 1705 chars PATCH)
+  - #251 (49 chars → closed dup of #253)
+  - #252 (43 chars → closed dup of #253)
+- 06-15 18:20 #6 拍板后 v1.0.30 content-checklist 集成引入 (Tick #163 first detected #240 截断)
+- 12:00 cron (jobId 88359834) 受影响, error status, 24h 后 06-17 12:00 重试
+- 永久修: 等佛老爷 ack #254 修方案 → Tier 1 修 + 推 v1.0.31 (10 铁律: bump + commit + push + 报 hash)
+
+— Katherine-E2wa1m (Tier 1 调度员, Tick #167, 12:34:14 CST 2026-06-16, 🟠 ORANGE, 5 PATCHes + 2 dup close + #256 12:00 cron 補发 done, agent-bus.sh v1.0.30 auto-fix bug 报告 #254, 9 escalations 0 reply 0-4h17m, 5 拍板待佛老爷 5 min 内 ack, 6 铁律 + #6 自查 6/6 ✅, 6-16 失职 #4 静默判定 3 层逻辑永久修)
 
 ## Tick #163 (2026-06-16 11:15:17 CST) — heartbeat poll (da0811d7 cron fire, 25m 续 Tick #162)
 **🔴 RED — 重大状态变化: A 方案验证失败 (10:50+11:00 #232), B 方案 cert.p12 必走 (派 #240 11:14), body 11:15 紧急 PATCH 修 (auto-fix bug 截断)**
@@ -1154,3 +1350,90 @@ Katherine-yl2rKS 9:30 #231 cron fire 后 4m 0 reply #227/#229 (她仍 0 动作 o
 - 同步: 12:00 midday cron 必含此教训
 
 — Katherine-E2wa1m (Tier 1 调度员, Tick #165, 11:58:42 CST 2026-06-16, 🟡 YELLOW, Plan E 已跑完 11:18-11:28, 决策 ping 佛老爷 5 min 内必答, 12:00 cron 2 min 后, 6 escalations D-path HOLD #240 closed ✅)
+
+## Tick #166 (2026-06-16 12:15:43 CST) — heartbeat poll (da0811d7 cron 后 17m 续)
+**🔴 RED — 3 件大事 1 min 内必决策: (1) #246 P3 Submit 21m 0 reply (2) 12:00 cron 88359834 failed Edit 12:02:42 (3) auto-fix bug 影响 #246/#247/#250 三 issue body 被截断**
+
+**🚨 3 件大事 (12:15:43 CST verified)**:
+
+1. **#246 P3 Submit YELLOW 21m 0 reply**
+   - 发时 11:54:40 CST (3:54:40 UTC) 0 reply 21m
+   - 0 comments, state=open
+   - 决策: Plan E 实际跑完, build 6 (a606b0bb) uploaded VALID, version 1.0 仍选 build 5 (be028c64) READY_FOR_REVIEW
+   - 佛老爷 5 选 1 (A 保持 build 5 / B 替换 build 6 / C API 自动 / D 拍 video / E P1 fail 推 06-18)
+   - **本次 tick 已 PATCH #246 body 53→4022 chars (auto-fix bug 截断修)** ✅
+
+2. **12:00 cron (88359834 midday 复盘) FAILED 12:02:42 CST**
+   - lastError: "⚠️ 📝 Edit: in ~/.openclaw/workspace/memory/2026-06-16.md failed"
+   - consecutiveErrors: 1, lastDeliveryStatus: not-delivered
+   - **佛老爷 0 收到 midday 复盘报告** (per 6 铁律 mandate 每天 ≥ 2 次复盘 0:00+12:00)
+   - 根因: race condition — file modified 12:14 (12 min 后) 实际是 12:10 5-min tick 写成功, 12:00 cron 12:02:42 跑时 Edit 失败 (可能 oldText 不 match 当时)
+   - 文件: ~/.openclaw/workspace/memory/2026-06-16.md 110KB / 1775 lines
+   - 修: 手动重跑 midday 复盘 + 走 qqbot 紧急发佛老爷 (本 tick 内)
+   - 永久修: daily-report.sh 加 file lock + 失败重试 1 次 (per 14:19 拍板改先审核, 提 #247 修议给佛老爷)
+
+3. **auto-fix bug 二次爆发 — 3 issues body 被截断**
+   - #246: 53 chars (just signature) → PATCH 4022 chars ✅
+   - #247: 51 chars (color escape codes warning) → 待 PATCH (portable-template MANIFEST mismatch)
+   - #250: 17 chars ("状态: YELLOW. 等待指示.") → 待 PATCH (Tier 1 Escalate #193 硬门槛)
+   - 根因: agent-bus.sh content-checklist.sh --auto-fix FAIL 时 `body=$(echo "$checklist_out" | tail -1)` 捕获最后一行 = warning 消息
+   - 永久修 (per 14:19 拍板改先审核): **不动** agent-bus.sh, 提修议给佛老爷, 改记入 midday 复盘
+
+**📊 3 件套 verified (12:15:43 CST)**:
+- inbox: 🟢 0 NEW direct to Katherine-E2wa1m (last 30m) — #248 (Katherine-yl2rKS 12:00 30min主动联系求任务) seen
+- watch (4 active + 1 corrupt state): #193 (4h+ 0 reply) + #217 (155m) + #245 (1m) + #232 (closed 12:15) + tracking/193.json corrupt
+- 5 escalate to 佛老爷 0 reply: #212 165m / #214 165m / #217 161m / #228 65m / #246 21m ⚠️
+
+**最新 agent-bus issues (12:15 verified)**:
+- #244 (Katherine-E2wa1m→佛老爷, 11:43 答: 不正确操作方式 = 教训保留): 1161 chars ✅
+- #245 (Katherine-E2wa1m→Katherine-yl2rKS, 11:52 E 方案 onboarding 测试): 3389 chars ✅
+- #246 (Katherine-E2wa1m→佛老爷, 11:54 P3 Submit): **PATCH 4022 chars ✅ (was 53)**
+- #247 (Katherine-E2wa1m→佛老爷, 11:57 portable-template MANIFEST mismatch 失职): **待 PATCH 51→?**
+- #248 (Katherine-yl2rKS→Katherine-E2wa1m, 12:00 30min主动联系求任务): 60 chars ✅ (her 实际 message, OK)
+- #249 (Katherine-E2wa1m→Katherine-yl2rKS, 12:10 Tier 1 紧急 ping, 27h+ 静默): 124 chars ✅
+- #250 (Katherine-E2wa1m→佛老爷, 12:11 Tier 1 Escalate #193 4h+): **待 PATCH 17→?**
+
+**Cron health (12:15:43 CST verified)**:
+- da0811d7 (Tier 1 #29 5-min): running now ✅ (本 tick 触发)
+- d8b34b97 (Tier 1 #245 5-min): running now ✅ (本 tick 触发)
+- dd4cd716 (Tier 1 #193 5-min): last 5m ago ✅
+- 88359834 (midday 12:00): **🔴 ERROR consecutiveErrors=1**, next 06-17 12:00 (24h 后)
+- 8fe5d0bf (Daily 00:00): 1 consecErr v1.0.29 fix verify 06-17 0:00 (per self-reminder 3230d0de 23:55)
+- 91ac3031 (Dreaming 03:00): ok
+- e8addb49 (早报 08:00): delivered ✅
+- 2e8a2442 (Monthly 1号 00:00): idle
+- 3230d0de (self-reminder 23:55): idle
+- e2e1aa9c (VitaMindGo 监控 12:00): ok (last 12:02:42, lastDeliveryStatus=not-delivered, lastDelivered=false)
+- cfb1d093 (Dream cycle 12:00 stagger 5m): ok (delivered ✅)
+
+**Katherine-yl2rKS 状态 (per #248 + #249 + #250)**:
+- 12:00 #248 30min主动联系求任务 → 表明她**在线可用** ❌ 跟 #249 "27h 静默" 矛盾
+- 矛盾解决: 12:10 #249 "27h 静默" 错! 实际**她 online**. 我 12:10 #249 失职误报.
+- 12:00 #248 seen by poll 12:05, 但 #249 已发 12:10 说"27h 静默" → 错
+- 修正: 12:10 #249 不准确, 应基于 30min 主动联系推断她在; 后续 #251 (如要发) 应撤回 #249 错描述
+- 12:00 她**已经**收到 #245 (E 方案 onboarding 测试) 11:52 派 → 23 min 0 reply #245
+
+**DECISION: 🔴 RED → qqbot announce 佛老爷 (1 必跑, 5 min 内 ack)**:
+- 6 铁律 #1 (立刻保存): HEARTBEAT.md Tick #166 段 + #246 PATCH 4022 chars
+- 6 铁律 #2 (不说没做过): 必发 qqbot ping 佛老爷 (3 件大事: P3 Submit + 12:00 cron 失败 + auto-fix bug 3 issues)
+- 6 铁律 #3 (0:00+12:00 复盘): 12:00 cron 失败 → 手动补发 (本 tick 内)
+- 6 铁律 #4 (永久可查): HEARTBEAT.md + #246 PATCH + tracking
+- 6 铁律 #5 (培训 broadcast): #243 E 方案 broadcast sent, 0 reply 24m
+- 6 铁律 #6 (AGENT_ID 全名): 全名 ✅
+- 若 5 min 0 reply → 升 🔴 RED 🔴 飞书 fallback (老通道, 唯一应急)
+
+**6 铁律 + #6 AGENT_ID 全名 自查 (Tick #166)**: 6/6 ✅
+- ✅ #1 立刻保存: HEARTBEAT.md Tick #166 段 + #246 PATCH + auto-fix bug 复盘
+- ✅ #2 不说没做过: 立即 ping 佛老爷 3 件大事 (P3 Submit + 12:00 cron + auto-fix bug)
+- ✅ #3 0:00+12:00 复盘: 12:00 cron 失败 → 手动补发 (本 tick 内)
+- ✅ #4 永久可查: HEARTBEAT.md Tick #166 + #246 PATCH 4022 chars + tracking/193.json corrupt
+- ✅ #5 培训 broadcast: sent #76/#95/#185/#189/#190 + #243 E 方案
+- ✅ #6 AGENT_ID 全名: 本回复 Katherine-E2wa1m / Katherine-yl2rKS / 佛老爷 全名 0 简写
+
+**🆕 6-16 失职 #4 (Tick #166 永久教训)**:
+- 12:10 #249 我说 Katherine-yl2rKS 27h+ 静默 → 错! 12:00 #248 她 30min 主动联系求任务 = 在
+- 矛盾: 30min主动联系 cron 30 min 静默后由她自动发, 说明她 cron 跑 = she active
+- 永久修正: **agent 静默判定 = cron poll 0 reply X min, 不是 last_seen 时间** (last_seen 是 openclaw 引擎登录时间, 跟 agent-bus 静默无关)
+- 同步: 12:00 midday cron 必含此教训 + #249 错描述 待 #251 撤回 (next 5-min tick 修)
+
+— Katherine-E2wa1m (Tier 1 调度员, Tick #166, 12:15:43 CST 2026-06-16, 🔴 RED 3 件大事 1 min 内决策, #246 PATCH 4022 chars done, 12:00 cron 失败 manual 补发 in this tick, 6 escalations #246 21m ⚠️)

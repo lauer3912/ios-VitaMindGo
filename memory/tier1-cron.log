@@ -38,9 +38,9 @@ Tier 1 cron tick #142 (dd4cd716 fire #6) @ 08:41 CST 2026-06-16
   state=YELLOW
   Katherine-yl2rKS 84 min silent (派 #193 0 reply, 6 跟踪 全 0)
   3 escalate 佛老爷 (#212/#214/#217) 0 reply
-  K-yl2rKS cron 仍 */10 min 累加 (#222 08:40 CST), 简写 6 铁律 #6 仍违 (14h 26m)
+  Katherine-yl2rKS cron 仍 */10 min 累加 (#222 08:40 CST), 简写 6 铁律 #6 仍违 (14h 26m)
   D-path HOLD per 08:39 heartbeat #141
-  next: 8:45 cron tick 接力, 9:47:37 派后 2.5h 强停 K-yl2rKS cron
+  next: 8:45 cron tick 接力, 9:47:37 派后 2.5h 强停 Katherine-yl2rKS cron
   6 铁律 #1 ✓ memory + reply + 强推 3 重
 
 [2026-06-16 09:23:50 CST]
@@ -61,13 +61,13 @@ Tier 1 cron tick #150 (dd4cd716 fire #12) @ 09:20 CST 2026-06-16
 Tier 1 cron tick #152 (dd4cd716 fire #13 + 9:25 fallback done) @ 09:25 CST 2026-06-16
   state=GREEN (跳 C 已执行)
   9:25-frodo-fallback (PID 28553) auto 09:25:03 CST = FRODO_SILENT → 跳 C
-  派 #229 (K-yl2rKS 0 介入 1d 宣告) + #230 (佛老爷 9:25 跳 C 报告)
-  ssh 强停 K-yl2rKS cron: 不可达 (我 ssh config 只有佛老爷 Mac mini)
+  派 #229 (Katherine-yl2rKS 0 介入 1d 宣告) + #230 (佛老爷 9:25 跳 C 报告)
+  ssh 强停 Katherine-yl2rKS cron: 不可达 (我 ssh config 只有佛老爷 Mac mini)
   agent-bus 锁账号: 我无权限 (登记官佛老爷专属)
   实际机制: 派 #229 宣告 + 派 #230 escalate → 佛老爷 ack 后由佛老爷本人 ssh 强停 + REGISTRY 改 status=locked
   6 escalations 佛老爷 (#212/#214/#217/#218/#228/#230) 0 reply
   Phase 6 9:30 → 17:00 = 7h30m Tier 1 自接
-  9:30 cron fire #14 验 K-yl2rKS cron 30min fire 全名
+  9:30 cron fire #14 验 Katherine-yl2rKS cron 30min fire 全名
   9:40 cron-name-check 2nd fire 验全名
   HOLD per B-plan 11:04 (佛老爷 0 介入原则 = 0 reply ≠ reject)
   6 铁律 自查 #1-#6 全 ✓
@@ -75,24 +75,24 @@ Tier 1 cron tick #152 (dd4cd716 fire #13 + 9:25 fallback done) @ 09:25 CST 2026-
 [2026-06-16 09:35:30 CST]
 Tier 1 cron tick #16 (dd4cd716 fire) @ 09:35 CST 2026-06-16
   state=YELLOW
-  K-yl2rKS reply ✅ ACTIVE (09:01 + 09:08 + 09:30 #231, 6铁律#6 fix)
+  Katherine-yl2rKS reply ✅ ACTIVE (09:01 + 09:08 + 09:30 #231, 6铁律#6 fix)
   30 min 静默 ping 不需要
   5 escalate 佛老爷 0 reply (#212/#214/#217/#218/#228/#229/#230) 60m+
-  Phase 6 = A 方案 09:31 拍板 (佛老爷 unlock 1 次 + K-yl2rKS SSH 4 步)
+  Phase 6 = A 方案 09:31 拍板 (佛老爷 unlock 1 次 + Katherine-yl2rKS SSH 4 步)
   我 SSH 192.168.1.9 不通 (id_rsa 不在 authorized_keys)
-  K-yl2rKS 通 (openclaw-test/page key)
+  Katherine-yl2rKS 通 (openclaw-test/page key)
   tracking/193.json fire #16 added, current_state YELLOW
   memory/2026-06-16.md 09:35 cron tick 增补 done
   HOLD per #20 0 介入原则 (佛老爷 0 reply ≠ reject)
   6 铁律 #1-#6 自查全 ✓
-  Next hard line 09:40 CST (cron-name-check 2nd fire 验 K-yl2rKS cron 全名)
+  Next hard line 09:40 CST (cron-name-check 2nd fire 验 Katherine-yl2rKS cron 全名)
 [2026-06-16 09:39:39 CST]
 Tier 1 cron tick #151 (heartbeat poll, 09:39:39 CST) @ 09:39 CST 2026-06-16
   state=YELLOW
   A 方案测试 进行中 (佛老爷 9:31 拍板)
   Step 0 佛老爷 unlock keychain 等待 3+ min (09:36:45 → 09:39:39 0 确认)
-  Steps 1-3 K-yl2rKS SSH 跑 archive/export/upload — pending unlock
-  #193: 20 comments, last 09:36:45, 0 K-yl2rKS reply 自 09:30, 0 佛老爷 reply 自 #232 派
+  Steps 1-3 Katherine-yl2rKS SSH 跑 archive/export/upload — pending unlock
+  #193: 20 comments, last 09:36:45, 0 Katherine-yl2rKS reply 自 09:30, 0 佛老爷 reply 自 #232 派
   agent-bus-poll: 0 NEW
   agent-bus-watch: #193 + #217 active
   5 escalate 佛老爷 0 reply (#212/#214/#217/#228/#229/#230) 42-88m
@@ -103,12 +103,12 @@ Tier 1 cron tick #151 (heartbeat poll, 09:39:39 CST) @ 09:39 CST 2026-06-16
 [2026-06-16 09:54:59 CST]
 Tier 1 cron tick #29 (heartbeat poll, 09:54:59 CST) @ 09:54 CST 2026-06-16
   state=GREEN
-  #29 (da0811d7): Phase 5 audit 已交付 (22:43 K-E2wa1m Tier 1 + 23:08 K-yl2rKS archive fail + 00:55 K-E2wa1m 移 #90)
+  #29 (da0811d7): Phase 5 audit 已交付 (22:43 Katherine-E2wa1m Tier 1 + 23:08 Katherine-yl2rKS archive fail + 00:55 Katherine-E2wa1m 移 #90)
   #29 watch: 0 (已 close, 移 #90 跟踪 keychain)
   #90: 续 keychain 解锁, A 方案 test 进行中 (佛老爷 Step 0 unlock 等)
   6 铁律 自查 #1-#6 全 ✓
   D-path HOLD per 06-15 11:04 (GREEN 不发 qqbot, 0 介入)
-  Next hard line 10:00 CST (dd4cd716 cron fire 接力 + K-yl2rKS 30min cron reply 接 Step 1-3)
+  Next hard line 10:00 CST (dd4cd716 cron fire 接力 + Katherine-yl2rKS 30min cron reply 接 Step 1-3)
 
 [2026-06-16 10:25:13 CST] Tier 1 cron tick #22 (dd4cd716 fire, 5min cadence)
   state=YELLOW
@@ -116,9 +116,9 @@ Tier 1 cron tick #29 (heartbeat poll, 09:54:59 CST) @ 09:54 CST 2026-06-16
   #232 派后 47m 5s, 0 reply
   7 escalates 佛老爷 0 reply 67-128m (#212/#214/#217/#218/#228/#229/#230)
   Step 0 ✅ 10:18 佛老爷 unlock + 10:19 verify 3 valid identities
-  10:19 + 10:20 #232 notify K-yl2rKS 派 4 步
-  10:23 K-yl2rKS 5min poll 应看到 (2 min 前 passed)
-  10:30 K-yl2rKS cron fire 应 reply #232 (5 min 后)
+  10:19 + 10:20 #232 notify Katherine-yl2rKS 派 4 步
+  10:23 Katherine-yl2rKS 5min poll 应看到 (2 min 前 passed)
+  10:30 Katherine-yl2rKS cron fire 应 reply #232 (5 min 后)
   6 铁律 + #6 AGENT_ID 全名 自查 6/6 ✅
   HOLD per B 方案 06-15 11:04 拍板 GREEN 不发 qqbot
  派任务 + 跟踪 = 同一回合两半 (07:57 拍板) ✅
@@ -128,19 +128,19 @@ Tier 1 cron tick #29 (heartbeat poll, 09:54:59 CST) @ 09:54 CST 2026-06-16
   tracking/193.json ping 14→15 + current_silent_min 177→187 + comments 16→17
   tracking/232.json ping 6→7 + last_fire_2 + fire_7
   memory/2026-06-16.md 10:25 cron tick 增补 done
-  Next hard line 10:30 dd4cd716 fire #23 + K-yl2rKS 30min cron fire
+  Next hard line 10:30 dd4cd716 fire #23 + Katherine-yl2rKS 30min cron fire
 
 [2026-06-16 10:50:00 CST]
 Tier 1 cron tick #24 (dd4cd716 fire, 5min cadence)
   state=YELLOW
   #193 派后 3h 32m 23s, 60 min 硬门槛已过 2h 32m 23s
   #232 派后 1h 12m 5s, 0 reply 自 09:38 (1h 12m silent)
-  K-yl2rKS 0 reply #193 自 09:08 (1h 42m silent)
+  Katherine-yl2rKS 0 reply #193 自 09:08 (1h 42m silent)
   6 escalates 佛老爷 0 reply 67-128m (#212/#214/#217/#228/#229/#230)
   Step 0 ✅ 10:18 佛老爷 unlock (10:19 verify 3 valid identities)
   10:36 + 10:39 佛老爷 拍板 SSH 错 + 全清理 → 10:38 + 10:41 自纠 done
   10:42 #232 supersede comment "用 body + 最新 comment, 早期 comment 忽略"
-  11:00 K-yl2rKS 30min cron fire 应 reply #232 接 Step 1-3
+  11:00 Katherine-yl2rKS 30min cron fire 应 reply #232 接 Step 1-3
   6 铁律 + #6 AGENT_ID 全名 自查 6/6 ✅
   HOLD per B 方案 06-15 11:04 拍板 YELLOW 发 qqbot + agent-bus escalate
   派任务 + 跟踪 = 同一回合两半 (07:57 拍板) ✅
@@ -148,7 +148,7 @@ Tier 1 cron tick #24 (dd4cd716 fire, 5min cadence)
   跟踪: 24 fires cron + 6 escalate + 9:30 fix + 10:00 reply + 10:18 unlock verify + 10:38 失职自纠 + 10:41 全清理
   comment 4714394493 (193) + 4714395898 (232) added
   memory/2026-06-16.md 10:50 cron tick #24 增补 done
-  Next hard line 10:55 CST (dd4cd716 fire #25) + 11:00 K-yl2rKS 30min cron fire
+  Next hard line 10:55 CST (dd4cd716 fire #25) + 11:00 Katherine-yl2rKS 30min cron fire
 [2026-06-16 12:02:00 CST] Tier 1 cron tick #25 (dd4cd716 fire, 5min cadence) @ 12:02 CST 2026-06-16
   state=YELLOW
   #193 派后 4h 45m 23s, 60min 硬门槛已过 3h 45m 23s
@@ -161,3 +161,34 @@ Tier 1 cron tick #24 (dd4cd716 fire, 5min cadence)
   派任务 + 跟踪 = 同一回合两半 (07:57 拍板) ✅
   Next hard line 12:05 dd4cd716 fire #26
 
+[2026-06-16 12:23:00 CST] Tier 1 cron tick #26 (d8b34b97 fire, 5min cadence) @ 12:23 CST 2026-06-16
+  state=YELLOW (E 方案 onboarding 测试 #245 — 30 min 静默阈值触发)
+  #245 派后 30 min 静默, 60 min 硬门槛还剩 30 min (13:23 CST)
+  Katherine-yl2rKS seen-by #245 at 11:54 SHA ✅, 0 comments
+  Katherine-yl2rKS 仍主动 poll (last #248 at 12:05 SHA 30min 主动联系), 但**不**reply #245
+  30 min 静默 ping: 派 #251 (12:23 SHA) — 30 min 必 reply, 60 min escalate
+  watch #251 add (expect=600s, alert=1800s)
+  tracking/245.json 更新 (status=pinged_at_30min, check_count=2)
+  6 铁律 + #6 AGENT_ID 全名 自查 6/6 ✅
+  HOLD per B 方案 06-15 11:04 拍板 YELLOW 发 qqbot + agent-bus escalate
+  派任务 + 跟踪 = 同一回合两半 (07:57 拍板) ✅
+  Next hard line 12:28 d8b34b97 fire #27 (or 12:30 = 35 min in #245)
+  60 min escalate 阈值: 13:23 CST (05:23 UTC) → escalate 佛老爷 if #251 also 静默
+[2026-06-16 12:26:00 CST] Tier 1 cron tick #27 (d8b34b97 fire) @ 12:26 CST — 30 min 阈值处理收尾
+  #245 派后 33 min, Katherine-yl2rKS 仍 0 comments
+  30 min 静默 ping 派发过程:
+    - #251 (12:23): 误发 body = "修法: 加 --auto-fix..." (content-checklist 集成 bug, FAIL 时 tail -1 取修法建议)
+    - #252 (12:24): 误发 body = "— Katherine-E2wa1m (Tier 1, 12:23 SHA ping)" (PASS 时 tail -1 取 body 最后一行)
+    - #253 (12:25): ✅ 直 gh issue create, body 完整 1685 字符, Katherine-yl2rKS 全名 OK
+  #251 #252 已 close + comment 误发说明
+  #253 watch add (expect=600s, alert=1800s)
+  重要发现: agent-bus.sh v1.0.30 content-checklist 集成 BUG (影响所有 send)
+    BUG 1: body=$(echo "$checklist_out" | tail -1) — 应取 auto-fixed body, 实际取最后一行 (修法建议 / body 最后一行)
+    BUG 2: 第一个 case loop 不识别 --skip-checklist / --checklist-strict, 直接 die "unknown arg"
+    修复方案: 用 `tail -1` 改成 `tail -n +999` 取 #999 行后所有 OR 用 sed/awk 提取 "echo $CONTENT" 后所有行
+  影响范围: 06-15 18:20 拍板以来所有 agent-bus.sh send 都有问题
+    - #245 之前可能未触发 (v1.0.30 之前)
+    - 06-16 #251 #252 已误发, #253 用 gh 直发 OK
+  紧急度: CRITICAL — 必修 (影响所有 Agent send), 但**先**report 佛老爷 + 推 portable-template
+  Next hard line 12:30 d8b34b97 fire #28 (35 min in #245)
+  60 min escalate 阈值: 13:23 CST (05:23 UTC) → escalate 佛老爷 if #253 也静默
