@@ -1,0 +1,23 @@
+{
+  "lastChecks": {
+    "agent-bus-inbox": "2026-06-16T00:57:00+08:00",
+    "issue-193": "2026-06-16T00:57:00+08:00",
+    "escalations-212-214-217": "2026-06-16T00:57:00+08:00",
+    "kyl2rks-dup-cron": "2026-06-16T00:57:00+08:00",
+    "background-9-37": "2026-06-16T00:57:00+08:00",
+    "background-9-47": "2026-06-16T00:57:00+08:00"
+  },
+  "state": "RED-D-path-HOLD",
+  "current_fire": "dd4cd716 cron fire #9 @ 08:55 CST",
+  "next_actions": [
+    "9:00 cron tick fire #10 接力",
+    "9:15 cron tick fire #11 加 #193 comment",
+    "9:30 cron tick fire #12 接力",
+    "9:37:37 PID 20480 final pre-action escalate sharp",
+    "9:45 cron tick fire #13 接力",
+    "9:47:37 PID 20481 强停 Katherine-yl2rKS cron sharp",
+    "9:50 派 #226 Phase 6 我自接",
+    "12:00 midday 复盘",
+    "17:00 交付 Phase 6 (P1 不延)"
+  ]
+}
