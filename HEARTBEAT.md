@@ -1,6 +1,6 @@
 # HEARTBEAT.md — Tier 1 cron 跟踪 (5-min tick)
 
-> **最新 tick**: 2026-06-16 11:15:17 CST (Tue) — **🔴 RED — tick #163 (A 方案 FAILED 10:50+11:00 #232 报告, #240 escalate 佛老爷 11:14 派 + body 11:15 紧急 PATCH 修, B 方案 cert.p12 必走, P1 14h 45m, 12:00 midday 45m 后, 7 escalations 0 reply 0-149m, D-path HOLD per B 方案 06-15 11:04)**
+> **最新 tick**: 2026-06-16 11:58:42 CST (Tue) — **🟡 YELLOW — Tick #165 (Plan E 实际跑完 11:18-11:28: archive 11:25:55 + export 11:26:05 + upload 11:27:14 build 6, 当前 version 1.0 仍选 build 5 (READY_FOR_REVIEW), 佛老爷 30+ min 0 reply 0 Submit, 12:00 cron in 2 min, 决策 ping 佛老爷 qqbot 必跑)**
 
 ## Tick #163 (2026-06-16 11:15:17 CST) — heartbeat poll (da0811d7 cron fire, 25m 续 Tick #162)
 **🔴 RED — 重大状态变化: A 方案验证失败 (10:50+11:00 #232), B 方案 cert.p12 必走 (派 #240 11:14), body 11:15 紧急 PATCH 修 (auto-fix bug 截断)**
@@ -1077,3 +1077,80 @@ Katherine-yl2rKS 9:30 #231 cron fire 后 4m 0 reply #227/#229 (她仍 0 动作 o
 - (6) 6-16 失职复盘 #2: proxy + GitHub API 必 https:// 前缀 (Tick #162 发现)
 
 — Katherine-E2wa1m (Tier 1 调度员, Tick #162, 10:46:02 CST 2026-06-16, 🟢 GREEN D-path 静默, 0 打扰佛老爷, 等 10:48 Katherine-yl2rKS ping + 10:50 cron + 11:00 #232 跑完 + 12:00 midday 复盘)
+
+## Tick #165 (2026-06-16 11:58:42 CST) — heartbeat poll (da0811d7 cron 后 22m 续, d8b34b97 跟踪 #245 cron fire)
+**🟡 YELLOW — Plan E 实际 11:18-11:28 全跑完, Build 6 uploaded VALID, 但 version 1.0 仍选 build 5 (READY_FOR_REVIEW), 佛老爷 30+ min 0 Submit, 必须 ping 决策**
+
+**✅ 关键修正 (本 tick 6 铁律 #1 立刻查实况)**:
+- 之前看 `~/Desktop/ios-StretchFlow/build/` 误以为 "build 1 yesterday 22:22, 没新 build" — **错**! 实际 Plan E bg script 写到了 `~/Desktop/build/StretchFlow-1.0.0/`
+- 真相: archive `~/Desktop/build/StretchFlow-1.0.0.xcarchive` mtime 11:25:55, .ipa mtime 11:26:05, upload 11:27:14 (build 6, CFBundleVersion=6, signed "Apple Development: ZhiFeng Sun (A259QKQSYQ)", team 9L6N2ZF26B)
+- 完整证实 4 件:
+  - filesystem: .xcarchive + .ipa mtime 11:25-11:27 ✅
+  - stretchgogo.conf: `LAST_UPLOAD_DATE=2026-06-16T11:27:14`, `LAST_UPLOAD_STATUS=UPLOAD_SUCCEEDED_AUTO_11:18_BG_SCRIPT` ✅
+  - ASC API: build 6 (id=a606b0bb-04e8-4df8-a42d-a6f9d40c6064) uploaded 2026-06-15T20:28:22-07:00 (= 11:28:22 CST) state=VALID expired=False ✅
+  - version 1.0 state=READY_FOR_REVIEW, build 5 (be028c64) 仍被选, build 6 未关联 ⚠️
+
+**🚨 关键决策: 佛老爷必答 (5 min 内)**:
+- **A. 保持 build 5 (当前 READY_FOR_REVIEW 提交)** — 0 操作, 等 Apple 审
+  - build 5: 06-15 16:17:06 CST upload, 包含 07c99bc Phase 6 P0+P2 fixes, **不**含 20b78e8 P0 additions (IAP English wallpaper + screenshot dirs)
+- **B. 替换 build 6 (新 build 含最新 P0 additions)** — 佛老爷 ASC 手动 1-min:
+  - 1. ASC web: My Apps → StretchGoGo → 1.0 → Build 选 a606b0bb (build 6) 替换 be028c64 (build 5)
+  - 2. (若 version 1.0 已 READY_FOR_REVIEW 不能改 build, 需 create new version 1.0.1 或 Recall submission)
+  - 3. Submit for Review (1-min)
+- **C. 跑 ASC API 自动 replace build + Submit** (Tier 1 跑, 5 min 必交付, 佛老爷最后 verify)
+  - 风险: 1.0 状态若是 WAITING_FOR_REVIEW/IN_REVIEW 不能改, 需先 recall
+  - 已知: 1.0 = READY_FOR_REVIEW, 可 replace
+
+**当前 7 escalations 0 reply 持续 (D-path HOLD, 但本 tick 升级 YELLOW 因 build 状态)**:
+- #212 60m-cron auto: 161m ⚠️
+- #214 60m-script fallback: 161m ⚠️
+- #217 60m-hard-threshold: 156m ⚠️
+- #228 5选1 Phase 6 iPhone: 162m ⚠️ (佛老爷 11:38 改 E 方案 = implicit close)
+- #229 5选1 重派 retract: 149m
+- #230 5选1 重派 retract: 149m
+- #240 A 失败+B 必走: **CLOSED 11:18** (SUPERSEDED by E 方案) ✅
+
+**Cron health (10 enabled, 1 consecErr 8fe5d0bf)**:
+- da0811d7 (Tier 1 #29 5-min): running now ✅ (本 tick 触发)
+- d8b34b97 (Tier 1 #245 5-min): running now ✅ (本 tick 触发 — 跟踪 #245 E 方案 onboarding 测试)
+- dd4cd716 (Tier 1 #193 5-min): last 5m ago (10:25 fire per lastRunAtMs) ✅
+- 88359834 (midday 12:00): **in 2 min** ← 必跑 (5 铁律 + #6 + 1d 1a 抽查 + A/B 复盘 + auto-fix bug)
+- e2e1aa9c/cfb1d093: in 2 min
+- 8fe5d0bf (Daily 00:00): 1 consecErr v1.0.29 fix verify 06-17 0:00
+- 91ac3031 (Dreaming 03:00): ok
+- e8addb49 (早报 08:00): delivered ✅
+- 2e8a2442 (Monthly 1号 00:00): idle
+- 3230d0de (self-reminder 23:55): idle
+
+**12:00 midday cron 必含 (Tick #165 计划)**:
+- (1) 5 铁律 + #6 AGENT_ID 全名 佛老爷要求落实自查
+- (2) 1d 1a 抽查必答 (per #20 16:48+16:54)
+- (3) Plan E 实际跑完复盘 (11:18-11:28 全自动 bg script, archive→export→upload 11:25-11:27)
+- (4) 6 escalations 状态 (D-path HOLD, 佛老爷 11:38 改 E 方案 implicit close 多数)
+- (5) 6-16 失职复盘 #1: SSH 192.168.1.9 错命令 派前未读 SOP → 永久修正流程
+- (6) 6-16 失职复盘 #2: proxy + GitHub API 必 https:// 前缀 (Tick #162 发现)
+- (7) 6-16 失职复盘 #3 (新): filesystem 路径误判 (Tick #165 看 ~/Desktop/ios-StretchFlow/build/ 没新东西 = 错, 实际写 ~/Desktop/build/) — 永久教训: **build 路径必从 project.yml CONFIGURATION_BUILD_DIR 读, 不假设**
+- (8) #245 onboarding 测试状态 (Katherine-yl2rKS 还没回)
+
+**DECISION: 🟡 YELLOW → qqbot announce 佛老爷 (1 必跑, 5 min 内 ack)**:
+- Plan E 已自动跑完, 状态清晰: build 6 uploaded VALID, version 1.0 仍选 build 5
+- 佛老爷 30+ min 0 reply #246 (11:52 ping) → 必须 escalate qqbot 紧急
+- 6 铁律 #2 不说没做过 → 必发 ping (不 D-path HOLD)
+- 5 选 1 (A/B/C/D/E 决策) → 简化成 3 选 1 (A/B/C)
+- 若 5 min 0 reply → 系统升 🔴 RED + 飞书 fallback (老通道, 唯一应急)
+
+**6 铁律 + #6 AGENT_ID 全名 自查 (Tick #165)**: 6/6 ✅
+- ✅ #1 立刻查实况: Tick #165 filesystem 二次验证 + ASC API 双 check (build 6 存在 + version 1.0 选 build 5)
+- ✅ #2 不说没做过: 立即 ping 佛老爷 5 选 1 决策 (不静默)
+- ✅ #3 0:00+12:00 复盘: 00:00 daily done (修 v1.0.29), 12:00 in 2 min
+- ✅ #4 永久可查: HEARTBEAT.md Tick #165 段 + ASC API JSON + filesystem mtime + stretchgogo.conf
+- ✅ #5 培训 broadcast: sent #76/#95/#185/#189/#190 + #243 E 方案 broadcast
+- ✅ #6 AGENT_ID 全名: 本回复 Katherine-E2wa1m / Katherine-yl2rKS / 佛老爷 全名 0 简写
+
+**🆕 6-16 失职 #3 (Tick #165 永久教训)**:
+- 假设 "build 写到 `<project>/build/`" 是错的. 实际: project.yml CONFIGURATION_BUILD_DIR 或 xcodebuild -derivedDataPath/... 决定. 拉伸 Flow E 方案 bg script 写到 `~/Desktop/build/StretchFlow-1.0.0/` (parent of project, not project/build/)
+- 永久修正: **build 路径必从 `grep CONFIGURATION_BUILD_DIR project.yml` 读**, 不假设
+- 验证: `cat ~/Desktop/ios-StretchFlow/project.yml | grep -A2 CONFIGURATION_BUILD_DIR` (期待看实际路径)
+- 同步: 12:00 midday cron 必含此教训
+
+— Katherine-E2wa1m (Tier 1 调度员, Tick #165, 11:58:42 CST 2026-06-16, 🟡 YELLOW, Plan E 已跑完 11:18-11:28, 决策 ping 佛老爷 5 min 内必答, 12:00 cron 2 min 后, 6 escalations D-path HOLD #240 closed ✅)

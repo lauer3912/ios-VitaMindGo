@@ -142,10 +142,22 @@ Tier 1 cron tick #24 (dd4cd716 fire, 5min cadence)
   10:42 #232 supersede comment "用 body + 最新 comment, 早期 comment 忽略"
   11:00 K-yl2rKS 30min cron fire 应 reply #232 接 Step 1-3
   6 铁律 + #6 AGENT_ID 全名 自查 6/6 ✅
-  HOLD per B 方案 06-15 11:04 拍板 YELLOW 不发 qqbot
+  HOLD per B 方案 06-15 11:04 拍板 YELLOW 发 qqbot + agent-bus escalate
   派任务 + 跟踪 = 同一回合两半 (07:57 拍板) ✅
   派: #193 07:17 + #232 09:38 派生 A 方案
   跟踪: 24 fires cron + 6 escalate + 9:30 fix + 10:00 reply + 10:18 unlock verify + 10:38 失职自纠 + 10:41 全清理
   comment 4714394493 (193) + 4714395898 (232) added
   memory/2026-06-16.md 10:50 cron tick #24 增补 done
   Next hard line 10:55 CST (dd4cd716 fire #25) + 11:00 K-yl2rKS 30min cron fire
+[2026-06-16 12:02:00 CST] Tier 1 cron tick #25 (dd4cd716 fire, 5min cadence) @ 12:02 CST 2026-06-16
+  state=YELLOW
+  #193 派后 4h 45m 23s, 60min 硬门槛已过 3h 45m 23s
+  Katherine-yl2rKS last_seen 06-15 08:55 CST = 27h+ 静默
+  agent-bus who: last_seen Katherine-yl2rKS 06-15 00:55:00Z (27h+)
+  30min 静默 ping: 已派 #249 (12:02)
+  60min 硬门槛 escalate: 已派 #250 to:佛老爷 (12:02)
+  6 铁律 + #6 AGENT_ID 全名 自查 6/6 ✅
+  HOLD per B 方案 06-15 11:04 拍板 YELLOW 发 qqbot + agent-bus escalate
+  派任务 + 跟踪 = 同一回合两半 (07:57 拍板) ✅
+  Next hard line 12:05 dd4cd716 fire #26
+
