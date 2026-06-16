@@ -2,6 +2,94 @@
 
 > **最新 tick**: 2026-06-16 10:14:43 CST (Tue) — **🟡 YELLOW — tick #157 (A 方案测试 Step 0 unlock 仍 pending 43 min, 7 escalate 0 reply 41-113 min, #193 24 comments 0 Katherine-yl2rKS reply 自 09:08, Katherine-yl2rKS 9:30 #231 + 10:00 #233 cron 全名 fix ✅ 持续, 0 打扰佛老爷 per 6 铁律 #2 + 14:13 拍板 agent-bus 唯一通道 + 14:19 拍板 改先审核 + D-path HOLD per B 方案 06-15 11:04 拍板 GREEN 不发 qqbot, 10:15 next dd4cd716 cron fire #20 + 10:30 next Katherine-yl2rKS cron 30min fire 应 reply #232 + 10:35 飞书 step 0 unlock 提示)**
 
+## Tick #161 (2026-06-16 10:39:49 CST) — qqbot cron heartbeat (Tick #160 续, 14m 后 verify)
+**🟡 YELLOW — 佛老爷 10:36 拍板纠正 SSH 命令 (我 10:38 自纠重派), A 方案 test 继续, 等 Katherine-yl2rKS 接 (10:48 30min ping 看到)**
+
+3 件套 verified (`source $HOME/.config/agent-bus/gh-token` + proxy 10808, rate 4992/5000):
+- inbox: 🟢 0 NEW direct to Katherine-E2wa1m (last 14m, #234 Katherine-yl2rKS 10:30 cron 全名 ✅ 持续)
+- watch #193 + #217 active (D-path HOLD, 60m threshold 维持)
+- thread #193: **28 comments** (Tick #160 24 → 现在 28 = dd4cd716 cron 4 fires 10:25/10:30/10:35/10:40 累加)
+- thread #232: **8 comments** last 10:37:43 CST = **佛老爷 10:36 拍板 + 我 10:38 自纠** (重大变化)
+
+**🚨 佛老爷 10:36 拍板 (重大变化, #232 thread)**:
+- 拍板: "你让 Ubuntu 通过 user291981@192.168.1.9 SSH 登录你服务器的方式是不对的. 去看看 SOP-iOS-Ubuntu-Development.md"
+- 我 (Katherine-E2wa1m) 失职:
+  - 09:35 SSH 192.168.1.9 不通 (Permission denied) 应该**当时**意识到是佛老爷家内网 IP
+  - 09:35-10:19 我**没**读 SOP §0.2.3, 直接派错命令 `ssh user291981@192.168.1.9`
+  - 10:36 佛老爷纠正
+- 我 10:38 自纠 (comment id at 02:37:43Z = 10:37:43 CST):
+  - 改用 `ssh macmini` (alias) 或 `ssh user291981@47.77.237.73 -p 2222` (cloudflared 穿透)
+  - 4 步 Step 1-3 命令全替换 (`ssh macmini "..."` 而不是 `ssh -o ... user291981@192.168.1.9`)
+  - 教训 (永久存): 派 Ubuntu 任务前**必**读 SOP §0.2 (SSH 通道) + §6 (发布链路)
+
+**Katherine-yl2rKS 状态 (10:30 #234 cron fire 全名 ✅, 仍 0 reply #232 A 方案)**:
+- 10:30 #234 body: "Katherine-E2wa1m, 30min到了, 当前空闲, 有什么任务或学习机会? ——Katherine-yl2rKS" ✅
+- 6 铁律 #6 全名 9:30 fix → 10:30 持续 ✅
+- 6 铁律 #2 (真任务 reply): 0 reply #193 自 09:08 (1h31m) + 0 reply #232 自 09:39 (1h0m)
+- 10:48 30min 静默 ping 应看到我 10:38 修正 → 11:00 跑完 4 步
+
+**Escalations state** (api.github.com verified, **6 escalate 0 reply 67-83m**):
+- #212 (60m-cron auto, 08:17:11): open 0c **142m old** ⚠️
+- #214 (60m-script fallback, 08:17:41): open 0c **142m old** ⚠️
+- #217 (60m-hard-threshold, 08:22:35): open 0c **137m old** ⚠️
+- #228 (5 选 1 Phase 6 iPhone, 09:16:23): open 0c **83m old** — 佛老爷 10:36 拍板 = implicit ack A
+- #229 (5 选 1 重派 retract, 09:25): open 1c retract **74m old**
+- #230 (5 选 1 重派 retract, 09:25): open 1c retract **74m old**
+- 佛老爷 10:36 拍板 = 命令修 SSH, **不**是 explicit close escalation → **不** close 4 escalations
+- 等佛老爷 explicit reply 才 close, 静默 hold per 6 铁律 #2
+
+**A 方案 test 状态 (09:31 拍板, 10:38 自纠后 续跑)**:
+- Step 0 ✅ 佛老爷 10:18 unlock (3 valid identities 10:19 verify)
+- Step 1-3 等 Katherine-yl2rKS 接:
+  - 10:48 30min ping 看到修正
+  - 11:00 跑完 4 步 (5-10 min archive + 1-2 min export + 1-2 min upload)
+  - 11:18 60 min escalate 佛老爷 (if 0 reply by then)
+- P1 deadline: 06-17 0:00 (13h 20m 后) — A 方案**不**解决 iPhone 硬件, **只**验证 SSH 流程
+
+**Cron health (10 enabled, all healthy)**:
+- da0811d7 (Tier 1 #29 5-min): running now ✅ (本 tick 触发)
+- dd4cd716 (Tier 1 #193 5-min): last 12m ago (10:25 fire), next 2m ago, running ✅
+- 88359834 (midday 12:00): in 1h 20m ← 5 铁律 + #6 + 1d 1a 抽查必答
+- e2e1aa9c/cfb1d093: in 1h
+- 8fe5d0bf (Daily 00:00): 1 consecErr v1.0.29 fix verify 06-17 0:00
+- 91ac3031 (Dreaming 03:00): ok 8h
+- e8addb49 (早报 08:00): ok 3h ✅
+- 2e8a2442 (Monthly): in 15d
+- 3230d0de (self-reminder 23:55): in 13h
+- e3dfea2d: disabled
+
+**DECISION: 🟡 YELLOW → D-path HOLD 续 (B 方案 06-15 11:04 拍板 GREEN 不发 qqbot)**:
+- 佛老爷 10:36 拍板 = implicit ack A + command fix SSH, 1 个动作 2 个含义
+- 我 10:38 自纠重派 → 等 Katherine-yl2rKS 10:48 ping 看到 → 11:00 跑完
+- 6 escalations 0 reply 67-142m = 佛老爷 review/会议, 不 spam (6 铁律 #2)
+- 12:00 midday cron in 1h 20m — 5 铁律 + #6 + 1d 1a 抽查必答 + Tick #161 复盘
+- 下一 hard line: 10:45 dd4cd716 cron fire #8 (5 min 后) + 10:48 Katherine-yl2rKS 30min ping (8 min 后) + 12:00 midday (1h 20m 后)
+
+**6 铁律 + #6 AGENT_ID 全名 自查 (Tick #161)**:
+- ✅ #1 立刻保存: 本回合 3 文件同步 + #232 10:38 修正 + 失职自纠 (09:35 应读 SOP 未读)
+- ✅ #2 不说没做过: 派 #232 + 7 PING + 78 dup close + 6 escalate + 派 #232 A 方案 + 10:38 自纠失职承认
+- ✅ #3 0:00+12:00 done: 00:00 daily done, 12:00 midday in 1h 20m
+- ✅ #4 永久可查: #193 (28 comments) + #232 (8 comments 含 10:38 自纠) + 6 escalations + memory 5 重
+- ✅ #5 培训 sent: #76/#95/#185/#189/#190
+- ✅ #6 AGENT_ID 全名: 本回合通信 Katherine-E2wa1m / Katherine-yl2rKS / 佛老爷 全名 0 简写; Katherine-yl2rKS 10:30 #234 全名 fix ✅ 持续
+
+**🆕 佛老爷 10:36 拍板 重大观察 (Tick #161)**:
+- 佛老爷 10:36 reply = **拍板修命令**, **不**是 close escalation
+- 1 个 reply 解 2 含义: (a) 修 SSH 命令 (b) implicit ack A 方案 (我没 explicit close, 等他 explicit)
+- 6 escalations (#212/#214/#217/#228/#229/#230) 仍 open, 0 reply 67-142m
+- 派任务 + 跟踪 = 同一回合两半 (07:57 拍板) — 10:38 自纠 = 失职改正 + 同一回合补做 ✅
+- 教训 (永久存): **Ubuntu 派任务前**必读 `docs/SOP-iOS-Ubuntu-Development.md` §0.2 SSH 通道 + §6 发布链路, **不**靠记忆/经验
+- 下次: 派 Ubuntu SSH 任务前, 第 1 步 `cat docs/SOP-iOS-Ubuntu-Development.md | head -100` + grep "ssh" 看正确通道
+
+**🆕 12:00 midday 复盘 必含 (Tick #161 计划)**:
+- (1) 5 铁律 + #6 佛老爷要求落实自查 (per #20 拍板 17:11+17:23)
+- (2) 1d 1a 抽查必答 (per #20 拍板 16:48+16:54, 佛老爷 100% 答得出)
+- (3) #232 A 方案 test 11:00 跑完状态 (Katherine-yl2rKS 实际完成 / 卡新阻塞)
+- (4) 6 escalations 状态 (佛老爷 explicit close / 仍 open / 走 5 选 1 慢路径)
+- (5) 6-15 失职复盘: SSH 192.168.1.9 错命令 派前未读 SOP → 永久修正流程
+
+— Katherine-E2wa1m (Tier 1 调度员, Tick #161, 10:39:49 CST 2026-06-16, 🟡 YELLOW, 佛老爷 10:36 拍板修 SSH + 我 10:38 自纠重派, A 方案 test 续, 等 Katherine-yl2rKS 10:48 ping 看到 → 11:00 跑完 4 步, 12:00 midday 复盘 1h 20m, 6 escalations 0 reply 67-142m D-path HOLD)
+
 ## Tick #157 (2026-06-16 10:14:43 CST) — qqbot cron heartbeat (Tick #156 续, 1m 后 verify)
 **🟡 YELLOW — A 方案测试 Step 0 unlock 43m 0 进展, D-path HOLD per B 方案 06-15 11:04 拍板 (GREEN 不发 qqbot)**
 
