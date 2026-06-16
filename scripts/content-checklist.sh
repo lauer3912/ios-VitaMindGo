@@ -159,7 +159,8 @@ else
 fi
 
 # === C7: 不发送密钥文件 ===
-if echo "$CONTENT" | grep -qE 'BEGIN.*PRIVATE KEY|AuthKey_[A-Z0-9]+\.p8|-----BEGIN'; then
+# C7 修复 (Tick 11:23): 只匹配 PEM 内容, 不匹配路径 (AuthKey_*.p8 是路径引用, 不是文件内容)
+  if echo "$CONTENT" | grep -qE '-----BEGIN [A-Z ]*PRIVATE KEY-----|-----BEGIN [A-Z ]*PRIVATE KEY$'; then
   ko "7" "内容含 private key / p8 文件内容, **不**应发送. 用路径引用 ~/.appstoreconnect/private_keys/AuthKey_*.p8"
 else
   ok 7 "无密钥文件内容 (用路径引用)"

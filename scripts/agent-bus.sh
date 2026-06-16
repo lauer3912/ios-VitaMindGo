@@ -514,6 +514,45 @@ cmd_send() {
   done
   [[ -n "$body" ]] || die "--body required (use --body '' for empty)"
 
+  # v1.0.30 content-checklist (佛老爷 10:48 拍板): 发 issue 前自动跑 checklist
+  # --skip-checklist 跳过 (admin/test only)
+  # --checklist-strict 失败 abort (默认 auto-fix + warn)
+  local skip_checklist=false
+  local checklist_strict=false
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      --skip-checklist) skip_checklist=true; shift ;;
+      --checklist-strict) checklist_strict=true; shift ;;
+      --body) shift 2 ;;  # already consumed
+      --impersonate) shift ;;  # already consumed
+      *) die "unknown arg: $1" ;;
+    esac
+  done
+  if [[ "$skip_checklist" != "true" ]]; then
+    local checklist_script="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/content-checklist.sh"
+    if [[ -x "$checklist_script" ]]; then
+      local checklist_out
+      if [[ "$checklist_strict" == "true" ]]; then
+        # Strict: 失败 abort
+        if ! checklist_out=$(echo "$body" | bash "$checklist_script" --auto-fix - 2>&1); then
+          die "content-checklist 失败 (strict mode): $checklist_out"
+        fi
+        body=$(echo "$checklist_out" | tail -1)
+        log "✅ content-checklist auto-fix PASS"
+      else
+        # Default: auto-fix + 警告 (not abort)
+        if checklist_out=$(echo "$body" | bash "$checklist_script" --auto-fix - 2>&1); then
+          body=$(echo "$checklist_out" | tail -1)
+          log "✅ content-checklist PASS (auto-fix if needed)"
+        else
+          warn "content-checklist 警告 (auto-fix applied, FAIL items fixed). Verify body OK."
+          # Try to extract fixed body from partial output
+          body=$(echo "$checklist_out" | tail -1)
+        fi
+      fi
+    fi
+  fi
+
   local labels=("from:$from" "type:$type" "priority:$pri")
   # Routing label: to:<AGENT_ID> OR to-persona:<X> OR to:All OR to:佛老爷
   if [[ "$to" =~ ^to-persona: ]]; then

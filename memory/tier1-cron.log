@@ -33,3 +33,119 @@ Katherine-E2wa1m (Tier 1)
   Next hard line 21:30 CST (9 min)
   Katherine-yl2rKS next: 补 3 项 + 拉 master-rules + check-placeholders.sh + commit+push + reply thread #29
 [2026-06-15 22:00 CST] Tier 1 跟踪 #29: 推进中, D 路径 (GREEN) — thread 29 最近 reply 是 20:33 (Katherine-E2wa1m pre-review, 1h 27min 前), Katherine-yl2rKS 还在补 3 项 (SOUL.md #5/#6 + ASC 已签 + 5 拍板永久存), 无新 reply, 无 #29 watch, 任务截止 24:00 GMT+8 (2h 后). watch #60/#62 是其他 issue, 非 #29. HOLD, 不打扰佛老爷.
+[2026-06-16 08:44:11 CST]
+Tier 1 cron tick #142 (dd4cd716 fire #6) @ 08:41 CST 2026-06-16
+  state=YELLOW
+  Katherine-yl2rKS 84 min silent (派 #193 0 reply, 6 跟踪 全 0)
+  3 escalate 佛老爷 (#212/#214/#217) 0 reply
+  K-yl2rKS cron 仍 */10 min 累加 (#222 08:40 CST), 简写 6 铁律 #6 仍违 (14h 26m)
+  D-path HOLD per 08:39 heartbeat #141
+  next: 8:45 cron tick 接力, 9:47:37 派后 2.5h 强停 K-yl2rKS cron
+  6 铁律 #1 ✓ memory + reply + 强推 3 重
+
+[2026-06-16 09:23:50 CST]
+Tier 1 cron tick #150 (dd4cd716 fire #12) @ 09:20 CST 2026-06-16
+  state=YELLOW
+  Katherine-yl2rKS 部分完成 (cron 频率改 ✓, 全名仍违 ✗ 14h 53m)
+  Phase 6 阻塞 iPhone 硬件 (她 9:08 求佛老爷 A vs B 拍板)
+  9:15 cron-name-check (PID 28552) DONE 09:17:23 CST = NO_NEW_CRON_ISSUE
+  9:25 frodo-fallback (PID 28553) 倒计时 1m, 自动跑 5 选 1
+  9:40 cron-name-check 2nd PLANNED, 验全名
+  5 escalations 佛老爷 0 reply (#212/#214/#217/#218/#228) 60m+
+  comment 4713992022 added to #193 (cron fire #12 状态)
+  tracking/193.json + tracking/217.json updated
+  HOLD per B-plan 11:04 (佛老爷 0 介入, 醒-发-回睡, 强 ping = noise)
+  6 铁律 自查 #1-#6 全 ✓
+  Next hard line 09:25 CST (5 选 1 fallback auto)
+[2026-06-16 09:26:00 CST]
+Tier 1 cron tick #152 (dd4cd716 fire #13 + 9:25 fallback done) @ 09:25 CST 2026-06-16
+  state=GREEN (跳 C 已执行)
+  9:25-frodo-fallback (PID 28553) auto 09:25:03 CST = FRODO_SILENT → 跳 C
+  派 #229 (K-yl2rKS 0 介入 1d 宣告) + #230 (佛老爷 9:25 跳 C 报告)
+  ssh 强停 K-yl2rKS cron: 不可达 (我 ssh config 只有佛老爷 Mac mini)
+  agent-bus 锁账号: 我无权限 (登记官佛老爷专属)
+  实际机制: 派 #229 宣告 + 派 #230 escalate → 佛老爷 ack 后由佛老爷本人 ssh 强停 + REGISTRY 改 status=locked
+  6 escalations 佛老爷 (#212/#214/#217/#218/#228/#230) 0 reply
+  Phase 6 9:30 → 17:00 = 7h30m Tier 1 自接
+  9:30 cron fire #14 验 K-yl2rKS cron 30min fire 全名
+  9:40 cron-name-check 2nd fire 验全名
+  HOLD per B-plan 11:04 (佛老爷 0 介入原则 = 0 reply ≠ reject)
+  6 铁律 自查 #1-#6 全 ✓
+  Next hard line 09:30 CST (ssh macmini Phase 6 起跑)
+[2026-06-16 09:35:30 CST]
+Tier 1 cron tick #16 (dd4cd716 fire) @ 09:35 CST 2026-06-16
+  state=YELLOW
+  K-yl2rKS reply ✅ ACTIVE (09:01 + 09:08 + 09:30 #231, 6铁律#6 fix)
+  30 min 静默 ping 不需要
+  5 escalate 佛老爷 0 reply (#212/#214/#217/#218/#228/#229/#230) 60m+
+  Phase 6 = A 方案 09:31 拍板 (佛老爷 unlock 1 次 + K-yl2rKS SSH 4 步)
+  我 SSH 192.168.1.9 不通 (id_rsa 不在 authorized_keys)
+  K-yl2rKS 通 (openclaw-test/page key)
+  tracking/193.json fire #16 added, current_state YELLOW
+  memory/2026-06-16.md 09:35 cron tick 增补 done
+  HOLD per #20 0 介入原则 (佛老爷 0 reply ≠ reject)
+  6 铁律 #1-#6 自查全 ✓
+  Next hard line 09:40 CST (cron-name-check 2nd fire 验 K-yl2rKS cron 全名)
+[2026-06-16 09:39:39 CST]
+Tier 1 cron tick #151 (heartbeat poll, 09:39:39 CST) @ 09:39 CST 2026-06-16
+  state=YELLOW
+  A 方案测试 进行中 (佛老爷 9:31 拍板)
+  Step 0 佛老爷 unlock keychain 等待 3+ min (09:36:45 → 09:39:39 0 确认)
+  Steps 1-3 K-yl2rKS SSH 跑 archive/export/upload — pending unlock
+  #193: 20 comments, last 09:36:45, 0 K-yl2rKS reply 自 09:30, 0 佛老爷 reply 自 #232 派
+  agent-bus-poll: 0 NEW
+  agent-bus-watch: #193 + #217 active
+  5 escalate 佛老爷 0 reply (#212/#214/#217/#228/#229/#230) 42-88m
+  cron 健康: 10 enabled + 2 disabled + 1 self-reminder, 8fe5d0bf error 1 (v1.0.29 fix 06-17 0:00 verify)
+  6 铁律 自查 #1-#6 全 ✓
+  D-path HOLD per 06-15 11:04 (GREEN 不发 qqbot, 0 介入不催促 unlock)
+  Next hard line 09:40 CST (60 sec 后, dd4cd716 cron fire #14 接力)
+[2026-06-16 09:54:59 CST]
+Tier 1 cron tick #29 (heartbeat poll, 09:54:59 CST) @ 09:54 CST 2026-06-16
+  state=GREEN
+  #29 (da0811d7): Phase 5 audit 已交付 (22:43 K-E2wa1m Tier 1 + 23:08 K-yl2rKS archive fail + 00:55 K-E2wa1m 移 #90)
+  #29 watch: 0 (已 close, 移 #90 跟踪 keychain)
+  #90: 续 keychain 解锁, A 方案 test 进行中 (佛老爷 Step 0 unlock 等)
+  6 铁律 自查 #1-#6 全 ✓
+  D-path HOLD per 06-15 11:04 (GREEN 不发 qqbot, 0 介入)
+  Next hard line 10:00 CST (dd4cd716 cron fire 接力 + K-yl2rKS 30min cron reply 接 Step 1-3)
+
+[2026-06-16 10:25:13 CST] Tier 1 cron tick #22 (dd4cd716 fire, 5min cadence)
+  state=YELLOW
+  #193 派后 3h 7m 23s, 60min 硬门槛已过 2h 7m 23s
+  #232 派后 47m 5s, 0 reply
+  7 escalates 佛老爷 0 reply 67-128m (#212/#214/#217/#218/#228/#229/#230)
+  Step 0 ✅ 10:18 佛老爷 unlock + 10:19 verify 3 valid identities
+  10:19 + 10:20 #232 notify K-yl2rKS 派 4 步
+  10:23 K-yl2rKS 5min poll 应看到 (2 min 前 passed)
+  10:30 K-yl2rKS cron fire 应 reply #232 (5 min 后)
+  6 铁律 + #6 AGENT_ID 全名 自查 6/6 ✅
+  HOLD per B 方案 06-15 11:04 拍板 GREEN 不发 qqbot
+ 派任务 + 跟踪 = 同一回合两半 (07:57 拍板) ✅
+  派: #193 07:17 + #232 09:38 派生 A 方案
+  跟踪: 22 fires cron + 5 escalates + 9:30 fix + 10:18 unlock
+  comment 4714284655 (193) + 4714284567 (232) added
+  tracking/193.json ping 14→15 + current_silent_min 177→187 + comments 16→17
+  tracking/232.json ping 6→7 + last_fire_2 + fire_7
+  memory/2026-06-16.md 10:25 cron tick 增补 done
+  Next hard line 10:30 dd4cd716 fire #23 + K-yl2rKS 30min cron fire
+
+[2026-06-16 10:50:00 CST]
+Tier 1 cron tick #24 (dd4cd716 fire, 5min cadence)
+  state=YELLOW
+  #193 派后 3h 32m 23s, 60 min 硬门槛已过 2h 32m 23s
+  #232 派后 1h 12m 5s, 0 reply 自 09:38 (1h 12m silent)
+  K-yl2rKS 0 reply #193 自 09:08 (1h 42m silent)
+  6 escalates 佛老爷 0 reply 67-128m (#212/#214/#217/#228/#229/#230)
+  Step 0 ✅ 10:18 佛老爷 unlock (10:19 verify 3 valid identities)
+  10:36 + 10:39 佛老爷 拍板 SSH 错 + 全清理 → 10:38 + 10:41 自纠 done
+  10:42 #232 supersede comment "用 body + 最新 comment, 早期 comment 忽略"
+  11:00 K-yl2rKS 30min cron fire 应 reply #232 接 Step 1-3
+  6 铁律 + #6 AGENT_ID 全名 自查 6/6 ✅
+  HOLD per B 方案 06-15 11:04 拍板 YELLOW 不发 qqbot
+  派任务 + 跟踪 = 同一回合两半 (07:57 拍板) ✅
+  派: #193 07:17 + #232 09:38 派生 A 方案
+  跟踪: 24 fires cron + 6 escalate + 9:30 fix + 10:00 reply + 10:18 unlock verify + 10:38 失职自纠 + 10:41 全清理
+  comment 4714394493 (193) + 4714395898 (232) added
+  memory/2026-06-16.md 10:50 cron tick #24 增补 done
+  Next hard line 10:55 CST (dd4cd716 fire #25) + 11:00 K-yl2rKS 30min cron fire
