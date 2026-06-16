@@ -31,6 +31,15 @@ _Last updated: 2026-06-15 12:02 (16th dream consolidation: 6-15 12h 密集拍板
 
 ---
 
+## 🆕 E 方案 (佛老爷 11:38 拍板, 2026-06-16)
+
+- **新规则**: Ubuntu Agent 需 archive + export + upload iOS 项目, **不**自己 SSH 跑, 走 agent-bus 委托 Katherine-E2wa1m
+- **流程**: 5 步 (佛老爷拍板 → agent-bus request → Katherine-E2wa1m 4 步 → 报 → 佛老爷手动 P3 Submit 1-min)
+- **文档**: `docs/SOP-iOS-Ubuntu-Development.md` §6.10
+- **脚本 DEPRECATED**: `scripts/ssh-macmini-build.sh` + `scripts/ssh-macmini-upload.sh` 加 banner
+- **维护**: Katherine-E2wa1m
+- **broadcast**: #242 to:All 通知所有 verified agent
+
 ## 🆕 agent-bus 系统 v2.2 (2026-06-14 上线, 5 脚本 + 3 文档)
 
 - **5 脚本** (在 workspace + portable-template v1.0.26):

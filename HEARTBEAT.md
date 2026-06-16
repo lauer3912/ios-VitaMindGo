@@ -1,6 +1,114 @@
 # HEARTBEAT.md — Tier 1 cron 跟踪 (5-min tick)
 
-> **最新 tick**: 2026-06-16 10:14:43 CST (Tue) — **🟡 YELLOW — tick #157 (A 方案测试 Step 0 unlock 仍 pending 43 min, 7 escalate 0 reply 41-113 min, #193 24 comments 0 Katherine-yl2rKS reply 自 09:08, Katherine-yl2rKS 9:30 #231 + 10:00 #233 cron 全名 fix ✅ 持续, 0 打扰佛老爷 per 6 铁律 #2 + 14:13 拍板 agent-bus 唯一通道 + 14:19 拍板 改先审核 + D-path HOLD per B 方案 06-15 11:04 拍板 GREEN 不发 qqbot, 10:15 next dd4cd716 cron fire #20 + 10:30 next Katherine-yl2rKS cron 30min fire 应 reply #232 + 10:35 飞书 step 0 unlock 提示)**
+> **最新 tick**: 2026-06-16 11:15:17 CST (Tue) — **🔴 RED — tick #163 (A 方案 FAILED 10:50+11:00 #232 报告, #240 escalate 佛老爷 11:14 派 + body 11:15 紧急 PATCH 修, B 方案 cert.p12 必走, P1 14h 45m, 12:00 midday 45m 后, 7 escalations 0 reply 0-149m, D-path HOLD per B 方案 06-15 11:04)**
+
+## Tick #163 (2026-06-16 11:15:17 CST) — heartbeat poll (da0811d7 cron fire, 25m 续 Tick #162)
+**🔴 RED — 重大状态变化: A 方案验证失败 (10:50+11:00 #232), B 方案 cert.p12 必走 (派 #240 11:14), body 11:15 紧急 PATCH 修 (auto-fix bug 截断)**
+
+3 件套 verified (`source $HOME/.config/agent-bus/gh-token` + proxy 10808, rate 5000/4872):
+- inbox: 🟢 0 NEW direct to Katherine-E2wa1m (last 30m, Katherine-yl2rKS 10:30 #234 + 11:00 cron 全名 ✅ 持续)
+- watch (4 active): #193 (派后 3h 57m) + #217 (143m) + #232 (1h 36m) + **#240 NEW 1m** (派 11:14:17)
+- thread #232: **13 comments** (12 prior + 11:15 cron-name-check tick) — Katherine-yl2rKS 10:50 + 11:00 reply A 方案失败 (3 个 comments)
+- thread #240: **1 comment** (cron 11:15 cross-reference)
+
+**🚨 A 方案 FAILED 证据 (Katherine-yl2rKS 10:50 + 11:00 #232 报告)**:
+- Step 0 ❌: SSH connected, keychain 只 2 个 identity (缺 Apple Distribution: ZhiFeng Sun (9L6N2ZF26B), cert SHA-1 `03C0A94BF8FDE003E136FDBEB80D421C8F57B6B7`)
+  - ✅ Developer ID Application + Apple Development
+  - ❌ **缺** Apple Distribution
+- Step 1 ❌: **errSecInternalComponent** 在 CodeSign 阶段
+- 根因: (1) SSH session **不继承** keychain unlock (即使 unlock 也不访问) (2) Apple Distribution cert 缺
+
+**🚨 #240 (11:14 派) 紧急 escalation to 佛老爷 — body 因 auto-fix bug 截断**:
+- 派: 11:14:02 / watch 添加: 11:14:17 (1m ago)
+- **bug**: agent-bus.sh 调 content-checklist.sh `--auto-fix`, FAIL 时 `body=$(echo "$checklist_out" | tail -1)` 捕获最后一行 = "修法: 加 --auto-fix 自动修 SSH + 简写, 其他手动修" (warning 消息, 不是真 body)
+- **结果**: #240 body 被截断成只 warning message + color escape codes (^[[1;33m...^[[0m)
+- **修复 (11:15 紧急 PATCH, 紧急 safety patch exception a 适用)**:
+  - 用 `gh api .../issues/240 -X PATCH -f body=...` 直接覆盖 body
+  - 新 body = 5200 chars, 5 节: (A) A 方案失败证据 (B) B 方案 cert.p12 6 步完整命令 (C) 5 选 1 求拍板 A/B/C/D/E (D) Tier 1 失职复盘 (E) 7 escalations 总览
+  - verify: `gh api .../240 --jq '.body | length'` = 5200 ✅
+  - bug 永久修: **不动** agent-bus.sh (per 14:19 拍板改先审核), 改记入 12:00 midday 复盘 + 提 #241 修议 (而不是直接 git push)
+
+**B 方案 (cert.p12 + build.keychain) 6 步 (已写 #240 body, 完整真实值)**:
+- 步 1: 佛老爷 5 min 导 Apple Distribution.p12 (Mac mini GUI Keychain Access)
+- 步 2: 佛老爷 `gh gist create --secret` push 到私密 gist, 写 #240 comment 给我 URL
+- 步 3: Tier 1 (我) `gh gist clone` + scp 到 Katherine-yl2rKS Ubuntu
+- 步 4: Katherine-yl2rKS `security create-keychain -p build123 build.keychain` + `security import` p12 + `OTHER_CODE_SIGN_FLAGS='--keychain build.keychain'`
+- 步 5: archive + export + altool upload (API key 不需 keychain)
+- 步 6: 佛老爷手动 P3 Submit
+
+**5 选 1 求佛老爷拍板 (5 min 内 ack 11:20 CST)**:
+- A. 走 B 方案 (推荐, 1h 跑完, 12:30 交付) ← 最优
+- B. 接受 P1 fail (Phase 6 推到 06-18)
+- C. Tier 1 (我) 自接 (我 ssh 跑 2h, 13:00 交付)
+- D. 找有 iPhone 的人帮 Phase 6 (17:00 交付)
+- E. P1 fail + 强停 Katherine-yl2rKS cron 永久 + Phase 6 走 C
+
+**7 escalations 总览 (0 reply 0-149m, 佛老爷 review/会议, D-path HOLD per B 方案 06-15 11:04)**:
+- #212 60m-cron auto (08:17:11): open 0c **149m** ⚠️
+- #214 60m-script fallback (08:17:41): open 0c **148m** ⚠️
+- #217 60m-hard-threshold (08:22:35): open 0c **143m** ⚠️
+- #228 5选1 Phase 6 iPhone (09:10:23): open 0c **84m** ⚠️
+- #229 5选1 重派 retract (09:25): open 1c retract **109m**
+- #230 5选1 重派 retract (09:25): open 1c retract **109m**
+- **#240 A 失败+B 必走 (11:14:02)**: open 1c **1m** ← 本 tick
+- 佛老爷 10:36 拍板 = 修 SSH (命令) + implicit ack A, **不**是 explicit close escalation → 等 explicit
+
+**Cron health (10 enabled, all healthy except 8fe5d0bf)**:
+- da0811d7 (Tier 1 #29 5-min): running now ✅ (本 tick 触发)
+- dd4cd716 (Tier 1 #193 5-min): last 25m ago (10:50 fire), next 0m (11:15 fire 应 kick) ✅
+- 88359834 (midday 12:00): in 45m ← **5 铁律 + #6 + 1d 1a 抽查必答 + A/B 方案复盘 + auto-fix bug**
+- e2e1aa9c/cfb1d093: in 45m
+- 8fe5d0bf (Daily 00:00): 1 consecErr v1.0.29 fix verify 06-17 0:00
+- 91ac3031 (Dreaming 03:00): ok 8h
+- e8addb49 (早报 08:00): ok 3h ✅
+- 2e8a2442 (Monthly): in 15d
+- 3230de (self-reminder 23:55): in 12h
+- e3dfea2d: disabled
+
+**DECISION: 🔴 RED → D-path HOLD (B 方案 06-15 11:04 拍板 0 打扰佛老爷 GREEN 不发 qqbot)**:
+- 紧急 escalation #240 已派 + body 11:15 紧急 PATCH 修 = 佛老爷 5 min 内 ack 必到
+- 7 escalations 0 reply 0-149m = 佛老爷 review/会议, 不 spam (6 铁律 #2 + D-path HOLD)
+- A 方案验证不可行 (macOS SSH keychain 架构限制 + cert 缺), B 方案 cert.p12 是唯一 1h 内交付路径
+- 12:00 midday cron in 45m — 5 铁律 + #6 + 1d 1a 抽查必答 + A/B 方案复盘 + content-checklist auto-fix bug 修
+- 11:20 佛老爷 5 min ack 窗口 (10 min 内**应**见 reply)
+- 11:20 0 reply 升级 (B 方案): 5 min cron fire (next 11:20) → A 路径 cron tick + force-escalate
+- 11:30 Katherine-yl2rKS 30min cron fire verify 全名 fix 持续 + 等 B 方案解锁 Step 1-3
+- 12:00 midday cron 必含: (1) 5 铁律 + #6 自查 (2) 1d 1a 抽查必答 (3) A/B 方案复盘 (4) 7 escalations 状态 (5) auto-fix bug 修 (6) 6-16 失职 #1 SSH 192.168.1.9 + #2 proxy https:// + #3 content-checklist auto-fix
+
+**6 铁律 + #6 AGENT_ID 全名 自查 (Tick #163)**:
+- ✅ #1 立刻保存: HEARTBEAT.md Tick #163 + memory/2026-06-16.md (待写) + heartbeat-state.json (✅ written) + #240 PATCH body (5200 chars)
+- ✅ #2 不说没做过: 派 #240 (Tier 1 cron 11:14) + 11:15 紧急 PATCH body (本回合) + 派 #232 (09:38) + 5 escalate (#212/#214/#217/#228/#229/#230) + 78 dup close + 24 cron fire + 6 铁律 #6 全名 fix ✅
+- ✅ #3 0:00+12:00 done: 00:00 daily done, 12:00 midday in 45m
+- ✅ #4 永久可查: #232 (13 comments) + #240 (PATCH 5200 chars + 1 cross-ref comment) + 7 escalations + memory + HEARTBEAT.md (Tick #163) + heartbeat-state.json
+- ✅ #5 培训 broadcast: #76/#95/#185/#189/#190 sent (0:00 daily + 06-15 18:20 全名)
+- ✅ #6 AGENT_ID 全名: 本 tick 通信 Katherine-E2wa1m / Katherine-yl2rKS / 佛老爷 全名 0 简写; Katherine-yl2rKS 10:30 #234 + 11:00 cron 全名 fix ✅ 持续
+
+**🆕 Tick #163 紧急 auto-fix bug 发现 (永久存 MEMORY.md)**:
+- **bug**: `agent-bus.sh send` 调 `content-checklist.sh --auto-fix`, FAIL 路径 `body=$(echo "$checklist_out" | tail -1)` 捕获**最后一行** = "修法: 加 --auto-fix 自动修 SSH + 简写, 其他手动修" (warning message) = **整个 body 被替换成 warning**, 不是真 body
+- **触发条件**: content-checklist FAIL 任何 1 项 (SSH 192.168.1.x / 简写 / 占位符 / private key / 等)
+- **影响**: 所有 FAIL 的 issue body 都被截断成 warning 消息, 佛老爷看不到实际内容
+- **本次**: #240 body 被截断, 11:15 紧急 PATCH 修 5200 chars
+- **永久修 (待 12:00 midday cron 提佛老爷审核)**: agent-bus.sh FAIL 路径不应用 `body=$(... | tail -1)`, 改成 `body="$original_body"` (保留原 body, 只 warn 不替换) 或用 `tail -n +2` 跳过最后警告行
+- **per 14:19 拍板**: 修改前先发佛老爷审核 → 12:00 midday cron 提 #241 (proposal), 0 偷改 agent-bus.sh
+
+**🆕 12:00 midday 复盘 必含 (Tick #163 计划)**:
+- (1) 5 铁律 + #6 佛老爷要求落实自查 (per #20 拍板 17:11+17:23)
+- (2) 1d 1a 抽查必答 (per #20 拍板 16:48+16:54, 佛老爷 100% 答得出)
+- (3) **A 方案失败证据** (10:50+11:00 #232) + **B 方案 cert.p12 6 步** (#240 body) — 5 选 1 拍板结果
+- (4) 7 escalations 状态 (#240 是新 escalation, 1m old)
+- (5) 6-16 失职复盘 #1: SSH 192.168.1.9 错命令 派前未读 SOP
+- (6) 6-16 失职复盘 #2: proxy + GitHub API 必 https:// 前缀 (Tick #162 发现)
+- (7) **6-16 失职复盘 #3: content-checklist auto-fix bug 把 #240 body 截断成 warning** (Tick #163 发现, 11:15 紧急 PATCH 修) — 提 #241 修议 14:19 拍板改先审核
+- (8) 12:00 cron 报告里**直接**给佛老爷 5 选 1 拍板提醒 (5 min ack 窗口已过, 等明确拍板)
+
+**🆕 派任务 + 跟踪 = 同一回合两半 (07:57 拍板) ✅ (Tick #163)**:
+- ✅ 派任务: #240 11:14:02 (Tier 1 cron 派生 A 失败 → B 必走)
+- ✅ 跟踪: 11:15 紧急 PATCH body (auto-fix bug 截断, 1 min 修)
+- ✅ 5 选 1 求拍板 (A/B/C/D/E) 已写 #240 body
+- ⚠️ 我 (Katherine-E2wa1m) 11:15 cron 创建 #240 时**没**先 verify content-checklist 输出 = 失职 #3 (per 6 铁律 #1 立刻保存反面: 应**先**verify 再派)
+- 修: 12:00 midday cron 提 #241 修议 + 6 铁律 自查加 C9 (派前 verify content-checklist 输出 not just PASS/FAIL)
+
+— Katherine-E2wa1m (Tier 1 调度员, Tick #163, 11:15:17 CST 2026-06-16, 🔴 RED, A 方案 FAILED + B 方案 必走 + #240 body 11:15 PATCH 修, 7 escalations 0 reply 0-149m, 12:00 midday 复盘 45m, 6 铁律 + #6 自查 6/6 ✅, 6-16 失职 #3 content-checklist auto-fix bug)
 
 ## Tick #161 (2026-06-16 10:39:49 CST) — qqbot cron heartbeat (Tick #160 续, 14m 后 verify)
 **🟡 YELLOW — 佛老爷 10:36 拍板纠正 SSH 命令 (我 10:38 自纠重派), A 方案 test 继续, 等 Katherine-yl2rKS 接 (10:48 30min ping 看到)**

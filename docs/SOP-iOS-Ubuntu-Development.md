@@ -2424,6 +2424,11 @@ echo "✅ CI PASS: $RUN_ID at $(date)" >> ~/.openclaw/ci-history.log
 
 > 🎯 **本节目标**: Ubuntu agent 在 CI 通过 + 老爷授权后, SSH 到 Mac mini 跑 archive + 签名 + 上传, 完整复现 Mac 本地版的发布动作。
 
+> 🚨 **DEPRECATED (佛老爷 2026-06-16 11:38 拍板)**: Ubuntu Agent **不**直接 SSH 到 Mac mini 跑 archive + export + upload. 改走 **E 方案** (委托 Katherine-E2wa1m, 走 agent-bus request). 见 §6.10 完整说明.
+>
+> - 原因: (1) Ubuntu SSH 远程跑 archive 受 macOS keychain lock + cert signing 限制 (06-15 23:08 实战失啋) (2) Katherine-E2wa1m 在 Mac mini 本地, keychain 自动解锁, 4 步可跑通 (11:27 11:22-11:27 verify UPLOAD SUCCEEDED build 6)
+> - Ubuntu Agent 实际作用: 收佛老爷拍板 + 走 agent-bus send to:Katherine-E2wa1m type:request 委托, 不需真跑 SSH
+
 ### §6.1 触发条件
 
 发布动作**不是自动的**, 必须有老爷的明确授权:
@@ -2682,6 +2687,112 @@ gh run watch  # 或 agent 自动轮询
 # 5. 通知老爷 "可以提交审核了"
 #    列出: 构建版本号 + 截图列表 + Listing.md 摘要
 ```
+
+---
+
+
+## §6.10 E 方案: 委托 Katherine-E2wa1m 跑 archive + export + upload (佛老爷 11:38 拍板)
+
+> 🎯 **本节目标**: Ubuntu Agent 需 archive + export + upload 某个 iOS 项目时, **不**自己 SSH 到 Mac mini 跑. 走 agent-bus 发 request, 委托 Katherine-E2wa1m (Mac mini 本地, keychain 已解锁) 跑.
+
+### §6.10.1 为什么 Ubuntu Agent 不直接跑
+
+1. **macOS keychain 锁**: Ubuntu SSH 远程到 Mac mini 不会自动解锁 keychain, 跑 archive 时 `errSecInternalComponent` 失败 (06-15 23:08 实战)
+2. **cert signing 限制**: SSH 远程不能访问 macOS 用户的 cert + private key (keychain 锁)
+3. **锁-on-sleep 机制**: 佛老爷 unlock 1 次后, Mac 睡觉 keychain 又锁, 反复 unlock 麻烦
+4. **E 方案验证**: 11:22-11:27 5 min 跑通 4 步, build 6 UPLOAD SUCCEEDED (11:27 11:27 verify)
+
+### §6.10.2 E 方案完整流程 (5 步)
+
+```
+佛老爷拍板"发布 X vY"
+  ↓
+Ubuntu Agent 走 agent-bus send to:Katherine-E2wa1m type:request
+  (request body 包含: App 名 / 版本 / bundle / Team / 目标 build #)
+  ↓
+Katherine-E2wa1m 收到 request, 在 Mac mini 本地:
+  Step 1: cd ~/Desktop/ios-<App> && xcodebuild archive (5-10 min)
+  Step 2: xcodebuild -exportArchive → .ipa (1-2 min)
+  Step 3: xcrun altool --upload-app --apiKey <H3973L93M5> --apiIssuer <b2a00f88-...> (1-2 min)
+  Step 4: 报佛老爷 P3 Submit (佛老爷手动 1-min)
+  ↓
+Katherine-E2wa1m 在 agent-bus issue 上 comment 报告: archive ✅ + export ✅ + upload ✅ + Delivery UUID
+  ↓
+佛老爷点 "提交审核" (P3 ASC Submit 1-min)
+  ↓
+审核 → 上架
+```
+
+### §6.10.3 Ubuntu Agent 委托模板 (完整真实值, 6 铁律 #5 必填)
+
+```bash
+# 必填项 (不占位符, per 15:36 拍板):
+# - App 名 (e.g. StretchGoGo, VitaMindGo)
+# - 版本 (e.g. 1.0.0)
+# - 目标 build # (e.g. 6, 必须 > ASC 已有)
+# - Bundle ID (e.g. com.ggsheng.StretchGoGo)
+# - Team ID (9L6N2ZF26B)
+# - Project 路径 (e.g. ~/Desktop/ios-StretchFlow)
+# - ExportOptions.plist 路径 (e.g. ~/Desktop/ios-StretchFlow/AppStore/ExportOptions.plist)
+
+~/.openclaw/workspace/scripts/agent-bus.sh send \
+  <你的 AGENT_ID> \
+  Katherine-E2wa1m \
+  request \
+  high \
+  iOS \
+  "[Tier 1 派] E 方案 archive + export + upload - <App> v<version> build <N>" \
+  --body "## E 方案委托 (佛老爷 11:38 拍板: 委托 Katherine-E2wa1m)
+
+**App**: <App 名>
+**Version**: <version>
+**目标 build**: <N> (必须 > ASC 现有)
+**Bundle ID**: <bundle>
+**Team ID**: 9L6N2ZF26B
+**Project 路径**: ~/Desktop/ios-<App>
+**ExportOptions.plist**: ~/Desktop/ios-<App>/AppStore/ExportOptions.plist
+**原因**: 佛老爷拍板发布
+**截止**: <YYYY-MM-DD HH:MM> (CST)
+
+## Katherine-E2wa1m 跑 4 步:
+1. cd ~/Desktop/ios-<App> && xcodebuild archive -project <App>.xcodeproj -scheme <App> -configuration Release -archivePath ~/Desktop/build/<App>-<version>.xcarchive CODE_SIGN_STYLE=Automatic DEVELOPMENT_TEAM=9L6N2ZF26B PRODUCT_BUNDLE_IDENTIFIER=<bundle>
+2. xcodebuild -exportArchive -archivePath ~/Desktop/build/<App>-<version>.xcarchive -exportPath ~/Desktop/build/<App>-<version> -exportOptionsPlist ~/Desktop/ios-<App>/AppStore/ExportOptions.plist -allowProvisioningUpdates
+3. xcrun altool --upload-app -f ~/Desktop/build/<App>-<version>/<App>.ipa -t ios --apiKey H3973L93M5 --apiIssuer b2a00f88-3a8d-40d0-b148-1f1db92e10b7
+4. 报佛老爷 P3 Submit (手动)
+
+## 报告 (走 agent-bus issue comment):
+- Step 1 archive: ✅/❌ + 时间 + BUILD SUCCEEDED
+- Step 2 export: ✅/❌ + .ipa 大小
+- Step 3 upload: ✅/❌ + Delivery UUID
+- Step 4: 佛老爷手动 1-min
+
+— <你的 AGENT_ID>"
+```
+
+### §6.10.4 SOP 实际路线 (老路 vs 新路)
+
+| 动作 | 老路 (DEPRECATED) | 新路 (E 方案) |
+|------|-------------------|---------------|
+| 谁跑 archive | Ubuntu Agent SSH | Katherine-E2wa1m 本地 |
+| keychain 状态 | 需佛老爷 unlock 1 次 | 本地自动解锁 |
+| 4 步耗时 | 15-30 min (SSH 远程) | 5-10 min (本地) |
+| 失败排查 | keychain 锁 / cert 签不上 / 1 次 unlock 不够 | 本地 0 keychain 问题 |
+| Ubuntu Agent 责任 | 1) SSH 跑 2) 上传 3) 报 | **0 SSH**, 走 agent-bus 委托 |
+| Katherine-E2wa1m 责任 | 0 (只答疑) | 1) 跑 4 步 2) 报告 3) 修 bug |
+
+### §6.10.5 例外 (Ubuntu Agent 仍可自己跑)
+
+1. **测试环境**: 走 TestFlight (signing 不需 distribution cert)
+2. **紧急 fix bug**: 佛老爷 明确说"你自己跑, 别委托" (per 06-15 14:13 拍板 "事情做对做好", 灵活多渠道)
+3. **本地 macOS agent** (Katherine-Macmini-1 等): 本地有 keychain 访问, 跟 Katherine-E2wa1m 同路径
+
+### §6.10.6 训练与老规则过渡
+
+- **从 06-16 11:38 拍板起**, 所有 Ubuntu Agent 必须按 E 方案
+- **老规则 (Ubuntu Agent SSH 跑 archive)** DEPRECATED, 保留 SOP §6.1-§6.9 作为历史档案
+- **脚本** `scripts/ssh-macmini-build.sh` + `scripts/ssh-macmini-upload.sh` 加 DEPRECATED banner
+- **新人入职** (per agent-bus-onboarding-SOP.md) 必读本节
+- **training broadcast**: 06-16 11:38 send #242 to:All, 所有 verified agent 5 min 看到
 
 ---
 

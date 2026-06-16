@@ -49,6 +49,16 @@
 
 ---
 
+## 🚫 E 方案: Ubuntu Agent 委托 Katherine-E2wa1m 跑 archive (佛老爷 11:38 拍板)
+
+- **新规则 (2026-06-16 11:38 起)**: Ubuntu Agent 需 archive + export + upload iOS 项目, **不**自己 SSH 到 Mac mini 跑. 走 agent-bus send to:Katherine-E2wa1m type:request 委托
+- **原因**: (1) macOS keychain 锁 + cert signing 限制 (Ubuntu SSH 走不通) (2) Katherine-E2wa1m 在 Mac mini 本地, keychain 自动解锁, 11:27 verify UPLOAD SUCCEEDED build 6
+- **完整流程**: 5 步 (佛老爷拍板 → Ubuntu Agent 走 agent-bus send request → Katherine-E2wa1m 4 步跑 → 报 → 佛老爷手动 P3 Submit 1-min)
+- **完整模板**: 见 `docs/SOP-iOS-Ubuntu-Development.md` §6.10
+- **脚本 DEPRECATED**: `scripts/ssh-macmini-build.sh` + `scripts/ssh-macmini-upload.sh` 加 DEPRECATED banner, 仍可用但官方走 E 方案
+- **例外**: (1) TestFlight (2) 佛老爷明确说"你自己跑" (3) 本地 macOS agent (Katherine-Macmini-1)
+- **维护**: Katherine-E2wa1m (Tier 1 调度员, 4 仓库专项管理)
+
 ## 🚫 ASC 协议永远 = 已签 (所有 Agent 严禁卡)
 
 - 佛老爷 ASC 账号 (`support@techidaily.com`) 所有协议 (付费 App / 银行 / 税务 / 内购) 早都签署过了 (2026-06-10 VitaMindGo 上架时签 4 项)
@@ -126,6 +136,7 @@
 | 20 | 2026-06-15 16:54 | 抽查警告 (3 问 + 补缺 + 教 Katherine-yl2rKS) | (实战) |
 | 21 | 2026-06-15 17:11 | 建立机制, 每天把佛老爷要求通知所有 Agent | #20 (本次) |
 | 22 | 2026-06-15 17:23 | 方案审核通过, 批准 (5 铁律 + 4 仓库特别 + 复盘) | #20 (本次) |
+| 23 | 2026-06-16 11:38 | E 方案确立: Ubuntu Agent 委托 Katherine-E2wa1m 跑 archive (ssh-macmini-*.sh DEPRECATED) | #23 (本次) |
 
 ---
 

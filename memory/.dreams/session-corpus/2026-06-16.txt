@@ -1,0 +1,2 @@
+[main/sessions/main/26302bdb-dca9-4982-a782-3a5822fa954d.jsonl#L14] Assistant: [assistant turn failed before producing content]
+[main/sessions/main/26302bdb-dca9-4982-a782-3a5822fa954d.jsonl#L23] Assistant: 报告里发现 ⚠️ 静默告警 (#65 silent 8.3h) — 先 pre-review + 处理 placeholder，再转发报告。

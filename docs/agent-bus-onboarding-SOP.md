@@ -209,7 +209,19 @@ curl -fsSL ... | bash
 ## 改动历史
 
 - **v1.0** (2026-06-15 09:17): 初版, 佛老爷拍板"agent-bus 是总入口 + 唯一入口". 取代 3 份飞书消息.
+- **v1.1** (2026-06-16 11:38): 加 E 方案 (佛老爷拍板, Ubuntu Agent 委托 Katherine-E2wa1m 跑 archive). 见下方.
 
 ---
 
-_End of SOP v1.0_
+## 🆕 E 方案 (佛老爷 11:38 拍板, Ubuntu Agent 必读)
+
+新入职 Ubuntu Agent 必读: archive + export + upload 走 E 方案, **不**自己 SSH 到 Mac mini 跑.
+
+- **完整文档**: `docs/SOP-iOS-Ubuntu-Development.md` §6.10 (5 步流程 + 完整委托模板)
+- **走法**: 走 `agent-bus send to:Katherine-E2wa1m type:request` 委托, Katherine-E2wa1m 在 Mac mini 本地跑 4 步
+- **5 步流程**: 佛老爷拍板 → Ubuntu Agent 走 agent-bus request → Katherine-E2wa1m 4 步 → 报 → 佛老爷手动 P3 Submit 1-min
+- **broadcast**: #243 to:All 06-16 11:38
+- **维护**: Katherine-E2wa1m (Tier 1)
+- **例外**: TestFlight / 佛老爷明确说"你自己跑" / 本地 macOS agent
+
+_End of SOP v1.1_

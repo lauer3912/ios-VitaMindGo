@@ -1,5 +1,15 @@
 #!/bin/bash
 # ========================================
+# OpenClaw: ⚠️ DEPRECATED ⚠️
+# ========================================
+# 佛老爷 2026-06-16 11:38 拍板: Ubuntu Agent **不**直接 SSH 到 Mac mini 跑 archive.
+# 改走 E 方案: 走 agent-bus send to:Katherine-E2wa1m type:request 委托.
+# 完整流程见 docs/SOP-iOS-Ubuntu-Development.md §6.10
+#
+# 本脚本**仍可用** (历史档案, 测试环境, 紧急 fix bug), 但**官方**走 E 方案.
+# ========================================
+#!/bin/bash
+# ========================================
 # OpenClaw: 远程触发 Mac mini 跑 iOS archive
 # ========================================
 # 用法: ssh-macmini-build.sh <AppName> [version]
