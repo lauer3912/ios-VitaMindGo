@@ -1,23 +1,60 @@
 {
   "lastChecks": {
-    "agent-bus-inbox": "2026-06-16T00:57:00+08:00",
-    "issue-193": "2026-06-16T00:57:00+08:00",
-    "escalations-212-214-217": "2026-06-16T00:57:00+08:00",
-    "kyl2rks-dup-cron": "2026-06-16T00:57:00+08:00",
-    "background-9-37": "2026-06-16T00:57:00+08:00",
-    "background-9-47": "2026-06-16T00:57:00+08:00"
+    "agent-bus-inbox": "2026-06-16T10:08:35+08:00",
+    "issue-193": "2026-06-16T10:08:35+08:00",
+    "issue-232-a-plan": "2026-06-16T10:08:35+08:00",
+    "issue-233-kyl2rks-30min": "2026-06-16T10:08:35+08:00",
+    "escalations-212-214-217-228-229-230-232": "2026-06-16T10:08:35+08:00",
+    "kyl2rks-dup-cron": "2026-06-16T10:08:35+08:00",
+    "background-scripts": "2026-06-16T10:08:35+08:00"
   },
-  "state": "RED-D-path-HOLD",
-  "current_fire": "dd4cd716 cron fire #9 @ 08:55 CST",
+  "state": "YELLOW-D-path-HOLD",
+  "current_fire": "dd4cd716 cron fire #18 @ 10:00 CST (next #19 @ 10:10)",
+  "decision": "D-path HOLD per B 方案 06-15 11:04 拍板 (GREEN 不发 qqbot, 0 主动 ping 佛老爷 per 6 铁律 #2 + 14:13 拍板 agent-bus 唯一交流通道 + 14:19 拍板 改先审核)",
+  "key_issues": {
+    "193": {
+      "state": "open",
+      "comments": 24,
+      "派后": "2h 47m",
+      "60min_hard_threshold": "已过 1h 47m",
+      "Katherine-yl2rKS_reply": "0 reply 自 09:08 (2h 0m silent on 真任务)",
+      "6_铁律_6": "Katherine-yl2rKS 9:30 #231 fix ✅ + 10:00 #233 fix ✅ 持续"
+    },
+    "232": {
+      "type": "A 方案 test (佛老爷 unlock + Katherine-yl2rKS SSH archive/export/upload)",
+      "state": "open",
+      "comments": 3,
+      "派后": "29m 40s",
+      "Katherine-yl2rKS": "seen-by, 0 reply"
+    },
+    "233": {
+      "type": "Katherine-yl2rKS 30min 主动联系 cron @ 10:00:03Z",
+      "全名_fix": "✅ 持续 (Katherine-E2wa1m ... ——Katherine-yl2rKS)"
+    },
+    "escalations_0_reply": ["#212 (1h 51m)", "#214 (1h 51m)", "#217 (1h 46m)", "#228 (52m)", "#229 (43m)", "#230 (43m)", "#232 (29m)"]
+  },
+  "a_plan_test": {
+    "拍板时间": "09:31 CST (37 min 0 进展)",
+    "Step 0": "佛老爷 unlock keychain — 0 确认 37 min",
+    "Step 1-3": "Katherine-yl2rKS SSH 跑 archive/export/upload — pending unlock",
+    "真实_Project": "~/Desktop/ios-StretchFlow/StretchGoGo.xcodeproj",
+    "真实_Bundle": "com.ggsheng.StretchGoGo",
+    "真实_Team": "9L6N2ZF26B",
+    "真实_cert_SHA-1": "03C0A94BF8FDE003E136FDBEB80D421C8F57B6B7",
+    "真实_ASC_Key_ID": "H3973L93M5",
+    "真实_ASC_Issuer": "b2a00f88-3a8d-40d0-b148-1f1db92e10b7"
+  },
   "next_actions": [
-    "9:00 cron tick fire #10 接力",
-    "9:15 cron tick fire #11 加 #193 comment",
-    "9:30 cron tick fire #12 接力",
-    "9:37:37 PID 20480 final pre-action escalate sharp",
-    "9:45 cron tick fire #13 接力",
-    "9:47:37 PID 20481 强停 Katherine-yl2rKS cron sharp",
-    "9:50 派 #226 Phase 6 我自接",
-    "12:00 midday 复盘",
-    "17:00 交付 Phase 6 (P1 不延)"
-  ]
+    "10:10 dd4cd716 cron fire #19 (1m 25s 后)",
+    "10:30 Katherine-yl2rKS 30min cron fire verify 全名 fix 持续 (21m 后)",
+    "12:00 midday cron (1h 52m 后) — 5 铁律 + #6 + 1d 1a 抽查必答"
+  ],
+  "6_铁律_自查": {
+    "#1_立刻保存": "✅ 本回合 3 文件同步",
+    "#2_不说没做过": "✅ 派 + 15 PING + 78 dup close + 7 escalate + 派 #232 A 方案 + 9:28 retract + 17 cron fire + 5 选 1 慢路径",
+    "#3_0:00+12:00": "✅ 00:00 daily done, 12:00 midday in 1h 52m",
+    "#4_永久可查": "✅ #193 (24 comments) + #232 (3) + 7 escalate + 撤旧启新脚本 + MEMORY.md GH_TOKEN + A 方案真实值",
+    "#5_培训_sent": "✅ #76/#95/#185/#189/#190",
+    "#6_AGENT_ID_全名": "✅ 本回合通信 全名 0 简写; Katherine-yl2rKS 9:30 #231 + 10:00 #233 fix ✅ 持续"
+  }
 }

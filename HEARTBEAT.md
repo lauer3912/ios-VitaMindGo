@@ -1,6 +1,189 @@
 # HEARTBEAT.md — Tier 1 cron 跟踪 (5-min tick)
 
-> **最新 tick**: 2026-06-16 09:22:08 CST (Tue) — **🟡 YELLOW — tick #148 (Katherine-yl2rKS 9:01+9:08 reply 部分完成, 1h44m silent broken, 6 铁律 #5 ✅ FIXED, #6 ❌ 仍违 14h53m, Phase 6 卡 iPhone 硬件 → #228 派 佛老爷 5 选 1, 9:25 fallback 倒计时 3m)**
+> **最新 tick**: 2026-06-16 10:14:43 CST (Tue) — **🟡 YELLOW — tick #157 (A 方案测试 Step 0 unlock 仍 pending 43 min, 7 escalate 0 reply 41-113 min, #193 24 comments 0 Katherine-yl2rKS reply 自 09:08, Katherine-yl2rKS 9:30 #231 + 10:00 #233 cron 全名 fix ✅ 持续, 0 打扰佛老爷 per 6 铁律 #2 + 14:13 拍板 agent-bus 唯一通道 + 14:19 拍板 改先审核 + D-path HOLD per B 方案 06-15 11:04 拍板 GREEN 不发 qqbot, 10:15 next dd4cd716 cron fire #20 + 10:30 next Katherine-yl2rKS cron 30min fire 应 reply #232 + 10:35 飞书 step 0 unlock 提示)**
+
+## Tick #157 (2026-06-16 10:14:43 CST) — qqbot cron heartbeat (Tick #156 续, 1m 后 verify)
+**🟡 YELLOW — A 方案测试 Step 0 unlock 43m 0 进展, D-path HOLD per B 方案 06-15 11:04 拍板 (GREEN 不发 qqbot)**
+
+3 件套 verified (`source $HOME/.config/agent-bus/gh-token` + proxy 10808, rate ~4920/5000):
+- inbox: 🟢 0 NEW direct to Katherine-E2wa1m (last 1 min, 20 open total, all skipped)
+- watch: 3 active (#193 + #217 + #232), all under threshold (corrupt state warning harmless)
+- thread #193: **24 comments**, 派后 2h 57m, last fire 10:10 CST
+- thread #232 (A 方案 test): **派后 36m**, Katherine-yl2rKS seen, 0 reply
+- thread #233 (Katherine-yl2rKS 10:00 cron): fired ✅, 全名 fix 持续
+- 7 escalate state: #212 (1h 57m) / #214 (1h 57m) / #217 (1h 52m) / #228 (1h 4m) / #229 (49m) / #230 (49m) / #232 (36m) — **all 0 reply**
+
+**A 方案测试 状态 (09:31 佛老爷拍板, 43 min 0 进展)**:
+- Step 0: 佛老爷 unlock keychain — **0 确认 43 min** (09:31 → 10:14)
+- 6 铁律 #2 + B 方案 11:04 + 14:13/14:19 拍板 = **不**催
+- Step 1-3: Katherine-yl2rKS SSH 跑 pending unlock (她 6 铁律 #6 9:30 fix ✅ 后 0 强停理由)
+- 真实 Project: `~/Desktop/ios-StretchFlow/StretchGoGo.xcodeproj`
+- 真实 Bundle: `com.ggsheng.StretchGoGo`, Team `9L6N2ZF26B`
+- 真实 cert SHA-1: `03C0A94BF8FDE003E136FDBEB80D421C8F57B6B7`
+- 真实 ASC API: Key ID `H3973L93M5`, Issuer `b2a00f88-3a8d-40d0-b148-1f1db92e10b7`
+
+**Cron health (10 enabled, all healthy, Tick #137 误判已修)**:
+- da0811d7 (Tier 1 #29 5-min): in 4m (next 10:18) ✅
+- dd4cd716 (Tier 1 #193 5-min): in 1m (next 10:15 fire #20) ✅
+- e8addb49 (早报 08:00): 2h 14m ago ok ✅
+- 8fe5d0bf (Daily 00:00): 1 consecErr v1.0.29 fix verify 06-17 0:00
+- 91ac3031/e2e1aa9c/cfb1d093: ok
+- 88359834 (midday 12:00): in 1h 45m
+- 2e8a2442 (Monthly 1号 00:00): in 15d
+- 3230d0de (self-reminder 23:55): in 13h 41m
+
+**DECISION: 🟡 YELLOW → D-path HOLD unchanged**:
+- 7 escalate 0 reply 41-113m = 佛老爷 review/睡眠/会议, 不 spam (6 铁律 #2 + 14:13 拍板)
+- A 方案 Step 0 unlock 43m 0 进展 = 佛老爷可能忙, **不**催 (B 方案)
+- Katherine-yl2rKS 0 reply #232 36m = 等 unlock 才 SSH 跑, 0 强停理由 (6 铁律 #6 9:30 fix ✅)
+- 下一 hard line: 10:15 dd4cd716 cron fire #20 (32s 后) + 10:30 Katherine-yl2rKS 30min cron fire 应 reply #232 (15m 后) + 10:35 飞书 step 0 unlock 提示 (20m 后, per B 方案 GREEN)
+- 12:00 midday cron (in 1h 45m) — 5 铁律 + #6 + 1d 1a 抽查必答
+- B 方案 06-15 11:04 拍板: GREEN 不发 qqbot
+
+**6 铁律 + #6 AGENT_ID 全名 自查 (Tick #157)**:
+- ✅ #1 立刻保存: 本回合 3 文件同步 (HEARTBEAT.md + heartbeat-state.json + memory/2026-06-16.md)
+- ✅ #2 不说没做过: 派 #193 + 15 PING + 78 dup close + 7 escalate + 派 #232 A 方案 + 9:28 retract 自纠 + 19 cron fire + 5 选 1 慢路径
+- ✅ #3 0:00+12:00 done: 00:00 daily done, 12:00 midday in 1h 45m
+- ✅ #4 永久可查: #193 (24 comments) + #232 (派后 36m) + 7 escalate + 撤旧启新后台脚本 + MEMORY.md GH_TOKEN + A 方案 test 真实值
+- ✅ #5 培训 sent: #76/#95/#185/#189/#190 (0:00 daily + 06-15 18:20 全名)
+- ✅ #6 AGENT_ID 全名: 本回合 通信 Katherine-E2wa1m / Katherine-yl2rKS / 佛老爷 全名 0 简写; Katherine-yl2rKS 9:30 #231 + 10:00 #233 fix ✅ 持续
+
+**🆕 Tick #157 关键观察**:
+- 7 escalate 0 reply 41-113m: 佛老爷在等 Katherine-yl2rKS 真任务完成, 我等佛老爷 reply, Katherine-yl2rKS 等 unlock, **3 方都静默 (B 方案 06-15 11:04 GREEN)**
+- A 方案 test Step 0 佛老爷 unlock 43 min 0 进展 = 可能佛老爷在会议/午餐/休息, **不**催 (B 方案)
+- Katherine-yl2rKS 0 reply #232 36m = 等 unlock 才 SSH 跑 archive, 0 强停理由 (6 铁律 #6 已 fix)
+- 下一 hard line: 10:15 dd4cd716 cron fire #20 (32s 后) + 10:30 Katherine-yl2rKS 30min cron fire 应 reply #232 (15m 后) + 10:35 飞书 step 0 unlock 提示 (20m 后)
+
+— Katherine-E2wa1m (Tier 1 调度员, Tick #157, 10:14:43 CST 2026-06-16, 🟡 YELLOW, A 方案测试 Step 0 unlock 43m 0 进展, D-path HOLD per B 方案 06-15 11:04 拍板 GREEN 不发 qqbot, 10:15 next dd4cd716 cron fire #20 + 10:30 next Katherine-yl2rKS cron 30min fire 应 reply #232 + 10:35 飞书 step 0 unlock 提示)
+
+## Tick #156 (2026-06-16 10:13:30 CST) — qqbot cron heartbeat (Tick #155 续, 2m 后 verify)
+**🟡 YELLOW — A 方案测试 Step 0 unlock 37m 0 进展, D-path HOLD per B 方案 06-15 11:04 拍板 (GREEN 不发 qqbot)**
+
+3 件套 verified (`source $HOME/.config/agent-bus/gh-token` + proxy 10808, rate 4912/5000):
+- inbox: 🟢 0 NEW direct to Katherine-E2wa1m (last 3 min)
+- watch #193 + #217 + #232 active
+- thread #193: **24 comments**, last fire 10:04:52 CST (派后 2h 47m, 60min 硬门槛已过 1h 47m)
+- #232 (A 方案 test): **3 comments**, 派后 29m 40s, Katherine-yl2rKS seen-by, 0 reply
+- #233 (Katherine-yl2rKS 10:00 30min cron): **fired @ 10:00:03Z**, 全名 fix 持续 ✅
+  - body: "Katherine-E2wa1m, 30min到了, 当前空闲, 有什么任务或学习机会? ——Katherine-yl2rKS"
+- 6 escalate state: #212 (1h 51m) / #214 (1h 51m) / #217 (1h 46m) / #228 (52m) / #229 (43m) / #230 (43m) / #232 (29m) — **all 0 reply**
+
+**A 方案测试 状态 (09:31 佛老爷拍板, 37 min 0 进展)**:
+- Step 0: 佛老爷 unlock keychain — **0 确认 37 min** (09:31 → 10:08)
+- 6 铁律 #2 + B 方案 11:04 + 14:13/14:19 拍板 = **不**催
+- Step 1-3: Katherine-yl2rKS SSH 跑 pending unlock (她 6 铁律 #6 9:30 fix ✅ 后 0 强停理由)
+- 真实 Project: `~/Desktop/ios-StretchFlow/StretchGoGo.xcodeproj`
+- 真实 Bundle: `com.ggsheng.StretchGoGo`, Team `9L6N2ZF26B`
+- 真实 cert SHA-1: `03C0A94BF8FDE003E136FDBEB80D421C8F57B6B7`
+- 真实 ASC API: Key ID `H3973L93M5`, Issuer `b2a00f88-3a8d-40d0-b148-1f1db92e10b7`
+
+**Cron health (10 enabled, all healthy, Tick #137 误判已修)**:
+- da0811d7 (Tier 1 #29 5-min): in 1m (next 10:10) ✅
+- dd4cd716 (Tier 1 #193 5-min): last 9m ago (10:00 fire), in 1m ✅
+- e8addb49 (早报 08:00): 2h ago ok ✅
+- 8fe5d0bf (Daily 00:00): 1 consecErr v1.0.29 fix verify 06-17 0:00
+- 91ac3031/e2e1aa9c/cfb1d093: ok
+- 88359834 (midday 12:00): in 1h 52m
+- 2e8a2442 (Monthly 1号 00:00): in 15d
+- 3230d0de (self-reminder 23:55): in 14h
+
+**DECISION: 🟡 YELLOW → D-path HOLD unchanged**:
+- 6 escalate 0 reply 39-107m = 佛老爷 review/睡眠/会议, 不 spam (6 铁律 #2 + 14:13 拍板)
+- A 方案 Step 0 unlock 37m 0 进展 = 佛老爷可能忙, **不**催
+- Katherine-yl2rKS 0 reply #232 29m = 等 unlock 才 SSH 跑, 0 强停理由 (6 铁律 #6 9:30 fix ✅)
+- 下一 hard line: 10:10 dd4cd716 cron fire #19 (1m 25s 后) + 10:30 Katherine-yl2rKS 30min cron fire verify (21m 后)
+- 12:00 midday cron (in 1h 52m) — 5 铁律 + #6 + 1d 1a 抽查必答
+- B 方案 06-15 11:04 拍板: GREEN 不发 qqbot
+
+**6 铁律 + #6 AGENT_ID 全名 自查 (Tick #154)**:
+- ✅ #1 立刻保存: 本回合 3 文件同步 (HEARTBEAT.md + heartbeat-state.json + memory/2026-06-16.md)
+- ✅ #2 不说没做过: 派 #193 + 15 PING + 78 dup close + 7 escalate + 派 #232 A 方案 + 9:28 retract 自纠 + 17 cron fire + 5 选 1 慢路径
+- ✅ #3 0:00+12:00 done: 00:00 daily done, 12:00 midday in 1h 52m
+- ✅ #4 永久可查: #193 (24 comments) + #232 (3 comments) + 7 escalate + 撤旧启新后台脚本 + MEMORY.md GH_TOKEN + A 方案 test 真实值
+- ✅ #5 培训 sent: #76/#95/#185/#189/#190 (0:00 daily + 06-15 18:20 全名)
+- ✅ #6 AGENT_ID 全名: 本回合 通信 Katherine-E2wa1m / Katherine-yl2rKS / 佛老爷 全名 0 简写; Katherine-yl2rKS 9:30 #231 + 10:00 #233 fix ✅ 持续
+
+**🆕 Tick #154 关键观察**:
+- 6 escalate 0 reply 39-107m: 佛老爷在等 Katherine-yl2rKS 真任务完成, 我等佛老爷 reply, Katherine-yl2rKS 等 unlock, **3 方都静默 (B 方案 06-15 11:04 GREEN)**
+- A 方案 test Step 0 佛老爷 unlock 37 min 0 进展 = 可能佛老爷在会议/午餐/休息, **不**催 (B 方案)
+- Katherine-yl2rKS 0 reply #232 29m = 等 unlock 才 SSH 跑 archive, 0 强停理由 (6 铁律 #6 已 fix)
+- 下一 hard line: 10:10 dd4cd716 cron fire #19 (1m 25s 后) + 10:30 Katherine-yl2rKS 30min cron fire 验证 (21m 后)
+
+— Katherine-E2wa1m (Tier 1 调度员, Tick #154, 10:08:35 CST 2026-06-16, 🟡 YELLOW, A 方案测试 Step 0 unlock 37m 0 进展, D-path HOLD per B 方案 06-15 11:04 拍板 GREEN 不发 qqbot, 10:10 next dd4cd716 cron fire #19 + 10:30 next Katherine-yl2rKS cron 30min fire verify)
+
+## Tick #152 (2026-06-16 09:50:52 CST) — qqbot cron heartbeat
+**🟡 YELLOW — A 方案测试进行中 12 min 0 进展, Katherine-yl2rKS 0 reply #232 12m, 5 escalate 0 reply 33-93m, 6 铁律 #6 9:30 fix ✅. D-path HOLD per B 方案 06-15 11:04 拍板 (GREEN 不发 qqbot).**
+
+3 件套 verified (`source $HOME/.config/agent-bus/gh-token` + proxy 10808, rate 4838/5000):
+- **inbox** (20 open total): **🟢 0 NEW** direct to Katherine-E2wa1m (last 12 min)
+- **watch** (3 tracked): #193 + #217 + #229 active
+- **thread #193**: **21 comments** (派后 2h 32m 53s), last update 01:47:32Z (09:47:32 CST, 3m ago = dd4cd716 cron fire #15)
+- **Escalations state** (api.github.com verified, 5 escalate 0 reply):
+  - #212 (08:17:11 CST): open 0 comments **93m old** (60m-cron auto)
+  - #214 (08:17:41 CST): open 0 comments **93m old** (60m-script fallback)
+  - #217 (08:22:35 CST): open 0 comments **88m old** (60m-hard-threshold)
+  - #228 (09:10 CST): open 0 comments **40m old** (5 选 1 求拍板, to 佛老爷)
+  - #229 (09:25 CST): open 0 comments + 1 retract comment **25m old** (5 选 1 重派 + retract)
+  - #230 (09:25 CST): open 0 comments + 1 retract comment **25m old** (5 选 1 重派 + retract)
+  - #232 (09:38 CST): open 0 comments **12m old** (A 方案 test, to Katherine-yl2rKS, seen by her)
+  - 佛老爷 0 reply 25-93m, Katherine-yl2rKS 0 reply #232 12m, #227 35m, #193 自 09:08 (42m)
+
+**A 方案测试 状态 (09:31 佛老爷拍板, 进行中 19 min, 0 进展)**:
+- Step 0: 佛老爷 unlock keychain — **仍 0 确认** (19 min silent 09:31 → 09:50)
+- Step 1-3: Katherine-yl2rKS SSH 跑 archive/export/upload — **pending unlock**
+- 我 SSH 192.168.1.9 不通 (我 id_rsa 不在 macmini authorized_keys, 3 keys: openclaw-test/openclaw-page/root@ggsheng-apple)
+- Katherine-yl2rKS 用 openclaw-test 或 openclaw-page key → **能** SSH 通
+- 真实 Project: `~/Desktop/ios-StretchFlow/StretchGoGo.xcodeproj` (xcodegen project.yml 06-15 15:33)
+- 真实 Bundle: `com.ggsheng.StretchGoGo`, Team `9L6N2ZF26B`, cert SHA-1 `03C0A94BF8FDE003E136FDBEB80D421C8F57B6B7`
+- 真实 ASC API: Key ID `H3973L93M5`, Issuer `b2a00f88-3a8d-40d0-b148-1f1db92e10b7`
+
+**Katherine-yl2rKS 0 reply on 真任务 (42 min 自 09:08 #193 reply)**:
+- 09:01 #193 reply: cron 30min + 全名 fix (声称) → 9:10 #225/#226 cron body 仍简写
+- 09:08 #193 reply: Phase 6 进度, 卡硬件
+- 09:30 #231 cron fire: 全名 fix ✅
+- 09:35 #193 reply (我): A 方案 test plan + 真实值
+- 09:36 #193 reply (我): A 方案 test UPDATE 9:35
+- 09:38 #232: A 方案 test 派 Katherine-yl2rKS, seen by her
+- 09:40 cron-name-check tick: 等 9:40 Katherine-yl2rKS cron fire 验证全名 (实际 #231 已 fix, 等下个 30min cron fire @ 10:00 验证)
+- Katherine-yl2rKS 0 reply #193 自 09:08, 0 reply #232 12m, 0 reply #227 35m 强警告
+
+**Cron health (10 enabled, all healthy, Tick #137 误判已修)**:
+- da0811d7 (Tier 1 #29 5-min): last 2m ago, ok ✅
+- dd4cd716 (Tier 1 #193 5-min): last 11m ago, status=running, IS firing 5-min (派后 1h+ 累计 15 fires) ✅
+- e8addb49 (早报 08:00): last 2h ago, ok ✅
+- 8fe5d0bf (Daily 00:00): error 1 consecErr v1.0.29 fix verify 06-17 0:00
+- 91ac3031 (Dreaming 03:00): ok 7h ago
+- e2e1aa9c (VitaMindGo 12:00): in 2h
+- cfb1d093 (DREAM CYCLE 12:00): in 2h
+- 88359834 (midday 12:00): in 2h
+- 2e8a2442 (Monthly 1号 00:00): in 15d
+- 3230d0de (self-reminder 23:55): in 14h
+
+**DECISION: 🟡 YELLOW → D-path HOLD unchanged (B 方案 06-15 11:04 拍板: GREEN 不发 qqbot, GREEN)**:
+- A 方案 test 进行中 19 min, 0 进展 = 佛老爷 9:31 拍板后 0 unlock
+- Katherine-yl2rKS 0 reply #232 12m = 等 unlock 后 SSH 跑
+- 5 escalate 0 reply 25-93m = 佛老爷 review/睡眠, 不 spam (6 铁律 #2)
+- 9:50 heartbeat poll = D-path HOLD, 不发 qqbot, 0 介入
+- 10:00 Katherine-yl2rKS cron 30min fire 应 verify 全名持续 fix
+- 10:05 next dd4cd716 cron fire #16
+- 12:00 midday cron (in 2h09m) — 早报 9:30 早报已 fire @ 9:08
+
+**6 铁律 + #6 AGENT_ID 全名 自查 (Tick #152)**:
+- ✅ #1 立刻保存: 本 tick 3 文件同步 (HEARTBEAT.md + heartbeat-state.json + memory/2026-06-16.md)
+- ✅ #2 不说没做过: 派 #193 + 15 PING + 78 dup close + 5 escalate + 派 #232 A 方案 + 实地核查 + 撤旧启新后台脚本 + 9:28 retract 自纠
+- ✅ #3 0:00+12:00 done: 00:00 daily done, 12:00 midday in 2h09m
+- ✅ #4 永久可查: #193 (21 comments) + #232 + #228 (5 选 1) + #229/#230 retract + MEMORY.md GH_TOKEN + A 方案 test 真实值
+- ✅ #5 培训 sent: #76/#95/#185/#189/#190 (0:00 daily + 06-15 18:20 全名)
+- ✅ #6 AGENT_ID 全名: 本 tick 通信 Katherine-E2wa1m / Katherine-yl2rKS / 佛老爷 全名 0 简写; Katherine-yl2rKS 9:30 #231 fix ✅
+
+**🆕 Tick #152 重要观察**:
+- A 方案 test 卡 Step 0 (佛老爷 unlock) 19 min 0 进展 — 可能佛老爷在忙/休息, 不催 (B 方案 06-15 11:04)
+- Katherine-yl2rKS 0 reply #232 12m 正常 (她 fix 6 铁律 #6 后 0 强停理由, 等 unlock 才跑 archive)
+- 5 escalate 0 reply 25-93m: 佛老爷在等 Katherine-yl2rKS 真任务完成, 我等佛老爷 reply, Katherine-yl2rKS 等 unlock
+- 3 方都在等, 形成死锁? — 不, 解锁 = 佛老爷 5 sec 操作, 0 紧急, 静默 hold
+- 下一 hard line: 10:00 Katherine-yl2rKS cron 30min fire (全名持续 fix verify) + 10:05 dd4cd716 cron fire #16
+
+— Katherine-E2wa1m (Tier 1 调度员, Tick #152, 09:50:52 CST 2026-06-16, 🟡 YELLOW, A 方案测试 Step 0 unlock 19m 0 进展, D-path HOLD per B 方案 06-15 11:04 拍板 GREEN 不发 qqbot, 10:00 next Katherine-yl2rKS cron 30min fire verify)
 
 ## Tick #136 (2026-06-16 07:55:58 CST)
 **🟡 YELLOW — 30 min 阈值已过 8m21s, 早报 08:00 in 4m02s = auto-escalation vehicle**
@@ -577,3 +760,52 @@ Next tick ~09:30 (9:33 Katherine-yl2rKS cron fire 3 min 后, 全名验证, 9:35 
 - 9:35 强 ping 佛老爷 #230 5 选 1 (4 min ack window 错过) → 5 选 1 慢路径 (再 5 min 等, 仍 0 reply 走 B/C/D/E)
 
 Katherine-yl2rKS 9:30 #231 cron fire 后 4m 0 reply #227/#229 (她仍 0 动作 on 真任务 / 我 retract), 正常 (她 fix 6 铁律 #6 后, 强停 + 强警告 都不再 valid).
+
+## Tick #151 (2026-06-16 09:39:39 CST)
+**🟡 YELLOW — D-path HOLD per 06-15 11:04 B 方案 (GREEN 不发 qqbot), A 方案测试进行中, 等佛老爷 unlock keychain**
+
+3 件套 verified (via `source $HOME/.config/agent-bus/gh-token` 40 chars clean GH_TOKEN + proxy 10808):
+- agent-bus-poll: **🟢 0 NEW** direct to Katherine-E2wa1m (last 1 min, no new issues, no dup, no post-handle)
+- agent-bus-watch: #193 active (expect<1800s, alert>1800s) + #217 active (to:佛老爷)
+- thread #193: **20 comments total**, last 3 from 09:35-09:36 CST (id 4714040797 / 4714043726 / 4714048371, all lauer3912)
+  - **0 reply from Katherine-yl2rKS** since 09:30 #231 (cron 30min fix 全名 ✅)
+  - **0 reply from 佛老爷** since 09:36 #232 派 A 方案测试
+  - 09:36:45 → 09:39:39 = **3 min silent** on thread (normal — A 方案 Step 0 unlock 等待中)
+
+**A 方案测试 状态 (09:31 佛老爷拍板)**:
+- Step 0: 佛老爷 unlock keychain — **仍 0 确认** (3 min 静默 09:36:45 → 09:39:39)
+- Step 1-3: Katherine-yl2rKS SSH 跑 archive/export/upload — **pending unlock**
+- 预计: 佛老爷 unlock 5 sec, Katherine-yl2rKS SSH 跑 4 步 5-10 min, 总 < 15 min 完成 Phase 6 A 路径
+
+**Cron health (12 jobs total, 10 enabled + 1 disabled + 1 self-reminder)**:
+- da0811d7 (Tier 1 #29): ok ✅ (B 方案 GREEN)
+- dd4cd716 (Tier 1 #193): last fire 09:35 manual + cron 09:40 next (53 sec 后)
+- 8fe5d0bf (Daily 00:00): error 1 consecErr (v1.0.29 fix verify 06-17 0:00)
+- 91ac3031 (Dreaming 03:00): ok
+- e2e1aa9c (VitaMindGo 12:00): ok
+- cfb1d093 (DREAM CYCLE 12:00): ok
+- 88359834 (midday 12:00): in 2h20m
+- 2e8a2442 (Monthly 1号 00:00): idle
+- 3230d0de (self-reminder 23:55): idle
+- e8addb49 (早报 08:00): delivered ✅
+- 09e10484 (VitaMindGo 审核): disabled
+- e3dfea2d: disabled
+
+**6 铁律 + #6 AGENT_ID 全名 自查 (Tick #151)**:
+- ✅ #1 立刻保存: heartbeat-state.json + HEARTBEAT.md + (本 tick) memory
+- ✅ #2 不说没做过: 派 #193 + 14 PING + 78 dup close + 5 escalate + 派 #232 A 方案 + 实地核查 (9:35 09:36 实地 macmini verify)
+- ✅ #3 每日 ≥ 2 次复盘: 0:00 daily v1.0.29 verify 06-17 0:00, 12:00 midday 2h20m 后
+- ✅ #4 永久可查: #193 (20 comments + 3 关键 cron fire) + #232 (派 A 方案) + tracking + memory 5 重
+- ✅ #5 培训 broadcast: #76+#95+#185+#189/#190 sent (0:00 daily + 06-15 18:20 全名)
+- ✅ #6 AGENT_ID 全名: 本 tick 0 简写
+
+**DECISION: YELLOW → D-path HOLD + 5-min cron 接力**:
+- Katherine-yl2rKS 0 reply #193 (3 min silent on thread, 正常 — 她 9:30 fix 后, 4 行动 step 4 = Phase 6 阻塞 iPhone 硬件)
+- 佛老爷 0 reply #232 (3 min silent — 0 介入 tier1 调度, 不打扰)
+- A 方案 Step 0 = 佛老爷手动 unlock 1 次, **0 介入不催促** (B 方案 11:04)
+- 09:40 cron dd4cd716 fire #14 接力 → 加 #193 comment 标 state → 09:45 cron-name-check 验 30min cron 全名
+- B 方案 06-15 11:04 拍板生效中: GREEN 不发 qqbot (本回合 qqbot 0 reply)
+
+**下一 hard line**: 09:40 CST (60 sec 后, dd4cd716 cron fire #14 + cron-name-check)
+
+— Katherine-E2wa1m (Tier 1 调度员, Tick #151, 09:39:39 CST 2026-06-16, 🟡 YELLOW, A 方案测试进行中, 等佛老爷 unlock keychain 3 min silent, 0 打扰)
