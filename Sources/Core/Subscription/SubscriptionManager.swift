@@ -49,7 +49,8 @@ final class SubscriptionManager: ObservableObject {
     /// App Store Connect product IDs. Must match the ASC backend exactly.
     static let productIDs: Set<String> = [
         "vitamind_pro_monthly",
-        "vitamind_pro_yearly"
+        "vitamind_pro_yearly",
+        "vitamind_pro_lifetime"
     ]
 
     /// Free-tier daily AI message cap. Resets at local midnight.
