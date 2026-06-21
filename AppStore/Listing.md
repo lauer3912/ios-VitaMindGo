@@ -2,9 +2,9 @@
 
 > **App Name:** VitaMindGo
 > **Bundle ID:** com.ggsheng.VitaMind
-> **Version:** 3.0.0
-> **Document Version:** 2.0
-> **Last Updated:** 2026-05-30
+> **Version:** 3.1.0
+> **Document Version:** 3.0 (v3.1.0 IAP added)
+> **Last Updated:** 2026-06-21
 
 ---
 
@@ -273,7 +273,11 @@ Key testing guidance:
 2. Apple Watch integration is optional. iPhone-only testing is fully supported. Watch app shows current health metrics synced from the paired iPhone.
 3. AI Coach requires a user-provided API key in Settings > AI Provider. The app ships with a placeholder; testers should enter their own OpenAI/Anthropic/Google/DeepSeek/MiniMax/xAI key. No bundled credentials.
 4. The 5 tabs (Pocket, Habits, Coach, Collection, Settings) are all functional without an account. Onboarding tour is skippable.
-5. No subscription, no IAP, no in-app purchase in v3.0.0 — app is 100% free with all features.
+5. **In-App Purchase / Subscription (v3.1.0 — NEW):** VitaMindGo Pro offers three auto-renewable subscriptions:
+   - **Pro Monthly:** $4.99/month, 7-day free trial
+   - **Pro Yearly:** $39.99/year (save 33%), no trial
+   - **Pro Lifetime:** one-time purchase
+   Subscription Group ID: 21525862182 (VitaMindGo Pro). The paywall (PaywallView) appears when a free user hits the 5 AI messages/day limit, and via an "Upgrade" button in Settings. Pro unlocks unlimited AI Coach messages, advanced insights, exclusive card themes, and Apple Watch advanced complications. Subscription state is verified locally via StoreKit 2 JWS — no backend server, no account required. Restore Purchases is available in Settings. To test subscriptions in sandbox: sign in with a Sandbox Apple ID (Settings > App Store > Sandbox Account on the test device) and use the PaywallView Upgrade button. Use the included `Resources/VitaMindGo.storekit` configuration for local Xcode testing.
 6. The app does NOT claim to diagnose, treat, or prevent any medical condition. All health metrics are presented as informational/lifestyle data.
 
 Guideline 1.4.1 fix (build 11, 2026-06-09):
@@ -339,6 +343,8 @@ To test: Open the Coach tab. The header should immediately show "References: CDC
 - 需自行实现 JWT 验证 (从 App Store 拉取公钥) + 事件处理
 - **当前阶段忽略此字段**
 
+> **v3.1.0 更新 (2026-06-21):** v3.1.0 仍为纯客户端 StoreKit 2 验证 (无后端), 暂不接 App Store Server Notifications V2。后续 v3.2.0+ 如增加自建后端，可启用 Production + Sandbox 两个 URL。
+
 ### 10.7 字段填写汇总表 (Human 复制用)
 
 | App Store Connect 字段 | 直接复制 |
@@ -350,8 +356,13 @@ To test: Open the Coach tab. The header should immediately show "References: CDC
 | Regulated Medical Device | No |
 | App uses cryptography | Yes |
 | App qualifies for exemption | Yes |
-| Production Server Notification URL | (空) |
-| Sandbox Server Notification URL | (空) |
+| Production Server Notification URL | (空, v3.1.0 纯客户端) |
+| Sandbox Server Notification URL | (空, v3.1.0 纯客户端) |
+| **Subscription Group Name** | `VitaMindGo Pro` |
+| **Subscription Group Reference Name** | `VitaMindGo Pro` |
+| **Product ID 1 (Monthly)** | `vitamind_pro_monthly` ($4.99/month, 7d trial) |
+| **Product ID 2 (Yearly)** | `vitamind_pro_yearly` ($39.99/year) |
+| **Product ID 3 (Lifetime)** | `vitamind_pro_lifetime` (one-time, 设定价格) |
 
 ---
 
