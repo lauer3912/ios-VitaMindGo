@@ -123,7 +123,7 @@ final class SubscriptionManagerTests: XCTestCase {
         let ids = SubscriptionManager.productIDs
         XCTAssertTrue(ids.contains("vitamind_pro_monthly_v2"), "v3.1.0 (06-21): renamed from vitamind_pro_monthly after accidental ASC delete")
         XCTAssertTrue(ids.contains("vitamind_pro_yearly"))
-        XCTAssertTrue(ids.contains("vitamind_pro_lifetime"), "vitamind_pro_lifetime added 06-18 per IAP 拍板 #28")
+        XCTAssertTrue(ids.contains("vitamind_pro_lifetime2"), "v3.1.0 (06-21 17:34): renamed from vitamind_pro_lifetime (CONSUMABLE) when 佛老爷 rebuilt as NON_CONSUMABLE")
         XCTAssertEqual(ids.count, 3)
     }
 

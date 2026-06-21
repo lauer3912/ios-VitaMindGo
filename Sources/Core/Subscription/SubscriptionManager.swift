@@ -52,12 +52,14 @@ final class SubscriptionManager: ObservableObject {
 /// was accidentally deleted during an ASC API permission probe and Apple
 /// disallows reusing product IDs within 30-90 days. We migrated to
 /// `vitamind_pro_monthly_v2` to keep the Apple ID stable for the Pro Monthly
-/// IAP flow. Code-side references, the bundled `VitaMindGo.storekit` file, and
-/// all marketing metadata were updated in tandem.
+/// IAP flow. The original `vitamind_pro_lifetime` (CONSUMABLE) was retired the
+/// same day when 佛老爷 rebuilt lifetime as a proper NON_CONSUMABLE IAP under
+/// the new ID `vitamind_pro_lifetime2`. Code-side references, the bundled
+/// `VitaMindGo.storekit` file, and all marketing metadata were updated in tandem.
     static let productIDs: Set<String> = [
         "vitamind_pro_monthly_v2",
         "vitamind_pro_yearly",
-        "vitamind_pro_lifetime"
+        "vitamind_pro_lifetime2"
     ]
 
     /// Free-tier daily AI message cap. Resets at local midnight.

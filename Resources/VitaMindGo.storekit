@@ -1,6 +1,23 @@
 {
   "identifier" : "VitaMindGoStoreKit",
-  "nonRenewingSubscriptions" : [],
+  "nonRenewingSubscriptions" : [
+    {
+      "adHocOffers" : [],
+      "codeOffers" : [],
+      "displayPrice" : "79.99",
+      "internalID" : "lt2_init",
+      "localizations" : [
+        {
+          "description" : "One-time purchase. Unlock unlimited AI Coach, advanced insights, and exclusive card themes. Never expires.",
+          "displayName" : "VitaMindGo Pro Lifetime",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "vitamind_pro_lifetime2",
+      "referenceName" : "VitaMindGo Pro Lifetime",
+      "type" : "NonConsumable"
+    }
+  ],
   "products" : [],
   "settings" : {
     "_compatibilityTimeRate" : 1,
