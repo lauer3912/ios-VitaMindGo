@@ -273,11 +273,12 @@ Key testing guidance:
 2. Apple Watch integration is optional. iPhone-only testing is fully supported. Watch app shows current health metrics synced from the paired iPhone.
 3. AI Coach requires a user-provided API key in Settings > AI Provider. The app ships with a placeholder; testers should enter their own OpenAI/Anthropic/Google/DeepSeek/MiniMax/xAI key. No bundled credentials.
 4. The 5 tabs (Pocket, Habits, Coach, Collection, Settings) are all functional without an account. Onboarding tour is skippable.
-5. **In-App Purchase / Subscription (v3.1.0 — NEW):** VitaMindGo Pro offers three auto-renewable subscriptions:
-   - **Pro Monthly:** $4.99/month, 7-day free trial
-   - **Pro Yearly:** $39.99/year (save 33%), no trial
-   - **Pro Lifetime:** one-time purchase
-   Subscription Group ID: 21525862182 (VitaMindGo Pro). The paywall (PaywallView) appears when a free user hits the 5 AI messages/day limit, and via an "Upgrade" button in Settings. Pro unlocks unlimited AI Coach messages, advanced insights, exclusive card themes, and Apple Watch advanced complications. Subscription state is verified locally via StoreKit 2 JWS — no backend server, no account required. Restore Purchases is available in Settings. To test subscriptions in sandbox: sign in with a Sandbox Apple ID (Settings > App Store > Sandbox Account on the test device) and use the PaywallView Upgrade button. Use the included `Resources/VitaMindGo.storekit` configuration for local Xcode testing.
+5. **In-App Purchase / Subscription (v3.1.0 — NEW):** VitaMindGo Pro offers three Pro tiers:
+   - **Pro Monthly:** $4.99/month, 7-day free trial (product ID: `vitamind_pro_monthly_v2`)
+   - **Pro Yearly:** $39.99/year (save 33%), no trial (product ID: `vitamind_pro_yearly`)
+   - **Pro Lifetime:** one-time $79.99, NON_CONSUMABLE IAP (product ID: `vitamind_pro_lifetime`)
+   Subscription Group ID: 22153084 (VitaMindGo Pro). The paywall (PaywallView) appears when a free user hits the 5 AI messages/day limit, and via an "Upgrade" button in Settings. Pro unlocks unlimited AI Coach messages, advanced insights, exclusive card themes, and Apple Watch advanced complications. Subscription state is verified locally via StoreKit 2 JWS — no backend server, no account required. Restore Purchases is available in Settings. To test subscriptions in sandbox: sign in with a Sandbox Apple ID (Settings > App Store > Sandbox Account on the test device) and use the PaywallView Upgrade button. Use the included `Resources/VitaMindGo.storekit` configuration for local Xcode testing.
+   **v3.1.0 Product ID history note:** The original `vitamind_pro_monthly` product ID was accidentally deleted during an internal ASC API permission probe on 2026-06-21 and Apple's reuse policy blocks reusing the ID for 30-90 days. The new product ID `vitamind_pro_monthly_v2` was created in the same VitaMindGo Pro subscription group; all code (`SubscriptionManager.swift`), the bundled `VitaMindGo.storekit` config, and marketing metadata were updated in this same release.
 6. The app does NOT claim to diagnose, treat, or prevent any medical condition. All health metrics are presented as informational/lifestyle data.
 
 Guideline 1.4.1 fix (build 11, 2026-06-09):
@@ -360,9 +361,9 @@ To test: Open the Coach tab. The header should immediately show "References: CDC
 | Sandbox Server Notification URL | (空, v3.1.0 纯客户端) |
 | **Subscription Group Name** | `VitaMindGo Pro` |
 | **Subscription Group Reference Name** | `VitaMindGo Pro` |
-| **Product ID 1 (Monthly)** | `vitamind_pro_monthly` ($4.99/month, 7d trial) |
+| **Product ID 1 (Monthly)** | `vitamind_pro_monthly_v2` ($4.99/month, 7d trial) |
 | **Product ID 2 (Yearly)** | `vitamind_pro_yearly` ($39.99/year) |
-| **Product ID 3 (Lifetime)** | `vitamind_pro_lifetime` (one-time, 设定价格) |
+| **Product ID 3 (Lifetime)** | `vitamind_pro_lifetime` (NON_CONSUMABLE IAP, $79.99) |
 
 ---
 

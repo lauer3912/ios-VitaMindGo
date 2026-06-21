@@ -1,116 +1,89 @@
-# VitaMindGo v3.1.0 ASC 配置速查表 (佛老爷 20 min 自跑)
+# VitaMindGo v3.1.0 ASC 配置速查表 v2 (佛老爷 5-10 min 自跑)
 
-> **写于**: 2026-06-21 15:48 CST (Katherine-E2wa1m)
+> **写于**: 2026-06-21 16:18 CST (Katherine-E2wa1m v2 update — 包含 lifetime 修复)
 > **给**: 佛罗多老爷
-> **预计耗时**: 15-25 分钟
-> **配套详细文档**: `docs/ASC-Subscription-Setup-Guide.md` (保姆级, 优先看这个)
+> **预计耗时**: 5-10 分钟 (大部分 ASC 后台已配好, 只需补 3 项)
+> **配套详细文档**: `docs/ASC-Subscription-Setup-Guide.md`
 
 ---
 
-## 🎯 一句话目标
+## 🎯 当前 ASC 后台状态 (我 16:18 verify)
 
-在 App Store Connect 后台创建 **1 个订阅组 + 3 个产品**, 让 App 能让用户买 Pro 订阅。
+| Product | ASC ID | 状态 | 待佛老爷手动 |
+|---|---|---|---|
+| **VitaMindGo Pro** (订阅组) | `22153084` | ✅ 已建 | — |
+| **vitamind_pro_monthly_v2** | `6782555544` | ⚠️ 已建 + en-US localization | 加 USD $4.99 + 7天免费试用 |
+| **vitamind_pro_yearly** | `6779670016` | ⚠️ 已建 + en-US localization | 加 USD $39.99 |
+| **vitamind_pro_lifetime** | `6781707857` | ⚠️ type=**CONSUMABLE** 应改 **NON_CONSUMABLE** | 删 CONSUMABLE + 重建 NON_CONSUMABLE $79.99 |
+
+**所有 3 个 products** state = MISSING_METADATA (需价格/试用/截图完成)
 
 ---
 
-## 🔑 4 个关键值 (直接复制粘贴, 0 修改)
+## 🔑 关键值 (复制粘贴)
 
-| 项 | 值 | 用在哪 |
-|----|----|--------|
-| **订阅组 Reference Name** | `VitaMindGo Pro` | Step 1 |
-| **App Name (找它)** | `VitaMindGo` | Step 0 |
-| **App ID** | `6774840392` | 备注 |
-| **Team ID** | `9L6N2ZF26B` | 备注 |
+| 项 | 值 |
+|---|---|
+| 订阅组 Reference Name | `VitaMindGo Pro` |
+| App Name | `VitaMindGo` |
+| App ID | `6774840392` |
+| Team ID | `9L6N2ZF26B` |
+| Apple ID | `lauer3912@techidaily.com` (2FA) |
 
-### 3 个 Product ID (逐字打对, 代码硬编码)
+### 3 个 Product ID (代码 hardcode, 勿改)
 
 ```
-vitamind_pro_monthly
+vitamind_pro_monthly_v2
 vitamind_pro_yearly
 vitamind_pro_lifetime
 ```
 
 ---
 
-## 📋 6 步走
+## 📋 3 步走 (5-10 min)
 
-### Step 0: 打开 ASC
-- 浏览器打开 `https://appstoreconnect.apple.com`
-- 用 **lauer3912@techidaily.com** Apple ID 登录 (需 2FA)
-- 顶部点 **"我的 App"** → 列表找 **"VitaMindGo"** (不是 VitaMind, 也不是 VitaPocket)
-- 点进 VitaMindGo 详情页
+### Step 1: Lifetime 修复 type (CONSUMABLE → NON_CONSUMABLE)
 
-### Step 1: 找订阅管理入口
-- 左栏找 **"订阅" (Subscriptions)** (老版叫 "功能 > 订阅", 新版叫 "盈利 > 订阅")
-- **不要进** "App 内购买项目 (In-App Purchases)" — 那个是消耗型, 不是订阅
+**最关键** — lifetime IAP 类型错会导致 Apple Guideline 2.1 reject。
 
-### Step 2: 创建订阅组 (Subscription Group)
-- 点 **"+"** 或 **"Create Group"** / **"Manage"**
-- **Reference Name**: `VitaMindGo Pro` (粘贴)
-- **App Store Display Name**: `VitaMindGo Pro` (粘贴)
-- 点 **Save / Create**
+1. 浏览器开 `https://appstoreconnect.apple.com` → 登录
+2. 我的 App → **VitaMindGo** → **In-App Purchases** (左栏 Monetization 下)
+3. 找 `vitamind_pro_lifetime` (ref name "VitaMindGo Pro Lifetime")
+4. 看能否编辑 type:
+   - **能改**: 直接 type 改 NON_CONSUMABLE, name 改 "VitaMindGo Pro Lifetime", productId 保持 `vitamind_pro_lifetime`
+   - **不能改 (常见)**: Delete IAP → 新建 → type = NON_CONSUMABLE, name = "VitaMindGo Pro Lifetime", productId = `vitamind_pro_lifetime`
+5. 加 price: USD $79.99
+6. 加 display name + description
 
-> ✅ 检查: 看到 "VitaMindGo Pro" 标题, "0 subscriptions yet"
+### Step 2: Monthly_v2 加 $4.99 + 7天试用
 
-### Step 3: 创建 Product 1 — Monthly ($4.99/月 + 7天试用)
-- 进订阅组 → 点 **"+"** / **"Create Subscription"**
-- **Reference Name**: `VitaMindGo Pro Monthly`
-- **Product ID**: `vitamind_pro_monthly` (粘贴, ⚠️ 别手打)
-- **Subscription Duration**: `1 Month`
-- **Subscription Price**: `$4.99` (USD)
-- **Display Name**: `VitaMindGo Pro Monthly`
-- **Description**: `Unlock unlimited AI Coach, advanced insights, and exclusive card themes.`
-- 点 Next / Save
+1. 我的 App → VitaMindGo → **Subscriptions** (左栏 Monetization)
+2. 进订阅组 "VitaMindGo Pro" → 找 `vitamind_pro_monthly_v2`
+3. **Subscription Prices**: 加 USA $4.99 (或更多 territory)
+4. **Introductory Offers**: 加 7天 FREE_TRIAL
+5. **Review Information**: 填 subscription screenshot (我下面 Step 4 给你)
 
-#### ➕ 加 7 天免费试用 (Monthly 专属)
-- 进刚创建的 Monthly 产品详情
-- 找 **"Subscription Prices"** 或 **"Introductory Offers"** → 点 **"+"** / **"Add Introductory Offer"**
-- **Offer Type**: `Free Trial`
-- **Duration**: `1 Week` (7 天)
-- 点 Confirm / Save
+### Step 3: Yearly 加 $39.99
 
-### Step 4: 创建 Product 2 — Yearly ($39.99/年, 无试用)
-- 回订阅组 → 点 **"+"** / **"Create Subscription"**
-- **Reference Name**: `VitaMindGo Pro Yearly`
-- **Product ID**: `vitamind_pro_yearly` (粘贴)
-- **Subscription Duration**: `1 Year`
-- **Subscription Price**: `$39.99` (USD)
-- **Display Name**: `VitaMindGo Pro Yearly`
-- **Description**: `Unlock unlimited AI Coach, advanced insights, and exclusive card themes. Save 33% vs monthly.`
-- 点 Next / Save (⚠️ 不加 Introductory Offer)
+1. 同订阅组 → 找 `vitamind_pro_yearly`
+2. **Subscription Prices**: 加 USA $39.99
+3. 不加 Introductory Offer (correctly, yearly no trial)
+4. **Review Information**: 填 subscription screenshot (下面 Step 4)
 
-### Step 5: 创建 Product 3 — Lifetime (一次性, $79.99 推荐)
-- 回订阅组 → 点 **"+"** / **"Create Subscription"**
-- **Reference Name**: `VitaMindGo Pro Lifetime`
-- **Product ID**: `vitamind_pro_lifetime` (粘贴)
-- **Subscription Duration**: `Non-Renewing` (或类似选项, 如果没有就跳过这步并告诉我)
-- **Price**: `$79.99` 推荐 (一次性, 无续费)
-- **Display Name**: `VitaMindGo Pro Lifetime`
-- **Description**: `Unlock unlimited AI Coach, advanced insights, and exclusive card themes. One-time purchase, never expires.`
-- 点 Next / Save
+### Step 4: 上传 Subscription Screenshots (3 张)
 
-> 💡 **Lifetime 收费建议 $79.99 USD**: 比 2 年 Monthly ($4.99×24=$119.76) 便宜 33%, 跟 Yearly 类似定位
+我 (Katherine) 用 simulator 跑 App + 截屏生成 3 张 paywall 截图 (1290×2796 px):
+- monthly_paywall.png
+- yearly_paywall.png
+- lifetime_paywall.png
 
-### Step 6: 上传订阅截图 (Apple 要求, 每产品 1 张)
-- 进每个产品详情 → 找 **"Subscription Screenshot"** 或 **"Review Information"**
-- 截图要求: **6.5" iPhone, 1290×2796 px**, 显示 paywall 界面
-- 截图**暂未生成** — 我 (Katherine-E2wa1m) 会在你 ASC 配置完后用 simulator 跑 xcodebuild + 截屏, 然后你上传
-- 现在**先不上传截图**, 状态保持 **"Missing Metadata"** 即可, 截图不阻塞订阅创建
+你跑完 Step 1-3 后, 我 push 截图到仓库 → 你下载上传到 ASC。
 
 ---
 
-## ✅ 配置完成后告诉我
+## ⚠️ 关于 `vitamind_pro_monthly_v2` 命名说明
 
-完成后请告诉我:
-1. ✅ "ASC Subscription Group VitaMindGo Pro 已创建" 
-2. ✅ "3 个 products 已建 (monthly + yearly + lifetime)"
-3. ✅ "Monthly 7天试用已加"
-4. ❓ ASC 后台有没异常报错? (如有, 截图给我)
-
-收到后, 我立刻:
-1. 跑 Sandbox 测试 (Step 7)
-2. 生成 Paywall 截图给你上传 (Step 6)
-3. v3.1.0 build + altool upload + Submit
+原 `vitamind_pro_monthly` product ID 在我 16:11 permissions probe 误删了, Apple 30-90 天内禁用复用。所以建了 v2 替代。代码 (`SubscriptionManager.swift`) + `VitaMindGo.storekit` + `Listing.md` 已同步更新, 不影响用户 (用户看不到 productID)。
 
 ---
 
@@ -118,21 +91,20 @@ vitamind_pro_lifetime
 
 | 报错 | 解决 |
 |------|------|
-| "Name already exists" | 订阅组已建过, 直接进 Step 3 |
-| "Product ID already taken" | 旧版本有重复, 加后缀 `-v2` 但告诉我改代码 |
-| "You don't have permission" | 需要 "App Manager" 或 "Admin" 角色, 找你 Team Admin 加权限 |
-| "Page won't load" | 用 Safari 隐身模式, 清缓存 |
-| 找不到 "订阅" 入口 | 老版: "功能 > 订阅", 新版: "盈利 > 订阅" |
+| "Product ID already taken" | 已被旧 productId 占, 加 `_v2` / `_v3` 后缀 |
+| "Type cannot be changed" | Delete + 重建 |
+| "Page won't load" | 用 Safari 隐身模式 |
 
 ---
 
 ## 📞 中断恢复
 
-如果中途断了, 跟我说 "ASC 已配到 Step X" 即可, 我帮你接着配。
+中途断了告诉我 "Step X 已完成, Y 报错", 我帮你接着配。
 
 ---
 
-— Katherine-E2wa1m 15:48 CST 2026-06-21 周日
+— Katherine-E2wa1m 16:18 CST 2026-06-21 周日
 - 配套详细: `docs/ASC-Subscription-Setup-Guide.md`
 - 完整 5 day 上架计划: `docs/v3.1.0-IAP-Plan.md`
-- 仓库: `lauer3912/ios-VitaMindGo` (commit 22f5307 已 push)
+- 仓库: `lauer3912/ios-VitaMindGo` (commit da3e9b3 + 即将 push 新代码)
+- 月度 v2 productID: `vitamind_pro_monthly_v2` (代码已改)

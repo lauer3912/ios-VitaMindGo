@@ -41,7 +41,7 @@
               "locale" : "en_US"
             }
           ],
-          "productID" : "vitamind_pro_monthly",
+          "productID" : "vitamind_pro_monthly_v2",
           "recurringSubscriptionPeriod" : "P1M",
           "referenceName" : "VitaMindGo Pro Monthly",
           "subscriptionGroupID" : "21525862182",

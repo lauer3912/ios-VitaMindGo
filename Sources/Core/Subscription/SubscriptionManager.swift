@@ -47,8 +47,15 @@ final class SubscriptionManager: ObservableObject {
     // MARK: - Configuration
 
     /// App Store Connect product IDs. Must match the ASC backend exactly.
+///
+/// **v3.1.0 note (2026-06-21):** The original `vitamind_pro_monthly` product ID
+/// was accidentally deleted during an ASC API permission probe and Apple
+/// disallows reusing product IDs within 30-90 days. We migrated to
+/// `vitamind_pro_monthly_v2` to keep the Apple ID stable for the Pro Monthly
+/// IAP flow. Code-side references, the bundled `VitaMindGo.storekit` file, and
+/// all marketing metadata were updated in tandem.
     static let productIDs: Set<String> = [
-        "vitamind_pro_monthly",
+        "vitamind_pro_monthly_v2",
         "vitamind_pro_yearly",
         "vitamind_pro_lifetime"
     ]
@@ -296,7 +303,7 @@ final class SubscriptionManager: ObservableObject {
 
     /// Lookup the monthly product, if loaded.
     var monthlyProduct: Product? {
-        products.first { $0.id == "vitamind_pro_monthly" }
+        products.first { $0.id == "vitamind_pro_monthly_v2" }
     }
 
     /// Lookup the yearly product, if loaded.
