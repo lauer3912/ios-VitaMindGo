@@ -29,10 +29,12 @@
 		A9AD655FA73A0B0BED2A4D05 /* DynamicColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D437358573E84B0C11C23529 /* DynamicColor.swift */; };
 		B56F2504D8E23CDBF890A63D /* VitaPocketUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1197B2E4298E59030B2B834 /* VitaPocketUITests.swift */; };
 		B77305B40352259D78FB4ACC /* AppIconLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B652BC07E92B9C5A6F9A50E2 /* AppIconLoader.swift */; };
+		B979893255B604B9974CAD22 /* VitaMindIntents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09787704C9DACBE04C0C9F42 /* VitaMindIntents.swift */; };
 		C6426403A3420078C07FD540 /* CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30FE214FF5381C12BA107110 /* CollectionView.swift */; };
 		CBFBCB71BA7CD10E4FCEA4FE /* CoachView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9F7D2C3E57790E1B5ED38D /* CoachView.swift */; };
 		CD906BE7D2170936D8B48B47 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CF1735B8D3DB1F1BBBA64C63 /* Assets.xcassets */; };
 		CEE84D2F9410CEA8C8B048FC /* GameCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536FA57B47211FA5BB2F0C6B /* GameCardView.swift */; };
+		D7286F073711E4FD36FDBC39 /* VitaMindGo.storekit in Resources */ = {isa = PBXBuildFile; fileRef = BB48536541CA081154499630 /* VitaMindGo.storekit */; };
 		D7C7391A37C8A472B565EF9B /* CardModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7FF9F390C23A9F20D36FBF /* CardModels.swift */; };
 		E19E29BC0CC8830EEE12C3BB /* VitaMindWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3CBE342AE828EAFE5C6A8FD /* VitaMindWidget.swift */; };
 		E5A78C282F79EE3919117763 /* EmptyStateCaptureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A654448F849ED17D0E1596F3 /* EmptyStateCaptureTests.swift */; };
@@ -85,6 +87,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		09787704C9DACBE04C0C9F42 /* VitaMindIntents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VitaMindIntents.swift; sourceTree = "<group>"; };
 		0B3AA6CBA911C12B4AFA43D2 /* VitaMindWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = VitaMindWidget.entitlements; sourceTree = "<group>"; };
 		11A9640125DE75F5C8892B28 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		12BC2578A6D5B9F73A8E7D58 /* VitaPocket.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = VitaPocket.entitlements; sourceTree = "<group>"; };
@@ -216,6 +219,14 @@
 			path = App;
 			sourceTree = "<group>";
 		};
+		423990484940C0E7955FE035 /* AppIntents */ = {
+			isa = PBXGroup;
+			children = (
+				09787704C9DACBE04C0C9F42 /* VitaMindIntents.swift */,
+			);
+			path = AppIntents;
+			sourceTree = "<group>";
+		};
 		4B4396EB8CABA49B618AEC3A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -242,13 +253,6 @@
 				F0E2325B2D9FC8006F201B91 /* VitaPocketWidget.appex */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		77E680CC33FCE716887F0380 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Extensions;
 			sourceTree = "<group>";
 		};
 		80DE26229E8056ECE083A3FC /* Theme */ = {
@@ -340,8 +344,8 @@
 		CF370DB84236506FD0F1058C /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				423990484940C0E7955FE035 /* AppIntents */,
 				C4D5BB417AC1E287BEFDFBC5 /* CardEngine */,
-				77E680CC33FCE716887F0380 /* Extensions */,
 				FFFA6F2EC07BB62579ED5996 /* Subscription */,
 				80DE26229E8056ECE083A3FC /* Theme */,
 			);
@@ -526,6 +530,7 @@
 				FCEF5B23FD5AB1E24D4640FF /* LaunchScreen.storyboard in Resources */,
 				375CEE8E713E076468DB96A6 /* PrivacyPolicy.html in Resources */,
 				1F678E1CF06F1E5EBBF11D37 /* TermsOfService.html in Resources */,
+				D7286F073711E4FD36FDBC39 /* VitaMindGo.storekit in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -564,6 +569,7 @@
 				748F7788CA333C2F54BA98C0 /* PersistenceService.swift in Sources */,
 				F8EB1385FA89CF02EAFB4FA7 /* SettingsView.swift in Sources */,
 				9F55624154D556E5313B8517 /* SubscriptionManager.swift in Sources */,
+				B979893255B604B9974CAD22 /* VitaMindIntents.swift in Sources */,
 				FA1974A6AAD4B78E2704870D /* VitaPocketApp.swift in Sources */,
 				F74DDCCFEF60A769B035445B /* VitaTheme.swift in Sources */,
 			);
@@ -757,7 +763,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 10;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 9L6N2ZF26B;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -778,7 +784,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				MARKETING_VERSION = 3.0.0;
+				MARKETING_VERSION = 3.1.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -827,7 +833,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 10;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 9L6N2ZF26B;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -842,7 +848,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				MARKETING_VERSION = 3.0.0;
+				MARKETING_VERSION = 3.1.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";

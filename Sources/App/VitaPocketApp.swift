@@ -3,6 +3,8 @@ import SwiftUI
 @main
 struct VitaPocketApp: App {
     @StateObject private var gameState = GameState()
+    // v3.1.0 IAP: inject SubscriptionManager so child views can observe Pro state
+    @StateObject private var subscription = SubscriptionManager.shared
 
     // User-controllable appearance (SOP §8.14, HR-19: must support Light + Dark)
     // Stored in UserDefaults; reads override the system setting.
@@ -19,6 +21,7 @@ struct VitaPocketApp: App {
         WindowGroup {
             ContentView()
                 .environmentObject(gameState)
+                .environmentObject(subscription)
                 .preferredColorScheme(AppearanceMode(rawValue: appearanceMode)?.colorScheme)
                 .task {
                     // Backup entry-point: also trigger here in case the

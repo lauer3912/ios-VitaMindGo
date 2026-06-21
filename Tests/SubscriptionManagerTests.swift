@@ -123,7 +123,8 @@ final class SubscriptionManagerTests: XCTestCase {
         let ids = SubscriptionManager.productIDs
         XCTAssertTrue(ids.contains("vitamind_pro_monthly"))
         XCTAssertTrue(ids.contains("vitamind_pro_yearly"))
-        XCTAssertEqual(ids.count, 2)
+        XCTAssertTrue(ids.contains("vitamind_pro_lifetime"), "vitamind_pro_lifetime added 06-18 per IAP 拍板 #28")
+        XCTAssertEqual(ids.count, 3)
     }
 
     // MARK: - MiniMaxError.freeMessageLimitReached (v3.1.0 Phase 2)

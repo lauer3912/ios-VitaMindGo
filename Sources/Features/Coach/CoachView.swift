@@ -9,6 +9,8 @@ struct CoachView: View {
     @State private var isTyping = false
     @AppStorage("vita_coach_disclaimer_acknowledged") private var disclaimerAcknowledged: Bool = false
     @State private var showFirstTimeDisclaimer: Bool = false
+    // v3.1.0 IAP: show PaywallView when free-tier daily limit reached
+    @State private var showPaywall: Bool = false
     
     var body: some View {
         NavigationStack {
@@ -55,6 +57,10 @@ struct CoachView: View {
             // toolbarColorScheme removed — let nav bar follow appearance
         }
         .accessibilityIdentifier("coach_view")
+        // v3.1.0 IAP: PaywallView sheet on free-tier limit
+        .sheet(isPresented: $showPaywall) {
+            PaywallView()
+        }
         .onAppear {
             if !disclaimerAcknowledged {
                 showFirstTimeDisclaimer = true
@@ -92,8 +98,20 @@ struct CoachView: View {
                 )
                 messages.append(aiMsg)
             } catch {
-                // Check if API key is not configured
-                if !AIService.shared.isConfigured {
+                // v3.1.0 IAP: free-tier daily limit reached — show PaywallView sheet
+                if let mmErr = error as? MiniMaxError, case .freeMessageLimitReached = mmErr {
+                    let aiMsg = CoachMessage(
+                        text: "🚫 " + (mmErr.errorDescription ?? "Free daily limit reached"),
+                        isUser: false,
+                        timestamp: Date()
+                    )
+                    messages.append(aiMsg)
+                    // Trigger PaywallView on next runloop tick so the message
+                    // is appended before the sheet animates in.
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                        showPaywall = true
+                    }
+                } else if !AIService.shared.isConfigured {
                     let aiMsg = CoachMessage(
                         text: "⚠️ AI service is not configured. Please go to the [Settings] tab and set up your API Key to continue.",
                         isUser: false,

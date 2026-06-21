@@ -11,8 +11,8 @@ settings:
   base:
     SWIFT_VERSION: "5.10"
     TARGETED_DEVICE_FAMILY: "1,2"
-    MARKETING_VERSION: "3.0.0"
-    CURRENT_PROJECT_VERSION: "9"
+    MARKETING_VERSION: "3.1.0"
+    CURRENT_PROJECT_VERSION: "10"
     DEVELOPMENT_TEAM: 9L6N2ZF26B
     CODE_SIGN_STYLE: Automatic
     ENABLE_USER_SCRIPT_SANDBOXING: NO
@@ -32,9 +32,9 @@ targets:
           - "**/DesignSpec/**"
       # Resources/ holds non-bundled support files (e.g. StoreKit config)
       # buildPhase: none means it won't be copied into the app bundle.
-      - path: Resources
-        type: group
-        buildPhase: none
+      - path: Resources/VitaMindGo.storekit
+        type: file
+        buildPhase: resources
         optional: true
     resources:
       - path: Sources/Resources/Assets.xcassets
@@ -126,11 +126,14 @@ schemes:
         VitaPocketUITests: [test]
     run:
       config: Debug
+      # v3.1.0 IAP: enable StoreKit testing via .storekit configuration file
+      storeKitConfiguration: Resources/VitaMindGo.storekit
     test:
       config: Debug
       targets:
         - VitaPocketTests
         - VitaPocketUITests
+      storeKitConfiguration: Resources/VitaMindGo.storekit
     profile:
       config: Release
     analyze:
