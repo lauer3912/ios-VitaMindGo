@@ -350,15 +350,17 @@ struct SettingsView: View {
                     HStack {
                         Text("App Version")
                         Spacer()
-                        Text("3.0.0")
+                        Text(AppInfo.appVersion)
                             .foregroundColor(.secondary)
+                            .accessibilityIdentifier("settings_app_version")
                     }
 
                     HStack {
                         Text("Build")
                         Spacer()
-                        Text("1")
+                        Text(AppInfo.buildNumber)
                             .foregroundColor(.secondary)
+                            .accessibilityIdentifier("settings_build_number")
                     }
 
                     NavigationLink {
@@ -368,6 +370,9 @@ struct SettingsView: View {
                     }
                 } header: {
                     Text("App Info")
+                } footer: {
+                    Text("Version \(AppInfo.appVersion) (\(AppInfo.buildNumber))")
+                        .font(VitaTheme.Fonts.caption)
                 }
             }
             .navigationTitle("Settings")
@@ -598,7 +603,7 @@ struct AboutView: View {
                         .font(.title)
                         .fontWeight(.bold)
 
-                    Text("Version 3.0.0")
+                    Text("Version \(AppInfo.appVersion) (\(AppInfo.buildNumber))")
                         .foregroundColor(.secondary)
 
                     Text("Your AI Health Companion")

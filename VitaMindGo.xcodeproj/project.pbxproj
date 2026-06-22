@@ -15,6 +15,7 @@
 		22994AE9D08B981A65D03AA3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 11A9640125DE75F5C8892B28 /* Assets.xcassets */; };
 		375CEE8E713E076468DB96A6 /* PrivacyPolicy.html in Resources */ = {isa = PBXBuildFile; fileRef = E40DED902DEEF2B49E155D53 /* PrivacyPolicy.html */; };
 		37DED3FF013DEBBAE63B2FDF /* NotifDemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 678DA04C40288EA16D8768D4 /* NotifDemoTests.swift */; };
+		402D347BD8F2F67541D920CB /* AppInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D008CF3767A5310464F8A51 /* AppInfo.swift */; };
 		44D8720FACFBBD495FE50162 /* MiniMaxService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75EEA13EBB76241182FBA349 /* MiniMaxService.swift */; };
 		5734E5CAC63529C2621F10AC /* VitaPocketWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = F0E2325B2D9FC8006F201B91 /* VitaPocketWidget.appex */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		581116DC5422B4D4B4F103B6 /* AIProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 403A205DB5AA619FC30E4B5F /* AIProvider.swift */; };
@@ -26,6 +27,7 @@
 		76CA8770226E961AC6B43FDA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2C5D561D6BFBBE9B3A58BA /* ContentView.swift */; };
 		9CEDC3337C09061689CFD9FB /* GameState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1CA006FAFA076916099507 /* GameState.swift */; };
 		9F55624154D556E5313B8517 /* SubscriptionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0442AC7CF760162599D8F26 /* SubscriptionManager.swift */; };
+		A9AA7191DA6B98432DC50225 /* AppInfoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB47B0BC9D3FF4F43517FEAB /* AppInfoTests.swift */; };
 		A9AD655FA73A0B0BED2A4D05 /* DynamicColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D437358573E84B0C11C23529 /* DynamicColor.swift */; };
 		B56F2504D8E23CDBF890A63D /* VitaPocketUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1197B2E4298E59030B2B834 /* VitaPocketUITests.swift */; };
 		B77305B40352259D78FB4ACC /* AppIconLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B652BC07E92B9C5A6F9A50E2 /* AppIconLoader.swift */; };
@@ -106,6 +108,7 @@
 		6A9F7D2C3E57790E1B5ED38D /* CoachView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoachView.swift; sourceTree = "<group>"; };
 		6D00DD1CE40564CA8F571D69 /* LegalDocumentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegalDocumentView.swift; sourceTree = "<group>"; };
 		75EEA13EBB76241182FBA349 /* MiniMaxService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniMaxService.swift; sourceTree = "<group>"; };
+		7D008CF3767A5310464F8A51 /* AppInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInfo.swift; sourceTree = "<group>"; };
 		8556EB39FF74CAB76A22E291 /* HabitsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitsView.swift; sourceTree = "<group>"; };
 		9E45A750D6B9457F79649F57 /* AppStoreScreenshotIPadTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreScreenshotIPadTests.swift; sourceTree = "<group>"; };
 		A654448F849ED17D0E1596F3 /* EmptyStateCaptureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateCaptureTests.swift; sourceTree = "<group>"; };
@@ -133,6 +136,7 @@
 		F0E2325B2D9FC8006F201B91 /* VitaPocketWidget.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = VitaPocketWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9F2A1B16C532AAB62E8C7B2 /* HealthKitService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitService.swift; sourceTree = "<group>"; };
 		FA7FF9F390C23A9F20D36FBF /* CardModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardModels.swift; sourceTree = "<group>"; };
+		FB47B0BC9D3FF4F43517FEAB /* AppInfoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInfoTests.swift; sourceTree = "<group>"; };
 		FD9E953CC171D19CA482EDF5 /* VitaPocketTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = VitaPocketTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -255,6 +259,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		6099E7C764E9345637A0325C /* AppMetadata */ = {
+			isa = PBXGroup;
+			children = (
+				7D008CF3767A5310464F8A51 /* AppInfo.swift */,
+			);
+			path = AppMetadata;
+			sourceTree = "<group>";
+		};
 		80DE26229E8056ECE083A3FC /* Theme */ = {
 			isa = PBXGroup;
 			children = (
@@ -335,6 +347,7 @@
 		C89AF394C357579A932514A6 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				FB47B0BC9D3FF4F43517FEAB /* AppInfoTests.swift */,
 				B257B360CC497571FB416C39 /* SubscriptionManagerTests.swift */,
 				390CDD1ABAC1B9AE20310444 /* VitaMindUnitTests.swift */,
 			);
@@ -345,6 +358,7 @@
 			isa = PBXGroup;
 			children = (
 				423990484940C0E7955FE035 /* AppIntents */,
+				6099E7C764E9345637A0325C /* AppMetadata */,
 				C4D5BB417AC1E287BEFDFBC5 /* CardEngine */,
 				FFFA6F2EC07BB62579ED5996 /* Subscription */,
 				80DE26229E8056ECE083A3FC /* Theme */,
@@ -551,6 +565,7 @@
 			files = (
 				581116DC5422B4D4B4F103B6 /* AIProvider.swift in Sources */,
 				B77305B40352259D78FB4ACC /* AppIconLoader.swift in Sources */,
+				402D347BD8F2F67541D920CB /* AppInfo.swift in Sources */,
 				D7C7391A37C8A472B565EF9B /* CardModels.swift in Sources */,
 				CBFBCB71BA7CD10E4FCEA4FE /* CoachView.swift in Sources */,
 				C6426403A3420078C07FD540 /* CollectionView.swift in Sources */,
@@ -599,6 +614,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A9AA7191DA6B98432DC50225 /* AppInfoTests.swift in Sources */,
 				FE4C376AF7893EF400C06F7D /* SubscriptionManagerTests.swift in Sources */,
 				14119E5D031CD759D880A9D5 /* VitaMindUnitTests.swift in Sources */,
 			);

@@ -65,6 +65,17 @@ struct PaywallView: View {
             if subscription.products.isEmpty {
                 await subscription.loadProducts()
             }
+            // Default-select Lifetime if user lands here for the first time
+            // (lifetime is best value and matches the marketing landing pitch).
+            // We only override the default when the current selection isn't
+            // already a valid product.
+            if !subscription.products.contains(where: { $0.id == selectedProductID }) {
+                if subscription.products.contains(where: { $0.id == "vitamind_pro_lifetime2" }) {
+                    selectedProductID = "vitamind_pro_lifetime2"
+                } else if subscription.products.contains(where: { $0.id == "vitamind_pro_yearly" }) {
+                    selectedProductID = "vitamind_pro_yearly"
+                }
+            }
         }
     }
 
@@ -159,9 +170,16 @@ struct PaywallView: View {
     }
 
     private func savingsText(for product: Product) -> String? {
-        guard product.id == "vitamind_pro_yearly" else { return nil }
-        // Yearly is 39.99, Monthly is 4.99. Per-month cost: 3.33. Save ~33%.
-        return "Save 33% vs monthly"
+        if product.id == "vitamind_pro_yearly" {
+            // Yearly is 39.99, Monthly is 4.99. Per-month cost: 3.33. Save ~33%.
+            return "Save 33% vs monthly"
+        }
+        if product.id == "vitamind_pro_lifetime2" {
+            // Lifetime is 79.99 — pays for itself after 2 years of yearly (79.98)
+            // or ~16 months of monthly (79.84). Mark as best value.
+            return "Best Value"
+        }
+        return nil
     }
 
     // MARK: - Purchase Button
@@ -206,12 +224,18 @@ struct PaywallView: View {
 
     private var purchaseButtonTitle: String {
         guard let selected = subscription.products.first(where: { $0.id == selectedProductID }) else {
-            return "Start Free Trial"
+            return "Continue"
         }
-        if selected.id == "vitamind_pro_yearly" {
+        switch selected.id {
+        case "vitamind_pro_yearly":
             return "Start 7-Day Free Trial"
-        } else {
+        case "vitamind_pro_monthly_v2":
             return "Subscribe \(selected.displayPrice)/mo"
+        case "vitamind_pro_lifetime2":
+            // Non-consumable one-time purchase — never say "Subscribe" or "Trial"
+            return "Unlock Lifetime for \(selected.displayPrice)"
+        default:
+            return "Purchase \(selected.displayPrice)"
         }
     }
 
@@ -358,12 +382,14 @@ private struct PricingCard: View {
     private var displayName: String {
         if product.id.contains("yearly") { return "Yearly" }
         if product.id.contains("monthly") { return "Monthly" }
+        if product.id.contains("lifetime") { return "Lifetime" }
         return product.displayName
     }
 
     private var periodSuffix: String {
         if product.id.contains("yearly") { return "per year" }
         if product.id.contains("monthly") { return "per month" }
+        if product.id.contains("lifetime") { return "one-time" }
         return ""
     }
 }
