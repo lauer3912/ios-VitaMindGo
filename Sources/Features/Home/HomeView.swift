@@ -42,7 +42,7 @@ struct TodayMissionSection: View {
     @EnvironmentObject var gameState: GameState
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        VStack(alignment: .leading, spacing: 20) {
             HStack {
                 Text("Today's Missions")
                     .font(VitaTheme.Fonts.title)
@@ -129,7 +129,7 @@ struct HealthCardsSection: View {
     ]
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        VStack(alignment: .leading, spacing: 20) {
             HStack {
                 Text("Health Stats")
                     .font(VitaTheme.Fonts.title)
