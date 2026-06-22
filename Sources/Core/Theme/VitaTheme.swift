@@ -19,7 +19,7 @@ enum VitaTheme {
     enum Colors {
         // ── Brand colors (fixed across themes) ─────────────────────────
         static let primary      = Color(lightHex: "6B4EFF", darkHex: "6B4EFF")  // Royal purple
-        static let secondary    = Color(lightHex: "00D9A0", darkHex: "00D9A0")  // Teal accent
+        static let secondary    = Color(lightHex: "008F6E", darkHex: "00D9A0")  // Teal (light: deepened for WCAG 4.07:1 graphic, dark: bright teal 9.46:1)
         static let accent       = Color(lightHex: "B8860B", darkHex: "FFD700")  // Gold (DarkGoldenRod on light for WCAG AA 4.21:1, bright gold on dark for contrast 8.6:1)
 
         // ── Chrome (adaptive — change with appearance) ─────────────────
@@ -55,14 +55,14 @@ enum VitaTheme {
         // v3.1.0 (11:36 拍板) — Status 调深到 WCAG AA 4.5:1 on FFFFFF:
         //   success 1F9D55 (4.6:1), warning D68910 (4.5:1), error C0392B (5.2:1)
         static let success = Color(lightHex: "1F9D55", darkHex: "2ECC71")
-        static let warning = Color(lightHex: "D68910", darkHex: "F39C12")
+        static let warning = Color(lightHex: "8A5A14", darkHex: "F39C12")  // Light: B0741A (3.92:1 borderline) → 8A5A14 (5.91:1 ✅ AA)
         static let error   = Color(lightHex: "C0392B", darkHex: "E74C3C")
 
         // ── Card rarity (fixed — card art is always dark) ─────────────
-        static let cardRare      = Color(lightHex: "FF6B6B", darkHex: "FF6B6B")
+        static let cardRare      = Color(lightHex: "D63A3A", darkHex: "FF6B6B")  // Light: FF6B6B (2.78:1 FAIL) → D63A3A (4.30:1 ✅)
         static let cardEpic      = Color(lightHex: "9B59B6", darkHex: "9B59B6")
         static let cardLegendary = Color(lightHex: "B8860B", darkHex: "FFD700")  // Same adaptive as accent
-        static let cardCommon    = Color(lightHex: "4ECDC4", darkHex: "4ECDC4")
+        static let cardCommon    = Color(lightHex: "0E6B62", darkHex: "4ECDC4")  // Light: 4ECDC4 (1.93:1 FAIL) → 0E6B62 (6.37:1 ✅ AA)
         static let cardUncommon  = Color(lightHex: "6B4EFF", darkHex: "6B4EFF")
     }
 
