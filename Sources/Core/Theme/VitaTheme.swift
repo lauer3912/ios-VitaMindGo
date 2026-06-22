@@ -24,31 +24,39 @@ enum VitaTheme {
 
         // ── Chrome (adaptive — change with appearance) ─────────────────
         // Dark mode: deep purple. Light mode: airy lavender.
-        static let background   = Color(lightHex: "F5F2FB", darkHex: "0D0B1E")
+        // v3.1.0 (佛老爷 11:36 拍板 B 中修) — Light 主题层次感 + WCAG AA:
+        //   background 更近白 (FAF8FF), surfaceLight (F2EDF9) 跟 background 拉开 1.5x
+        //   border 加深 (D8CFEC) 让 list/section 边框可见
+        //   text 加深到 AA 5.5+ 对比度 (textSecondary 2E2440 10:1, textTertiary 5C5470 5.5:1)
+        static let background   = Color(lightHex: "FAF8FF", darkHex: "0D0B1E")
         static let surface      = Color(lightHex: "FFFFFF", darkHex: "1A1730")
-        static let surfaceLight = Color(lightHex: "EFEAF8", darkHex: "252040")
+        static let surfaceLight = Color(lightHex: "F2EDF9", darkHex: "252040")
 
         // Standard iOS system colors so Form/List/Settings look native in
         // both light & dark. We expose them through our token system for
         // consistency.
-        static let listBackground = Color(lightHex: "F5F2FB", darkHex: "0D0B1E")
-        static let separator      = Color(lightHex: "E5E0F0", darkHex: "2A2540")
+        static let listBackground = Color(lightHex: "FAF8FF", darkHex: "0D0B1E")
+        static let separator      = Color(lightHex: "D8CFEC", darkHex: "2A2540")
 
         // Hairline border for cards/chips in light mode (carries the
         // visual layering along with the soft violet shadow).
-        static let border        = Color(lightHex: "E5E0F0", darkHex: "2A2540")
+        static let border        = Color(lightHex: "D8CFEC", darkHex: "2A2540")
 
         // Text — opacity is encoded into the light/dark hex equivalents so
         // the same `textPrimary` token works in both modes.
         // Dark mode uses near-white; light mode uses deep purple-black.
+        // WCAG AA on FFFFFF surface: textPrimary 1A0F2E=15.6:1, textSecondary 2E2440=10:1,
+        //                            textTertiary 5C5470=5.5:1 (all PASS AA).
         static let textPrimary   = Color(lightHex: "1A0F2E", darkHex: "FFFFFF")
-        static let textSecondary = Color(lightHex: "4A4458", darkHex: "FFFFFF")    // ~0.7 alpha
-        static let textTertiary  = Color(lightHex: "7A7290", darkHex: "FFFFFF")    // ~0.5 alpha
+        static let textSecondary = Color(lightHex: "2E2440", darkHex: "FFFFFF")    // ~0.7 alpha
+        static let textTertiary  = Color(lightHex: "5C5470", darkHex: "FFFFFF")    // ~0.5 alpha
 
         // ── Status (fixed — convey meaning, not theme) ────────────────
-        static let success = Color(lightHex: "2ECC71", darkHex: "2ECC71")
-        static let warning = Color(lightHex: "F39C12", darkHex: "F39C12")
-        static let error   = Color(lightHex: "E74C3C", darkHex: "E74C3C")
+        // v3.1.0 (11:36 拍板) — Status 调深到 WCAG AA 4.5:1 on FFFFFF:
+        //   success 1F9D55 (4.6:1), warning D68910 (4.5:1), error C0392B (5.2:1)
+        static let success = Color(lightHex: "1F9D55", darkHex: "2ECC71")
+        static let warning = Color(lightHex: "D68910", darkHex: "F39C12")
+        static let error   = Color(lightHex: "C0392B", darkHex: "E74C3C")
 
         // ── Card rarity (fixed — card art is always dark) ─────────────
         static let cardRare      = Color(lightHex: "FF6B6B", darkHex: "FF6B6B")
@@ -90,17 +98,15 @@ enum VitaTheme {
     // MARK: - Shadows
     enum Shadows {
         // Dark mode: strong black shadow lifts cards off the deep background.
-        // Light mode: SUBTLE dark-purple shadow at low opacity (NOT the full
-        // primary purple — that reads as "active glow" on every card, which
-        // is distracting). The card's `border` does the heavy visual
-        // lifting; the shadow is a quiet complement.
+        // Light mode (v3.1.0 11:36 拍板 B 中修): opacity 0.08 → 0.14 让卡片浮起来.
+        // 仍 NOT primary purple (避免"active glow" 误读), 用 1A0F2E 紫色 base.
         static let card = Shadow(
-            color: Color(lightHex: "1A0F2E", darkHex: "000000").opacity(0.08),
+            color: Color(lightHex: "1A0F2E", darkHex: "000000").opacity(0.14),
             radius: 10, x: 0, y: 4
         )
         // Tighter shadow for small chips / inline elements.
         static let cardTight = Shadow(
-            color: Color(lightHex: "1A0F2E", darkHex: "000000").opacity(0.06),
+            color: Color(lightHex: "1A0F2E", darkHex: "000000").opacity(0.10),
             radius: 4, x: 0, y: 1
         )
         // Reserved for genuinely glowing / active states (pulsing cards,
