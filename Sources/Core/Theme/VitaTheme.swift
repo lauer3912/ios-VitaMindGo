@@ -20,7 +20,7 @@ enum VitaTheme {
         // ── Brand colors (fixed across themes) ─────────────────────────
         static let primary      = Color(lightHex: "6B4EFF", darkHex: "6B4EFF")  // Royal purple
         static let secondary    = Color(lightHex: "00D9A0", darkHex: "00D9A0")  // Teal accent
-        static let accent       = Color(lightHex: "FFD700", darkHex: "FFD700")  // Gold
+        static let accent       = Color(lightHex: "B8860B", darkHex: "FFD700")  // Gold (DarkGoldenRod on light for WCAG AA 4.21:1, bright gold on dark for contrast 8.6:1)
 
         // ── Chrome (adaptive — change with appearance) ─────────────────
         // Dark mode: deep purple. Light mode: airy lavender.
@@ -61,7 +61,7 @@ enum VitaTheme {
         // ── Card rarity (fixed — card art is always dark) ─────────────
         static let cardRare      = Color(lightHex: "FF6B6B", darkHex: "FF6B6B")
         static let cardEpic      = Color(lightHex: "9B59B6", darkHex: "9B59B6")
-        static let cardLegendary = Color(lightHex: "FFD700", darkHex: "FFD700")
+        static let cardLegendary = Color(lightHex: "B8860B", darkHex: "FFD700")  // Same adaptive as accent
         static let cardCommon    = Color(lightHex: "4ECDC4", darkHex: "4ECDC4")
         static let cardUncommon  = Color(lightHex: "6B4EFF", darkHex: "6B4EFF")
     }
@@ -76,7 +76,9 @@ enum VitaTheme {
         )
 
         static let gold = LinearGradient(
-            colors: [Color(hex: "FFD700"), Color(hex: "FFA500")],
+            // Light: deep gold → warm amber (WCAG-readable). Dark: bright gold → orange (vivid).
+            colors: [Color(lightHex: "B8860B", darkHex: "FFD700"),
+                     Color(lightHex: "D68910", darkHex: "FFA500")],
             startPoint: .top,
             endPoint: .bottom
         )
