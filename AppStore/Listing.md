@@ -3,8 +3,8 @@
 > **App Name:** VitaMindGo
 > **Bundle ID:** com.ggsheng.VitaMind
 > **Version:** 3.1.0
-> **Document Version:** 3.0 (v3.1.0 IAP added)
-> **Last Updated:** 2026-06-21
+> **Document Version:** 3.1 (v3.1.0 IAP added + What's New + Subscription section updated)
+> **Last Updated:** 2026-06-24
 
 ---
 
@@ -48,11 +48,44 @@ AI health coach for heart, sleep, habits. On-device AI, no account, no tracking.
 
 ---
 
+## 2A. What's New in this Version (v3.1.0 Release Notes)
+
+> **Apple 字段:** What's New in this Version — 每个版本必填 (3.0.0 是首版无此字段, 3.1.0 首次填写)
+> **Apple 限制:** 上限 4000 bytes, plain text
+> **当前字符数:** 832 chars (≤4000 ✓)
+
+```
+Introducing VitaMindGo Pro, three flexible ways to unlock the full AI Health Coach.
+
+VitaMindGo Pro offers:
+- Pro Monthly: $4.99/month with a 7-day free trial
+- Pro Yearly: $39.99/year, save 33%
+- Pro Lifetime: one-time $79.99, never expires
+
+Free tier still includes 5 AI Coach messages per day, no account, no tracking. Pro unlocks unlimited AI messages, advanced insights, exclusive card themes, and Apple Watch advanced complications.
+
+This release also includes:
+- Improved Light theme readability (WCAG AA accessibility across all status colors and text)
+- Settings now displays the correct version number automatically
+- Paywall interface refinements (Lifetime card now selected by default as best value)
+
+Subscription state is verified locally via StoreKit 2, no account required, your health data stays on your device. Restore Purchases is available in Settings.
+```
+
+### 决策记录 (v3.1.0)
+- **2026-06-24 佛老爷拍板**: 加 What's New, 加 VitaMindGo Pro 3 tier 描述, 强调 free tier 仍完整可用 (downgrade concern 防御)
+- **品牌 voice 保留**: 无 markdown / 无 emoji / ASCII 撇号 (per §3 清理清单)
+- **字符预算 832 / 4000 (20.8%)**: 留足后续 patch version 余量
+- **三 tier 顺序**: Monthly (low commitment) → Yearly (mid) → Lifetime (best value), 引导用户选最贵 (跟 PaywallView 默认选 lifetime 一致)
+- **未提及**: 未提 IAP product ID / bundle ID / 技术栈 / "AI" buzzword (engineer-credible, 不 hype)
+
+---
+
 ## 3. Full Description
 
 > **Apple 字段:** Description — 官方上限 4000 chars, **plain text only, no HTML**
 > **本项目内规:** 纯文本，无 markdown，无 emoji (老爷 2026-06-04 指定)
-> **当前字符数:** 1905 chars (≤4000 ✓)  <-- 2026-06-08 加 Medical Disclaimer 段 → 预计 ~2270 chars
+> **当前字符数:** 3177 chars (≤4000 ✓)  <-- 2026-06-08 加 Medical Disclaimer 段 + 2026-06-24 改 Subscription 段
 
 ```
 IMPORTANT MEDICAL DISCLAIMER:
@@ -96,7 +129,19 @@ Why VitaMindGo?
 
 Subscription Information:
 
-The initial version (3.0.0) is completely FREE with all features included. Future premium features will be available through Auto-Renewable Subscription.
+VitaMindGo is free to download and use. The free tier includes 5 AI Health Coach messages per day, all habit tracking, sleep analysis, and Apple Watch integration, no account required.
+
+VitaMindGo Pro unlocks:
+- Unlimited AI Health Coach messages
+- Advanced insights and analytics
+- Exclusive card themes
+- Apple Watch advanced complications
+
+Pro Monthly: $4.99/month with 7-day free trial
+Pro Yearly: $39.99/year (save 33%)
+Pro Lifetime: $79.99 one-time purchase
+
+Subscriptions renew automatically unless cancelled at least 24 hours before the end of the current period. Manage subscriptions in Settings, Apple ID, Subscriptions. Privacy Policy: https://lauer3912.github.io/ios-VitaMindGo/PrivacyPolicy.html
 ```
 
 ### 清理清单
@@ -234,6 +279,25 @@ habit tracker, health, fitness, sleep, AI, heart rate, Apple Watch, wellness
 - Verified Bundle ID = `com.ggsheng.VitaMind`, Display Name = `VitaMindGo`, Version = `3.0.0` (Build 1) in the captured `.app` Info.plist
 - No `#if DEBUG` / `#if !DEBUG` in Sources — Debug and Release configurations render identical UI
 - Legacy captures (5-31, 4 tabs only, Debug build) moved to `AppStore/Screenshots/legacy-5-31/` and `legacy-5-31-ipad/`
+
+### 9A. Paywall Screenshots (v3.1.0 NEW, 1290×2796)
+
+> **Apple 字段:** 3 个 IAP product 各自需 1 张 paywall screenshot (在 ASC Subscription 详情页)
+> **位置:** `AppStore/Screenshots/paywall_1290x2796/`
+> **尺寸:** 3 张 1290×2796 (iPhone 6.7") + 1 张 1920×1080 (lifetime2 IAP detail)
+> **最后更新:** 2026-06-23 20:41 CST (commit 9bb5d17)
+
+| File | Size | Product | Uploaded to |
+|------|------|---------|-------------|
+| `paywall_monthly_v2_1290x2796.png` | 1290×2796 | Pro Monthly $4.99 + 7d trial | commit 9bb5d17 |
+| `paywall_yearly_1290x2796.png` | 1290×2796 | Pro Yearly $39.99 | commit 9bb5d17 |
+| `paywall_lifetime2_1290x2796.png` | 1290×2796 | Pro Lifetime $79.99 | commit 9bb5d17 |
+| `lifetime2_screenshot_1920x1080.png` | 1920×1080 | Pro Lifetime IAP detail (smaller) | commit 9bb5d17 |
+
+**下载 (佛老爷 ASC backend 上传)**:
+- https://github.com/lauer3912/ios-VitaMindGo/tree/main/AppStore/Screenshots/paywall_1290x2796/
+
+**生成方式**: iPhone 17 Pro Max simulator (6.7" display) + `xcrun simctl io booted screenshot` + sim 内部打开 PaywallView 切到对应 product tab + 截屏. 3 张 paywall 同一时间点截 (保证视觉一致) + 1 张 lifetime2 IAP detail 缩略尺寸.
 
 ---
 
