@@ -31,3 +31,10 @@
 # 它有自己的 .git + GitHub 仓库 (lauer3912/openclaw-portable-template)
 # 不在 workspace 本地 git 里 track
 /dist/
+
+# === 2026-06-24 加 (per 佛老爷 09:51 拍板 6 步走) ===
+# build/ — xcodebuild archive 产物, 5 个 xcarchive 占 817M, 不入 git
+/build/
+
+# private_keys/ — App Store Connect API 私钥软链, 安全敏感
+/private_keys/
