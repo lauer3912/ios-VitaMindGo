@@ -5132,3 +5132,202 @@ final class GameState: ObservableObject {
   - 原因: 2026-06-03 rename 为 ios-VitaMindGo 后，这个空壳仓库仅作 redirect 占位
   - 删后影响: 旧 URL 从 301 redirect 变 404；SOP §8.4.3 检测项 4 接受 301 或 404 两者任一
   - 保留记录原因: 证明 HR-75 引用项目的仓库 URL 需随仓库状态变化同步维护 (GitHub redirect 状态下 URL 仍可用，删后则失效)
+
+---
+
+## Appendix H: 2026-07-01 Project Bootstrap Patterns 实战补丁
+
+> **补漏来源**: 对照 `VitaMind (Display: VitaMindGo)` + `ReverseWorld (Display: ReverseWorldGo)` + `StretchFlow (Display: StretchGoGo)` + `Stellumbra (Display: Stellumbra)` 4 个项目后发现 SOP §0-§10 共漏 8 项实战模式。本补丁是 Stellumbra scaffold 阶段撞出暴露的。
+>
+> **HK-实战触发**: 07-01 14:40 CST 佛老爷指令 "估计 SOP 文档有些内容丢失了, 先读 VitaMindGo 和 ReverseWorldGo 源代码及目录结构, 找到共同点更新 SOP 文档"。
+
+### H.1 Info.plist 模板化 — 永远用 Xcode 变量,绝不硬编码
+
+**规则**: Info.plist 字段**永远**用 Xcode 变量占位符,**绝不**硬编码版本号 / 标识符 / 名称。新项目 scaffold 时一次性写对。
+
+| 字段 | ❌ 错(硬编码) | ✅ 对(Xcode 变量) |
+|------|--------|--------|
+| `CFBundleShortVersionString` | `<string>3.1.0</string>` | `<string>$(MARKETING_VERSION)</string>` |
+| `CFBundleVersion` | `<string>14</string>` | `<string>$(CURRENT_PROJECT_VERSION)</string>` |
+| `CFBundleIdentifier` | `<string>com.ggsheng.MyApp</string>` | `<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>` |
+| `CFBundleName` | `<string>myapp</string>` | `<string>$(PRODUCT_NAME)</string>` |
+| `CFBundleExecutable` | `<string>myapp</string>` | `<string>$(EXECUTABLE_NAME)</string>` |
+| `CFBundlePackageType` | `<string>APPL</string>` | `<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>` |
+| `CFBundleDevelopmentRegion` | `<string>en</string>` | `<string>$(DEVELOPMENT_LANGUAGE)</string>` |
+
+**反例 — Stellumbra Info.plist (07-01)**:
+```xml
+<key>CFBundleShortVersionString</key>
+<string>3.0.0</string>           <!-- ❌ 硬编码 -->
+<key>CFBundleVersion</key>
+<string>1</string>             <!-- ❌ 硬编码 -->
+```
+
+修法: `Sources/Resources/Info.plist` 改 `<string>$(MARKETING_VERSION)</string>` + `<string>$(CURRENT_PROJECT_VERSION)</string>`。
+
+**结过 Xcode build verify**: 三件套同步 (project.yml + Info.plist + xcodegen) 才能保证一致性。
+
+### H.2 CFBundleDisplayName "Go" 后缀约定
+
+**观察**: 4 个项目 3 个用 codename + "Go" 后缀模式:
+
+| 目录 codename | Display name | 来源 |
+|-------------|-------|------|
+| VitaMind | VitaMindGo | § project.yml `name: VitaMindGo` |
+| ReverseWorld | ReverseWorldGo | § project.yml `name: ReverseWorld` + Info.plist DisplayName=`ReverseWorldGo` |
+| StretchFlow (历史遗留) | StretchGoGo | § 项目历史改名 |
+| **Stellumbra** | **Stellumbra** ❌ 不符一致模式 | scaffold 未对齐 |
+
+**新项目规则** (HR-75 同类): 除非品牌特殊 (Stellumbra 是拉丁文词根不需后缀),按 `codename + "Go"` 命名 `CFBundleDisplayName`。
+
+**例外**: 个别项目可能叫 "vault"/"app"/"plus" 等, 但默认走 "Go" 后缀以保证品牌一致性。
+
+### H.3 PrivacyInfo.xcprivacy — Apple 强制要求 (2024+)
+
+**Apple 政策**: 2024 年起所有 App Store 提交**必须**包含 `PrivacyInfo.xcprivacy` privacy manifest, 记录:
+
+| 字段 | 用途 |
+|------|------|
+| `NSPrivacyTracking` (bool) | 是否追踪用户 (App Tracking Transparency 受影响) |
+| `NSPrivacyTrackingDomains` ([String]) | 追踪域列表 |
+| `NSPrivacyCollectedDataTypes` ([Dict]) | 收集的数据类型 + 用途 + 是否脱敏 |
+| `NSPrivacyAccessedAPITypes` ([Dict]) | 调用的 Required Reason API (UserDefaults, FileTimestamp, DiskSpace, SystemBootTime 等) |
+
+**实战位置** (`ReverseWorld`):
+```
+ios/ReverseWorld/PrivacyInfo.xcprivacy
+```
+
+**project.yml 必须包含**:
+```yaml
+sources:
+  - path: ios/ReverseWorld   # 或 path: ReverseWorld
+    includes:
+      - "**/PrivacyInfo.xcprivacy"
+```
+
+**target status**:
+- VitaMind: ❓ 待定 (本附录未核对)
+- ReverseWorld: ✅
+- StretchGoGo: ❓ 待定
+- **Stellumbra: ❌ 缺** (07-01 待修)
+
+### H.4 Localizable.xcstrings — 多语言 (可选但推荐)
+
+**ReverseWorld 实战** (07-01): `ios/ReverseWorld/Localizable.xcstrings` 已支持多语言 strings 集中管理。
+
+**新项目规则**:
+- 仅英文市场: 仍建议加 (未来 i18n 不用改架构)
+- 多语言市场: 必加 (zh-CN + en-US 起步)
+
+**Stellumbra 状态**: ❌ 缺, 但 scaffold 06-30 阶段非阻塞。
+
+### H.5 App Groups entitlement — Watch + Widget 数据共享
+
+**VitaMind 实战** (project.yml):
+```yaml
+entitlements:
+  path: Sources/VitaPocket.entitlements
+  properties:
+    com.apple.security.application-groups:
+      - group.com.ggsheng.VitaMind
+```
+
+**Info.plist 不需要直接配**,系统从 entitlements 读。
+
+**强制适用场景**:
+- Apple Watch Companion App (主 App + Watch App 共享 SwiftData)
+- Widget Extension (主 App + Widget 共享 UserDefaults)
+- Background Task 数据传递
+
+**Stellumbra 状态**: ❓ Stellumbra 主线不是 Watch, HealthKit entitlement 已加。Family Controls entitlement 已留(可能未来 Watch 用), 暂无需 App Groups。
+
+### H.6 AppStore/Screenshots 多尺寸命名约定
+
+**VitaMind 实战** (`AppStore/Screenshots/`):
+```
+iPadPro13inchM4_2048x2732/   # 设备名_像素尺寸
+iPhone17ProMax_1320x2868/    # 注意: iPhone 17 Pro Max
+AppleWatchUltra3_396x484/    # Watch 截图单独类目
+paywall_1290x2796/           # IAP 支付截图单独类目
+legacy-5-31/                  # 历史版本截图 (不删,留 ASO 对照)
+legacy-5-31-ipad/
+```
+
+**ReverseWorld 实战** (`AppStore/Screenshots/`):
+```
+iPadPro13/                    # 简写 (设备名)
+iPhone67/                     # 简写 (像素高度)
+iPhone_69_1320x2868/         # 详写 (型号 + 像素)
+InAppPurchase/                # IAP 截图 (VitaMind 名 `paywall_*` 不一致)
+```
+
+**统一规则 (建议)**:
+| 类型 | 命名模式 | 例子 |
+|------|---------|------|
+| 主设备 | `{DeviceName}_{WxH}/` | `iPhone17ProMax_1320x2868/` |
+| iPad | `{DeviceName}/` (简写) | `iPadPro13/` |
+| Watch | `{WatchName}_{WxH}/` | `AppleWatchUltra3_396x484/` |
+| Paywall | `paywall_{WxH}/` | `paywall_1290x2796/` |
+| Legacy | `legacy-{ver}/`(保留) | `legacy-5-31/` |
+
+**Stellumbra 状态**: `AppStore/Screenshots/` 目录**还没建** (07-01 §0.5 review 时发现 §0.5 替换表**漏掉** Screenshots 必须预建)。
+
+### H.7 AppStore/Docs 必备文件清单
+
+| 文件 | 用途 | VitaMind | ReverseWorld | Stellumbra |
+|------|------|----------|--------------|------------|
+| `FeatureList.md` | ≥10 核心 + ≥60 全部 (ASC 必报字段) | ✅ | ✅ | ✅ (`ProjectProposal.md` 含) |
+| `PrivacyPolicy.html` | 本地副本 (可上传到 GitHub Pages) | ✅ | ✅ | ❌ **缺** |
+| `TermsOfService.html` | EULA 本地副本 | ✅ | ❌ (建议加) | ❌ **缺** |
+| `ExecutionLog.md` | Stage 执行记录 (audit trail) | ✅ | ❌ | ❌ **缺** (建议加) |
+| `ASC-Setup-Cheatsheet-v{ver}.md` | ASC 后台配置指南 | ✅ | ❌ (建议加) | ❌ **缺** |
+| `Submission-Checklist.md` | 提交前 checklist | ✅ | ❌ | ❌ **缺** |
+| `ProjectProposal.md` | 项目立项 (内审用) | ✅ | ❌ | ✅ |
+| `Listing.md` | ASC 元数据填写指南 | ✅ | ✅ | ✅ |
+
+**新项目 SOP 强制 (HR-75 同级)**:
+1. `FeatureList.md` — 必, ASC 必报 ≥60 功能
+2. `PrivacyPolicy.html` — 必, ASC 必填字段 (`privacyPolicyUrl` 字段)
+3. `TermsOfService.html` — 必, ASC 必填字段 (`EULA` 字段)
+4. `Submission-Checklist.md` — 必, 提审前自检
+
+### H.8 Bundle ID Prefix 选名建议 (扩展 §0.4)
+
+**佛老爷已用前缀**:
+
+| 前缀 | 现有 App | Bundle ID 示例 |
+|------|----------|---------------|
+| `com.ggsheng.*` | StretchGoGo (6763179117), ReverseWorldGo (6784627660), VitaMindGo (6774840392) | `com.ggsheng.StretchGoGo` |
+| `com.YOURNAME.*` (占位) | Stellumbra scaffold (07-01 待替换) | (未定) |
+
+**约束** (per SOP §0.4 + #40):
+- 避免 `com.example.*` (Apple 拒)
+- 避免与已上架 App 重复
+- 选一个可永久代表个人/团队的前缀
+- ASC 不可逆 — 下架才能换
+
+**建议候选**:
+- `com.techidaily.*` — 与 `support@techidaily.com` 邮箱域名一致 (#42 拍板 contact email)
+- `com.lauer3912.*` — 与 GitHub 用户名一致 (`lauer3912.github.io` Pages)
+
+**Stellumbra 待佛老爷拍板** (07-01 14:50 CST 仍在等).
+
+---
+
+## Appendix I: 2026-07-01 Changelog (增量)
+
+v12 (2026-07-01 14:50 CST):
+- 本次 v12 增 Appendix H (Project Bootstrap Patterns 实战补丁) 共 8 子节
+- **沉淀 8 个新发现** (HR-82 ~ HR-89):
+  - HR-82 Info.plist 永远用 Xcode 变量占位符 (不硬编码版本号 / 标识符 / 名称) — Stellumbra scaffold 反例直接暴露
+  - HR-83 CFBundleDisplayName "Go" 后缀约定 (除品牌特殊)
+  - HR-84 PrivacyInfo.xcprivacy 2024+ Apple 强制要求 (项目必须含)
+  - HR-85 Localizable.xcstrings 多语言 strings 集中管理
+  - HR-86 App Groups entitlement (Watch + Widget 数据共享必备)
+  - HR-87 AppStore/Screenshots 多尺寸命名约定 (`{Device}_{WxH}` + `paywall_*` + `legacy-*`)
+  - HR-88 AppStore/Docs 6 项必备文件 (FeatureList + PrivacyPolicy + TermsOfService + Submission-Checklist + ... )
+  - HR-89 Bundle ID Prefix 选名建议 (现有前缀 + 候选)
+- 实用: HR-82 反例触发 — Stellumbra scaffold Info.plist 硬编码 `CFBundleShortVersionString="3.0.0"` 而非变量, 修正走 git commit
+- 实用: HR-83 "Go" 后缀约定 — Stellumbra DisplayName="Stellumbra" 不符合 3/4 项目既有惯例 (品牌特殊可豁免, 但应在 ProjectProposal 中声明)
+
