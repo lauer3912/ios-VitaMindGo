@@ -30,6 +30,7 @@ struct SettingsView: View {
     @StateObject private var notifications = NotificationManager.shared
     @StateObject private var subscription = SubscriptionManager.shared
     @State private var showPaywall: Bool = false
+    @State private var showCredits: Bool = false
 
     @State private var switchError: String? = nil
 
@@ -181,6 +182,22 @@ struct SettingsView: View {
                         }
                     }
                     .disabled(subscription.isPurchasing)
+
+                    Button {
+                        showCredits = true
+                    } label: {
+                        HStack {
+                            Label("AI Credits & Daily Bonus", systemImage: "sparkles")
+                                .foregroundColor(.primary)
+                            Spacer()
+                            Text("100 Free")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                            Image(systemName: "chevron.right")
+                                .font(.caption2)
+                                .foregroundColor(.secondary)
+                        }
+                    }
                 } header: {
                     Text("VitaMindGo Pro")
                 } footer: {
@@ -379,6 +396,9 @@ struct SettingsView: View {
             .listSectionSpacing(.compact)
             .sheet(isPresented: $showPaywall) {
                 PaywallView()
+            }
+            .sheet(isPresented: $showCredits) {
+                CreditsView()
             }
         }
     }

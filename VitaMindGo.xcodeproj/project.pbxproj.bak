@@ -15,30 +15,24 @@
 		22994AE9D08B981A65D03AA3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 11A9640125DE75F5C8892B28 /* Assets.xcassets */; };
 		375CEE8E713E076468DB96A6 /* PrivacyPolicy.html in Resources */ = {isa = PBXBuildFile; fileRef = E40DED902DEEF2B49E155D53 /* PrivacyPolicy.html */; };
 		37DED3FF013DEBBAE63B2FDF /* NotifDemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 678DA04C40288EA16D8768D4 /* NotifDemoTests.swift */; };
-		402D347BD8F2F67541D920CB /* AppInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D008CF3767A5310464F8A51 /* AppInfo.swift */; };
 		44D8720FACFBBD495FE50162 /* MiniMaxService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75EEA13EBB76241182FBA349 /* MiniMaxService.swift */; };
 		5734E5CAC63529C2621F10AC /* VitaPocketWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = F0E2325B2D9FC8006F201B91 /* VitaPocketWidget.appex */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		581116DC5422B4D4B4F103B6 /* AIProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 403A205DB5AA619FC30E4B5F /* AIProvider.swift */; };
 		5B663C16AE32730215443B59 /* LegalDocumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D00DD1CE40564CA8F571D69 /* LegalDocumentView.swift */; };
-		5E6BF8837B1D3F80053CDDAA /* CreditsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BDB1B37DF894DDEB3D1D0A2 /* CreditsView.swift */; };
 		6875596A1834CC547E001110 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDCABBB5E80CE742AF47887E /* NotificationManager.swift */; };
-		68AC6C9DD8E742E4A0149913 /* BuyservicesClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA43096F51F00BF505080F35 /* BuyservicesClient.swift */; };
 		6CC21A6E79F56AD0FA5904A0 /* HealthKitService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F2A1B16C532AAB62E8C7B2 /* HealthKitService.swift */; };
 		721F0279F7831BDB39FA5EBB /* HabitsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8556EB39FF74CAB76A22E291 /* HabitsView.swift */; };
 		748F7788CA333C2F54BA98C0 /* PersistenceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3130FFD1F36D07291C05515 /* PersistenceService.swift */; };
 		76CA8770226E961AC6B43FDA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2C5D561D6BFBBE9B3A58BA /* ContentView.swift */; };
 		9CEDC3337C09061689CFD9FB /* GameState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1CA006FAFA076916099507 /* GameState.swift */; };
 		9F55624154D556E5313B8517 /* SubscriptionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0442AC7CF760162599D8F26 /* SubscriptionManager.swift */; };
-		A9AA7191DA6B98432DC50225 /* AppInfoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB47B0BC9D3FF4F43517FEAB /* AppInfoTests.swift */; };
 		A9AD655FA73A0B0BED2A4D05 /* DynamicColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D437358573E84B0C11C23529 /* DynamicColor.swift */; };
 		B56F2504D8E23CDBF890A63D /* VitaPocketUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1197B2E4298E59030B2B834 /* VitaPocketUITests.swift */; };
 		B77305B40352259D78FB4ACC /* AppIconLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B652BC07E92B9C5A6F9A50E2 /* AppIconLoader.swift */; };
-		B979893255B604B9974CAD22 /* VitaMindIntents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09787704C9DACBE04C0C9F42 /* VitaMindIntents.swift */; };
 		C6426403A3420078C07FD540 /* CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30FE214FF5381C12BA107110 /* CollectionView.swift */; };
 		CBFBCB71BA7CD10E4FCEA4FE /* CoachView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9F7D2C3E57790E1B5ED38D /* CoachView.swift */; };
 		CD906BE7D2170936D8B48B47 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CF1735B8D3DB1F1BBBA64C63 /* Assets.xcassets */; };
 		CEE84D2F9410CEA8C8B048FC /* GameCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536FA57B47211FA5BB2F0C6B /* GameCardView.swift */; };
-		D7286F073711E4FD36FDBC39 /* VitaMindGo.storekit in Resources */ = {isa = PBXBuildFile; fileRef = BB48536541CA081154499630 /* VitaMindGo.storekit */; };
 		D7C7391A37C8A472B565EF9B /* CardModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7FF9F390C23A9F20D36FBF /* CardModels.swift */; };
 		E19E29BC0CC8830EEE12C3BB /* VitaMindWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3CBE342AE828EAFE5C6A8FD /* VitaMindWidget.swift */; };
 		E5A78C282F79EE3919117763 /* EmptyStateCaptureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A654448F849ED17D0E1596F3 /* EmptyStateCaptureTests.swift */; };
@@ -91,7 +85,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		09787704C9DACBE04C0C9F42 /* VitaMindIntents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VitaMindIntents.swift; sourceTree = "<group>"; };
 		0B3AA6CBA911C12B4AFA43D2 /* VitaMindWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = VitaMindWidget.entitlements; sourceTree = "<group>"; };
 		11A9640125DE75F5C8892B28 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		12BC2578A6D5B9F73A8E7D58 /* VitaPocket.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = VitaPocket.entitlements; sourceTree = "<group>"; };
@@ -105,13 +98,11 @@
 		43CEB53EB4D2BB0DB03DB376 /* Entitlement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entitlement.swift; sourceTree = "<group>"; };
 		44C78675D652456454428767 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		536FA57B47211FA5BB2F0C6B /* GameCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameCardView.swift; sourceTree = "<group>"; };
-		5BDB1B37DF894DDEB3D1D0A2 /* CreditsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditsView.swift; sourceTree = "<group>"; };
 		678DA04C40288EA16D8768D4 /* NotifDemoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotifDemoTests.swift; sourceTree = "<group>"; };
 		6A689C036D0DB74D9158998E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		6A9F7D2C3E57790E1B5ED38D /* CoachView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoachView.swift; sourceTree = "<group>"; };
 		6D00DD1CE40564CA8F571D69 /* LegalDocumentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegalDocumentView.swift; sourceTree = "<group>"; };
 		75EEA13EBB76241182FBA349 /* MiniMaxService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniMaxService.swift; sourceTree = "<group>"; };
-		7D008CF3767A5310464F8A51 /* AppInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInfo.swift; sourceTree = "<group>"; };
 		8556EB39FF74CAB76A22E291 /* HabitsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitsView.swift; sourceTree = "<group>"; };
 		9E45A750D6B9457F79649F57 /* AppStoreScreenshotIPadTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreScreenshotIPadTests.swift; sourceTree = "<group>"; };
 		A654448F849ED17D0E1596F3 /* EmptyStateCaptureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateCaptureTests.swift; sourceTree = "<group>"; };
@@ -138,9 +129,7 @@
 		ED6582D7B636C5CBC4DD40A2 /* VitaPocket.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = VitaPocket.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0E2325B2D9FC8006F201B91 /* VitaPocketWidget.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = VitaPocketWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9F2A1B16C532AAB62E8C7B2 /* HealthKitService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitService.swift; sourceTree = "<group>"; };
-		FA43096F51F00BF505080F35 /* BuyservicesClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuyservicesClient.swift; sourceTree = "<group>"; };
 		FA7FF9F390C23A9F20D36FBF /* CardModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardModels.swift; sourceTree = "<group>"; };
-		FB47B0BC9D3FF4F43517FEAB /* AppInfoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInfoTests.swift; sourceTree = "<group>"; };
 		FD9E953CC171D19CA482EDF5 /* VitaPocketTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = VitaPocketTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -169,7 +158,6 @@
 			children = (
 				BDB71E71E4679B20219D8B11 /* Coach */,
 				D08E93FB2D83E23460F42C61 /* Collection */,
-				9AE8E03515885F2B5950EBEE /* Credits */,
 				25EFAF90CB8877799A19078C /* Habits */,
 				0041ABE1160A22892C10A732 /* Home */,
 				8CB95A8AB98DA2B33F1DDE4F /* Paywall */,
@@ -228,14 +216,6 @@
 			path = App;
 			sourceTree = "<group>";
 		};
-		423990484940C0E7955FE035 /* AppIntents */ = {
-			isa = PBXGroup;
-			children = (
-				09787704C9DACBE04C0C9F42 /* VitaMindIntents.swift */,
-			);
-			path = AppIntents;
-			sourceTree = "<group>";
-		};
 		4B4396EB8CABA49B618AEC3A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -264,12 +244,11 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		6099E7C764E9345637A0325C /* AppMetadata */ = {
+		77E680CC33FCE716887F0380 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				7D008CF3767A5310464F8A51 /* AppInfo.swift */,
 			);
-			path = AppMetadata;
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		80DE26229E8056ECE083A3FC /* Theme */ = {
@@ -287,15 +266,6 @@
 				E6D571161E6149F2989B5633 /* PaywallView.swift */,
 			);
 			path = Paywall;
-			sourceTree = "<group>";
-		};
-		9AE8E03515885F2B5950EBEE /* Credits */ = {
-			isa = PBXGroup;
-			children = (
-				FA43096F51F00BF505080F35 /* BuyservicesClient.swift */,
-				5BDB1B37DF894DDEB3D1D0A2 /* CreditsView.swift */,
-			);
-			path = Credits;
 			sourceTree = "<group>";
 		};
 		A61EDD79AAD9DB62CDB89156 /* UITests */ = {
@@ -361,7 +331,6 @@
 		C89AF394C357579A932514A6 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				FB47B0BC9D3FF4F43517FEAB /* AppInfoTests.swift */,
 				B257B360CC497571FB416C39 /* SubscriptionManagerTests.swift */,
 				390CDD1ABAC1B9AE20310444 /* VitaMindUnitTests.swift */,
 			);
@@ -371,9 +340,8 @@
 		CF370DB84236506FD0F1058C /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				423990484940C0E7955FE035 /* AppIntents */,
-				6099E7C764E9345637A0325C /* AppMetadata */,
 				C4D5BB417AC1E287BEFDFBC5 /* CardEngine */,
+				77E680CC33FCE716887F0380 /* Extensions */,
 				FFFA6F2EC07BB62579ED5996 /* Subscription */,
 				80DE26229E8056ECE083A3FC /* Theme */,
 			);
@@ -558,7 +526,6 @@
 				FCEF5B23FD5AB1E24D4640FF /* LaunchScreen.storyboard in Resources */,
 				375CEE8E713E076468DB96A6 /* PrivacyPolicy.html in Resources */,
 				1F678E1CF06F1E5EBBF11D37 /* TermsOfService.html in Resources */,
-				D7286F073711E4FD36FDBC39 /* VitaMindGo.storekit in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -579,13 +546,10 @@
 			files = (
 				581116DC5422B4D4B4F103B6 /* AIProvider.swift in Sources */,
 				B77305B40352259D78FB4ACC /* AppIconLoader.swift in Sources */,
-				402D347BD8F2F67541D920CB /* AppInfo.swift in Sources */,
-				68AC6C9DD8E742E4A0149913 /* BuyservicesClient.swift in Sources */,
 				D7C7391A37C8A472B565EF9B /* CardModels.swift in Sources */,
 				CBFBCB71BA7CD10E4FCEA4FE /* CoachView.swift in Sources */,
 				C6426403A3420078C07FD540 /* CollectionView.swift in Sources */,
 				76CA8770226E961AC6B43FDA /* ContentView.swift in Sources */,
-				5E6BF8837B1D3F80053CDDAA /* CreditsView.swift in Sources */,
 				A9AD655FA73A0B0BED2A4D05 /* DynamicColor.swift in Sources */,
 				F46C151AAA2B2B2EA5335971 /* Entitlement.swift in Sources */,
 				CEE84D2F9410CEA8C8B048FC /* GameCardView.swift in Sources */,
@@ -600,7 +564,6 @@
 				748F7788CA333C2F54BA98C0 /* PersistenceService.swift in Sources */,
 				F8EB1385FA89CF02EAFB4FA7 /* SettingsView.swift in Sources */,
 				9F55624154D556E5313B8517 /* SubscriptionManager.swift in Sources */,
-				B979893255B604B9974CAD22 /* VitaMindIntents.swift in Sources */,
 				FA1974A6AAD4B78E2704870D /* VitaPocketApp.swift in Sources */,
 				F74DDCCFEF60A769B035445B /* VitaTheme.swift in Sources */,
 			);
@@ -630,7 +593,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A9AA7191DA6B98432DC50225 /* AppInfoTests.swift in Sources */,
 				FE4C376AF7893EF400C06F7D /* SubscriptionManagerTests.swift in Sources */,
 				14119E5D031CD759D880A9D5 /* VitaMindUnitTests.swift in Sources */,
 			);
@@ -795,7 +757,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 15;
+				CURRENT_PROJECT_VERSION = 12;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 9L6N2ZF26B;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -816,7 +778,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				MARKETING_VERSION = 3.2.0;
+				MARKETING_VERSION = 3.0.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -865,7 +827,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 15;
+				CURRENT_PROJECT_VERSION = 12;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 9L6N2ZF26B;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -880,7 +842,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				MARKETING_VERSION = 3.2.0;
+				MARKETING_VERSION = 3.0.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
