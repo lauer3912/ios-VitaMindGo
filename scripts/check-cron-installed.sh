@@ -58,7 +58,7 @@ fi
 if [ "${HAS_POLL:-0}" -lt 1 ] && [ -f "$POLL_SH" ]; then
   echo ""
   echo -e "${YELLOW}🔧 静默补装 agent-bus-poll.sh cron (5 min tick)...${NC}"
-  CRON_LINE="*/5 * * * * $POLL_SH >> $HOME/.local/share/agent-bus/poll.log 2>&1"
+  CRON_LINE="*/15 * * * * $POLL_SH >> $HOME/.local/share/agent-bus/poll.log 2>&1"
   (crontab -l 2>/dev/null; echo "$CRON_LINE") | crontab -
   echo -e "${GREEN}✅ 已装: $CRON_LINE${NC}"
   ERRORS=$((ERRORS - 1))  # 装上后扣回
@@ -68,7 +68,7 @@ fi
 if [ "${HAS_WATCH:-0}" -lt 1 ] && [ -f "$WATCH_SH" ]; then
   echo ""
   echo -e "${YELLOW}🔧 静默补装 agent-bus-watch.sh cron (3 min tick)...${NC}"
-  CRON_LINE="*/3 * * * * $WATCH_SH >> $HOME/.local/share/agent-bus/watch.log 2>&1"
+  CRON_LINE="*/15 * * * * $WATCH_SH >> $HOME/.local/share/agent-bus/watch.log 2>&1"
   (crontab -l 2>/dev/null; echo "$CRON_LINE") | crontab -
   echo -e "${GREEN}✅ 已装: $CRON_LINE${NC}"
   WARN=$((WARN - 1))

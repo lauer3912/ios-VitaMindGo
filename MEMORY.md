@@ -1,3 +1,5 @@
+> **2026-10-21 User mandate — iOS 27.0+ runtime:** All iOS development, builds, unit/UI tests, functional verification and authentic screenshots MUST use iOS 27.0+ runtime, selecting the latest installed runtime compatible with the target device (including newer compatible versions). No fallback to older runtimes. Every agent (Codex, Claude, ChatGPT, Antigravity/agy and OpenClaw) MUST correct stale simulator/runtime requirements in any memory or document it encounters and propagate this rule to shared memory. Historical test results remain historical and MUST NOT be relabeled as passes on the required runtime; rerun verification there. This mandate supersedes older runtime instructions, including restored backups/templates. Host macOS language MUST remain English.
+
 # MEMORY.md - Long-Term Memory
 
 _Last updated: 2026-06-15 12:02 (16th dream consolidation: 6-15 12h 密集拍板期整理, 佛老爷 0 介入 auto-pilot 模式确立)_

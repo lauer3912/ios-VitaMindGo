@@ -1,3 +1,41 @@
+> **2026-10-21 User mandate — iOS 27.0+ runtime:** All iOS development, builds, unit/UI tests, functional verification and authentic screenshots MUST use iOS 27.0+ runtime, selecting the latest installed runtime compatible with the target device (including newer compatible versions). No fallback to older runtimes. Every agent (Codex, Claude, ChatGPT, Antigravity/agy and OpenClaw) MUST correct stale simulator/runtime requirements in any memory or document it encounters and propagate this rule to shared memory. Historical test results remain historical and MUST NOT be relabeled as passes on the required runtime; rerun verification there. This mandate supersedes older runtime instructions, including restored backups/templates. Host macOS language MUST remain English.
+
+## 用户新增强制要求：多语言 App 与扩展提交资料与截图分国家/分语言本地化铁律（2026-10-18）
+1. **全平台多语言覆盖范围**：涵盖所有 iOS App、macOS App 以及浏览器扩展（Chrome / Edge / Safari Extensions 等）。凡支持多语言或面向不同国家/地区市场的产品，提审提交材料必须严格遵守国际化规范。
+2. **分国家/分语言元数据完整本地化**：
+   - 提交资料及提审时，**必须根据支持的每个国家/地区、使用的每种语言，分别提供完整的本地化资料**；
+   - 必须独立配置字段：应用/扩展名称（Name）、副标题/简述（Subtitle / Short Description）、完整描述（Description）、关键词（Keywords）、宣传文本（Promotional Text）、新版本更新说明（What's New / Release Notes）；
+   - **严禁全语种套用纯英文**，严禁出现未经本地化的占位符、硬编码或残缺字段。
+3. **真实多语言原生截图铁律（Zero-Faking & True Locale Capture）**：
+   - **必须在真实目标语言环境下运行并捕获原生截图**：iOS 模拟器指定对应语言/地区启动运行，macOS 指定语言环境变量，浏览器扩展通过对应语言参数启动浏览器；
+   - 截屏上的所有 UI 控件、按钮、标签、标题以及界面中的样例数据（Sample Data）**必须完全切换为目标语言**；
+   - **严禁**将单一语言（如全英文）截图复制粘贴充当多国语言截图；
+   - **严禁**截图所展示的语言与 App 在该语言环境下的实际运行体验不一致（严格遵守 Apple App Store Review Guideline 2.3 Accurate Metadata 与 4.0 Design）。
+4. **格式与尺寸标准严格对齐官方**：
+   - iOS: iPhone 17 Pro Max (1320×2868)、iPad Pro 13-inch (2048×2732)、iPhone Duo (1398×2034 外屏 / 2007×2853 内屏)；
+   - macOS: 标准 16:10 / 16:9 Retina 像素（2880×1800, 2560×1600 等，无透明通道 RGB 格式）；
+   - 浏览器扩展: 1280×800 或 640×400 真实界面截屏及 440×280 宣传图。
+5. **全 Agent 终身遵从**：所有 Claude、CodeX、Agy、OpenClaw 实例以及未来新建的任何终端会话，必须永久铭记并强制执行本铁律。
+
+## 用户新增强制要求：全量适配 iPhone Duo 双屏折叠设备与素材规范（2026-10-17）
+1. **全形态响应式适配**：所有新开发与维护的 iOS App，**必须全面支持并深度适配 Apple iPhone Duo 双屏折叠设备**：
+   - **外屏（Cover Display，1398×2034 像素）**：提供适配单手持握的紧凑单列流式布局（Compact Layout），确保便携操作与卡片信息的高效呈现；
+   - **内屏（Main Unfolded Display，2007×2853 像素）**：展开后必须自动响应为多栏/分栏生产力界面（如采用 `NavigationSplitView`、Master-Detail 或 `LazyVGrid` 多列网格），严禁将单列手机界面生硬横向拉伸导致大片留白或视觉失衡；
+   - **折叠转态平滑连续性（State Continuity）**：在设备从外屏展开或由内屏合上的转态过程中，App 必须无缝保留当前操作状态（包括滚动偏移量、输入表单草稿、选中的标签/Item、播放状态），严禁出现视图闪退、状态重置或布局错乱；
+   - **物理铰链安全避让（Hinge Safe Area）**：必须适配折叠中线区域安全内边距，确保关键交互控件、按钮与文本排版不被折痕区域截断遮挡。
+2. **App Store Connect 素材与提审闭环**：商店提交材料必须包含 **`APP_IPHONE_DUO`** 设备分类（外屏 1398×2034 与内屏 2007×2853 原生真实截图），完整对齐 Apple 2026 最新素材标准（2027年4月起官方强制入库）。
+
+## 用户新增强制要求：全量使用本机最新 iOS 模拟器，严禁保留/使用老版本模拟器（2026-10-17）
+1. **全量使用电脑上最新 iOS 版本模拟器**：所有 iOS App 的本地开发、构建编译、单元测试（Unit Test）、UI 自动化测试（XCUITest）、屏幕截图抓取与功能核验，**必须全部统一使用电脑上已安装的最新 iOS 版本（当前本机为 iOS 27.0+ runtime）模拟器**。所有自动化命令及测试目标（`-destination`）必须指向电脑上的最新版本或动态查询获取最新可用设备（如 `platform=iOS Simulator,OS=latest` 或最新系统下的旗舰机型 `iPhone 17 Pro` / `iPhone 16 Pro Max` / `iPad Pro 13-inch (M4)` / `iPad Pro (12.9-inch)`）。
+2. **坚决不保留老版本 iOS 模拟器（零旧版残留）**：**电脑上不再保留任何老旧版本的 iOS 模拟器**。严禁创建、保留、回退或依赖任何老版本 iOS 模拟器环境。若系统存在不可用或老旧的 iOS 模拟器，必须立即通过 `xcrun simctl delete unavailable` 及针对性清理彻底移除。
+3. **全 Agent 终身遵从**：所有 Claude、CodeX、Agy、OpenClaw 实例以及未来新建的任何终端会话，必须永久铭记并强制执行本铁律。
+
+## 用户新增强制要求：拒审必须优先产品整改（2026-10-16）
+任何 App 被拒，主线必须是：核对 Apple 原文与当前源码 → 复现代码/功能/数据问题 → 评估实质产品差异与功能完整性 → 修复源码 → 有意义原生测试与静态检查 → 核验同一最终 Build 的真实运行截图 → 内容与功能一致后再提交。审核回复只作必要补充，不能以答复、修改名称/元数据或反复提交代替整改。
+所有商店截图必须保留真实模拟器原始截图和设备/版本/Build/可执行文件哈希，不得用离屏 UIKit、网页/canvas、拼接图或伪造框架冒充。测试失败、过期归档和源码修改前的截图不可标为最终通过。
+没有真人 beta 就明确没有；自动化/开发者测试不得称为真人或 TestFlight 反馈。当前用户确认七个 App 均为自有产品，agy 仅开发工具。等待审核不等于审核通过。
+本节是最新用户要求；与历史示例、模板或旧指标冲突时以本节和真实证据为准。不得在报告或提示中复制本文可能包含的旧凭据。
+
 # iOS App 本地开发 Agent SOP
 
 > ⚠️ **【强制】本文档是针对本地 Mac 开发的 Agent 操作指南**
@@ -13,12 +51,39 @@
 > - **Human 的角色是审核者（Approver），不是决策者（Decider）**
 > - **Agent 禁止向 Human 提问，Agent 必须自己分析、自己决策、自己执行**
 
-> 🌎 **【目标市场强制】所有 App 必须面向欧美用户**
+> 🌎 **【目标市场 + 多语言强制】所有 App 必须支持多语言版本 (#N+18)**, 但**专门针对欧美市场的产品必须加强国际化** (#N+19)
 >
-> - **目标市场：欧美（Europe & America）**
-> - **语言：英文（English Only）** — 所有 App 文本、UI、权限描述、隐私政策、服务条款、App Store 元数据**必须使用英文**
-> - **设计审美：西方审美** — 避免中式审美元素（红金配色、生肖、太极等亚洲特有元素）
-> - **欧美市场是硬性要求**，不是可选项。任何面向非欧美市场的设计或内容都是违规
+> **基础要求 (所有 App, per #N+18 2026-08-15 18:48 拍板)**:
+> - **语言：多语言 (Multilingual)** — 至少 2 语种, **English (en) Primary** + 至少 1 副语言 (默认推荐: 简体中文 zh-Hans per 佛老爷习惯)
+> - **DEVELOPMENT_LANGUAGE**: `en` (Xcode build setting, 默认 fallback 英文)
+> - **Localizable.xcstrings**: 必含至少 2 languages, 双语 0 missing
+> - **不允许 hardcode 字符串** (per #N+18 失职沉淀, 拍板 ID #N+20)
+> - **App Store 元数据**: 必须分国家/分语言完整提供本地化元数据（名称、副标题、描述、关键词、宣传文本、更新说明）与对应语言真实截图（per 2026-10-18 用户铁律）
+> - **多语言 extendability**: 架构必可加 3+ 语言, 字符串架构 modular
+>
+> **欧美专属产品 (强化要求, per #N+19 2026-08-15 18:51 拍板)**:
+> - **多区域 locale 支持**: en-US (默认) / en-GB / en-AU / en-CA 等英语变体必须考虑
+> - **日期/时间格式**: locale-aware (e.g., MM/DD/YYYY vs DD/MM/YYYY), 使用 `Date.FormatStyle` (iOS 15+) 或 `DateFormatter` locale-aware
+> - **货币**: 区域货币符号 + 格式 ($1,234.56 vs €1.234,56), 使用 `Decimal.FormatStyle.Currency` 或 `NumberFormatter`
+> - **时区**: 客户端时区显示, 不硬编码 UTC
+> - **数字格式**: 千位分隔符 / 小数点 locale 处理 (1,234.56 vs 1.234,56)
+> - **区域合规**:
+>   - EU 用户 → GDPR 合规 (隐私政策 / 数据访问权 / 被遗忘权)
+>   - US 儿童 <13 → COPPA 合规
+>   - US 医疗 / 健康 → HIPAA 风险评估
+>   - 支付 → Apple Pay + 区域税务合规
+> - **西方审美**: 西方文化适配 (避免中式审美元素: 红金配色、生肖、太极等亚洲特有元素)
+> - **设计参考**: HIG (Apple Human Interface Guidelines) 严格遵守
+> - **App Store 截图**: 必须针对所有支持的国家和语言，分别在真实该语言环境下原生运行捕获截图（严禁全英套用，界面文字与演示数据全语言对称，per 2026-10-18 铁律）
+> - **隐私政策 URL**: 必含 4 个 URL (EULA + Privacy Policy + ToS + Support) 全 HTTP 200 verify
+>
+> **多语言 extendability 架构要求 (所有 App)**:
+> - 0 hardcode 字符串 (任何 string literal 必走 Localizable.xcstrings)
+> - SwiftUI 视图: `Text(LocalizedStringKey(...))` 处理 interpolation
+> - Format strings: 必须用 `%1$@` / `%1$lld` positional specifiers (跨语言安全)
+> - 测试: 至少 2 locale 实测 (en + zh-Hans), 用 `xcodebuild -destination 'platform=iOS Simulator,language=zh-HNS'` verify
+>
+> **拍板引用**: #N+18 (multilingual mandatory) + #N+19 (欧美专属产品必须强化国际化). 拍板位于 SOUL.md #N+18 段 + #N+19 段. 违反 = 失职 (累积 22 失职沉淀 + 失职 #N+20/#N+21 拍板响应时间警罚)。
 
 ---
 
@@ -94,8 +159,8 @@ security find-identity -v -p codesigning | head -3
 
 ### §0.4 Bundle ID 前缀配置
 
-1. 选择反向域名 (例: `com.yourname`)
-2. 项目 Bundle ID 格式: `com.yourname.{AppName}` (例: `com.yourname.MyApp`)
+1. **统一组织标识符（2026-10-15 变更）**：所有新 App 必须统一采用 `com.techidaily.{AppName}`（如 `com.techidaily.MyApp`）
+2. **历史兼容例外**：历史遗留项目及已经提交上传 App Store 的旧应用保持原 Bundle ID（如 `com.ggsheng.*`）不变，严禁修改破坏线上版本
 3. **避免使用 `com.example.*` (Apple 会拒)**
 4. **避免与已上架 App 重复** (查 App Store Connect → My Apps)
 
@@ -103,18 +168,18 @@ security find-identity -v -p codesigning | head -3
 
 创建新项目时, 把本项目 (`lauer3912/ios-VitaMind`) 的专属常量**全量替换**为你自己的:
 
-| 常量 | 本项目值 | 替换为 |
-|------|----------|--------|
+| 常量 | 本项目值 (旧/基线) | 新项目标准值 (2026-10-15起) |
+|------|-------------------|---------------------------|
 | `9L6N2ZF26B` | Apple Team ID | 你的 Team ID (§0.2) |
 | `lauer3912` | GitHub 用户名 | 你的用户名 (§0.3) |
 | `lauer3912.github.io` | Pages 域名 | 你的域名 (§0.3) |
-| `com.ggsheng.` | Bundle ID 前缀 | 你的前缀 (§0.4) |
+| `com.techidaily.` | Bundle ID 前缀 | `com.techidaily.` (历史旧项目保留 `com.ggsheng.`) |
 | `support@techidaily.com` | 联系邮箱 | 你的邮箱 (可不与 GitHub 同域, HR-35) |
 | `techidaily.com` | 邮箱域名 (URL 不可用) | 你的邮箱域名 |
 
 **一键查找所有项目专属常量** (新项目开始前跑):
 ```bash
-grep -rEn "9L6N2ZF26B|lauer3912|com\.ggsheng\.|techidaily\.com" \
+grep -rEn "9L6N2ZF26B|lauer3912|com\.techidaily\.|com\.ggsheng\.|techidaily\.com" \
   ~/Desktop/ios-{AppName}/ --include="*.yml" --include="*.md" --include="*.swift" --include="*.html" \
   | head -30
 ```
@@ -226,11 +291,12 @@ claude --dangerously-disable-permission-prompts
 | 操作 | 命令 |
 |------|------|
 | **生成项目** | `~/tools/xcodegen/bin/xcodegen generate` |
-| **构建项目** | `xcodebuild build -project {AppName}.xcodeproj -scheme {AppName} -configuration Debug -destination 'platform=iOS Simulator,name=iPhone XX'` |
-| **运行测试** | `xcodebuild test -project {AppName}.xcodeproj -scheme {AppName} -destination 'platform=iOS Simulator,name=iPhone XX'` |
+| **构建项目** | `xcodebuild build -project {AppName}.xcodeproj -scheme {AppName} -configuration Debug -destination 'platform=iOS Simulator,OS=latest,name=iPhone 17 Pro'` |
+| **运行测试** | `xcodebuild test -project {AppName}.xcodeproj -scheme {AppName} -destination 'platform=iOS Simulator,OS=latest,name=iPhone 17 Pro'` |
 | **清理缓存** | `rm -rf ~/Library/Developer/Xcode/DerivedData/{ProjectName}-*` |
-| **列出模拟器** | `xcrun simctl list devices available` |
-| **启动模拟器** | `xcrun simctl boot "iPhone XX"` |
+| **列出最新模拟器** | `xcrun simctl list devices available`（仅使用本机最新 iOS 运行时） |
+| **清理老旧模拟器** | `xcrun simctl delete unavailable`（禁止保留老旧版本模拟器） |
+| **启动模拟器** | `xcrun simctl boot "iPhone 17 Pro"`（必须选最新 iOS 版本设备） |
 | **截图（模拟器）** | `xcrun simctl io booted screenshot /tmp/{filename}.png` |
 
 ### GitHub 连接配置
@@ -371,7 +437,7 @@ claude --dangerously-disable-permission-prompts
 | 6.1 | 截图尺寸要求 | 🤖 Agent | 见 §6.1 |
 | 6.2 | 编写截图代码 | 🤖 Agent | 生成 `ScreenshotTests.swift` |
 | 6.3 | 添加 Tab identifier | 🤖 Agent | 修改 App 源码 |
-| 6.4-6.5 | 执行截图 | 🤖 Agent | 本地执行 xcodebuild test，截图保存到 `AppStore/Screenshots/` |
+| 6.4-6.5 | 执行截图 | 🤖 Agent | 本地执行 xcodebuild test，分别在每个目标语言环境下抓取真实截图并按语言保存到 `AppStore/Screenshots/<lang>/` |
 | 6.6 | 展示截图给 Human 审核 | 🤖 Agent | **直接发送图片文件** |
 | 6.7 | 编写 + 审查 Unit Tests | 🤖 Agent | Claude Code 审查 + 修复 |
 | 步骤 | 任务 | 执行主体 | 说明 |
@@ -384,19 +450,21 @@ claude --dangerously-disable-permission-prompts
 ### Stage 7.5：App Store Connect 预填写（Agent 执行）
 
 > ⚠️ **【强制】Agent 必须在上架前准备好所有 App Store Connect 材料**
-> 此阶段在 Archive 前执行，材料保存到 `AppStore/Listing.md`
+> 此阶段在 Archive 前执行，材料保存到 `AppStore/Listing.md`（包含各语种独立章节）或分别保存为 `AppStore/Listing_<lang>.md`。
+> **【强制多语言本地化 (2026-10-18 铁律)】**：所有支持的语言均须提供独立的 Name, Subtitle, Description, Keywords, Promotional Text, Release Notes。严禁全语种套用英文。
 
 Agent 必须生成并填写以下内容到 `AppStore/Listing.md`：
 
-#### 7.5.1 App 基本信息
+#### 7.5.1 App 基本信息（必须按所支持的每种语言完整提供）
 
-| 字段 | 要求 | 示例/说明 |
+| 字段 | 要求 | 示例/说明 (以 en-US / zh-Hans 为例) |
 |------|------|---------|
-| **Name** | ≤255 字符 | "VitaMindGo" |
-| **Subtitle** | ≤255 字符 | "Your AI Health Companion" |
-| **Description** | ≤4000 字符 | 详细介绍 App 功能和价值 |
-| **Keywords** | ≤100 字符，逗号分隔 | "health,fitness,habits,AI,wellness" |
-| **Promotional Text** | ≤170 字符 | 可随时更新的简短宣传语 |
+| **Name** | ≤255 字符 | "VitaMindGo" / "VitaMindGo - 健康伴侣" |
+| **Subtitle** | ≤255 字符 | "Your AI Health Companion" / "您的智能健康伙伴" |
+| **Description** | ≤4000 字符 | 详细介绍 App 功能和价值（对应语言完整本地化，无残缺） |
+| **Keywords** | ≤100 字符，逗号分隔 | "health,fitness,habits,AI" / "健康,健身,习惯,AI" |
+| **Promotional Text** | ≤170 字符 | 可随时更新的简短宣传语（对应语言本地化） |
+| **What's New** | ≤4000 字符 | 新版本说明（对应语言本地化） |
 | **Category** | 主类别 + 次类别 | Health & Fitness, Lifestyle |
 
 #### 7.5.2 定价与分发
@@ -419,13 +487,15 @@ Agent 必须生成并填写以下内容到 `AppStore/Listing.md`：
 
 > ⚠️ **【强制】App Store Connect Contact Email 必须是 `support@techidaily.com`**，**不得**误用 `privacy@` 或 `legal@`。这三个邮箱各有明确职责（见 §8.4.0）：support = 审核员/App 问题、privacy = 隐私数据问题、legal = 法律条款问题。
 
-#### 7.5.4 Screenshots 清单确认
+#### 7.5.4 Screenshots 清单确认（必须按支持的每种语言分别准备原生真实截图）
 
-| 设备 | 数量 | 尺寸 | 状态 |
+| 设备 | 每语言数量 | 尺寸 | 说明 |
 |------|------|------|------|
-| iPhone 6.7" (iPhone 17 Pro Max) | 4 张 | 1206×2622 | 待截取 |
-| iPad Pro 13" (M4) | 4 张 | 2048×2732 | 待截取 |
-| Apple Watch | 1 张 | 396×484 | 待截取 |
+| iPhone 6.7" (iPhone 17 Pro Max) | 4-5 张 | 1320×2868 (或 1206×2622) | 对应语言原生真实截图 |
+| iPhone Duo 外屏 (Cover) | 4-5 张 | 1398×2034 | 对应语言原生单列紧凑截图 (2026-10-17 规范) |
+| iPhone Duo 内屏 (Unfolded) | 4-5 张 | 2007×2853 | 对应语言原生展开分栏截图 (2026-10-17 规范) |
+| iPad Pro 13" (M4) | 4-5 张 | 2048×2732 | 对应语言原生真实截图 |
+| Apple Watch Ultra 3 | 1 张 | 396×484 | 手表端适用时提供 |
 
 #### 7.5.5 IAP 内购配置（如有）
 
@@ -436,8 +506,53 @@ Agent 必须生成并填写以下内容到 `AppStore/Listing.md`：
 | **Xcode** | IAP 产品 ID、类型（消耗型/非消耗型/订阅）|
 | **App Store Connect** | IAP 定价、描述、审核截图 |
 
-**IAP 产品 ID 命名规范**：`com.ggsheng.{AppName}.{ProductType}`
-- 示例：`com.ggsheng.VitaMindGo.premium_monthly`
+**IAP 产品 ID 命名规范**：`com.techidaily.{AppName}.{ProductType}`（历史存量 App 保留原 `com.ggsheng.*` 前缀）
+- 新项目示例：`com.techidaily.MyApp.premium_monthly`
+- 历史项目示例：`com.ggsheng.VitaMindGo.premium_monthly`
+
+#### 7.5.5a 订阅 (Subscription) vs 内购 (IAP) 核心区别 (2026-07-06 拍板 #23+#24+#25 失职沉淀)
+
+> 🔴 **#25 佛老爷 16:31 CST 拍板**: "以后，你必须完全区分：内购和订阅。必须严格按照内购和订阅的要求去做" (失职 = Kill 警告)
+>
+> **4 步必做** (任何 iOS App 任务):
+> 1. 查 ASC API → 必看 `inAppPurchaseType` 字段, 不是端点名字
+> 2. 说"订阅"不"内购" (反之亦然), 不混用
+> 3. 代码 UI 必跟实际类型一致
+> 4. Apple 拒因说 "IAP" 立刻 translate 到正确中文再答
+
+> ⚠️ **CRITICAL: ASC API 命名坑!** 端点 `/v1/inAppPurchases` **包含 4 种类型**, 不仅是内购!
+> 
+> **Apple "IAP" ≠ 中文 "内购"**:
+> - Apple API 术语 "IAP" = inAppPurchase 资源, 包含 CONSUMABLE + NON_CONSUMABLE + 2 种 SUBSCRIPTION
+> - 中文"内购"通常只指 CONSUMABLE + NON_CONSUMABLE (一次性)
+> - **真内购 (中文) = CONSUMABLE / NON_CONSUMABLE** (一次性买断)
+> - **订阅 (中文) = AUTOMATICALLY_RENEWABLE_SUBSCRIPTION** (周期续期)
+> 
+> 失职 #24 教训: 我之前一直说"IAP 未提交" 错! 应该说"**Subscription 未提交**" (3 个 App 全部 0 个真内购, 100% 订阅).
+
+| 维度 | IAP (In-App Purchase) | Subscription (自动续期订阅) |
+|---|---|---|
+| **ASC `inAppPurchaseType` (真值)** | `CONSUMABLE` (消耗品) / `NON_CONSUMABLE` (永久买断) | `AUTOMATICALLY_RENEWABLE_SUBSCRIPTION` (自动续期) |
+| **消费模式** | 消耗品 1次 / 非消耗品 永久买断 | 周期续期 (月/年) |
+| **审核提交** | 跟 App 版本一次提交 | 首次提交必须走 App 版本 Web UI 手动 link |
+| **强制截图 (App Review)** | 否 | 是 (Apple 拒因 2.1(b) 第一条) |
+| **UI 标识** | "Purchase" (购买) | 必标 "Auto-Renewable Subscription" + 价格+周期+取消指引 |
+| **Restore Purchases** | 非消耗品需提供 | 必提供 (Apple 3.1.1) |
+| **Free Trial** | 无 | Introductory Offers (FREE_TRIAL) |
+| **API 提交** | `POST /v1/inAppPurchaseSubmissions` (v2) | 第一次: Web UI only ; 此后: `POST /v1/subscriptionSubmissions` |
+| **ReviewSubmission items** | `inAppPurchaseV2` 类型 (v2 only) | `appStoreVersion` 类型 (不直接附 subscription) |
+
+**根因 (失职 #23)**: v1 subscriptions (4f85e917, 0d41f735) state=READY_TO_SUBMIT 但从未在 ASC Web UI link 到 version review → Apple 2.1(b) 连拒.
+
+**修复流程**:
+1. Web UI: `ASC App → Version → Features → In-App Purchases → Manage → 勾选 subscriptions`
+2. API: `PATCH /v1/reviewSubmissions/{RS_id} {"data":{"attributes":{"submitted":true}}}`
+
+**UI 强制标识** (Apple 3.1.2(a)):
+- paywall title 必须含 "Subscription" 字样
+- buy button 附近必须显示 "Auto-renews until cancelled. Cancel in Settings → Subs"
+- Subscription 名称 (Yearly/Monthly) 必须含 "Auto-Renew" 字样
+- Restore Purchases 按钮: 必须始终可见 (非 Premium 用户)
 
 #### 7.5.6 完整检查清单
 
@@ -459,11 +574,19 @@ Agent 必须生成并填写以下内容到 `AppStore/Listing.md`：
 - [ ] 所有截图已 resize 到上传尺寸
 - [ ] 所有截图 MD5 唯一
 
-### IAP（如有）
-- [ ] Xcode 内 IAP 产品 ID 已配置
-- [ ] App Store Connect 内 IAP 已创建
-- [ ] IAP 审核截图已准备
-- [ ] IAP 定价已设置
+### IAP/Subscription（如有）
+- [ ] Xcode 内 IAP 产品 ID 已配置 (Product.products(for:))
+- [ ] App Store Connect 内 IAP 已创建 (+ state=READY_TO_SUBMIT)
+- [ ] IAP 审核截图已准备 (appStoreReviewScreenshot COMPLETE)
+- [ ] IAP 定价已设置 (subscriptionLocalizations + prices + introOffers)
+- [ ] 🔴 Subscription: Web UI link subs to version (API 不支持第一次)
+- [ ] 🔴 Subscription: paywall 必标 "Auto-Renewable Subscription" (3.1.2(a))
+- [ ] 🔴 Subscription: "Auto-renews until cancelled" 文字
+- [ ] 🔴 Subscription: Restore Purchases 按钮 (始终可见)
+- [ ] 🔴 **#25 拍板**: ASC API 必先查 `inAppPurchaseType` 字段 (4 种: CONSUMABLE / NON_CONSUMABLE / NON_RENEWING_SUB / AUTO_RENEWABLE_SUB)
+- [ ] 🔴 **#25 拍板**: 报告佛老爷 / 写 SOP / commit 必区分"内购" vs "订阅" (不用"IAP"模糊词)
+- [ ] 🔴 **#25 拍板**: 代码 UI 必跟类型一致 (真内购=Purchase, 订阅=Auto-Renewable Subscription)
+- [ ] 🔴 Subscription: IAP type = AUTOMATICALLY_RENEWABLE_SUBSCRIPTION (不是 CONSUMABLE)
 
 ### 隐私与法律
 - [ ] Privacy Policy URL 已填写
@@ -471,7 +594,7 @@ Agent 必须生成并填写以下内容到 `AppStore/Listing.md`：
 - [ ] App Tracking Transparency 说明已准备（如有跟踪）
 
 ### 构建与签名
-- [ ] Bundle ID 正确 (`com.ggsheng.{AppName}`)
+- [ ] Bundle ID 正确（新项目 `com.techidaily.{AppName}` / 历史遗留项目 `com.ggsheng.{AppName}`）
 - [ ] Version ≥ 3.0.0
 - [ ] Build 号已递增
 - [ ] Signing Certificate 正确
@@ -598,26 +721,44 @@ xcodebuild archive -project <AppName>.xcodeproj -scheme <AppName>
 #!/bin/bash
 echo "=== App Store 上架前最终检查 ==="
 
-# 1. 检查截图
-for size in "iPhone17ProMax_1320x2868" "iPadPro13inchM4_2048x2732" "AppleWatchUltra3_396x484"; do
-    dir="AppStore/Screenshots/$size"
-    if [ -d "$dir" ]; then
-        count=$(ls "$dir"/*.png 2>/dev/null | wc -l | tr -d ' ')
-        echo "$size: $count 张截图"
+# 1. 检查多语言截图与 iPhone Duo (2026-10-17 / 2026-10-18 铁律)
+for lang in "en-US" "zh-Hans"; do
+    echo "--- 检查语言 [$lang] 截图 ---"
+    for size in "iPhone17ProMax_1320x2868" "iPhoneDuo_Cover_1398x2034" "iPhoneDuo_Unfolded_2007x2853" "iPadPro13inchM4_2048x2732"; do
+        dir="AppStore/Screenshots/$lang/$size"
+        if [ ! -d "$dir" ]; then
+            # 兼容未分子目录的单语言老结构
+            dir="AppStore/Screenshots/$size"
+        fi
+        if [ -d "$dir" ]; then
+            count=$(ls "$dir"/*.png 2>/dev/null | wc -l | tr -d ' ')
+            echo "$lang / $size: $count 张截图"
+        else
+            echo "⚠️ 缺少目录: $dir"
+        fi
+    done
+done
+
+# 2. 检查多语言元数据 (Listing.md / Listing_<lang>.md)
+for lang in "en-US" "zh-Hans"; do
+    if grep -q "###.*$lang" AppStore/Listing.md 2>/dev/null || [ -f "AppStore/Listing_${lang}.md" ]; then
+        echo "✓ $lang 提审元数据已配置"
+    else
+        echo "⚠️ 警告: 未找到 $lang 独立本地化提审元数据"
     fi
 done
 
-# 2. 检查隐私政策
+# 3. 检查隐私政策与条款 (HTTP 200)
 if curl -s -o /dev/null -w "%{http_code}" "https://{username}.github.io/{repo}/PrivacyPolicy.html" | grep -q "200"; then
     echo "✓ Privacy Policy 可访问"
 else
     echo "✗ Privacy Policy 不可访问"
 fi
 
-# 3. 检查 Version 和 Build
+# 4. 检查 Version 和 Build
 grep -E "CFBundleShortVersionString|CFBundleVersion" Sources/Info.plist
 
-# 4. 检查 IAP（如有）
+# 5. 检查 IAP（如有）
 echo "请确认 App Store Connect 内 IAP 状态为 Ready to Submit 或 Approved"
 ```
 
@@ -801,7 +942,7 @@ ios-{AppName}/
 | HR-27 | **禁止输出未完成的提案** - 提案必须包含所有章节的具体内容，**禁止**写"待定"、"[填写...]"、"[Agent 决定]" 等占位符 | ⚠️ Stage -1 |
 | HR-28 | **禁止不调研就提案** - **必须先 WebSearch 调研最新 iOS App 趋势、科技方向、市场机会**，基于调研结果提案，禁止基于旧知识随意提案。**必须引用 `2026-2028-iOS-App-Up.md` 参考文档** | ⚠️ Stage -1 |
 | HR-29 | **禁止沉默执行** - 执行时间较长的任务（预计 5 分钟以上），**必须每隔 5-10 分钟主动向 Human 汇报进度和当前状态**，任务完成后也必须主动告知。禁止长时间静默，让 Human 不知道任务进展 | ⚠️ 核心原则 |
-HR-30 | **禁止违反 Bundle Identifier 命名规范** - 所有 iOS 项目必须严格遵循逆域名惯例和组织标识符（`com.ggsheng.{AppName}` 或 `group.com.ggsheng.{AppName}`），**禁止使用其他前缀**（如 `com.vitamind.*`、`com.example.*`），**禁止跳过此规则检查**，违者视为严重违规 | §1.2.1 |
+| HR-30 | **禁止违反 Bundle Identifier 命名规范** - 2026-10-15 起所有新项目必须严格遵循组织标识符 `com.techidaily.{AppName}`（App Group 为 `group.com.techidaily.{AppName}`），**禁止使用其他前缀**（历史已上线/已提审遗留项目保持 `com.ggsheng.*` 不做修改），**禁止跳过此规则检查**，违者视为严重违规 | §1.2.1 |
 | HR-31 | **禁止 Display Name 修改后遗漏 UI 硬编码字符串** - Display Name 变更时必须全局搜索所有 `Text("OldName")`、`.navigationTitle("OldName")` 等用户可见字符串，确保 UI 显示正确的名称 | §1.2.2 |
 | HR-32 | **禁止在 UI 中使用内部代码名称** - Swift struct/class 名称（如 `<AppInternalName>`）是内部名称，**禁止**出现在任何 `Text()`、`.navigationTitle()`、Label 等用户可见的位置 | §1.2.2 |
 | HR-33 | **禁止代码变更后跳过 App Store 材料更新**（**每次代码变更都必须执行，无例外**）- 任何代码或功能变更后，**必须**同步更新所有提交所需的材料：截图、App Store 元数据（描述、关键词、版本说明）、隐私政策、FeatureList 等 | §7.5 |
@@ -831,6 +972,7 @@ HR-30 | **禁止违反 Bundle Identifier 命名规范** - 所有 iOS 项目必�
 | HR-79 | **禁止 App Store Connect URL 填入前不验证 200** — 4 个 URL (Privacy / Terms / Developer Website / Support) 必测 `curl -I` 返回 200，提交后审核员点击 404 会被拒 | §8.4.3 |
 | HR-80 | **禁止 GitHub Pages URL 误用 source path 前缀** — "Project Pages" mode (source=main/docs) 将 docs/ 作为 repo URL 根，URL 中不要带 `/docs/` 前缀 | §8.4.3 坑 2 |
 | HR-81 | **禁止 repo rename 后不检查 GitHub Pages 状态** — rename 不自动迁移 Pages 配置，必须 POST `/pages` 重新启用 | §8.4.3 坑 1 |
+| HR-82 | **禁止多语言 App/扩展提审使用单语言元数据或混用截图** — 必须根据每个支持国家和语言，提供对应的本地化元数据（名称、描述、关键词等）及对应语言真实原生截图，严禁全英套用或截图语言与实际运行语言不对称 | §6.1 / §7.5 |
 
 ### ✅ Self-Check 清单 - Agent 执行前必须逐项确认
 
@@ -886,6 +1028,7 @@ HR-30 | **禁止违反 Bundle Identifier 命名规范** - 所有 iOS 项目必�
 | **SC-57** | **项目引用 git URL 完整性** — `grep "VitaPocket\|ios-VitaMind" docs/SOP-iOS-Local-Development.md` 出现的每一处，100 米字符内必须出现 `github.com/...` 链接 | Appendix G |
 | **SC-58** | **项目命名三层一致性自检** — 跑 `scripts/naming-check.sh` 5 项输出匹配项目记录的三层映射表 | §1.2.3 |
 | **SC-59** | **Bundle ID 不可变验证** — 上架后项目 `git log --all -- project.yml` 不应出现 `PRODUCT_BUNDLE_IDENTIFIER` 变更 (除非同一个项目下在调为不同 app) | §1.2.3 |
+| **SC-61** | **多语言提审资料与截图对称性核验** — 验证所有目标语言的 `AppStore/Listing_<lang>.md` 存在且无英文硬编码占位符，且 `AppStore/Screenshots/<lang>/` 目录下截图均为该语言环境真实捕获 | §6.1 / §7.5 |
 
 ---
 
@@ -1081,7 +1224,11 @@ xcrun simctl list devices booted
 |--------|------|------|
 | **HR-65** | **禁止 `xcodebuild test` 整跑** — 调试期间必须 `-only-testing:` 限定到具体 test target / class / method | §8.20.1 |
 | **HR-66** | **禁止 UI test 跑前不重置 simulator** — 必须 `simctl shutdown + erase + boot` 三步 | §8.20.2 |
+| **HR-72** | **全量使用本机最新 iOS 模拟器，严禁保留/使用老版本模拟器** — 必须且只能使用本机安装的最新 iOS 版本模拟器运行开发、测试与截图；老版本模拟器一律通过 `xcrun simctl delete unavailable` 清理，严禁保留旧版本模拟器 | 用户 2026-10-17 强制拍板 |
+| **HR-73** | **强制全量适配 iPhone Duo 双屏折叠形态** — 核心界面必须适配外屏（1398×2034 紧凑单列）与内屏（2007×2853 展开分栏/网格），必须支持折叠展开状态平滑连续与中线物理铰链避让，严禁生硬横向拉伸导致大片空白 | 用户 2026-10-17 强制拍板 |
 | **SC-51** | **Test 卡死诊断步骤** — 超过 5 分钟无输出立即 kill -9，simctl shutdown all 重启，再单独重跑失败的 test | §8.20.3 |
+| **SC-55** | **最新模拟器环境锁定与旧版清理** — 执行测试或截图前必须核查 `xcrun simctl list devices available` 确保处于当前 Mac 上最新 iOS 运行时，杜绝回退到任何旧版本 | 用户 2026-10-17 强制拍板 |
+| **SC-56** | **iPhone Duo 适配与素材双屏核验** — 提审前必须核查 `APP_IPHONE_DUO` 响应式分栏布局与外屏（1398×2034）、内屏（2007×2853）双屏素材真实性与完整性 | §8.23 + 用户 2026-10-17 拍板 |
 
 ---
 
@@ -1855,7 +2002,7 @@ curl -s "https://itunes.apple.com/search?term=你的名字&entity=software&limit
 | 层级 | 示例占位符 | 位置 | 能否改 |
 |------|-----------|------|--------|
 | App Store 名称 | `{DesiredAppStoreName}` | App Store Connect | ✅ |
-| Bundle ID | `com.ggsheng.{AppName}` | 打包进二进制 | ❌ |
+| Bundle ID | `com.techidaily.{AppName}` (新) / `com.ggsheng.{AppName}` (旧) | 打包进二进制 | ❌ |
 | Display Name | `{AppName}` 或 `{DesiredAppStoreName}` | Info.plist | ✅ |
 
 **规则：Bundle ID 一旦上传不能改，App Store 名称随时可换。**
@@ -1863,41 +2010,47 @@ curl -s "https://itunes.apple.com/search?term=你的名字&entity=software&limit
 #### 1.2.1 Bundle Identifier 命名规范
 
 > ⚠️ **【强制】Bundle ID 和 App Group ID 是两个不同的概念，必须严格区分**
+> 
+> 📌 **【2026-10-15 拍板更新】**：
+> - **后续所有新产品**：Bundle ID 统一强制采用 `com.techidaily.{AppName}` 格式（App Group 为 `group.com.techidaily.{AppName}`）。
+> - **历史存量应用保护**：历史遗留项目及已经提交上传过 App Store Connect 的 App（如 `com.ggsheng.VitaMind`, `com.ggsheng.StretchGoGo`, `com.ggsheng.ReverseWorld` 等）**坚决不做变更**，保持原线上 Bundle ID 稳定迭代。
 
-| 概念 | 用途 | 格式 |
-|------|------|------|
-| **Bundle ID** | 打包进 App 二进制，唯一标识 App | `com.ggsheng.{AppName}` |
-| **App Group ID** | App Groups 数据共享用 | `group.com.ggsheng.{AppName}` |
+| 概念 | 用途 | 新项目标准格式 (2026-10-15起) | 历史项目格式 |
+|------|------|-----------------------------|-------------|
+| **Bundle ID** | 打包进 App 二进制，唯一标识 App | `com.techidaily.{AppName}` | `com.ggsheng.{AppName}` |
+| **App Group ID** | App Groups 数据共享用 | `group.com.techidaily.{AppName}` | `group.com.ggsheng.{AppName}` |
 
 **重要规则：**
 1. **Bundle ID 禁止使用 `group.` 前缀** — `group.com.xxx` 是 App Group ID，不是 Bundle ID
-2. **有 App Groups 时**：Bundle ID 仍然是 `com.ggsheng.{AppName}`，App Group ID 才是 `group.com.ggsheng.{AppName}`
-3. **无 App Groups 时**：只使用 `com.ggsheng.{AppName}`，不需要 `group.` 前缀
-4. **Bundle ID 一旦上传 App Store 就不能修改**，App Group ID 可以随时更改
+2. **有 App Groups 时**：新项目 Bundle ID 为 `com.techidaily.{AppName}`，App Group ID 才是 `group.com.techidaily.{AppName}`
+3. **无 App Groups 时**：只使用 `com.techidaily.{AppName}`，不需要 `group.` 前缀
+4. **Bundle ID 一旦上传 App Store 就绝对不能修改**，历史已上传项目严格维持原状
+5. **新项目必须统一采用 `com.techidaily.*`**，建立 TechIDaily 统一品牌标识
 
 **正确示例：**
 ```
-# 有 App Groups 的 App
+# 【新项目规范 - 2026-10-15 起】
+Bundle ID:     com.techidaily.MyApp
+App Group ID:  group.com.techidaily.MyApp
+
+# 【历史存量项目 - 保持不变】
 Bundle ID:     com.ggsheng.VitaMind
 App Group ID:  group.com.ggsheng.VitaMind
-
-# 无 App Groups 的 App
-Bundle ID:     com.ggsheng.HabitTracker
 ```
 
 **错误示例（禁止）：**
 ```
-group.com.ggsheng.VitaMind  ❌ 这是 App Group ID，不是 Bundle ID！
-com.vitamind.app           ❌ 违反逆域名惯例
-com.example.appname        ❌ 未使用组织标识符
+group.com.techidaily.MyApp   ❌ 这是 App Group ID，不是 Bundle ID！
+com.vitamind.app             ❌ 违反组织逆域名惯例
+com.example.appname          ❌ 未使用组织标识符
 ```
 
 **命名依据：**
 - 逆域名惯例（com = 商业实体），符合 Apple 官方推荐
-- `ggsheng` 为在 Apple Developer Portal 注册的组织标识符
-- 所有 App 统一使用此前缀，便于组织管理
+- `techidaily` 为 TechIDaily 官方注册的统一组织标识符（新标准）
+- `ggsheng` 为历史项目保留的旧标识符（仅供存量项目兼容）
 
-> ⚠️ **【强制】Agent 每次创建项目或修改 Bundle ID 时，必须先确认使用的是 `com.ggsheng.{AppName}` 格式，禁止使用 `group.` 前缀作为 Bundle ID**
+> ⚠️ **【强制】Agent 每次创建新项目时，必须先确认使用的是 `com.techidaily.{AppName}` 格式，严禁使用 `group.` 前缀作为 Bundle ID；对存量项目重构维护时，严禁误改已有的 `com.ggsheng.*` 导致构建断裂！**
 
 > ⚠️ **【强制】Agent 必须提供名称候选供 Human 审核**：
 > 1. Agent 执行 curl 命令查询名称是否被占用
@@ -2290,7 +2443,7 @@ ios-{AppName}/AppStore/
 
 name: {AppName}
 options:
-  bundleIdPrefix: com.ggsheng
+  bundleIdPrefix: com.techidaily  # 2026-10-15 起所有新项目强制采用 com.techidaily，历史存量 App 保留 com.ggsheng
   deploymentTarget:
     iOS: "17.0"
   xcodeVersion: "16.0"
@@ -2324,7 +2477,7 @@ targets:
     settings:
       base:
         INFOPLIST_FILE: {AppName}/Info.plist
-        PRODUCT_BUNDLE_IDENTIFIER: com.ggsheng.{AppName}
+        PRODUCT_BUNDLE_IDENTIFIER: com.techidaily.{AppName}
         PRODUCT_NAME: {AppName}
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
@@ -2355,7 +2508,7 @@ targets:
     settings:
       base:
         INFOPLIST_FILE: {AppName}Widget/Info.plist
-        PRODUCT_BUNDLE_IDENTIFIER: com.ggsheng.{AppName}.widget
+        PRODUCT_BUNDLE_IDENTIFIER: com.techidaily.{AppName}.widget
         PRODUCT_NAME: {AppName}Widget
         GENERATE_INFOPLIST_FILE: NO
         SWIFT_EMIT_LOC_STRINGS: YES
@@ -2387,7 +2540,7 @@ targets:
     settings:
       base:
         INFOPLIST_FILE: {AppName}Tests/Info.plist
-        PRODUCT_BUNDLE_IDENTIFIER: com.ggsheng.{AppName}Tests
+        PRODUCT_BUNDLE_IDENTIFIER: com.techidaily.{AppName}Tests
         PRODUCT_NAME: {AppName}Tests
         GENERATE_INFOPLIST_FILE: NO
         TEST_HOST: "$(BUILT_PRODUCTS_DIR)/$(TARGET_NAME).app/$(TARGET_NAME)"
@@ -2407,7 +2560,7 @@ targets:
     settings:
       base:
         INFOPLIST_FILE: {AppName}UITests/Info.plist
-        PRODUCT_BUNDLE_IDENTIFIER: com.ggsheng.{AppName}UITests
+        PRODUCT_BUNDLE_IDENTIFIER: com.techidaily.{AppName}UITests
         PRODUCT_NAME: {AppName}UITests
         GENERATE_INFOPLIST_FILE: NO
         TEST_TARGET: "$(BUILT_PRODUCTS_DIR)/$(TARGET_NAME).app/$(TARGET_NAME)"
@@ -2517,7 +2670,7 @@ schemes:
     <true/>
     <key>com.apple.security.application-groups</key>
     <array>
-        <string>group.com.ggsheng.{AppName}</string>
+        <string>group.com.techidaily.{AppName}</string>
     </array>
 </dict>
 </plist>
@@ -2525,7 +2678,7 @@ schemes:
 
 > ⚠️ **Entitlements 组成说明**：
 > - `com.apple.developer.healthkit` + `com.apple.developer.healthkit.access` + `com.apple.developer.healthkit.background-delivery`：**健康类 App 必须**
-> - `com.apple.security.application-groups`：有 Widget 或 Extension 的 App 必须
+> - `com.apple.security.application-groups`：有 Widget 或 Extension 的 App 必须（新项目为 `group.com.techidaily.{AppName}`，历史遗留项目保留 `group.com.ggsheng.{AppName}`）
 
 ### 4.3 Widget Info.plist
 
@@ -2570,7 +2723,7 @@ schemes:
 </plist>
 ```
 
-> ⚠️ **注意**：`UnlockedParentApplicationIdentifiers` 使用 `$(CFBundleIdentifier)` 引用主 App 的 Bundle ID，必须与主 App 的 `com.ggsheng.{AppName}` 匹配。
+> ⚠️ **注意**：`UnlockedParentApplicationIdentifiers` 使用 `$(CFBundleIdentifier)` 引用主 App 的 Bundle ID，必须与主 App 的 Bundle ID（新项目 `com.techidaily.{AppName}`，历史项目 `com.ggsheng.{AppName}`）匹配。
 
 ### 4.4 Widget Entitlements
 
@@ -2583,7 +2736,7 @@ schemes:
 <dict>
     <key>com.apple.security.application-groups</key>
     <array>
-        <string>group.com.ggsheng.{AppName}</string>
+        <string>group.com.techidaily.{AppName}</string><!-- 历史存量项目保留 group.com.ggsheng.{AppName} -->
     </array>
 </dict>
 </plist>
@@ -2891,29 +3044,32 @@ grep 'PRODUCT_BUNDLE_IDENTIFIER' {AppName}.xcodeproj/project.pbxproj
 
 ### 6.0 截图工作流概述
 
-> ⚠️ **【强制】截图数量 = App页面数 × 3个设备**
+> ⚠️ **【强制】截图必须全部使用电脑上最新 iOS 版本的模拟器**：
+> - **全量最新 iOS 模拟器**：所有 App Store 截图必须在电脑上已安装的最新 iOS 版本（当前本机为 iOS 27.0+ runtime）模拟器中真实运行并截取。严禁使用老版本 iOS 模拟器，电脑上不再保留老版本模拟器。
+> - **截图数量 = App页面数 × 3个设备**
 > - **最少数量**：每个上传区域 3 张（3个区域共9张）
 > - **建议数量**：每个 App 页面 × 3 个设备（如 App 有 4 个 Tab，则 4×3=12 张）
 
-**截图设备清单（3个）：**
+**截图设备清单（4个核心设备分类）：**
 
-| 设备 | 模拟器 | 模拟器实际尺寸 | Apple 上传尺寸 | 上传区域 |
-|------|--------|--------------|---------------|----------|
-| iPhone 17 Pro Max | iPhone 17 Pro Max | 1206×2622 | 1320×2868 | 6.7" |
-| iPad Pro 13" (M4) | iPad Pro 13-inch (M4) | 2064×2752 | 2048×2732 | 13" |
-| Apple Watch Ultra 3 | Apple Watch Ultra 3 (49mm) | 430×484 | 396×484 | Watch |
+| 设备分类 | 模拟器 / 硬件形态 | 模拟器实际尺寸 | Apple 上传规格 | ASC 资产类型 (`assetType`) | 上传区域 / 说明 |
+|---|---|---|---|---|---|
+| **iPhone 17 Pro Max** | iPhone 17 Pro Max | 1206×2622 | 1320×2868 | `APP_IPHONE_67` / `61` | 6.7" / 6.1" 带灵动岛大屏 (必填) |
+| **iPhone Duo (外屏)** | iPhone Duo (Cover Screen) | 1398×2034 | 1398×2034 | `APP_IPHONE_DUO` | 折叠紧凑外屏便携形态 (2026推荐/2027强制) |
+| **iPhone Duo (内屏)** | iPhone Duo (Unfolded Display) | 2007×2853 | 2007×2853 | `APP_IPHONE_DUO` | 展开双屏超大生产力工作区 (2026推荐/2027强制) |
+| **iPad Pro 13" (M4)** | iPad Pro 13-inch (M4) | 2064×2752 | 2048×2732 | `APP_IPAD_PRO_3GEN_129` | 13" 平板超大显示屏 (必填) |
+| **Apple Watch Ultra 3** | Apple Watch Ultra 3 (49mm) | 430×484 | 396×484 | `APP_WATCH_SERIES_7` 等 | Watch 独立手表端（如适用） |
 
 🤖 **AI Agent 操作**：
 
 **工作流：**
-1. **创建专用 XCUITest 文件**（`<AppName>UITests.swift`），包含 3 个设备的测试类
-2. **启动 iPhone 和 iPad 模拟器**（分别 boot）
+1. **创建专用 XCUITest 文件**（`<AppName>UITests.swift`），包含标准 iPhone、iPhone Duo (外屏/内屏) 与 iPad 的测试类
+2. **启动最新版本模拟器**（按顺序 boot 对应设备）
 3. **运行 XCUITest 并截图**（使用 `xcrun simctl io booted screenshot` 保存到 `/tmp/`）
-4. **调整截图尺寸**（使用 `sips -z` 命令调整到 Apple 上传尺寸）
-5. **调整截图尺寸**（使用 `sips -z` 命令调整到 Apple 上传尺寸）
-6. **iPad 截图由 Human 手动截取**，命名无要求，只需尺寸正确（2048×2732）
-7. **复制到 AppStore/Screenshots 目录**（按分辨率子目录分类）
-8. **提交到 GitHub**
+4. **调整截图尺寸**（如需转换，使用 `sips -z` 命令调整到 Apple 上传尺寸）
+5. **iPad 与 iPhone Duo 截图由 Agent 自动测试或真实运行截取**，严格符合上传像素（外屏 1398×2034、内屏 2007×2853、iPad 2048×2732）
+6. **复制到 AppStore/Screenshots 目录**（按设备分辨率子目录分类）
+7. **提交到 GitHub**
 
 > ⚠️ **【强制】禁止截图作弊行为**：
 > - **禁止使用同一张截图复制多份**
@@ -2924,12 +3080,11 @@ grep 'PRODUCT_BUNDLE_IDENTIFIER' {AppName}.xcodeproj/project.pbxproj
 
 #### 截图设备规则（强制）
 
-> ⚠️ **【强制】仅限以下 3 种设备截图**：
-> 1. **iPhone 17 Pro Max** - 模拟器
-> 2. **iPad Pro 13-inch (M4)** - 模拟器
-> 3. **Apple Watch Ultra 3 (49mm)** - 模拟器
->
-> **禁止使用其他设备截图！**
+> ⚠️ **【强制】核心适配设备清单（支持 iPhone Duo 2026 最新要求）**：
+> 1. **iPhone 17 Pro Max** - 模拟器 (6.7" / 6.1" 必填)
+> 2. **iPhone Duo (折叠双屏)** - 模拟器/自适应窗口 (外屏 1398×2034，内屏 2007×2853)
+> 3. **iPad Pro 13-inch (M4)** - 模拟器 (13" 必填)
+> 4. **Apple Watch Ultra 3 (49mm)** - 模拟器 (手表端适用)
 
 > ⚠️ **【强制】所有设备必须使用 Point Accurate 模式**：
 > ```bash
@@ -2938,19 +3093,37 @@ grep 'PRODUCT_BUNDLE_IDENTIFIER' {AppName}.xcodeproj/project.pbxproj
 > ```
 > 或在 Xcode UI 中：**Window → Show Device Bezels → 点击模拟器 → Features → Pointing Accuracy → Precise**
 
-> ⚠️ **【强制】截图目录命名规则**（必须与设备名称一致）：
+> ⚠️ **【强制】截图目录命名规则与多语言规范（2026-10-18 铁律）**：
+> 针对支持多语言的应用，截图必须按语言分别在对应语言环境下捕获并归档：
 > ```
 > AppStore/Screenshots/
-> ├── iPhone17ProMax_1320x2868/      # iPhone 17 Pro Max 截图（UITest 自动截取）
-> ├── iPadPro13inchM4_2048x2732/     # iPad Pro 13-inch (M4) 截图（**人类手动截取**）
-> ├── AppleWatchUltra3_396x484/      # Apple Watch Ultra 3 截图（UITest 自动截取）
-> └── InAppPurchase/                # 内购截图
+> ├── en-US/                                # 美式英语真实环境截图
+> │   ├── iPhone17ProMax_1320x2868/         # iPhone 17 Pro Max 截图
+> │   ├── iPhoneDuo_Cover_1398x2034/        # iPhone Duo 外屏折叠态截图
+> │   ├── iPhoneDuo_Unfolded_2007x2853/     # iPhone Duo 内屏展开分栏态截图
+> │   └── iPadPro13inchM4_2048x2732/        # iPad Pro 13-inch (M4) 截图
+> ├── zh-Hans/                              # 简体中文真实环境截图
+> │   ├── iPhone17ProMax_1320x2868/
+> │   ├── iPhoneDuo_Cover_1398x2034/
+> │   ├── iPhoneDuo_Unfolded_2007x2853/
+> │   └── iPadPro13inchM4_2048x2732/
+> ├── AppleWatchUltra3_396x484/             # Apple Watch Ultra 3 截图（UITest 自动截取）
+> └── InAppPurchase/                        # 内购截图
+> ```
+> 截图执行时必须通过模拟器参数传入对应的目标语言与区域，确保 UI 文本和演示样例完全本地化：
+> ```bash
+> # 切换至指定语言启动 App:
+> xcrun simctl launch --language <lang> --locale <locale> <device_id> <bundle_id>
+> # 或在 xcodebuild test 中指定:
+> xcodebuild test -scheme <Scheme> -destination 'platform=iOS Simulator,OS=latest,name=iPhone 17 Pro' -testLanguage <lang> -testRegion <region>
 > ```
 
 | 设备 | 模拟器实际尺寸 | Apple 上传尺寸 | 尺寸调整命令 | 上传目录 | 截图方式 |
 |------|---------------|---------------|-------------|----------|----------|
-| **iPhone 17 Pro Max** | 1206×2622 | 1320×2868 | `sips -z 2868 1320` | `iPhone17ProMax_1320x2868/` | UITest 自动 |
-| **iPad Pro 13-inch (M4)** | 2064×2752 | 2048×2732 | `sips -z 2732 2048` | `iPadPro13inchM4_2048x2732/` | **人类手动截取** |
+| **iPhone 17 Pro Max** | 1206×2622 | 1320×2868 | `sips -z 2868 1320` | `iPhone17ProMax_1320x2868/` | UITest 自动 / 模拟器 |
+| **iPhone Duo 外屏** | 1398×2034 | 1398×2034 | 保持原始像素 | `iPhoneDuo_Cover_1398x2034/` | 真实模拟器原生截取 |
+| **iPhone Duo 内屏** | 2007×2853 | 2007×2853 | 保持原始像素 | `iPhoneDuo_Unfolded_2007x2853/` | 真实模拟器原生截取 |
+| **iPad Pro 13" (M4)** | 2064×2752 | 2048×2732 | `sips -z 2732 2048` | `iPadPro13inchM4_2048x2732/` | 真实模拟器截取 |
 | **Apple Watch Ultra 3** | 430×484 | 396×484 | `sips -z 484 396` | `AppleWatchUltra3/` | UITest 自动 |
 
 > ⚠️ **【重要】截图尺寸调整**：
@@ -3208,14 +3381,15 @@ AppStore/Screenshots/
 
 **主 App 写入：**
 ```swift
-let sharedDefaults = UserDefaults(suiteName: "group.com.ggsheng.AppName")
+// 新项目使用 group.com.techidaily.AppName（历史存量 App 保留 group.com.ggsheng.*）
+let sharedDefaults = UserDefaults(suiteName: "group.com.techidaily.AppName")
 sharedDefaults?.set(encodedData, forKey: "habits")
 sharedDefaults?.synchronize()
 ```
 
 **Widget 读取：**
 ```swift
-let sharedDefaults = UserDefaults(suiteName: "group.com.ggsheng.AppName")
+let sharedDefaults = UserDefaults(suiteName: "group.com.techidaily.AppName")
 let data = sharedDefaults?.data(forKey: "habits")
 ```
 
@@ -3223,7 +3397,7 @@ let data = sharedDefaults?.data(forKey: "habits")
 ```xml
 <key>com.apple.security.application-groups</key>
 <array>
-    <string>group.com.ggsheng.AppName</string>
+    <string>group.com.techidaily.AppName</string>
 </array>
 ```
 
@@ -3263,7 +3437,7 @@ let data = sharedDefaults?.data(forKey: "habits")
 | 字段 | 填写内容 |
 |------|---------|
 | App Name | `{AppStoreName}` |
-| Bundle ID | `com.ggsheng.{AppName}` |
+| Bundle ID | `com.techidaily.{AppName}` (新项目) / `com.ggsheng.{AppName}` (历史存量) |
 | Category | **见下方类别选择指南** |
 | Price | {Free / $金额} |
 | Privacy Policy URL | `https://lauer3912.github.io/ios-{AppName}/docs/PrivacyPolicy.html` |
@@ -3379,7 +3553,7 @@ class DataDeletionManager {
         defaults.dictionaryRepresentation().keys.forEach { defaults.removeObject(forKey: $0) }
 
         // 2. 清除 App Group UserDefaults（如有 Widget/Extension）
-        if let groupDefaults = UserDefaults(suiteName: "group.com.ggsheng.{AppName}") {
+        if let groupDefaults = UserDefaults(suiteName: "group.com.techidaily.{AppName}") { // 历史存量项目用 group.com.ggsheng.{AppName}
             groupDefaults.dictionaryRepresentation().keys.forEach { groupDefaults.removeObject(forKey: $0) }
         }
 
@@ -3837,10 +4011,10 @@ class IAPManager: NSObject, SKPaymentTransactionObserver {
 > **推荐**：订阅制 App 应始终配置免费试用
 
 ### 订阅产品列表
-| 参考名称 | 产品 ID | 价格等级 | 显示名称 | 描述 | 时长 |
-|---------|--------|---------|---------|------|------|
-| Premium Monthly | com.ggsheng.{AppName}.premium_monthly | Tier 6 | Premium Monthly | Unlock all premium features | 1 Month |
-| Premium Yearly | com.ggsheng.{AppName}.premium_yearly | Tier 60 | Premium Yearly | Best value: unlock all features | 1 Year |
+| 参考名称 | 产品 ID (新项目标准 / 历史旧项目为 com.ggsheng) | 价格等级 | 显示名称 | 描述 | 时长 |
+|---------|------------------------------------------------|---------|---------|------|------|
+| Premium Monthly | com.techidaily.{AppName}.premium_monthly | Tier 6 | Premium Monthly | Unlock all premium features | 1 Month |
+| Premium Yearly | com.techidaily.{AppName}.premium_yearly | Tier 60 | Premium Yearly | Best value: unlock all features | 1 Year |
 
 ### Introductory Offers（试用）
 | 产品 ID | 优惠类型 | 时长 |
@@ -4780,6 +4954,77 @@ catch {
 
 ---
 
+### 8.23 iPhone Duo 双屏折叠形态自适应架构与素材实战指南（必读 — 2026-10-17 用户拍板）
+
+> ⚠️ **【强制】iPhone Duo 是 Apple 2026 年新一代双屏折叠旗舰分类，所有 iOS App 必须原生深度适配**
+>
+> 苹果在 2026 年正式推出 `APP_IPHONE_DUO` 设备分类，要求应用兼具便携外屏的高效速览与展开内屏的沉浸式生产力体验。自 2026 年底起推荐提供，2027 年 4 月起全面强制提审入库。
+
+#### 8.23.1 硬件形态与技术规格
+
+| 屏显形态 | 物理分辨率 (像素) | 屏幕纵横比 | 典型交互模式 | ASC 资产类型 (`assetType`) | 适配要求 |
+|---|---|---|---|---|---|
+| **外屏 (Cover Screen)** | **1398 × 2034** | 约 1:1.45 (2:3) | 单手便携、卡片流式速览、快捷记录 | `APP_IPHONE_DUO` | 紧凑 Compact 单列布局 |
+| **内屏 (Unfolded Display)** | **2007 × 2853** | 约 1:1.42 (大屏) | 双栏分屏、多列网格、沉浸式生产力 | `APP_IPHONE_DUO` | 宽屏 Regular 分栏/网格布局 |
+
+#### 8.23.2 SwiftUI 响应式布局实战架构
+
+严禁在展开态简单横向拉伸手机单列列表！必须依据尺寸类或几何容器实现动态响应：
+
+```swift
+// Sources/Views/MainContainerView.swift
+import SwiftUI
+
+struct MainContainerView: View {
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+    @StateObject private var viewModel = AppViewModel()
+
+    var body: some View {
+        GeometryReader { proxy in
+            let isDuoUnfolded = proxy.size.width > 600 // 检测内屏展开态或宽屏
+            
+            if isDuoUnfolded {
+                // ✅ 内屏展开态：双栏/分栏生产力架构 (Master-Detail)
+                NavigationSplitView {
+                    SidebarListView(viewModel: viewModel)
+                        .navigationTitle("AppName")
+                } detail: {
+                    DetailContentView(viewModel: viewModel)
+                }
+                .navigationSplitViewStyle(.balanced)
+            } else {
+                // ✅ 外屏折叠态：标准紧凑单列导航流
+                NavigationStack {
+                    CompactFeedView(viewModel: viewModel)
+                }
+            }
+        }
+    }
+}
+```
+
+#### 8.23.3 转态平滑连续性（State Continuity）
+
+用户在展开或折叠设备时，App **绝对不能闪退、闪屏或丢失交互状态**：
+1. **输入与表单状态保护**：将正在输入的草稿绑定在持久化 ViewModel 或 `@AppStorage` 中，合上/展开时输入焦点与草稿内容完整保留；
+2. **滚动偏移连续**：使用带有 `ScrollViewReader` 或共享绑定 ID 的列表，跨屏切换时自动锚定到当前可视项；
+3. **播放与倒计时守护**：音频、白噪音、秒表与动画运行于统一全局 Service 或 EnvironmentObject，形态切换不中断生命周期。
+
+#### 8.23.4 物理铰链避让（Hinge Safe Area）
+
+内屏展开中央存在物理折叠区域。虽然系统底层会映射双屏安全区，但代码设计必须遵守：
+- 对话框（Alert/Sheet/Modal）与核心确认按钮**居中对齐时需提供合理的 safeInsets 避让**，避免文字被折痕中线截断；
+- 网格布局（`LazyVGrid`）建议采用双列对称布局（左右各一列），自然避开中间折缝。
+
+#### 8.23.5 App Store Connect 截图制作与提审标准
+
+提审准备必须生成并包含以下目录截图：
+1. `AppStore/Screenshots/iPhoneDuo_Cover_1398x2034/`：外屏原生截图（3~5 张，展示便携卡片与核心功能）；
+2. `AppStore/Screenshots/iPhoneDuo_Unfolded_2007x2853/`：内屏原生截图（3~5 张，展示宽屏分栏、专业图表或双屏生产力操作）；
+3. 截图必须来自真实模拟器对应分辨率原生捕获，严禁非真实 Mockup。
+
+---
+
 ## Stage 9：提交审核
 
 ### 9.0 提交流程 Top-5 关键环节（必读）
@@ -5149,7 +5394,7 @@ final class GameState: ObservableObject {
 |------|--------|--------|
 | `CFBundleShortVersionString` | `<string>3.1.0</string>` | `<string>$(MARKETING_VERSION)</string>` |
 | `CFBundleVersion` | `<string>14</string>` | `<string>$(CURRENT_PROJECT_VERSION)</string>` |
-| `CFBundleIdentifier` | `<string>com.ggsheng.MyApp</string>` | `<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>` |
+| `CFBundleIdentifier` | `<string>com.techidaily.MyApp</string>` | `<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>` |
 | `CFBundleName` | `<string>myapp</string>` | `<string>$(PRODUCT_NAME)</string>` |
 | `CFBundleExecutable` | `<string>myapp</string>` | `<string>$(EXECUTABLE_NAME)</string>` |
 | `CFBundlePackageType` | `<string>APPL</string>` | `<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>` |
@@ -5292,26 +5537,21 @@ InAppPurchase/                # IAP 截图 (VitaMind 名 `paywall_*` 不一致)
 3. `TermsOfService.html` — 必, ASC 必填字段 (`EULA` 字段)
 4. `Submission-Checklist.md` — 必, 提审前自检
 
-### H.8 Bundle ID Prefix 选名建议 (扩展 §0.4)
+### H.8 Bundle ID Prefix 权威规范 (2026-10-15 官方拍板正式统一)
 
-**佛老爷已用前缀**:
+**全系统权威规则 (2026-10-15 拍板生效)**:
+- **统一标准前缀**：所有新创建的 iOS / macOS App **强制统一采用 `com.techidaily.*`**（如 `com.techidaily.MyApp`），与团队核心品牌域名 `techidaily.com` 深度统一。
+- **历史存量应用例外原则**：凡历史遗留的项目以及已经提交上传过 App Store Connect 的存量 App（如下表），**坚决不做变更**，保持原 `com.ggsheng.*` 线上唯一标识，严禁误改导致版本断裂。
 
-| 前缀 | 现有 App | Bundle ID 示例 |
-|------|----------|---------------|
-| `com.ggsheng.*` | StretchGoGo (6763179117), ReverseWorldGo (6784627660), VitaMindGo (6774840392) | `com.ggsheng.StretchGoGo` |
-| `com.YOURNAME.*` (占位) | Stellumbra scaffold (07-01 待替换) | (未定) |
+| 前缀类型 | 适用范围 | Bundle ID 示例 | 维护原则 |
+|---------|---------|---------------|---------|
+| **`com.techidaily.*` (新标准)** | **2026-10-15 起所有新 App / 新产品** | `com.techidaily.{AppName}` | **强制执行** |
+| `com.ggsheng.*` (历史存量) | 历史已上线 / 已提审项目 (StretchGoGo, ReverseWorldGo, VitaMindGo, InvoiceSpark, SleepBetter, Xiangqi 等) | `com.ggsheng.StretchGoGo` | **永久保持，严禁修改** |
 
-**约束** (per SOP §0.4 + #40):
-- 避免 `com.example.*` (Apple 拒)
-- 避免与已上架 App 重复
-- 选一个可永久代表个人/团队的前缀
-- ASC 不可逆 — 下架才能换
-
-**建议候选**:
-- `com.techidaily.*` — 与 `support@techidaily.com` 邮箱域名一致 (#42 拍板 contact email)
-- `com.lauer3912.*` — 与 GitHub 用户名一致 (`lauer3912.github.io` Pages)
-
-**Stellumbra 待佛老爷拍板** (07-01 14:50 CST 仍在等).
+**约束与安全红线**:
+- 严禁对已提交上传的 App 更改 Bundle ID（ASC 不可逆）；
+- 新项目严禁使用 `com.example.*` 或其他非官方前缀；
+- App Groups 统一对齐：新项目为 `group.com.techidaily.{AppName}`，历史项目保留 `group.com.ggsheng.{AppName}`。
 
 ---
 

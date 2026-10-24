@@ -28,7 +28,7 @@
 | App Name | `VitaMindGo` |
 | App ID | `6774840392` |
 | Team ID | `9L6N2ZF26B` |
-| Apple ID | `lauer3912@techidaily.com` (2FA) |
+| Apple ID | `support@techidaily.com` (2FA) |
 
 ### 3 个 Product ID (代码已 hardcode `vitamind_pro_lifetime2`, 勿改)
 

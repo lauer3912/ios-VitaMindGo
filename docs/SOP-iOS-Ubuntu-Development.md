@@ -1,3 +1,32 @@
+> **2026-10-21 User mandate — iOS 27.0+ runtime:** All iOS development, builds, unit/UI tests, functional verification and authentic screenshots MUST use iOS 27.0+ runtime, selecting the latest installed runtime compatible with the target device (including newer compatible versions). No fallback to older runtimes. Every agent (Codex, Claude, ChatGPT, Antigravity/agy and OpenClaw) MUST correct stale simulator/runtime requirements in any memory or document it encounters and propagate this rule to shared memory. Historical test results remain historical and MUST NOT be relabeled as passes on the required runtime; rerun verification there. This mandate supersedes older runtime instructions, including restored backups/templates. Host macOS language MUST remain English.
+
+## 用户新增强制要求：多语言 App 与扩展提交资料与截图分国家/分语言本地化铁律（2026-10-18）
+1. **全平台多语言覆盖范围**：涵盖所有 iOS App、macOS App 以及浏览器扩展（Chrome / Edge / Safari Extensions 等）。凡支持多语言或面向不同国家/地区市场的产品，提审提交材料必须严格遵守国际化规范。
+2. **分国家/分语言元数据完整本地化**：
+   - 提交资料及提审时，**必须根据支持的每个国家/地区、使用的每种语言，分别提供完整的本地化资料**；
+   - 必须独立配置字段：应用/扩展名称（Name）、副标题/简述（Subtitle / Short Description）、完整描述（Description）、关键词（Keywords）、宣传文本（Promotional Text）、新版本更新说明（What's New / Release Notes）；
+   - **严禁全语种套用纯英文**，严禁出现未经本地化的占位符、硬编码或残缺字段。
+3. **真实多语言原生截图铁律（Zero-Faking & True Locale Capture）**：
+   - **必须在真实目标语言环境下运行并捕获原生截图**：iOS 模拟器指定对应语言/地区启动运行，macOS 指定语言环境变量，浏览器扩展通过对应语言参数启动浏览器；
+   - 截屏上的所有 UI 控件、按钮、标签、标题以及界面中的样例数据（Sample Data）**必须完全切换为目标语言**；
+   - **严禁**将单一语言（如全英文）截图复制粘贴充当多国语言截图；
+   - **严禁**截图所展示的语言与 App 在该语言环境下的实际运行体验不一致（严格遵守 Apple App Store Review Guideline 2.3 Accurate Metadata 与 4.0 Design）。
+4. **格式与尺寸标准严格对齐官方**：
+   - iOS: iPhone 17 Pro Max (1320×2868)、iPad Pro 13-inch (2048×2732)、iPhone Duo (1398×2034 外屏 / 2007×2853 内屏)；
+   - macOS: 标准 16:10 / 16:9 Retina 像素（2880×1800, 2560×1600 等，无透明通道 RGB 格式）；
+   - 浏览器扩展: 1280×800 或 640×400 真实界面截屏及 440×280 宣传图。
+5. **全 Agent 终身遵从**：所有 Claude、CodeX、Agy、OpenClaw 实例以及未来新建的任何终端会话，必须永久铭记并强制执行本铁律。
+
+## 用户新增强制要求：全量适配 iPhone Duo 双屏折叠设备与素材规范（2026-10-17）
+1. **全形态响应式适配**：所有开发与维护的 iOS App，必须全面支持并适配 Apple iPhone Duo 双屏折叠形态（外屏 1398×2034 紧凑单列流式布局，内屏 2007×2853 展开分栏/网格生产力布局）。
+2. **状态连续性与铰链避让**：折叠与展开状态转换过程中必须保持表单草稿、滚动位置与媒体播放连续无缝，物理折痕中线区域安全避让。
+3. **ASC 素材双屏合规**：提审素材必须包含 `APP_IPHONE_DUO` 规范分类（包含外屏 1398×2034 与内屏 2007×2853 真实截图）。
+
+## 用户新增强制要求：全量使用本机最新 iOS 模拟器，严禁保留/使用老版本模拟器（2026-10-17）
+1. **全量使用最新 iOS 版本模拟器**：无论本地还是通过 SSH 远程到 Mac mini 执行构建、测试或截图，**必须全部统一使用电脑上已安装的最新 iOS 版本（当前本机为 iOS 27.0+ runtime）模拟器**。
+2. **不再保留老版本 iOS 模拟器**：电脑上不再保留任何老旧版本的 iOS 模拟器，严禁在老版本模拟器上运行或保留旧版本环境。若存在不可用模拟器，及时使用 `xcrun simctl delete unavailable` 清理。
+3. **全 Agent 终身遵从**：所有 Claude、CodeX、Agy、OpenClaw 实例以及未来新建的任何终端会话，必须永久铭记并强制执行本铁律。
+
 # iOS App Ubuntu + GitHub Actions 远程开发 Agent SOP
 
 > 📝 **SOP 版本**: v1.1.0 (2026-06-08) — v1.0.9 + 新增 **§0.5.0 项目常量自动配置 (openclaw.config)** (7 项常量单一真相源, 替代硬编码) + **scripts/setup-config.sh** (3 模式: env/交互/手写)
@@ -216,7 +245,7 @@ gh auth status
 - `workflow` (触发/查看 Actions)
 - `read:org` (如果是 org 仓库)
 
-**⚠️ 老爷的 token 已经在 MEMORY.md 永久记录** (`GH_TOKEN\=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`)，如果多台 Ubuntu 用同一个 token 即可。
+**⚠️ 老爷的 token 已经在 MEMORY.md 永久记录** (`XGITHUBX_TOKENX\=${XGITHUBX_TOKENX}`)，如果多台 Ubuntu 用同一个 token 即可。
 
 ### §0.4 Apple Team ID 共享 (从 Mac mini 拉取)
 
@@ -249,7 +278,7 @@ echo "export APPLE_TEAM_ID=$TEAM_ID" >> ~/.openclaw/apple-team.env
 | KEY | 例值 | 用途 | 来源 |
 |-----|------|------|------|
 | `APPLE_TEAM_ID` | `9L6N2ZF26B` | 签名/上传 需 | App Store Connect → Membership |
-| `APPLE_BUNDLE_ID_PREFIX` | `com.ggsheng.` | Bundle ID 前缀 | 你的约定 |
+| `APPLE_BUNDLE_ID_PREFIX` | `com.techidaily.` | Bundle ID 前缀 (2026-10-15 新规范; 历史项目如 com.ggsheng.VitaMind 保持不变) | 团队统一定义 |
 | `GITHUB_USER` | `lauer3912` | SSH key / 仓库 拥有者 | GitHub |
 | `GITHUB_PAGES_DOMAIN` | `lauer3912.github.io` | Privacy Policy / 文档 URL | GitHub Pages 设置 |
 | `MACMINI_SSH_USER` | `user291981` | Mac mini 跳机用户名 | Mac mini |
@@ -304,7 +333,7 @@ echo "export APPLE_TEAM_ID=$TEAM_ID" >> ~/.openclaw/apple-team.env
 | `9L6N2ZF26B` | Apple Team ID | 你的 Team ID (§0.4) | App Store Connect → Membership |
 | `lauer3912` | GitHub 用户名 | 你的用户名 | `gh auth status` |
 | `lauer3912.github.io` | Pages 域名 | 你的域名 | GitHub Pages 设置 |
-| `com.ggsheng.` | Bundle ID 前缀 | 你的前缀 | App Store Connect |
+| `com.techidaily.` | Bundle ID 前缀 | 统一前缀 com.techidaily. (历史项目 com.ggsheng.* 保持原样不变) | App Store Connect |
 | `support@techidaily.com` | 联系邮箱 | 你的邮箱 | 隐私政策页 |
 | `techidaily.com` | 邮箱域名 (URL 不可用) | 你的域名 | 同上 |
 | `47.77.237.73:2222` | Mac mini 远程 SSH 入口 | 你的入口 | 老爷配置 |
@@ -615,7 +644,7 @@ find . -maxdepth 3 -type f -not -path './.git/*' | head -80
 | # | 问题 | 示例 | 原因 |
 |---|------|------|------|
 | 1 | **Display Name** | `VitaMindGo` (≤30 chars) | App Store 上架后不能改 |
-| 2 | **Bundle ID** | `com.{org}.{AppName}` (例 `com.ggsheng.VitaMind`) | 已上架的不能改 (HR-77) |
+| 2 | **Bundle ID** | `com.techidaily.{AppName}` (新项目强制要求; 历史已上架项目如 `com.ggsheng.VitaMind` 保持原样不能改 HR-77) | 统一包名命名规范 |
 | 3 | **Apple Team ID** | `9L6N2ZF26B` | App Store Connect → Membership |
 | 4 | **最低 iOS 版本** | 17.0 / 18.0 / 19.0 | 影响 API 选型 |
 | 5 | **初始功能范围** | MVP 1-2 个 / ≥60 个全功能 | 关系开发周期 |
@@ -2048,8 +2077,8 @@ ssh macmini << 'EOF'
   # 3. 命令行工具
   which git gh xcrun simctl 2>&1 | head -10
 
-  # 4. 可用模拟器 (iOS 18+)
-  xcrun simctl list devices available | grep "iPhone 1[5-9]" | head -3
+  # 4. 可用模拟器（强制使用电脑上最新 iOS 版本，如 iOS 27.0+ runtime，不保留老版本）
+  xcrun simctl list devices available | grep -E "iPhone 1[7-9]|iPhone 16 Pro|iPad Pro" | head -5
 
   # 5. 项目目录可写
   test -w ~/Desktop && echo "✅ ~/Desktop writable"
@@ -2184,9 +2213,9 @@ jobs:
 |--------|---------|------|
 | 任何 Apple 凭据 | **不需要** | 本 workflow 不 archive/不上传 |
 | `MACOS_SSH_KEY` | **不需要** | 本 workflow 不连 Mac mini |
-| 任何 GitHub Token | **不需要** | checkout 用默认 GITHUB_TOKEN |
+| 任何 GitHub Token | **不需要** | checkout 用默认 XGITHUBX_TOKENX |
 
-**结论**: GitHub Secrets 里**只放默认 GITHUB_TOKEN, 不放任何 Apple 凭据**。零凭证风险。
+**结论**: GitHub Secrets 里**只放默认 XGITHUBX_TOKENX, 不放任何 Apple 凭据**。零凭证风险。
 
 ### §4.4 跑什么 vs 不跑什么
 
@@ -2643,8 +2672,8 @@ ssh macmini << 'EOF'
   set -euo pipefail
   cd ~/Desktop/ios-VitaMind
 
-  # 1. 启动模拟器
-  xcrun simctl boot "iPhone 16" 2>/dev/null || true
+  # 1. 启动最新 iOS 模拟器（强制最新版本，如 iPhone 17 Pro）
+  xcrun simctl boot "iPhone 17 Pro" 2>/dev/null || xcrun simctl boot "iPhone 16 Pro Max" 2>/dev/null || true
   open -a Simulator
 
   # 2. 安装 App
@@ -2702,6 +2731,34 @@ gh run watch  # 或 agent 自动轮询
 3. **锁-on-sleep 机制**: 佛老爷 unlock 1 次后, Mac 睡觉 keychain 又锁, 反复 unlock 麻烦
 4. **E 方案验证**: 11:22-11:27 5 min 跑通 4 步, build 6 UPLOAD SUCCEEDED (11:27 11:27 verify)
 
+### §6.10.5 ★ NEW (2026-06-22 09:50 拍板): upload 后必跑 ensure-internal-tester.sh
+
+**佛老爷拍板原文**: "所有 iOS App，也包括 macOS App，你每次更新上传到 TestFlight 的包，都想办法让 support@techidaily.com 账号具有内部测试权限。iOS App，直接通过 TestFlight App，就可以看到"
+
+**位置**: 在 §6.10.2 流程的 **Step 3 (upload) 完成后**, Katherine-E2wa1m 自动跑:
+
+```bash
+# Mac mini 本地 (本地有 ASC API Key + ios-projects/<APP>.conf)
+APP_ID="$APP_ID" APP_NAME="$APP_NAME" \
+  ASC_KEY_ID="$ASC_KEY_ID" ASC_ISSUER_ID="$ASC_ISSUER_ID" \
+  bash ~/.openclaw/workspace/scripts/ensure-internal-tester.sh
+```
+
+**自动行为** (4 步 idempotent):
+1. 查 tester user (filter[username]=support@techidaily.com)
+2. 查 app 的 internal beta group, 没有则创建 (isInternalGroup=true, hasAccessToAllBuilds=true)
+3. 查 tester 是否在 group, 没有则 invite (state=NOT_INVITED 时先 DELETE 再 invite)
+4. 输出最终状态, **0 漏**
+
+**完整 SOP**: `docs/SOP-Internal-Tester-Access.md` (新建, 2026-06-22 09:50 拍板)
+
+**部署情况** (06-22 09:55-10:08 普查 + fix):
+- ✅ INSTALLED (直接可用): VitaMindGo / SoulEchoX / DailyIQAI / UstiaGo
+- ⚠️ INVITED (需佛老爷在 support@techidaily.com 邮箱接受): DailyExpenseAIPro / HabitArcFlow / JustZenGo / StretchGoGo
+- ❌ NOT_INVITED (需手动重发): MindPalAI / XPotter
+
+**future upload**: 脚本自动跑, 0 漏, 上传后等佛老爷在邮箱点接受链接, TestFlight app 即可看到新 build.
+
 ### §6.10.2 E 方案完整流程 (5 步)
 
 ```
@@ -2730,7 +2787,7 @@ Katherine-E2wa1m 在 agent-bus issue 上 comment 报告: archive ✅ + export �
 # - App 名 (e.g. StretchGoGo, VitaMindGo)
 # - 版本 (e.g. 1.0.0)
 # - 目标 build # (e.g. 6, 必须 > ASC 已有)
-# - Bundle ID (e.g. com.ggsheng.StretchGoGo)
+# - Bundle ID (新项目 e.g. com.techidaily.YourApp; 历史遗留项目 e.g. com.ggsheng.StretchGoGo 保持原样)
 # - Team ID (9L6N2ZF26B)
 # - Project 路径 (e.g. ~/Desktop/ios-StretchFlow)
 # - ExportOptions.plist 路径 (e.g. ~/Desktop/ios-StretchFlow/AppStore/ExportOptions.plist)

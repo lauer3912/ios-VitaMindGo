@@ -24,12 +24,12 @@ WARN=0
 # 豁免: MEMORY.md / SOUL.md (教训段必含简称) + .bak.* + check-placeholders.sh 自身
 gcount() {
   local pat="$1"
-  grep -rnw "$pat" . 2>/dev/null | grep -vE "\.bak(\.|$)" 2>/dev/null | grep -v "/.git/" 2>/dev/null | grep -v "check-placeholders.sh" 2>/dev/null | grep -vE "/(MEMORY|SOUL)\.md" 2>/dev/null | grep -vE "/memory/" 2>/dev/null | wc -l 2>/dev/null | tr -d ' '
+  grep -rnw --exclude-dir=.git --exclude-dir=node_modules --exclude-dir=dist --exclude-dir=.next --exclude-dir=.wrangler --exclude-dir=build --exclude-dir=DerivedData --exclude-dir=.venv --exclude-dir=vendor --exclude-dir=coverage --exclude-dir=.turbo --exclude-dir=.vinext --exclude-dir=out "$pat" . 2>/dev/null | grep -vE "\.bak(\.|$)" 2>/dev/null | grep -v "/.git/" 2>/dev/null | grep -v "check-placeholders.sh" 2>/dev/null | grep -vE "/(MEMORY|SOUL)\.md" 2>/dev/null | grep -vE "/memory/" 2>/dev/null | wc -l 2>/dev/null | tr -d ' '
 }
 
 glines() {
   local pat="$1"
-  grep -rnw "$pat" . 2>/dev/null | grep -vE "\.bak(\.|$)" 2>/dev/null | grep -v "/.git/" 2>/dev/null | grep -v "check-placeholders.sh" 2>/dev/null | grep -vE "/(MEMORY|SOUL)\.md" 2>/dev/null | grep -vE "/memory/" 2>/dev/null | head -5 2>/dev/null
+  grep -rnw --exclude-dir=.git --exclude-dir=node_modules --exclude-dir=dist --exclude-dir=.next --exclude-dir=.wrangler --exclude-dir=build --exclude-dir=DerivedData --exclude-dir=.venv --exclude-dir=vendor --exclude-dir=coverage --exclude-dir=.turbo --exclude-dir=.vinext --exclude-dir=out "$pat" . 2>/dev/null | grep -vE "\.bak(\.|$)" 2>/dev/null | grep -v "/.git/" 2>/dev/null | grep -v "check-placeholders.sh" 2>/dev/null | grep -vE "/(MEMORY|SOUL)\.md" 2>/dev/null | grep -vE "/memory/" 2>/dev/null | head -5 2>/dev/null
 }
 
 echo "=== check-placeholders.sh (按 18:31 + 18:50 佛老爷拍板) ==="

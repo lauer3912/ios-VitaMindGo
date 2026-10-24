@@ -49,7 +49,7 @@ for entry in "${FAKE_PATTERNS[@]}"; do
   pattern="${entry%%|*}"
   reason="${entry#*|}"
   # 整词匹配 (-w) + 排除脚本自身 + 排除 .git/ + 排除 .bak + 排除豁免文件
-  matches=$(grep -rnw "$pattern" . 2>/dev/null | grep -v "/.git/" 2>/dev/null | grep -vE "\.bak(\.|$)" 2>/dev/null | grep -vE "$EXCLUDE_PATTERN" 2>/dev/null)
+  matches=$(grep -rnw --exclude-dir=.git --exclude-dir=node_modules --exclude-dir=dist --exclude-dir=.next --exclude-dir=.wrangler --exclude-dir=build --exclude-dir=DerivedData --exclude-dir=.venv --exclude-dir=vendor --exclude-dir=coverage --exclude-dir=.turbo --exclude-dir=.vinext --exclude-dir=out "$pattern" . 2>/dev/null | grep -v "/.git/" 2>/dev/null | grep -vE "\.bak(\.|$)" 2>/dev/null | grep -vE "$EXCLUDE_PATTERN" 2>/dev/null)
   if [ -n "$matches" ]; then
     echo -e "${RED}❌ 假值 '$pattern' 出现:${NC}"
     echo "   原因: $reason"
@@ -69,7 +69,7 @@ PLACEHOLDER_PATTERNS=(
 for entry in "${PLACEHOLDER_PATTERNS[@]}"; do
   pattern="${entry%%|*}"
   reason="${entry#*|}"
-  matches=$(grep -rnE "$pattern" . 2>/dev/null | grep -v "/.git/" 2>/dev/null | grep -v ".bak:" 2>/dev/null | grep -v "check-fake-values.sh" 2>/dev/null)
+  matches=$(grep -rnE --exclude-dir=.git --exclude-dir=node_modules --exclude-dir=dist --exclude-dir=.next --exclude-dir=.wrangler --exclude-dir=build --exclude-dir=DerivedData --exclude-dir=.venv --exclude-dir=vendor --exclude-dir=coverage --exclude-dir=.turbo --exclude-dir=.vinext --exclude-dir=out "$pattern" . 2>/dev/null | grep -v "/.git/" 2>/dev/null | grep -v ".bak:" 2>/dev/null | grep -v "check-fake-values.sh" 2>/dev/null)
   if [ -n "$matches" ]; then
     echo -e "${RED}❌ 占位符 '$pattern' 出现:${NC}"
     echo "   原因: $reason"

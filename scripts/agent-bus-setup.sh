@@ -217,7 +217,7 @@ else
   read -rp "Install 5-min poll cron? [Y/n]: " INSTALL_CRON
   INSTALL_CRON="${INSTALL_CRON:-Y}"
   if [[ "$INSTALL_CRON" =~ ^[Yy]$ ]]; then
-    CRON_LINE="*/5 * * * * $POLL_SH >> $HOME/.local/share/agent-bus/poll.log 2>&1"
+    CRON_LINE="*/15 * * * * $POLL_SH >> $HOME/.local/share/agent-bus/poll.log 2>&1"
     (crontab -l 2>/dev/null; echo "$CRON_LINE") | crontab -
     log "cron installed: $CRON_LINE"
   else
@@ -233,7 +233,7 @@ if [[ -f "$WATCH_SH" ]]; then
     read -rp "Install 3-min watch cron (auto-track sent issues)? [Y/n]: " INSTALL_WATCH
     INSTALL_WATCH="${INSTALL_WATCH:-Y}"
     if [[ "$INSTALL_WATCH" =~ ^[Yy]$ ]]; then
-      CRON_LINE="*/3 * * * * $WATCH_SH >> $HOME/.local/share/agent-bus/watch.log 2>&1"
+      CRON_LINE="*/15 * * * * $WATCH_SH >> $HOME/.local/share/agent-bus/watch.log 2>&1"
       (crontab -l 2>/dev/null; echo "$CRON_LINE") | crontab -
       log "watch cron installed: $CRON_LINE"
     else
