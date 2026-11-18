@@ -3,6 +3,8 @@ import Foundation
 // MARK: - AI Provider Configuration
 
 enum AIProviderType: String, CaseIterable, Codable, Identifiable {
+    /// 免费额度通道：Key 由 credits.techidaily.com 按设备发放，上游厂商 Key 不下发到设备。
+    case creditsFree = "credits-free"
     case minimaxCn = "minimax-cn"
     case minimaxGlobal = "minimax-global"
     case openai = "openai"
@@ -19,6 +21,7 @@ enum AIProviderType: String, CaseIterable, Codable, Identifiable {
 
     var displayName: String {
         switch self {
+        case .creditsFree: return "TechIDaily AI (Free)"
         case .minimaxCn: return "MiniMax-CN"
         case .minimaxGlobal: return "MiniMax-Global"
         case .openai: return "OpenAI"
@@ -35,6 +38,7 @@ enum AIProviderType: String, CaseIterable, Codable, Identifiable {
 
     var iconName: String {
         switch self {
+        case .creditsFree: return "sparkles"
         case .minimaxCn: return "lock.shield.fill"
         case .minimaxGlobal: return "globe"
         case .openai: return "sparkles"
@@ -51,6 +55,7 @@ enum AIProviderType: String, CaseIterable, Codable, Identifiable {
 
     var defaultModel: String {
         switch self {
+        case .creditsFree: return "minimax/MiniMax-M3"
         case .minimaxCn: return "minimax/MiniMax-M3"
         case .minimaxGlobal: return "minimax/MiniMax-M3"
         case .openai: return "openai/gpt-5.5"
@@ -67,6 +72,7 @@ enum AIProviderType: String, CaseIterable, Codable, Identifiable {
 
     var baseURL: String {
         switch self {
+        case .creditsFree: return "https://credits.techidaily.com/api/ai"
         case .minimaxCn: return "https://api.minimaxi.com/v1"
         case .minimaxGlobal: return "https://api.minimax.io/v1"
         case .openai: return "https://api.openai.com/v1/chat/completions"
@@ -83,6 +89,8 @@ enum AIProviderType: String, CaseIterable, Codable, Identifiable {
 
     var supportedModels: [String] {
         switch self {
+        case .creditsFree:
+            return ["minimax/MiniMax-M3", "minimax/MiniMax-M2.7"]
         case .minimaxCn, .minimaxGlobal:
             return ["minimax/MiniMax-M3", "minimax/MiniMax-M2.7", "minimax/MiniMax-M2.7-highspeed", "minimax/MiniMax-M2.5", "minimax/MiniMax-M2.5-highspeed"]
         case .openai:
@@ -203,12 +211,16 @@ struct ChatMessage: Codable, Identifiable {
 final class AIService: ObservableObject {
     static let shared = AIService()
 
-    private let defaultAPIKey = "sk-cp-JrsXMfjYj9mexu5NAr9Eevedk7IBFoCZFi4azaPEColz-bU0LH0NPA-Z-gxMlM505CKP1Cq-zaAP0OF2bQ0k6y44J1TP0XNodYCxY9oiQAmeGb0RPIivl6A"
+    // API keys are never hardcoded in source. Resolution order:
+    //   1) key the user entered in Settings (persisted in UserDefaults)
+    //   2) MINIMAX_API_KEY environment variable (debug / CI builds)
+    //   3) empty -> user must enter a key in Settings before AI calls work
+    private let defaultAPIKey = ProcessInfo.processInfo.environment["MINIMAX_API_KEY"] ?? ""
 
     @Published var currentProvider: AIProviderType = .minimaxCn
     @Published var selectedModel: String = "minimax/MiniMax-M3"
     @Published var apiKey: String = ""
-    @Published var isConfigured: Bool = true
+    @Published var isConfigured: Bool = false
 
     private var urlSession: URLSession
 
@@ -216,9 +228,17 @@ final class AIService: ObservableObject {
         self.urlSession = URLSession.shared
         // Load saved config first, then ensure default provider has key
         loadConfiguration()
-        // If using default provider but no API key, restore default key
+        // Release builds ship without an environment key: fall back to the
+        // platform free-tier channel (key issued per device by the platform).
         if currentProvider == .minimaxCn && apiKey.isEmpty {
             apiKey = defaultAPIKey
+            if apiKey.isEmpty {
+                currentProvider = .creditsFree
+                selectedModel = AIProviderType.creditsFree.defaultModel
+            }
+            isConfigured = true
+        }
+        if currentProvider == .creditsFree {
             isConfigured = true
         }
     }
@@ -248,8 +268,8 @@ final class AIService: ObservableObject {
 
 
     func resetToDefaultProvider() {
-        self.currentProvider = .minimaxCn
-        self.selectedModel = AIProviderType.minimaxCn.defaultModel
+        self.currentProvider = .creditsFree
+        self.selectedModel = AIProviderType.creditsFree.defaultModel
         self.apiKey = defaultAPIKey
         self.isConfigured = true
         saveConfiguration()
@@ -454,12 +474,17 @@ final class AIService: ObservableObject {
     /// citations that were parsed out of the response. Throws
     /// `AIError.missingAPIKey` etc. on transport failures.
     func sendMessage(_ text: String, history: [ChatMessage] = []) async throws -> AIResponse {
-        guard !apiKey.isEmpty else {
-            throw AIError.missingAPIKey
+        // The free-tier channel issues its own per-device key, so no local key is required.
+        if currentProvider != .creditsFree {
+            guard !apiKey.isEmpty else {
+                throw AIError.missingAPIKey
+            }
         }
 
         let raw: String
         switch currentProvider {
+        case .creditsFree:
+            raw = try await sendFreeAIMessage(text, history: history)
         case .minimaxCn, .minimaxGlobal:
             raw = try await sendMiniMaxMessage(text, history: history)
         case .openai:
@@ -638,6 +663,66 @@ final class AIService: ObservableObject {
             body: requestBody,
             responseKeyPath: "choices.0.message.content"
         )
+    }
+
+    /// 免费额度通道：通过 credits.techidaily.com 的 Anthropic 兼容代理调用。
+    ///
+    /// Key 由平台按设备发放（存在 Keychain），上游厂商 Key 不下发到设备，
+    /// 因此平台可以随时轮换上游 Key，用户也无法提取它。
+    private func sendFreeAIMessage(_ text: String, history: [ChatMessage]) async throws -> String {
+        let status = try await FreeAIKeyManager.shared.currentStatus()
+        guard let url = URL(string: FreeAIKeyManager.messagesEndpoint()) else {
+            throw AIError.invalidURL
+        }
+
+        var messages: [[String: String]] = []
+        messages.append(contentsOf: history.map { ["role": $0.role, "content": $0.content] })
+        messages.append(["role": "user", "content": text])
+
+        let modelName = selectedModel.contains("/")
+            ? String(selectedModel.split(separator: "/", omittingEmptySubsequences: false).last ?? "")
+            : selectedModel
+
+        let requestBody: [String: Any] = [
+            "model": modelName.isEmpty ? status.model : modelName,
+            "system": Self.vitaCoachSystemPrompt,
+            "messages": messages,
+            "max_tokens": 500,
+        ]
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue(status.key, forHTTPHeaderField: "x-api-key")
+        request.setValue("2023-06-01", forHTTPHeaderField: "anthropic-version")
+        request.timeoutInterval = 60
+        request.httpBody = try JSONSerialization.data(withJSONObject: requestBody)
+
+        let (data, response) = try await urlSession.data(for: request)
+        guard let http = response as? HTTPURLResponse else { throw AIError.invalidResponse }
+        let payload = (try? JSONSerialization.jsonObject(with: data)) as? [String: Any]
+        let errorCode = payload?["code"] as? String
+
+        if http.statusCode == 401 || http.statusCode == 403 {
+            await FreeAIKeyManager.shared.invalidate()
+            throw AIError.unauthorized
+        }
+        if http.statusCode == 429 {
+            if errorCode == "AI_DAILY_QUOTA_EXCEEDED" || errorCode == "AI_TOTAL_QUOTA_EXCEEDED" {
+                throw AIError.freeQuotaExhausted
+            }
+            throw AIError.rateLimited
+        }
+        guard (200...299).contains(http.statusCode) else {
+            let message = (payload?["error"] as? String) ?? "HTTP \(http.statusCode)"
+            throw AIError.serverError(statusCode: http.statusCode, message: message)
+        }
+        guard let content = payload?["content"] as? [[String: Any]] else {
+            throw AIError.invalidResponse
+        }
+        let reply = content.compactMap { $0["text"] as? String }.joined(separator: "\n")
+        guard !reply.isEmpty else { throw AIError.emptyResponse }
+        return reply
     }
 
     private func sendAnthropicMessage(_ text: String, history: [ChatMessage]) async throws -> String {
@@ -910,9 +995,9 @@ final class AIService: ObservableObject {
               let providerRaw = config["provider"],
               let provider = AIProviderType(rawValue: providerRaw) else {
             // No saved config - this is NOT an error, we have default config
-            // Reset to minimaxCn with defaultAPIKey for first launch
-            self.currentProvider = .minimaxCn
-            self.selectedModel = AIProviderType.minimaxCn.defaultModel
+            // Fresh installs start on the platform free-tier channel: no key to paste.
+            self.currentProvider = .creditsFree
+            self.selectedModel = AIProviderType.creditsFree.defaultModel
             self.apiKey = defaultAPIKey
             self.isConfigured = true
             return
@@ -921,9 +1006,16 @@ final class AIService: ObservableObject {
         self.currentProvider = provider
         self.selectedModel = config["model"] ?? provider.defaultModel
         self.apiKey = config["apiKey"] ?? ""
-        // If using default provider but no API key saved, use the pre-configured key
-        if provider == .minimaxCn && self.apiKey.isEmpty {
+        if provider == .creditsFree {
+            // Free tier: the platform issues a per-device key, nothing to store locally.
+            self.isConfigured = true
+        } else if provider == .minimaxCn && self.apiKey.isEmpty {
             self.apiKey = defaultAPIKey
+            if self.apiKey.isEmpty {
+                // No personal key available: fall back to the free-tier channel.
+                self.currentProvider = .creditsFree
+                self.selectedModel = AIProviderType.creditsFree.defaultModel
+            }
             self.isConfigured = true
         } else {
             self.isConfigured = !self.apiKey.isEmpty
@@ -939,6 +1031,7 @@ enum AIError: LocalizedError {
     case invalidResponse
     case unauthorized
     case rateLimited
+    case freeQuotaExhausted
     case emptyResponse
     case serverError(statusCode: Int, message: String)
 
@@ -954,6 +1047,8 @@ enum AIError: LocalizedError {
             return "API Key is invalid or expired. Please check Settings."
         case .rateLimited:
             return "Too many requests. Please try again later."
+        case .freeQuotaExhausted:
+            return "Free AI quota exhausted. Please try again later or use your own API key in Settings."
         case .emptyResponse:
             return "AI returned an empty response."
         case .serverError(let code, let message):

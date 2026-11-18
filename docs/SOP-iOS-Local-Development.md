@@ -835,7 +835,7 @@ echo "请确认 App Store Connect 内 IAP 状态为 Ready to Submit 或 Approved
 | HR-41 | **AI Provider/Model ID 必须使用 OpenClaw 官方格式** - Provider ID 必须使用小写 canonical 格式（如 `anthropic`、`openai`、`deepseek`），Model ID 必须使用 `provider/model` 格式（如 `anthropic/claude-opus-4-6`）。禁止自行编造模型 ID（如 `claude-opus-4.8`），必须参照 OpenClaw 官方文档 (docs.openclaw.ai/providers) 确认正确格式。所有模型 ID 需与 OpenClaw provider 兼容 | §8.11 |
 | HR-42 | **AI 模型 ID 变更必须经过实时验证** - 当市场排名更新或 SOP 更新后，Agent 必须重新访问 docs.openclaw.ai/providers 获取最新的模型 ID 和 Provider ID，不能用上次记忆或自己推测的 ID。模型 ID 一旦变更，必须同步更新代码中的 `defaultModel`、`supportedModels` 和 `AIService.shared.selectedModel` | §8.11 |
 | HR-43 | **所有 AI API 请求必须 strip provider/ 前缀** - 不只是 MiniMax，所有厂商的 API 请求都需要去除 provider/ 前缀。例如 `openai/gpt-5.5` → `gpt-5.5`，`anthropic/claude-opus-4-6` → `claude-opus-4-6`。每家厂商的 API 只接受其对应的裸模型名。发送带前缀的模型名会导致 400/404 错误。代码中推荐统一使用 `let modelName = selectedModel.contains("/") ? String(selectedModel.split(separator: "/", omittingEmptySubsequences: false).last ?? "") : selectedModel` | §8.12.1 |
-| HR-44 | **MiniMax API 端点必须根据预配置 Key 的类型选择正确的地址** - MiniMax 有三个端点：① 全球：`https://api.minimax.io/v1`（国际版）② 中国：`https://api.minimaxi.com/v1`（中国区，供国内用户自定义）③ ~~`api.minimax.chat`~~（已废弃，禁止使用）。**如果预配置的 API Key 是中国区 Key（如 sk-cp-Jrs...），必须使用 `api.minimaxi.com/v1`，不能用全球端点**。欧美用户自定义可选择全球端点。 | §8.12.1 |
+| HR-44 | **MiniMax API 端点必须根据预配置 Key 的类型选择正确的地址** - MiniMax 有三个端点：① 全球：`https://api.minimax.io/v1`（国际版）② 中国：`https://api.minimaxi.com/v1`（中国区，供国内用户自定义）③ ~~`api.minimax.chat`~~（已废弃，禁止使用）。**如果预配置的 API Key 是中国区 Key（如 `sk-cp-` 前缀的中国区 Key），必须使用 `api.minimaxi.com/v1`，不能用全球端点**。欧美用户自定义可选择全球端点。 | §8.12.1 |
 | HR-44 | **API 请求时必须 strip 掉 provider 前缀** - `provider/model` 格式仅用于代码存储和 UI 显示，发送给 API 的模型名必须去除 provider 前缀（如 `minimax/MiniMax-M2.7` → `MiniMax-M2.7`）。不同厂商 API 对模型名格式要求不同，MiniMax 等 OpenAI-Compatible 厂商只接受裸模型名。发送错误格式会导致 400/404 或 ATS 错误 | §8.12.1 |
 | **HR-45** | **禁止 App 内 Privacy Policy / Terms of Service 只用外链显示** - 必须使用 WKWebView 加载本地 Bundle HTML 资源内嵌显示。`Link(destination: URL)` 外链方式在模拟器/飞行模式/弱网下会失败，违反 App Store 5.1.1 条款要求。**同时仍需保留 GitHub Pages 外链供 App Store Connect URL 字段使用**。参见 §8.4.2 | §8.4.2 |
 | **HR-46** | **禁止 App UI 中显示的 AppIcon 使用占位符** - About / Settings / 分享卡片中的 AppIcon 必须加载真实发行图标（从 Info.plist CFBundleIconFiles 或 bundle 根的 AppIcon*.png 加载）。禁止用「蓝紫渐变 + 通用 SF Symbol」等占位图代替，违反者视为 HR-22 类违规。参见 §4.5.1 | §4.5.1 |
@@ -4111,7 +4111,7 @@ class IAPManager: NSObject, SKPaymentTransactionObserver {
 ```
 
 - 特别说明：developer-pre-configured-key
-- 默认值：sk-cp-JrsXMfjYj9mexu5NAr9Eevedk7IBFoCZFi4azaPEColz-bU0LH0NPA-Z-gxMlM505CKP1Cq-zaAP0OF2bQ0k6y44J1TP0XNodYCxY9oiQAmeGb0RPIivl6A
+- 取值来源：环境变量 `MINIMAX_API_KEY`（禁止在文档/模板/源码中写入 Key 明文；轮换后以真值文件为准）
 
 
 **⚠️ 重要：API 请求时模型名格式与存储格式不同**

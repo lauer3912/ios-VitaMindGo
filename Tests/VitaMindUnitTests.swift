@@ -511,3 +511,61 @@ struct WidgetEntry {
     let steps: Int?
     let sleepHours: Double?
 }
+// MARK: - Free AI key (credits.techidaily.com)
+
+/// Verifies the device-bound free AI key flow: the App asks the platform for a
+/// key, then talks to the platform proxy. The upstream vendor key never
+/// reaches the device.
+///
+/// These tests need a running platform instance (default http://127.0.0.1:3456);
+/// they skip themselves when it is not reachable so CI stays green.
+@MainActor
+final class FreeAIKeyPlatformTests: XCTestCase {
+
+    private static let platformBaseURL = "http://127.0.0.1:3456"
+
+    override func setUp() {
+        super.setUp()
+        setenv("CREDITS_PLATFORM_BASE_URL", Self.platformBaseURL, 1)
+    }
+
+    override func tearDown() {
+        unsetenv("CREDITS_PLATFORM_BASE_URL")
+        super.tearDown()
+    }
+
+    private func platformIsRunning() async -> Bool {
+        guard let url = URL(string: "\(Self.platformBaseURL)/api/ai/config") else { return false }
+        var request = URLRequest(url: url)
+        request.timeoutInterval = 3
+        guard let (_, response) = try? await URLSession.shared.data(for: request),
+              let http = response as? HTTPURLResponse else { return false }
+        return http.statusCode == 200
+    }
+
+    func testDeviceIdentifierIsStableAcrossCalls() async {
+        let first = await FreeAIKeyManager.shared.deviceIdentifier()
+        let second = await FreeAIKeyManager.shared.deviceIdentifier()
+        XCTAssertFalse(first.isEmpty)
+        XCTAssertEqual(first, second)
+    }
+
+    func testIssueKeyAndReadQuota() async throws {
+        let platformRunning = await platformIsRunning()
+        try XCTSkipUnless(platformRunning, "local credits platform is not running")
+        let status = try await FreeAIKeyManager.shared.refresh()
+        XCTAssertTrue(status.key.hasPrefix("tdk_live_"))
+        XCTAssertEqual(status.model, "MiniMax-M3")
+        let quota = try await FreeAIKeyManager.shared.refreshQuota()
+        XCTAssertGreaterThan(quota.dailyQuota, 0)
+        XCTAssertGreaterThanOrEqual(quota.dailyRemaining, 0)
+    }
+
+    func testAIServiceAnswersThroughPlatformFreeTier() async throws {
+        let platformRunning = await platformIsRunning()
+        try XCTSkipUnless(platformRunning, "local credits platform is not running")
+        AIService.shared.configure(provider: .creditsFree, model: "minimax/MiniMax-M3", apiKey: "")
+        let response = try await AIService.shared.sendMessage("Reply with exactly: APPOK")
+        XCTAssertTrue(response.text.contains("APPOK"), "unexpected reply: \(response.text)")
+    }
+}

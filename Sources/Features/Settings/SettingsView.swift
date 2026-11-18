@@ -31,6 +31,7 @@ struct SettingsView: View {
     @StateObject private var subscription = SubscriptionManager.shared
     @State private var showPaywall: Bool = false
     @State private var showCredits: Bool = false
+    @StateObject private var freeAIKey = FreeAIKeyViewModel()
 
     @State private var switchError: String? = nil
 
@@ -240,6 +241,41 @@ struct SettingsView: View {
 
                 Section {
                     HStack(spacing: 12) {
+                        Image(systemName: "sparkles")
+                            .font(.title2)
+                            .foregroundColor(VitaTheme.Colors.success)
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text("Free AI Key")
+                                .foregroundColor(VitaTheme.Colors.textPrimary)
+                            Text(freeAIKey.statusText)
+                                .font(VitaTheme.Fonts.caption)
+                                .foregroundColor(VitaTheme.Colors.textSecondary)
+                            if !freeAIKey.quotaText.isEmpty {
+                                Text(freeAIKey.quotaText)
+                                    .font(VitaTheme.Fonts.caption)
+                                    .foregroundColor(VitaTheme.Colors.textSecondary)
+                            }
+                        }
+                        Spacer()
+                        if freeAIKey.isRefreshing {
+                            ProgressView()
+                        } else {
+                            Button("Refresh") {
+                                Task { await freeAIKey.refresh() }
+                            }
+                            .font(VitaTheme.Fonts.caption)
+                            .foregroundColor(.blue)
+                        }
+                    }
+                    .task { await freeAIKey.refresh() }
+                } header: {
+                    Text("Free AI")
+                } footer: {
+                    Text("Issued per device by credits.techidaily.com. The upstream model key stays on the platform, so it can be rotated without shipping a new app build.")
+                }
+
+                Section {
+                    HStack(spacing: 12) {
                         Image(systemName: "lock.shield.fill")
                             .font(.title2)
                             .foregroundColor(VitaTheme.Colors.success)
@@ -404,11 +440,12 @@ struct SettingsView: View {
     }
 
     private var customProviders: [AIProviderType] {
-        AIProviderType.allCases.filter { $0 != .minimaxCn }
+        AIProviderType.allCases.filter { $0 != .minimaxCn && $0 != .creditsFree }
     }
 
     private var isSystemPreConfigured: Bool {
         AIService.shared.currentProvider == .minimaxCn
+            || AIService.shared.currentProvider == .creditsFree
     }
 
     private func isProviderActive(_ provider: AIProviderType) -> Bool {
@@ -660,4 +697,34 @@ struct AboutView: View {
 #Preview {
     SettingsView()
         .environmentObject(GameState())
+}
+
+// MARK: - Free AI key panel
+
+/// Shows the platform-issued free AI key state (device-bound, no account needed).
+@MainActor
+private final class FreeAIKeyViewModel: ObservableObject {
+    @Published var statusText: String = "Checking…"
+    @Published var quotaText: String = ""
+    @Published var isRefreshing: Bool = false
+
+    func refresh() async {
+        isRefreshing = true
+        defer { isRefreshing = false }
+        do {
+            let quota = try await FreeAIKeyManager.shared.refreshQuota()
+            statusText = "Active"
+            quotaText = "\(quota.dailyRemaining) of \(quota.dailyQuota) requests left today · \(quota.totalRemaining) of \(quota.totalQuota) lifetime"
+        } catch {
+            // No key issued yet (or the platform is unreachable): try issuing once.
+            do {
+                let issued = try await FreeAIKeyManager.shared.refresh()
+                statusText = "Active · \(issued.model)"
+                quotaText = "\(issued.quota.dailyRemaining) of \(issued.quota.dailyQuota) requests left today · \(issued.quota.totalRemaining) of \(issued.quota.totalQuota) lifetime"
+            } catch {
+                statusText = "Unavailable"
+                quotaText = error.localizedDescription
+            }
+        }
+    }
 }

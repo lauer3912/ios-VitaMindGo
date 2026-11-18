@@ -1,49 +1,34 @@
 import Foundation
 
+/// Coach / health-advice model calls.
+///
+/// Two transports, both speaking the Anthropic Messages protocol:
+///  - Personal key (debug builds with `MINIMAX_API_KEY`, or a user-entered key)
+///    talks to MiniMax directly.
+///  - Otherwise the call goes through the TechIDaily credits platform
+///    (credits.techidaily.com), which issues a per-device free key and proxies
+///    the call. The upstream vendor key never reaches the device, so the
+///    platform can rotate it without shipping a new build.
+///
+/// The legacy `api.minimax.chat` host is gone: it is deprecated and returns
+/// nothing useful for new clients.
 final class MiniMaxService: ObservableObject {
     static let shared = MiniMaxService()
-    
+
     @Published var isLoading = false
     @Published var lastError: String?
-    
-    private let apiKey: String
-    private let baseURL = "https://api.minimax.chat/v1"
-    private let modelName = "MiniMax-M2.7"
-    
-    private init() {
-        // 从环境变量或配置读取 API Key
-        self.apiKey = ProcessInfo.processInfo.environment["MINIMAX_API_KEY"] ?? ""
-    }
-    
+
     struct ChatMessage: Codable {
         let role: String
         let content: String
     }
-    
-    struct ChatRequest: Codable {
-        let model: String
-        let messages: [ChatMessage]
-        let temperature: Double
-        let max_tokens: Int
-    }
-    
-    struct ChatResponse: Codable {
-        let choices: [Choice]
-        
-        struct Choice: Codable {
-            let message: Message
-            
-            struct Message: Codable {
-                let content: String
-            }
-        }
-    }
-    
-    func sendMessage(_ text: String, history: [ChatMessage] = []) async throws -> String {
-        guard !apiKey.isEmpty else {
-            throw MiniMaxError.missingAPIKey
-        }
 
+    private let personalEndpoint = "https://api.minimaxi.com/anthropic/v1/messages"
+    private let modelName = "MiniMax-M3"
+
+    // MARK: - Send message
+
+    func sendMessage(_ text: String, history: [ChatMessage] = []) async throws -> String {
         // v3.1.0 IAP: enforce free-tier daily message limit.
         // Pro users bypass; free users blocked at 5/day with .freeMessageLimitReached.
         // Record the message BEFORE the API call so concurrent calls can't
@@ -53,64 +38,82 @@ final class MiniMaxService: ObservableObject {
         guard allowed else {
             throw MiniMaxError.freeMessageLimitReached
         }
-        
+
         await MainActor.run {
             self.isLoading = true
             self.lastError = nil
         }
-        
+
         defer {
             Task { @MainActor in
                 self.isLoading = false
             }
         }
-        
-        var messages = history
-        messages.append(ChatMessage(role: "user", content: text))
-        
-        let requestBody = ChatRequest(
-            model: modelName,
-            messages: messages,
-            temperature: 0.7,
-            max_tokens: 500
-        )
-        
-        guard let url = URL(string: "\(baseURL)/text/chatcompletion_v2") else {
-            throw MiniMaxError.invalidURL
-        }
-        
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
-        request.httpBody = try JSONEncoder().encode(requestBody)
-        request.timeoutInterval = 30
-        
+
         do {
+            let personalKey = ProcessInfo.processInfo.environment["MINIMAX_API_KEY"] ?? ""
+            let endpoint: String
+            let apiKey: String
+            if !personalKey.isEmpty {
+                endpoint = personalEndpoint
+                apiKey = personalKey
+            } else {
+                let status = try await FreeAIKeyManager.shared.currentStatus()
+                endpoint = FreeAIKeyManager.messagesEndpoint()
+                apiKey = status.key
+            }
+
+            var messages = history
+            messages.append(ChatMessage(role: "user", content: text))
+
+            let requestBody: [String: Any] = [
+                "model": modelName,
+                "messages": messages.map { ["role": $0.role, "content": $0.content] },
+                "max_tokens": 500,
+                "temperature": 0.7,
+            ]
+
+            guard let url = URL(string: endpoint) else {
+                throw MiniMaxError.invalidURL
+            }
+
+            var request = URLRequest(url: url)
+            request.httpMethod = "POST"
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.setValue(apiKey, forHTTPHeaderField: "x-api-key")
+            request.setValue("2023-06-01", forHTTPHeaderField: "anthropic-version")
+            request.httpBody = try JSONSerialization.data(withJSONObject: requestBody)
+            request.timeoutInterval = 60
+
             let (data, response) = try await URLSession.shared.data(for: request)
-            
+
             if let httpResponse = response as? HTTPURLResponse {
-                if httpResponse.statusCode == 401 {
+                let payload = (try? JSONSerialization.jsonObject(with: data)) as? [String: Any]
+                if httpResponse.statusCode == 401 || httpResponse.statusCode == 403 {
                     throw MiniMaxError.unauthorized
                 }
                 if httpResponse.statusCode == 429 {
+                    let code = payload?["code"] as? String
+                    if code == "AI_DAILY_QUOTA_EXCEEDED" || code == "AI_TOTAL_QUOTA_EXCEEDED" {
+                        throw MiniMaxError.freeQuotaExhausted
+                    }
                     throw MiniMaxError.rateLimited
                 }
-                if httpResponse.statusCode != 200 {
-                    let errorBody = String(data: data, encoding: .utf8) ?? "Unknown error"
+                if !(200...299).contains(httpResponse.statusCode) {
+                    let errorBody = (payload?["error"] as? String)
+                        ?? String(data: data, encoding: .utf8)
+                        ?? "Unknown error"
                     throw MiniMaxError.serverError(statusCode: httpResponse.statusCode, message: errorBody)
                 }
+                guard let content = payload?["content"] as? [[String: Any]] else {
+                    throw MiniMaxError.emptyResponse
+                }
+                let reply = content.compactMap { $0["text"] as? String }.joined(separator: "\n")
+                guard !reply.isEmpty else { throw MiniMaxError.emptyResponse }
+                return reply
             }
-            
-            let decoder = JSONDecoder()
-            let chatResponse = try decoder.decode(ChatResponse.self, from: data)
-            
-            guard let responseText = chatResponse.choices.first?.message.content else {
-                throw MiniMaxError.emptyResponse
-            }
-            
-            return responseText
-            
+
+            throw MiniMaxError.emptyResponse
         } catch let error as MiniMaxError {
             await MainActor.run {
                 self.lastError = error.localizedDescription
@@ -123,7 +126,7 @@ final class MiniMaxService: ObservableObject {
             throw MiniMaxError.networkError(error)
         }
     }
-    
+
     // Generate health advice based on user data
     func generateHealthAdvice(steps: Double, heartRate: Double, sleep: Double, water: Double) async throws -> String {
         let prompt = """
@@ -132,10 +135,10 @@ final class MiniMaxService: ObservableObject {
         - Heart Rate: \(Int(heartRate)) BPM
         - Sleep: \(String(format: "%.1f", sleep)) hours
         - Water: \(Int(water)) glasses
-        
+
         Provide 2-3 short, actionable health tips. Be encouraging and friendly. Keep it under 100 words total.
         """
-        
+
         return try await sendMessage(prompt)
     }
 }
@@ -145,6 +148,7 @@ enum MiniMaxError: Error, LocalizedError {
     case invalidURL
     case unauthorized
     case rateLimited
+    case freeQuotaExhausted
     case serverError(statusCode: Int, message: String)
     case emptyResponse
     case networkError(Error)
@@ -160,6 +164,8 @@ enum MiniMaxError: Error, LocalizedError {
             return "Invalid API key or unauthorized access"
         case .rateLimited:
             return "Rate limit exceeded. Please try again later."
+        case .freeQuotaExhausted:
+            return "Free AI quota exhausted. Please try again later or add your own API key in Settings."
         case .serverError(let code, let message):
             return "Server error (\(code)): \(message)"
         case .emptyResponse:
