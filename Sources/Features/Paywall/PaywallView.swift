@@ -226,9 +226,14 @@ struct PaywallView: View {
         guard let selected = subscription.products.first(where: { $0.id == selectedProductID }) else {
             return "Continue"
         }
+        // 只有 StoreKit 真的报了 introductory offer 才写「免费试用」——
+        // 否则后台没有试用优惠，付费墙却承诺试用，会被判「内购信息与描述不符」。
+        if let trialDays = introductoryTrialDays(for: selected) {
+            return "Start \(trialDays)-Day Free Trial"
+        }
         switch selected.id {
         case "vitamind_pro_yearly":
-            return "Start 7-Day Free Trial"
+            return "Subscribe \(selected.displayPrice)/yr"
         case "vitamind_pro_monthly_v2":
             return "Subscribe \(selected.displayPrice)/mo"
         case "vitamind_pro_lifetime2":
@@ -237,6 +242,25 @@ struct PaywallView: View {
         default:
             return "Purchase \(selected.displayPrice)"
         }
+    }
+
+    /// 从 StoreKit 读取真实存在的免费试用（没有就返回 nil）。
+    private func introductoryTrialDays(for product: Product) -> Int? {
+        if #available(iOS 17.2, *) {
+            guard let offer = product.subscription?.introductoryOffer,
+                  offer.paymentMode == .freeTrial else { return nil }
+            let period = offer.period
+            let days: Int
+            switch period.unit {
+            case .day: days = period.value
+            case .week: days = period.value * 7
+            case .month: days = period.value * 30
+            case .year: days = period.value * 365
+            @unknown default: return nil
+            }
+            return days > 0 ? days : nil
+        }
+        return nil
     }
 
     private func purchase() async {
