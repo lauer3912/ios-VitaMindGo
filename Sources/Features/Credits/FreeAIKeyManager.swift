@@ -200,6 +200,29 @@ actor FreeAIKeyManager {
         return decoded.quota
     }
 
+    /// 主动轮换本设备的 Key：平台会给旧 Key 一个宽限期（默认 24 小时），
+    /// 因此即使其他设备正在用旧 Key，也不会被打断。
+    @discardableResult
+    func rotate() async throws -> Status {
+        let current = try await currentStatus()
+        let url = baseURL.appendingPathComponent("api/ai/keys/rotate")
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Accept")
+        request.setValue(current.key, forHTTPHeaderField: "x-api-key")
+        request.timeoutInterval = 30
+        let data = try await perform(request)
+        let decoded: IssueResponse = try JSONDecoder().decode(IssueResponse.self, from: data)
+        guard decoded.success, !decoded.key.isEmpty else {
+            throw FreeAIKeyError.invalidResponse
+        }
+        memoryApiKey = decoded.key
+        try? KeychainStore.set(decoded.key, for: apiKeyKey)
+        let status = Status(key: decoded.key, model: decoded.model, quota: decoded.quota)
+        cached = status
+        return status
+    }
+
     /// Key 被平台吊销或额度耗尽时清除本地缓存，下次调用重新申领。
     func invalidate() {
         cached = nil

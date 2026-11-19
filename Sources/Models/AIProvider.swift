@@ -670,11 +670,6 @@ final class AIService: ObservableObject {
     /// Key 由平台按设备发放（存在 Keychain），上游厂商 Key 不下发到设备，
     /// 因此平台可以随时轮换上游 Key，用户也无法提取它。
     private func sendFreeAIMessage(_ text: String, history: [ChatMessage]) async throws -> String {
-        let status = try await FreeAIKeyManager.shared.currentStatus()
-        guard let url = URL(string: FreeAIKeyManager.messagesEndpoint()) else {
-            throw AIError.invalidURL
-        }
-
         var messages: [[String: String]] = []
         messages.append(contentsOf: history.map { ["role": $0.role, "content": $0.content] })
         messages.append(["role": "user", "content": text])
@@ -684,45 +679,58 @@ final class AIService: ObservableObject {
             : selectedModel
 
         let requestBody: [String: Any] = [
-            "model": modelName.isEmpty ? status.model : modelName,
+            "model": modelName,
             "system": Self.vitaCoachSystemPrompt,
             "messages": messages,
             "max_tokens": 500,
         ]
 
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.setValue(status.key, forHTTPHeaderField: "x-api-key")
-        request.setValue("2023-06-01", forHTTPHeaderField: "anthropic-version")
-        request.timeoutInterval = 60
-        request.httpBody = try JSONSerialization.data(withJSONObject: requestBody)
-
-        let (data, response) = try await urlSession.data(for: request)
-        guard let http = response as? HTTPURLResponse else { throw AIError.invalidResponse }
-        let payload = (try? JSONSerialization.jsonObject(with: data)) as? [String: Any]
-        let errorCode = payload?["code"] as? String
-
-        if http.statusCode == 401 || http.statusCode == 403 {
-            await FreeAIKeyManager.shared.invalidate()
-            throw AIError.unauthorized
+        guard let url = URL(string: FreeAIKeyManager.messagesEndpoint()) else {
+            throw AIError.invalidURL
         }
-        if http.statusCode == 429 {
-            if errorCode == "AI_DAILY_QUOTA_EXCEEDED" || errorCode == "AI_TOTAL_QUOTA_EXCEEDED" {
-                throw AIError.freeQuotaExhausted
+
+        // 平台可能轮换/吊销过本设备的 Key：401/403 时清本地缓存并自动重取重试一次，
+        // 用户不需要重装或换机。
+        var attempt = 0
+        while attempt < 2 {
+            attempt += 1
+            let status = try await FreeAIKeyManager.shared.currentStatus()
+            var request = URLRequest(url: url)
+            request.httpMethod = "POST"
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.setValue(status.key, forHTTPHeaderField: "x-api-key")
+            request.setValue("2023-06-01", forHTTPHeaderField: "anthropic-version")
+            request.timeoutInterval = 60
+            request.httpBody = try JSONSerialization.data(withJSONObject: requestBody)
+
+            let (data, response) = try await urlSession.data(for: request)
+            guard let http = response as? HTTPURLResponse else { throw AIError.invalidResponse }
+            let payload = (try? JSONSerialization.jsonObject(with: data)) as? [String: Any]
+            let errorCode = payload?["code"] as? String
+
+            if http.statusCode == 401 || http.statusCode == 403 {
+                await FreeAIKeyManager.shared.invalidate()
+                if attempt == 1 { continue }
+                throw AIError.unauthorized
             }
-            throw AIError.rateLimited
+            if http.statusCode == 429 {
+                if errorCode == "AI_DAILY_QUOTA_EXCEEDED" || errorCode == "AI_TOTAL_QUOTA_EXCEEDED" {
+                    throw AIError.freeQuotaExhausted
+                }
+                throw AIError.rateLimited
+            }
+            guard (200...299).contains(http.statusCode) else {
+                let message = (payload?["error"] as? String) ?? "HTTP \(http.statusCode)"
+                throw AIError.serverError(statusCode: http.statusCode, message: message)
+            }
+            guard let content = payload?["content"] as? [[String: Any]] else {
+                throw AIError.invalidResponse
+            }
+            let reply = content.compactMap { $0["text"] as? String }.joined(separator: "\n")
+            guard !reply.isEmpty else { throw AIError.emptyResponse }
+            return reply
         }
-        guard (200...299).contains(http.statusCode) else {
-            let message = (payload?["error"] as? String) ?? "HTTP \(http.statusCode)"
-            throw AIError.serverError(statusCode: http.statusCode, message: message)
-        }
-        guard let content = payload?["content"] as? [[String: Any]] else {
-            throw AIError.invalidResponse
-        }
-        let reply = content.compactMap { $0["text"] as? String }.joined(separator: "\n")
-        guard !reply.isEmpty else { throw AIError.emptyResponse }
-        return reply
+        throw AIError.unauthorized
     }
 
     private func sendAnthropicMessage(_ text: String, history: [ChatMessage]) async throws -> String {
