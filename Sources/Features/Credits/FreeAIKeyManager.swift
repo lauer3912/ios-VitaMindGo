@@ -27,6 +27,8 @@ actor FreeAIKeyManager {
 
     enum FreeAIKeyError: LocalizedError {
         case platformUnavailable(String)
+        /// 服务端返回了网页（登录墙 / 挑战页 / 代理拦截），而不是 JSON。
+        case serviceBlocked
         case quotaExhausted
         case invalidResponse
         case unauthorized
@@ -36,6 +38,8 @@ actor FreeAIKeyManager {
             switch self {
             case .platformUnavailable(let detail):
                 return "AI service unavailable: \(detail)"
+            case .serviceBlocked:
+                return "The AI service returned a web page instead of data. This usually means the request was blocked by a network policy or a login wall, not a bug in the app. Please try again later or contact support@techidaily.com."
             case .quotaExhausted:
                 return "Free AI quota exhausted. Please try again later."
             case .invalidResponse:
@@ -236,6 +240,12 @@ actor FreeAIKeyManager {
         let (data, response) = try await URLSession.shared.data(for: request)
         guard let http = response as? HTTPURLResponse else {
             throw FreeAIKeyError.invalidResponse
+        }
+        // 登录墙 / WAF 挑战页会返回 HTML 或跳转到登录页 —— 明确报「被拦截」，
+        // 而不是让 JSONDecoder 抛出「数据格式不正确」这种天书。
+        let contentType = (http.value(forHTTPHeaderField: "Content-Type") ?? "").lowercased()
+        if contentType.contains("text/html") {
+            throw FreeAIKeyError.serviceBlocked
         }
         if http.statusCode == 401 || http.statusCode == 403 {
             throw FreeAIKeyError.unauthorized

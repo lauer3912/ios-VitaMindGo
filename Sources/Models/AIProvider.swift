@@ -705,6 +705,10 @@ final class AIService: ObservableObject {
 
             let (data, response) = try await urlSession.data(for: request)
             guard let http = response as? HTTPURLResponse else { throw AIError.invalidResponse }
+            let contentType = (http.value(forHTTPHeaderField: "Content-Type") ?? "").lowercased()
+            if contentType.contains("text/html") {
+                throw AIError.serviceBlocked
+            }
             let payload = (try? JSONSerialization.jsonObject(with: data)) as? [String: Any]
             let errorCode = payload?["code"] as? String
 
@@ -1040,6 +1044,8 @@ enum AIError: LocalizedError {
     case unauthorized
     case rateLimited
     case freeQuotaExhausted
+    /// 平台返回网页而不是 JSON（登录墙 / 网络策略拦截）。
+    case serviceBlocked
     case emptyResponse
     case serverError(statusCode: Int, message: String)
 
@@ -1057,6 +1063,8 @@ enum AIError: LocalizedError {
             return "Too many requests. Please try again later."
         case .freeQuotaExhausted:
             return "Free AI quota exhausted. Please try again later or use your own API key in Settings."
+        case .serviceBlocked:
+            return "The AI service returned a web page instead of data. This usually means the request was blocked by a network policy or a login wall, not a bug in the app. Please try again later or contact support@techidaily.com."
         case .emptyResponse:
             return "AI returned an empty response."
         case .serverError(let code, let message):
