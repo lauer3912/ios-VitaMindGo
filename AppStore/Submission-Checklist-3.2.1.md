@@ -1,14 +1,15 @@
 # App Store 提交清单 · VitaMindGo 3.2.1 (build 18)
 
 > 生成于 2026-11-19。API 侧已全部做完；下面 3 段**必须在 ASC 网页后台点**（Apple 不开放对应 API）。
-> 提审草稿：reviewSubmission `7cda6fbf-d045-4660-81cb-907333d4a402`（空壳，网页操作时会复用/重建）。
+> 提审草稿：**reviewSubmission `3beaf20a-8715-46e1-af64-bc9c5ce37dba`**（已含 App 版本 item，尚未提交）。
+> 上一轮提交 `7cda6fbf-…` 已取消（只有 App 版本、缺内购，2.1(b) 风险），版本已换成 **build 19**。
 
 ## ✅ API 侧已完成（无需再动）
 
 | 项 | 状态 |
 |---|---|
 | 版本记录 3.2.1 | `041d1d66-3754-40ed-b764-ffa6efbc8951`，`PREPARE_FOR_SUBMISSION` |
-| 挂 build 18 | ✅（付费墙试用文案修复版，Delivery UUID `3e8d5297-e217-4495-a1d4-b8307fb58e05`） |
+| 挂 build 19 | ✅（含「被登录墙拦截」可读报错，Delivery UUID `3e8d5297-…` / build19 `7ab6ec2f-0d36-4696-b723-ad7d0142d2b6`） |
 | 描述 | 3563 字，末尾含 **EULA + App 隐私政策 + 平台隐私声明**；已删掉不存在的「7 天免费试用」承诺 |
 | keywords / promotionalText / What's New | ✅ |
 | 截图 | iPhone 6.7" 5 张 + iPad 13" 5 张（COMPLETE） |
@@ -57,6 +58,7 @@
 3. 顶部 **添加以供审核** → 核对「准备提交项目」数量应为 **5**
    （App 版本 3.2.1 + 订阅组 VitaMindGo Pro + 三个商品）；数量不对就别提交
 4. **提交以供审核** → 状态变 `Waiting for Review`
+   （也可让我来提交：把「准备提交项目」数量告诉我，我用 API 提交并复核状态）
 
 ## 提交后我来复核
 
